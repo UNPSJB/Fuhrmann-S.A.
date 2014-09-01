@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Project" company="Fuhrmann-S.A" webLink="http://github.com/UNPSJB/Fuhrmann-S.A." view-date="2014-08-22" view-index="0" gantt-divider-location="353" resource-divider-location="300" version="2.0" locale="es_AR">
+<project name="Project" company="Fuhrmann-S.A" webLink="http://github.com/UNPSJB/Fuhrmann-S.A." view-date="2014-07-28" view-index="0" gantt-divider-location="269" resource-divider-location="300" version="2.0" locale="es">
     <description><![CDATA[Planificacion de desarrollo de software, Fuhrmann-S.A.]]></description>
-    <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd3" name="Nombre" width="57" order="0"/>
-        <field id="tpd4" name="Fecha de inicio" width="21" order="1"/>
-        <field id="tpd5" name="Fecha de fin" width="21" order="2"/>
+    <view zooming-state="default:6" id="gantt-chart">
+        <field id="tpd3" name="Nombre" width="49" order="0"/>
+        <field id="tpd4" name="Fecha de inicio" width="22" order="1"/>
+        <field id="tpd5" name="Fecha de fin" width="28" order="2"/>
+        <option id="taskLabelUp" value="advancement"/>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nombre" width="70" order="0"/>
-        <field id="1" name="Función" width="29" order="1"/>
+        <field id="0" name="Nombre" width="50" order="0"/>
+        <field id="1" name="Función" width="50" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -16,7 +17,7 @@
             <day-type id="0"/>
             <day-type id="1"/>
             <calendar id="1" name="default">
-                <default-week sun="0" mon="0" tue="0" wed="0" thu="0" fri="0" sat="0"/>
+                <default-week sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="0"/>
                 <only-show-weekends value="true"/>
                 <overriden-day-types/>
                 <days/>
@@ -36,8 +37,54 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
+        <task id="1" name="Revisión de Análisis" meeting="false" start="2014-08-01" duration="35" complete="64" expand="true">
+            <depend id="25" type="2" difference="0" hardness="Strong"/>
+            <depend id="27" type="2" difference="0" hardness="Strong"/>
+            <depend id="28" type="2" difference="0" hardness="Strong"/>
+            <task id="24" name="Definir Alcanze y Limite del Sistema" meeting="false" start="2014-08-01" duration="1" complete="0" expand="true">
+                <depend id="25" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="6" name="Modelo de Dominio" color="#8cb6ce" meeting="false" start="2014-08-25" duration="8" complete="70" expand="true"/>
+            <task id="5" name="Casos de Usos" color="#8cb6ce" meeting="false" start="2014-08-01" duration="35" complete="65" expand="true"/>
+        </task>
+        <task id="3" name="Detección de Requerimientos" meeting="false" start="2014-08-04" duration="1" complete="100" expand="true">
+            <depend id="25" type="2" difference="0" hardness="Strong"/>
+            <depend id="27" type="2" difference="0" hardness="Strong"/>
+            <depend id="28" type="2" difference="0" hardness="Strong"/>
+            <task id="10" name="De Dominio" meeting="false" start="2014-08-04" duration="1" complete="100" expand="true"/>
+            <task id="9" name="No Funcionales" color="#8cb6ce" meeting="false" start="2014-08-04" duration="1" complete="100" expand="true"/>
+            <task id="8" name="Funcionales" color="#8cb6ce" meeting="false" start="2014-08-04" duration="1" complete="100" expand="true"/>
+        </task>
+        <task id="2" name="Detección de Gestiones" color="#8cb6ce" meeting="false" start="2014-08-22" duration="1" complete="100" expand="true">
+            <depend id="27" type="2" difference="0" hardness="Strong"/>
+            <depend id="28" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="25" name="Definir Perfiles de Usuario" color="#8cb6ce" meeting="false" start="2014-09-05" duration="1" complete="0" expand="true"/>
+        <task id="27" name="Diseño Arquitectónico" color="#8cb6ce" meeting="false" start="2014-09-05" duration="1" complete="0" expand="true">
+            <depend id="35" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="28" name="Diseño de Interfases" color="#8cb6ce" meeting="false" start="2014-09-05" duration="1" complete="0" expand="true">
+            <depend id="35" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="35" name="Inicio de Desarrollo de Gestiones" color="#000000" meeting="false" start="2014-10-04" duration="1" complete="0" expand="true">
+            <task id="14" name="Gestión de Estancias" meeting="false" start="2014-10-04" duration="1" complete="0" expand="true"/>
+            <task id="13" name="Gestión de Representante" color="#8cb6ce" meeting="false" start="2014-10-04" duration="1" complete="0" expand="true"/>
+            <task id="15" name="Gestión de Productores" meeting="false" start="2014-10-04" duration="1" complete="0" expand="true"/>
+            <task id="17" name="Gestión de Compras" meeting="false" start="2014-10-04" duration="1" complete="0" expand="true"/>
+            <task id="21" name="Gestión de Proceso de Produccion" meeting="false" start="2014-10-04" duration="1" complete="0" expand="true"/>
+            <task id="19" name="Gestión de Lotes" meeting="false" start="2014-10-04" duration="1" complete="0" expand="true"/>
+            <task id="20" name="Gestión de Fardos" meeting="false" start="2014-10-04" duration="1" complete="0" expand="true"/>
+            <task id="18" name="Gestion de Maquinarias" meeting="false" start="2014-10-04" duration="1" complete="0" expand="true"/>
+            <task id="22" name="Gestión de Ventas" meeting="false" start="2014-10-04" duration="1" complete="0" expand="true"/>
+        </task>
+        <task id="23" name="Documentación" meeting="false" start="2014-08-01" duration="141" complete="0" expand="true"/>
     </tasks>
-    <resources/>
+    <resources>
+        <resource id="0" name="Matias Raies" function="Default:0" contacts="matthr.tw@gmail.com" phone="2804852202"/>
+        <resource id="1" name="Carla Cecilia Santos" function="Default:0" contacts="" phone=""/>
+        <resource id="2" name="Diego Carabajal" function="Default:0" contacts="" phone=""/>
+        <resource id="3" name="Mariana Wheeler" function="Default:0" contacts="" phone=""/>
+    </resources>
     <allocations/>
     <vacations/>
     <taskdisplaycolumns>
@@ -50,9 +97,9 @@
         <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd7" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="199" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="75" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="75" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="123" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="56" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="71" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
