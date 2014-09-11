@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Project" company="Fuhrmann-S.A" webLink="http://github.com/UNPSJB/Fuhrmann-S.A." view-date="2014-07-21" view-index="0" gantt-divider-location="239" resource-divider-location="300" version="2.0" locale="es">
+<project name="Project" company="Fuhrmann-S.A" webLink="http://github.com/UNPSJB/Fuhrmann-S.A." view-date="2014-10-20" view-index="0" gantt-divider-location="356" resource-divider-location="300" version="2.0" locale="es">
     <description><![CDATA[Planificacion de desarrollo de software, Fuhrmann-S.A.]]></description>
     <view zooming-state="default:6" id="gantt-chart">
-        <field id="tpd3" name="Nombre" width="70" order="0"/>
-        <field id="tpd4" name="Fecha de inicio" width="6" order="1"/>
-        <field id="tpd5" name="Fecha de fin" width="22" order="2"/>
+        <field id="tpd3" name="Nombre" width="58" order="0"/>
+        <field id="tpd4" name="Fecha de inicio" width="15" order="1"/>
+        <field id="tpd5" name="Fecha de fin" width="26" order="2"/>
         <option id="taskLabelUp" value="advancement"/>
         <option id="taskLabelDown" value="name"/>
-        <timeline><![CDATA[66,66,66,66,66]]></timeline>
+        <timeline><![CDATA[66]]></timeline>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nombre" width="56" order="0"/>
-        <field id="1" name="Función" width="43" order="1"/>
+        <field id="0" name="Nombre" width="52" order="0"/>
+        <field id="1" name="Función" width="47" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -50,24 +50,24 @@
             <task id="309" name="Re Diseño de Diagramas" color="#66ffcc" meeting="false" start="2014-09-02" duration="3" complete="100" expand="true"/>
         </task>
         <task id="69" name="1er Hito de Control" color="#00ff00" meeting="true" start="2014-09-05" duration="0" complete="0" expand="true"/>
-        <task id="315" name="Diseño" color="#000000" meeting="false" start="2014-09-05" duration="16" complete="0" expand="false">
+        <task id="315" name="Diseño" color="#000000" meeting="false" start="2014-09-05" duration="21" complete="27" expand="false">
             <depend id="66" type="2" difference="0" hardness="Strong"/>
             <depend id="109" type="2" difference="0" hardness="Strong"/>
-            <task id="27" name="Diseño Arquitectónico" color="#8cb6ce" meeting="false" start="2014-09-05" duration="6" complete="0" expand="true">
+            <task id="27" name="Diseño Arquitectónico" color="#8cb6ce" meeting="false" start="2014-09-05" duration="6" complete="100" expand="true">
                 <depend id="28" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="39" name="Diseño de Base" color="#66ffcc" meeting="false" start="2014-09-05" duration="6" complete="0" expand="true">
+            <task id="39" name="Diseño de BaseDatos" color="#66ffcc" meeting="false" start="2014-09-10" duration="6" complete="0" expand="true">
                 <depend id="28" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="28" name="Diseño de Interfases" color="#8cb6ce" meeting="false" start="2014-09-11" duration="10" complete="0" expand="true"/>
+            <task id="28" name="Diseño de Interfases" color="#8cb6ce" meeting="false" start="2014-09-16" duration="10" complete="0" expand="true"/>
         </task>
-        <task id="66" name="2do Hito de Control" color="#00ff00" meeting="true" start="2014-09-21" duration="0" complete="0" expand="true"/>
-        <task id="109" name="1er Gestion Entregable" color="#000000" meeting="false" start="2014-09-22" duration="35" complete="0" expand="false">
+        <task id="66" name="2do Hito de Control" color="#00ff00" meeting="true" start="2014-09-26" duration="0" complete="0" expand="true"/>
+        <task id="109" name="1er Gestion Entregable" color="#000000" meeting="false" start="2014-09-26" duration="31" complete="0" expand="false">
             <depend id="110" type="2" difference="0" hardness="Strong"/>
-            <task id="218" name="Gestión Proceso de Produccion" color="#000000" meeting="false" start="2014-09-22" duration="9" complete="0" expand="false">
+            <task id="218" name="Gestión Proceso de Produccion" color="#000000" meeting="false" start="2014-09-26" duration="5" complete="0" expand="false">
                 <depend id="19" type="2" difference="0" hardness="Strong"/>
-                <task id="219" name="Re Diseño" meeting="false" start="2014-09-22" duration="2" complete="0" expand="true"/>
-                <task id="220" name="Implementacion" meeting="false" start="2014-09-23" duration="5" complete="0" expand="true"/>
+                <task id="219" name="Re Diseño" meeting="false" start="2014-09-26" duration="2" complete="0" expand="true"/>
+                <task id="220" name="Implementacion" meeting="false" start="2014-09-26" duration="5" complete="0" expand="true"/>
                 <task id="221" name="Verificacion y Prueba" meeting="false" start="2014-09-27" duration="3" complete="0" expand="true"/>
                 <task id="222" name="Documentacion" meeting="false" start="2014-09-27" duration="3" complete="0" expand="true"/>
                 <task id="282" name="Entrega - Validacion" meeting="false" start="2014-09-30" duration="1" complete="0" expand="true"/>
@@ -115,6 +115,9 @@
             </task>
         </task>
         <task id="111" name="3ra Gestion Entregable" color="#000000" meeting="false" start="2014-11-12" duration="21" complete="0" expand="false">
+            <depend id="322" type="2" difference="0" hardness="Strong"/>
+            <depend id="324" type="2" difference="0" hardness="Strong"/>
+            <depend id="325" type="2" difference="0" hardness="Strong"/>
             <task id="14" name="Gestión de Estancias" color="#66ffcc" meeting="false" start="2014-11-12" duration="7" complete="0" expand="false">
                 <depend id="15" type="2" difference="0" hardness="Strong"/>
                 <depend id="71" type="2" difference="0" hardness="Strong"/>
@@ -140,6 +143,9 @@
                 <task id="306" name="Entrega - Validacion" meeting="false" start="2014-12-02" duration="1" complete="0" expand="true"/>
             </task>
         </task>
+        <task id="322" name="Manual Usuario" color="#66ffcc" meeting="false" start="2014-12-03" duration="8" complete="0" expand="true"/>
+        <task id="324" name="Documentacion de C. Fuente" color="#66ffcc" meeting="false" start="2014-12-03" duration="8" complete="0" expand="true"/>
+        <task id="325" name="Manual de Sistema" color="#66ffcc" meeting="false" start="2014-12-03" duration="8" complete="0" expand="true"/>
         <task id="71" name="3er Hito de Control" color="#00ff00" meeting="true" start="2014-11-19" duration="0" complete="0" expand="true"/>
         <task id="205" name="Entrega de Producto" color="#ff3333" meeting="false" start="2014-12-19" duration="1" complete="0" expand="true"/>
     </tasks>
@@ -170,9 +176,9 @@
         <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd7" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="166" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="15" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="54" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="205" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="54" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="93" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
