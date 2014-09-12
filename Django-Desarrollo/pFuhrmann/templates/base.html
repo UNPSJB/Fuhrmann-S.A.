@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang='es'>
+<meta charset='utf-8'>
+<link rel='stylesheet' href= '{{STATIC_URL}}css/bootstrap.css'>
+<link rel='stylesheet' href= '{{STATIC_URL}}css/base.css'>
+	<head><div class="panel panel-primary">
+		<div class="panel-heading">
+	    	<h3 class="panel-title">{% block titulo %}{% endblock %}</h3>
+	    </div>
+	</head>
+	<head>
+		<div class="panel panel-info">
+		  	<div class="panel-heading">
+		  		{% block title %}{% endblock %}
+
+			</div>
+		</div>
+
+		<div class="panel-body">
+		    {% block contenido %}{% endblock %}
+		</div>	
+	</head>
+
+	<footer>
+		<p>Fuhrman S.A - Alumnos: Diego Carabajal - Carla Santos - Mariana Wheeler - Matias Raies &copy; 2014</p>
+	</footer>
+</html>
+
