@@ -6,13 +6,13 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
 	url(r'^$','appWeb.views.index'),
-	url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^altaproductor/', 'appWeb.views.altaproductor'),
-    url(r'^bajaproductor/', 'appWeb.views.bajaproductor'),
-    url(r'^modificarproductor/', 'appWeb.views.modificarproductor'),
-    url(r'^altalote/', 'appWeb.views.altalote'),
-    url(r'^bajalote/', 'appWeb.views.bajalote'),
-    url(r'^modificarlote/', 'appWeb.views.modificarlote'),
-
+ 	url(r'^altaMaquinaria/', 'appWeb.views.altaMaquinaria'),
+ 	url(r'^modificarMaquinaria/', 'appWeb.views.modificarMaquinaria'),
+ 	url(r'^bajaMaquinaria/', 'appWeb.views.bajaMaquinaria'),
+ 	url(r'^liberarMaquinaria/', 'appWeb.views.liberarMaquinaria'),
+ 	url(r'^altaClasificacionFardo/', 'appWeb.views.altaClasificacionFardo'),
+ 	url(r'^modificacionFardo/', 'appWeb.views.modificacionFardo'),
+   	url(r'^altalote/', 'appWeb.views.altalote'),
 )
