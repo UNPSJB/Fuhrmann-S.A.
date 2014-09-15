@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang='es'>
+<meta charset='utf-8'>
+<link rel='stylesheet' href= '{{STATIC_URL}}css/bootstrap.css'>
+<link rel='stylesheet' href= '{{STATIC_URL}}css/base.css'>
+
+    <head><div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title2">Agregar Representante</h3>
+
+    </head>
+    <head><div class="panel panel-info">                    
+        <div class="panel-heading">{% block title %}{% endblock %}  
+    </head>
+
+	<form role="form">
+        <div class="form-group">
+            <label for="exampleInputNombre">NOMBRE</label>
+            <input type="nombre" class="form-control" id="exampleInputNombre" placeholder="Ingrese nombre">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputApellido">APELLIDO</label>
+            <input type="apellido" class="form-control" id="exampleInputApellido" placeholder="Ingrese apellido">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputLegajo">Nº LEGAJO</label>
+            <input type="legajo" class="form-control" id="exampleInputLegajo" placeholder="Ingrese Nº de Legajo">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputDni">DNI</label>
+            <input type="dni" class="form-control" id="exampleInputDni" placeholder="Ingrese DNI">
+        </div>
+        
+        <div class="form-group">
+            <label for="exampleInputZonaDeInjerencia">INGRESE ZONA DE INJERENCIA</label>
+            <input type="zonadeinjerencia" class="form-control" id="exampleInputZonaDeInjerencia" placeholder="Ingrese Zona de injerencia">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputTelefono">TELEFONO (opcional)</label>   
+            <input type="telefono" class="form-control" id="exampleInputTelefono" placeholder="Ingrese número de teléfono">
+        </div>
+        
+        <div class="form-group">
+            <label for="exampleInputEmail">E-MAIL (opcional)</label>
+            <input type="email" class="form-control" id="exampleInputEmail" placeholder="Ingrese e-mail">
+        </div>
+        
+        <button type="button" class="btn btn-primary">Agregar</button>
+        <button type="cancelar" class="btn btn-primary">Cancelar</button>
+    </form>
+</html>
+

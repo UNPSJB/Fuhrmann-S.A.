@@ -39,3 +39,21 @@ def bajaLote (request):
 
 def modificarLote (request):
 	return render_to_response('modificarLote.html', context_instance=RequestContext(request))
+
+def altaRepresentante (request):
+	return render_to_response('altaRepresentante.html', context_instance=RequestContext(request))
+
+def modificarRepresentante (request):
+	return render_to_response('modificarRepresentante.html', context_instance=RequestContext(request))
+
+def bajaRepresentante (request):
+	return render_to_response('bajaRepresentante.html', context_instance=RequestContext(request))
+
+def altaEstancia (request):
+	return render_to_response('altaEstancia.html', context_instance=RequestContext(request))
+
+def modificarEstancia (request):
+	return render_to_response('modificarEstancia.html', context_instance=RequestContext(request))
+
+def bajaEstancia (request):
+	return render_to_response('bajaEstancia.html', context_instance=RequestContext(request))
