@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block contenido %}
+           <!-- Header Carousel -->
+        <header id="myCarousel" class="carousel slide">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="fill" style="background-image:url({{STATIC_URL}}img/img.jpg);"></div>
+                    <div class="carousel-caption">
+                        <h4>Notice One</h4>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Twso');"></div>
+                    <div class="carousel-caption">
+                        <h4>Notice Two</h4>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Three');"></div>
+                    <div class="carousel-caption">
+                        <h4>Statistics</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="icon-prev"></span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="icon-next"></span>
+            </a>
+        </header>
+
+{% endblock %}
