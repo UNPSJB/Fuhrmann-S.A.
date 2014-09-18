@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='es'>
+<meta charset='utf-8'>
+<link rel='stylesheet' href= '{{STATIC_URL}}css/bootstrap.css'>
+<link rel='stylesheet' href= '{{STATIC_URL}}css/base.css'>
+  <head><div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title2">{% block titulo %}Liberar Maquinaria{% endblock %}</h3>
+  </head>
+  <head>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+          {% block title %}{% endblock %}
+  </head> 
+
+<form role="form">
+  <div class="form-group">
+    <label for="ejemplo_dia">DIA</label>
+    <input type="dia" class="form-control" id="ejemplo_dia" 
+           placeholder="Ingrese dia">
+  </div>
+
+  <div class="form-group">
+    <label for="ejemplo_hora">HORA</label>
+    <input type="hora" class="form-control" id="ejemplo_hora" 
+           placeholder="Ingrese hora">
+  </div>
+ 
+    <button type="button" class="btn btn-primary">Aceptar</button>
+    <button type="cancelar" class="btn btn-primary">Cancelar</button>
+</form>

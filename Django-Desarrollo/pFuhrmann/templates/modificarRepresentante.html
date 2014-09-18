@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
@@ -50,3 +51,64 @@
 	</div>
 </div>
 {% endblock %}
+=======
+<!DOCTYPE html>
+<html lang='es'>
+<meta charset='utf-8'>
+<link rel='stylesheet' href= '{{STATIC_URL}}css/bootstrap.css'>
+<link rel='stylesheet' href= '{{STATIC_URL}}css/base.css'>
+
+  <head><div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title2">Modificación de Representante</h3>
+    
+  </head>
+
+  <head>
+    <div class="panel panel-info">
+      <div class="panel-heading">{% block title %}{% endblock %}
+  </head> 
+
+<form role="form">
+  <div class="form-group">
+    <label for="ejemploApellido">APELLIDO</label>
+    <input type="apellido" class="form-control" id="ejemplo_apellido"
+           placeholder="Ingrese Apellido">
+  </div>
+
+  <div class="form-group">
+    <label for="ejemploNombre">NOMBRE</label>
+    <input type="nombre" class="form-control" id="ejemplonombre" 
+           placeholder="Ingrese nombre">
+  </div>
+
+  <div class="form-group">
+    <label for="ejemploLegajo">Nº DE LEGAJO</label>
+    <input type="legajo" class="form-control" id="ejemplolegajo" 
+           placeholder="Ingrese Nº de Legajo">
+  </div>
+
+ <div class="form-group">
+    <label for="exampleInputDni">DNI (opcional)</label>
+    <input type="dni" class="form-control" id="exampleInputDni" placeholder="Ingrese DNI">
+  </div>
+  
+  <div class="form-group">
+    <label for="exampleInputDni">INGRESE ZONA DE INJERENCIA (opcional)</label>
+    <input type="dni" class="form-control" id="exampleInputZonaDeInjerencia" placeholder="Ingrese Zona de injerencia">
+  </div>
+  
+  <div class="form-group">
+    <label for="exampleInputDni">TELEFONO (opcional)</label>    
+    <input type="dni" class="form-control" id="exampleInputTelefono" placeholder="Ingrese telefono">
+  </div>
+  
+  <div class="form-group">
+    <label for="exampleInputDni">E-MAIL (opcional)</label>
+    <input type="dni" class="form-control" id="exampleInputEmail" placeholder="Ingrese e-mail">
+  </div>
+  
+    <button type="button" class="btn btn-primary">Aceptar</button>
+    <button type="cancelar" class="btn btn-primary">Cancelar</button>
+</form>
+>>>>>>> 387f0800cc9a414db1c072eaa9f464b36957e601

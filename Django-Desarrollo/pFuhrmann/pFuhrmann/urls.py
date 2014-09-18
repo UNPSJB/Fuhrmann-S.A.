@@ -9,6 +9,7 @@ urlpatterns = patterns('',
 	
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+<<<<<<< HEAD
     url(r'^compra/$', 'appWeb.views.nuevaCompra'),
  	url(r'^venta/$', 'appWeb.views.nuevaVenta'),
     url(r'^nuevaOrdenProduccion/$', 'appWeb.views.nuevaOrdenProduccion'),
@@ -40,3 +41,24 @@ urlpatterns = patterns('',
     url(r'^modificarProductorF/$', 'appWeb.views.modificarProductorF'),
     url(r'^modificarRepresentanteF/$', 'appWeb.views.modificarRepresentanteF'),
 )
+=======
+ 	url(r'^altaMaquinaria/', 'appWeb.views.altaMaquinaria'),
+ 	url(r'^modificarMaquinaria/', 'appWeb.views.modificarMaquinaria'),
+ 	url(r'^bajaMaquinaria/', 'appWeb.views.bajaMaquinaria'),
+ 	url(r'^liberarMaquinaria/', 'appWeb.views.liberarMaquinaria'),
+ 	url(r'^altaFardo/', 'appWeb.views.altaFardo'),
+ 	url(r'^modificarFardo/', 'appWeb.views.modificarFardo'), 	
+ 	url(r'^altaProductor/', 'appWeb.views.altaProductor'),
+    url(r'^bajaProductor/', 'appWeb.views.bajaProductor'),
+    url(r'^modificarProductor/', 'appWeb.views.modificarProductor'),
+    url(r'^altaLote/', 'appWeb.views.altaLote'),
+    url(r'^bajaLote/', 'appWeb.views.bajaLote'),
+    url(r'^modificarLote/', 'appWeb.views.modificarLote'),
+    url(r'^altaRepresentante/', 'appWeb.views.altaRepresentante'),
+    url(r'^modificarRepresentante/', 'appWeb.views.modificarRepresentante'),
+    url(r'^bajaRepresentante/', 'appWeb.views.bajaRepresentante'),
+    url(r'^altaEstancia/', 'appWeb.views.altaEstancia'),
+    url(r'^modificarEstancia/', 'appWeb.views.modificarEstancia'),
+    url(r'^bajaEstancia/', 'appWeb.views.bajaEstancia'),
+)
+>>>>>>> 387f0800cc9a414db1c072eaa9f464b36957e601
