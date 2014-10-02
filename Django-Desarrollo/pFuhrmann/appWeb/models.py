@@ -1,9 +1,9 @@
 from django.db import models
 
 class Persona(models.Model):
-    Nombre = models.CharField(max_length=50, primary_key = True)
+    Nombre = models.CharField(max_length=50)
     Apellido = models.CharField(max_length=50)
-    DNI = models.PositiveIntegerField(max_length=50)
+    DNI = models.CharField(max_length=50, primary_key = True)
     Telefono = models.CharField(max_length=50)
     Email = models.EmailField()
     Baja = models.BooleanField(default=False)
@@ -12,15 +12,17 @@ class Persona(models.Model):
         return "%s" % str(str(self.Nombre) + " " + str(self.Apellido))
 
 class Productor (Persona):
-    CUIL = models.PositiveIntegerField(max_length=50, primary_key = True)
-
+    CUIL = models.CharField(max_length=50, primary_key = True)
+    Estancia = models.ForeignKey('Estancia')
+    
     def __str__(self):
         return super(Persona, self)
 
 class Representante(Persona): 
     NroLegajo = models.PositiveIntegerField(max_length=50, primary_key = True)
-    ZonaInjerencia = models.CharField(max_length=50)
-
+    Zona = models.CharField(max_length=50)
+    Estancia = models.ForeignKey('Estancia')
+    
     def __str__(self):
         return super(Persona, self)
 
@@ -46,15 +48,17 @@ class Lote(models.Model):
 class Fardo(models.Model):
     NroFardo = models.AutoField(primary_key = True)
     TipoFardo = models.ForeignKey('TipoFardo')
-    Peso = models.PositiveIntegerField(max_length=50)
-    Rinde = models.CharField(max_length=50)
-    Finura = models.CharField(max_length=50)
-    CoheficienteVariacion = models.PositiveIntegerField(max_length=50)
-    AlturaMedia = models.PositiveIntegerField(max_length=50)
-    Micronaje = models.CharField(max_length=50)
-    Romana = models.CharField(max_length=50)
+    Peso = models.FloatField()
+    Rinde = models.FloatField()
+    Finura = models.FloatField()
+    CV = models.FloatField()
+    AlturaMedia = models.FloatField()
+    Micronaje = models.FloatField()
+    Romana = models.FloatField()
     Cuadricula = models.ForeignKey('Cuadricula')
-    Baja = models.BooleanField(default=False)
+    DetalleOrden = models.ForeignKey('DetalleOrden')
+    Compra = models.OneToOneField('CompraLote')
+
 
     def __unicode__(self):
         return ""
@@ -71,42 +75,41 @@ class CompraLote(models.Model):
     Representante = models.ForeignKey('Representante')
     CantLotes = models.PositiveIntegerField(max_length=50)
     FechaLlegada = models.DateField()
-    Registrada = models.BooleanField(default=False) #Para saber si los fardos ya fueron cargados
     
     def __unicode__(self):
         return ""
 
-class DetalleCompra(models.Model):
-    NroDetalle = models.AutoField(primary_key = True)    
-    Compra = models.ForeignKey('CompraLote')
-    Peso = models.PositiveIntegerField(max_length=50)
-    CantFardos = models.PositiveIntegerField(max_length=50)
-    def __unicode__(self):
-        return ""
 
 class OrdenProduccion(models.Model):
     NroOrden = models.AutoField(primary_key = True)
     FechaEmision = models.DateField(auto_now_add = True)
     CantRequerida = models.PositiveIntegerField(max_length=50)
     Servicio = models.ManyToManyField('Servicio')
+    CV = models.FloatField()
+    AlturaMedia = models.FloatField()
+    Micronaje = models.FloatField()
+    Romana = models.FloatField()
+    FechaInicioProduccion = models.DateField() 
+    FechaFinProduccion = models.DateField() 
+    MaquinaActual = models.ForeignKey('Maquinaria')
     EnProduccion = models.BooleanField(default=False)
     Finalizada = models.BooleanField(default=False)
 
     def __unicode__(self):
         return u"%s - %s" % (self.NroOrden, u", ".join([unicode(s) for s in self.Servicio.all()]))
 
-    
 
 class DetalleOrden(models.Model):
     NroDetalle = models.AutoField(primary_key = True)
-    OrdenProduccion = models.ForeignKey('OrdenProduccion')
+    OrdenProduccion = models.OneToOneField('OrdenProduccion')
     Fardo = models.OneToOneField('Fardo') #Cuando se crea el detalle, tiene que tener asociado 1 fardo
     def __unicode__(self):
         return ""
 
 class Servicio(models.Model):
     Nombre = models.CharField(max_length=50, primary_key = True)
-    
+    Descripcion = models.CharField(max_length=50)
+
     def __unicode__(self):
         return u"%s" % (self.Nombre)
 
@@ -119,7 +122,7 @@ class LoteVenta(models.Model):
     Cuadricula = models.ForeignKey('Cuadricula')
     Servicio = models.ManyToManyField('Servicio')
     Baja = models.BooleanField(default=False)
-    #OrdenProduccion = models.OneToOneField('OrdenProduccion')
+    OrdenProduccion = models.OneToOneField('OrdenProduccion')
     def __unicode__(self):
         return ""
 
@@ -127,7 +130,7 @@ class Venta(models.Model):
     NroVenta = models.AutoField(primary_key = True)
     LoteVenta = models.OneToOneField('LoteVenta')
     Cliente = models.CharField(max_length=50)
-    fechaVenta = models.DateField()
+    FechaVenta = models.DateField()
 
     def __unicode__(self):
         return ""
@@ -140,18 +143,8 @@ class Cuadricula(models.Model):
 
 class Maquinaria(models.Model):
     NroSerie = models.PositiveIntegerField(max_length=50, primary_key = True)
-    tipoMaquinaria = models.ForeignKey('TipoMaquinaria')
+    TipoMaquinaria = models.ForeignKey('Servicio')
     Descripcion = models.CharField(max_length=50)
-    FechaHora = models.DateTimeField()
-    Baja = models.BooleanField(default=False)
 
     def __unicode__(self):
         return u"%s - %s" % (self.tipoMaquinaria, self.NroSerie)
-
-class TipoMaquinaria(models.Model):
-    Nombre = models.CharField(max_length=50, primary_key = True)
-    Descripcion = models.CharField(max_length=50)
-
-    def __unicode__(self):
-        return u"%s" % self.Nombre
-        

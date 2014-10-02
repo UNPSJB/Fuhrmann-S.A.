@@ -32,7 +32,7 @@ class ventaForm(ModelForm):
 class nuevaOrdenProduccionForm(ModelForm):
     class Meta:
         model = OrdenProduccion
-        exclude = ['EnProduccion', 'Finalizada']
+        exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual']
     def __init__(self, *args, **kwargs):
         super(nuevaOrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
