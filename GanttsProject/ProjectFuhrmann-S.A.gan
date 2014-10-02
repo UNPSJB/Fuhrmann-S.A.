@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Project" company="Fuhrmann-S.A" webLink="http://github.com/UNPSJB/Fuhrmann-S.A." view-date="2014-10-20" view-index="0" gantt-divider-location="356" resource-divider-location="300" version="2.0" locale="es">
+<project name="Project" company="Fuhrmann-S.A" webLink="http://github.com/UNPSJB/Fuhrmann-S.A." view-date="2014-07-21" view-index="0" gantt-divider-location="356" resource-divider-location="300" version="2.0" locale="es">
     <description><![CDATA[Planificacion de desarrollo de software, Fuhrmann-S.A.]]></description>
     <view zooming-state="default:6" id="gantt-chart">
         <field id="tpd3" name="Nombre" width="58" order="0"/>
@@ -10,8 +10,8 @@
         <timeline><![CDATA[66]]></timeline>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nombre" width="52" order="0"/>
-        <field id="1" name="Función" width="47" order="1"/>
+        <field id="0" name="Nombre" width="50" order="0"/>
+        <field id="1" name="Función" width="49" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -50,16 +50,16 @@
             <task id="309" name="Re Diseño de Diagramas" color="#66ffcc" meeting="false" start="2014-09-02" duration="3" complete="100" expand="true"/>
         </task>
         <task id="69" name="1er Hito de Control" color="#00ff00" meeting="true" start="2014-09-05" duration="0" complete="0" expand="true"/>
-        <task id="315" name="Diseño" color="#000000" meeting="false" start="2014-09-05" duration="21" complete="27" expand="false">
+        <task id="315" name="Diseño" color="#000000" meeting="false" start="2014-09-05" duration="21" complete="100" expand="true">
             <depend id="66" type="2" difference="0" hardness="Strong"/>
             <depend id="109" type="2" difference="0" hardness="Strong"/>
             <task id="27" name="Diseño Arquitectónico" color="#8cb6ce" meeting="false" start="2014-09-05" duration="6" complete="100" expand="true">
                 <depend id="28" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="39" name="Diseño de BaseDatos" color="#66ffcc" meeting="false" start="2014-09-10" duration="6" complete="0" expand="true">
+            <task id="39" name="Diseño de BaseDatos" color="#66ffcc" meeting="false" start="2014-09-10" duration="6" complete="100" expand="true">
                 <depend id="28" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="28" name="Diseño de Interfases" color="#8cb6ce" meeting="false" start="2014-09-16" duration="10" complete="0" expand="true"/>
+            <task id="28" name="Diseño de Interfases" color="#8cb6ce" meeting="false" start="2014-09-16" duration="10" complete="100" expand="true"/>
         </task>
         <task id="66" name="2do Hito de Control" color="#00ff00" meeting="true" start="2014-09-26" duration="0" complete="0" expand="true"/>
         <task id="109" name="1er Gestion Entregable" color="#000000" meeting="false" start="2014-09-26" duration="31" complete="0" expand="false">
