@@ -39,4 +39,10 @@ urlpatterns = patterns('',
     url(r'^modificarEstanciaF/$', 'appWeb.views.modificarEstanciaF'),
     url(r'^modificarProductorF/$', 'appWeb.views.modificarProductorF'),
     url(r'^modificarRepresentanteF/$', 'appWeb.views.modificarRepresentanteF'),
+
+    url(r'^registrarMaquinaria/$', 'appWeb.views.registrarMaquinaria'),
+    url(r'^modificarMaquinaria/$', 'appWeb.views.modificarMaquinaria'),
+    url(r'^modificarMaquinariaF/$', 'appWeb.views.modificarMaquinariaF'),
+    url(r'^borrarMaquinaria/$', 'appWeb.views.borrarMaquinaria'),
+
 )

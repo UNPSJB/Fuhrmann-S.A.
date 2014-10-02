@@ -125,7 +125,7 @@ def modificarFardoF(request):
 			formulario.save()
 			return HttpResponseRedirect('/modificarFardoF')
 	else:
-		formulario = modificarLoteForm()
+		formulario = modificarFardoForm()
 	return render_to_response('modificarFardoForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 	
 
@@ -213,6 +213,34 @@ def modificarRepresentanteF(request):
 def borrarRepresentante(request):
 	representantes = Representante.objects.all()
 	return render_to_response('borrarRepresentanteForm.html', {'lista':representantes}, context_instance=RequestContext(request))
+	
+def registrarMaquinaria(request):
+	if request.method == 'POST':
+		formulario = registrarMaquinariaForm(request.POST, request.FILES)
+		if formulario.is_valid():
+			formulario.save()
+			return HttpResponseRedirect('/registrarMaquinaria')
+	else:
+		formulario = registrarMaquinariaForm()
+	return render_to_response('registrarMaquinariaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+def modificarMaquinaria(request):
+	maquinaria = Maquinaria.objects.all()
+	return render_to_response('modificarMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
+	
+def modificarMaquinariaF(request):
+	if request.method == 'POST':
+		formulario = modificarMaquinariaForm(request.POST, request.FILES)
+		if formulario.is_valid():
+			formulario.save()
+			return HttpResponseRedirect('/modificarMaquinariaF')
+	else:
+		formulario = modificarMaquinariaForm()
+	return render_to_response('modificarMaquinariaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+	
+def borrarMaquinaria(request):
+	maquinaria = Maquinaria.objects.all()
+	return render_to_response('borrarMaquinariaForm.html', {'lista':maquinaria}, context_instance=RequestContext(request))
 	
 
 

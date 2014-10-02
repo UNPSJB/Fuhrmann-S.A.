@@ -107,8 +107,8 @@ class DetalleOrden(models.Model):
 class Servicio(models.Model):
     Nombre = models.CharField(max_length=50, primary_key = True)
     
-    def __str__(self):
-        return "%s" % str(self.Nombre)
+    def __unicode__(self):
+        return u"%s" % (self.Nombre)
 
 
 class LoteVenta(models.Model):

@@ -42,7 +42,7 @@ class nuevaOrdenProduccionForm(ModelForm):
         self.helper.add_input(Submit('cancel', 'Cancel'))
 
 class modificarOrdenProduccionForm(forms.Form):
-    OrdenProduccion = forms.CharField(label ="NroOrdenProduccion", max_length = 50)
+    Servicios = forms.ModelMultipleChoiceField(Servicio.objects.all())
     def __init__(self, *args, **kwargs):
         super(modificarOrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -80,7 +80,9 @@ class registrarLoteForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Aceptar'))
 
 class modificarLoteForm(forms.Form):
-    NroLote = forms.CharField(label ="NroLote", max_length = 50)
+    Peso = forms.IntegerField(label ="PesoLote", min_value = 0)
+    CantFardos = forms.IntegerField(label ="Cant.Fardos", min_value = 0)
+
     def __init__(self, *args, **kwargs):
         super(modificarLoteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -100,7 +102,15 @@ class registrarFardoForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Aceptar'))
 
 class modificarFardoForm(forms.Form):
-    NroFardo = forms.CharField(label ="NroFardo", max_length = 50)
+    Tipo = forms.ModelChoiceField(TipoFardo.objects.all())
+    Peso = forms.IntegerField(label ="Peso", min_value = 0)
+    Rinde = forms.IntegerField(label ="Rinde", min_value = 0)
+    Finura = forms.IntegerField(label ="Finura", min_value = 0)
+    CoeficienteVariacion = forms.IntegerField(label ="CoeficienteVariacion", min_value = 0)
+    AlturaMedia = forms.IntegerField(label ="AlturaMedia", min_value = 0)
+    Micronaje = forms.IntegerField(label ="Micronaje", min_value = 0)
+    Romana = forms.IntegerField(label ="Romana", min_value = 0)
+
     def __init__(self, *args, **kwargs):
         super(modificarFardoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -120,7 +130,9 @@ class registrarEstanciaForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Aceptar'))
 
 class modificarEstanciaForm(forms.Form):
-
+    Nombre = forms.CharField(label ="Nombre", max_length = 50)
+    Zona = forms.CharField(label ="Zona", max_length = 50)
+    Provincia = forms.CharField(label ="Provincia", max_length = 50)
     def __init__(self, *args, **kwargs):
         super(modificarEstanciaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -140,6 +152,10 @@ class registrarProductorForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Aceptar'))
 
 class modificarProductorForm(forms.Form):
+    Nombre = forms.CharField(label ="Nombre", max_length = 50)
+    Apellido = forms.CharField(label ="Apellido", max_length = 50)
+    Telefono = forms.CharField(label ="Telefono", max_length = 50)
+    Email = forms.EmailField(label ="Email", max_length = 50)
 
     def __init__(self, *args, **kwargs):
         super(modificarProductorForm, self).__init__(*args, **kwargs)
@@ -160,10 +176,37 @@ class registrarRepresentanteForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Aceptar'))
 
 class modificarRepresentanteForm(forms.Form):
+    Nombre = forms.CharField(label ="Nombre", max_length = 50)
+    Apellido = forms.CharField(label ="Apellido", max_length = 50)
+    Telefono = forms.CharField(label ="Telefono", max_length = 50)
+    Email = forms.EmailField(label ="Email", max_length = 50)
+    ZonaInjerencia = forms.CharField(label ="ZonaInjerencia", max_length = 50)
 
     def __init__(self, *args, **kwargs):
         super(modificarRepresentanteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = 'id-modificarRepresentanteForm'
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Aceptar'))
+
+class registrarMaquinariaForm(ModelForm):
+    class Meta:
+        model = Maquinaria
+        exclude = ['Baja']
+    def __init__(self, *args, **kwargs):
+        super(registrarMaquinariaForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-registrarMaquinariaForm'
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Aceptar'))
+
+class modificarMaquinariaForm(forms.Form):
+    Tipo = forms.ModelChoiceField(TipoMaquinaria.objects.all())
+    Descripcion = forms.CharField(label ="Descripcion", max_length = 50)
+
+    def __init__(self, *args, **kwargs):
+        super(modificarMaquinariaForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-modificarMaquinariaForm'
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Aceptar'))
