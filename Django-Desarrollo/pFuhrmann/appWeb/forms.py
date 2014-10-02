@@ -201,7 +201,7 @@ class registrarMaquinariaForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Aceptar'))
 
 class modificarMaquinariaForm(forms.Form):
-    Tipo = forms.ModelChoiceField(TipoMaquinaria.objects.all())
+    Tipo = forms.ModelChoiceField(Servicio.objects.all())
     Descripcion = forms.CharField(label ="Descripcion", max_length = 50)
 
     def __init__(self, *args, **kwargs):
