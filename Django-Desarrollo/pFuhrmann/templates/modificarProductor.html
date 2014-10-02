@@ -1,44 +1,58 @@
-<!DOCTYPE html>
-<html lang='es'>
-<meta charset='utf-8'>
-<link rel='stylesheet' href= '{{STATIC_URL}}css/bootstrap.css'>
-<link rel='stylesheet' href= '{{STATIC_URL}}css/base.css'>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
-    <head><div class="panel panel-primary">
-      <div class="panel-heading">
-            <h3 class="panel-title2">Modificar Productor</h3>
-    </head>
-    <head><div class="panel panel-info">                    
-        <div class="panel-heading">{% block title %}{% endblock %}  
-    </head>
+{% block contenido %}
+<div class="container">
+	<div class="well">
+		<div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Modificar Productor</h4>
+                <div class="btn-group pull-right">
+                    <a class="btn btn-default" type="button" href="#" title="Ayuda"><span class="glyphicon glyphicon-question-sign"></span></a>
+                    <a class="btn btn-default " type="button" href="#" title="Info"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    <a class="btn btn-default btn-gr" type="button" href="#" title="Listado"><span class="glyphicon glyphicon-list-alt"></span></a>
 
-  <form role="form">
-    <div class="form-group">
-      <label for="exampleInputNombre">Nombre</label>
-      <input type="nombre" class="form-control" id="exampleInputNombre" placeholder="Ingrese nombre">
-    </div>
-    
-    <div class="form-group">
-      <label for="exampleInputApellido">Apellido</label>
-      <input type="apellido" class="form-control" id="exampleInputApellido" placeholder="Ingrese apellido">
-    </div>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" title="Buscar Ej: Nro. Orden - Dni - Nro. Maquina" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Buscar"></input>
+                    </div> 
+                </div>
+            </div>
+            <div class="panel-body">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tableProductor" width="100%">
+                    <thead>
+                        <tr>
+                            <th width="10%">Nombre</th>
+                            <th width="10%">Apellido</th>
+                            <th width="10%">Dni</th>
+                            <th width="10%">Telefono</th>
+                            <th width="10%">Email</th>
+                            <th width="10%">CUIL</th>
 
-    <div class="form-group">
-      <label for="exampleInputDni">DNI</label>
-      <input type="dni" class="form-control" id="exampleInputDni" placeholder="Ingrese DNI">
-    </div>
+                        </tr>
+                        {% for dato in lista %}
+                        <tr onclick = "this.style.backgroundColor = '#F2F2F2' ">
+                            <td width="10%">{{dato.Nombre}}</td>
+                            <td width="10%">{{dato.Apellido}}</td>
+                            <td width="10%">{{dato.DNI}}</td>
+                            <td width="10%">{{dato.Telefono}}</td>
+                            <td width="10%">{{dato.Email}}</td>
+                            <td width="10%">{{dato.CUIL}}</td>
+                        </tr>
 
-    <div class="form-group">
-      <label for="exampleInputCuil">CUIL</label>
-      <input type="cuil" class="form-control" id="exampleInputCuil" placeholder="Ingrese CUIL">
-    </div>
+                        {% empty %}
+                            <li> Aún no hay Productores Cargados </li>
+                        {% endfor %}        
+                    </thead>
+                </table>
 
-    <div class="form-group">
-      <label for="exampleInputTelefono">TELEFONO (opcional)</label>
-      <input type="telefono" class="form-control" id="exampleInputTelefono" placeholder="Ingrese telefono">
-    </div>
-    
-    <button type="aceptar" class="btn btn-primary">Modificar</button>
-    <button type="cancelar" class="btn btn-primary">Cancelar</button>
-  </form>
-</html>
+                <a class="btn btn-default btn-gr" type= "button" title= "Estadisticas"  href="#">Stats</a>
+                <a class="btn btn-default btn-gr" type= "button" title= "Modificar"  href="/modificarProductorF">Edit</a>
+                <script type ="text/javascript"> </script>
+		    </div>
+        </div>
+	</div>
+</div>
+{% endblock %}
