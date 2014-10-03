@@ -75,7 +75,6 @@ class TipoFardo(models.Model):
 class CompraLote(models.Model):
     NroCompra = models.AutoField(primary_key = True)
     Representante = models.ForeignKey('Representante')
-    CantLotes = models.PositiveIntegerField(max_length=50)
     FechaLlegada = models.DateField()
     
     def __unicode__(self):
