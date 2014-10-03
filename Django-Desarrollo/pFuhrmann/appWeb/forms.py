@@ -180,7 +180,7 @@ class modificarRepresentanteForm(forms.Form):
     Apellido = forms.CharField(label ="Apellido", max_length = 50)
     Telefono = forms.CharField(label ="Telefono", max_length = 50)
     Email = forms.EmailField(label ="Email", max_length = 50)
-    ZonaInjerencia = forms.CharField(label ="ZonaInjerencia", max_length = 50)
+    Zona = forms.CharField(label ="Zona", max_length = 50)
 
     def __init__(self, *args, **kwargs):
         super(modificarRepresentanteForm, self).__init__(*args, **kwargs)
@@ -201,7 +201,7 @@ class registrarMaquinariaForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Aceptar'))
 
 class modificarMaquinariaForm(forms.Form):
-    Tipo = forms.ModelChoiceField(TipoMaquinaria.objects.all())
+    Tipo = forms.ModelChoiceField(Servicio.objects.all())
     Descripcion = forms.CharField(label ="Descripcion", max_length = 50)
 
     def __init__(self, *args, **kwargs):

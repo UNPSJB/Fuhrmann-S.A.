@@ -13,18 +13,19 @@ class Persona(models.Model):
 
 class Productor (Persona):
     CUIL = models.CharField(max_length=50, primary_key = True)
-    Estancia = models.ForeignKey('Estancia')
-    
-    def __str__(self):
-        return super(Persona, self)
+        
+    def __unicode__(self):
+        return "%s" % str(str(self.Nombre) + " " + str(self.Apellido) + " " + str(self.Estancia.Nombre))
 
 class Representante(Persona): 
     NroLegajo = models.PositiveIntegerField(max_length=50, primary_key = True)
     Zona = models.CharField(max_length=50)
-    Estancia = models.ForeignKey('Estancia')
-    
-    def __str__(self):
-        return super(Persona, self)
+        
+    def registrarCompra():
+        pass
+        
+    def __unicode__(self):
+        return "%s" % str(str(self.NroLegajo) + " " + str(self.Nombre) + " " + str(self.Apellido) + " " + str(self.Estancia.Nombre))
 
 class Estancia(models.Model):
     Nombre = models.CharField(max_length=50)
@@ -32,9 +33,11 @@ class Estancia(models.Model):
     Provincia = models.CharField(max_length=50)
     Zona = models.CharField(max_length=50)
     Baja = models.BooleanField(default=False)
-
+    Representante = models.ForeignKey('Representante')
+    Productor = models.OneToOneField('Productor')
+    
     def __unicode__(self):
-        return ""
+        return "%s" % str(str(self.Nombre) + " " + str(self.Provincia))
 
 class Lote(models.Model):
     NroLote = models.AutoField(primary_key = True)
