@@ -24,27 +24,27 @@ urlpatterns = patterns('',
     #Lotes y Fardos
     url(r'^registrarLote/$', 'appWeb.views.registrarLote'),
     url(r'^modificarLote/$', 'appWeb.views.modificarLote'),
-    url(r'^borrarLote/$', 'appWeb.views.borrarLote'),
+    url(r'^eliminarLote/$', 'appWeb.views.eliminarLote'),
     url(r'^registrarFardo/$', 'appWeb.views.registrarFardo'),
     url(r'^modificarFardo/$', 'appWeb.views.modificarFardo'),
 
     #Adm. Estancias
     url(r'^registrarEstancia/$', 'appWeb.views.registrarEstancia'),
     url(r'^modificarEstancia/$', 'appWeb.views.modificarEstancia'),
-    url(r'^borrarEstancia/$', 'appWeb.views.borrarEstancia'),
+    url(r'^eliminarEstancia/$', 'appWeb.views.eliminarEstancia'),
 
     #Adm. Personas
     url(r'^registrarProductor/$', 'appWeb.views.registrarProductor'),
     url(r'^modificarProductor/$', 'appWeb.views.modificarProductor'),
-    url(r'^borrarProductor/$', 'appWeb.views.borrarProductor'),
+    url(r'^eliminarProductor/$', 'appWeb.views.eliminarProductor'),
     url(r'^registrarRepresentante/$', 'appWeb.views.registrarRepresentante'),
     url(r'^modificarRepresentante/$', 'appWeb.views.modificarRepresentante'),
-    url(r'^borrarRepresentante/$', 'appWeb.views.borrarRepresentante'),
+    url(r'^eliminarRepresentante/$', 'appWeb.views.eliminarRepresentante'),
 
     #Adm. Maquinaria
     url(r'^registrarMaquinaria/$', 'appWeb.views.registrarMaquinaria'),
     url(r'^modificarMaquinaria/$', 'appWeb.views.modificarMaquinaria'),
-    url(r'^borrarMaquinaria/$', 'appWeb.views.borrarMaquinaria'),
+    url(r'^eliminarMaquinaria/$', 'appWeb.views.eliminarMaquinaria'),
 
     #Url's de Forms para modificar Datos
     url(r'^modificarOrdenProduccionF/$', 'appWeb.views.modificarOrdenProduccionF'),
