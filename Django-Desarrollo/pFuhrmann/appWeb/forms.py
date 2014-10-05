@@ -14,6 +14,7 @@ class compraForm(ModelForm):
         exclude = ['Registrada']
     def __init__(self, *args, **kwargs):
         super(compraForm, self).__init__(*args, **kwargs)
+        
         self.helper = FormHelper()
         self.helper.form_id = 'id-compraForm'
         self.helper.form_method = 'post'

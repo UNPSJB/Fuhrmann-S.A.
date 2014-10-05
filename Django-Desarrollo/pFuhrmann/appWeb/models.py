@@ -80,7 +80,6 @@ class CompraLote(models.Model):
     def __unicode__(self):
         return ""
 
-
 class OrdenProduccion(models.Model):
     NroOrden = models.AutoField(primary_key = True)
     FechaEmision = models.DateField(auto_now_add = True)

@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
@@ -35,7 +36,7 @@
                             <td width="10%">{{dato.Telefono}}</td>
                             <td width="10%">{{dato.Email}}</td>
                             
-                            <td width="10%">{{dato.Zona}}</td>
+                            <td width,="10%">{{dato.Zona}}</td>
                         </tr>
 
                         {% empty %}
@@ -44,9 +45,13 @@
                     </thead>
                 </table>
 
-                <a class="btn btn-default btn-gr" type= "button" title= "Estadisticas"  href="#">Stats</a>
-                <a class="btn btn-default btn-gr" type= "button" title= "Borrar"  href="#">Delete</a>
-                <script type ="text/javascript"> </script>
+                
+                <a class="btn btn-default btn-gr" type= "button" title= "Borrar"  href="#">Eliminar</a>
+                <a class="btn btn-default btn-gr" type= "button" title= "Cancelar"  href="/index">Cancelar</a>
+                
+               <script type ="text/javascript"> 
+
+               </script>
 		    </div>
         </div>
 	</div>
