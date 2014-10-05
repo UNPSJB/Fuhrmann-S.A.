@@ -17,7 +17,8 @@ class compraForm(ModelForm):
         self.helper = FormHelper()
         self.helper.form_id = 'id-compraForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class ventaForm(ModelForm):
     class Meta:
@@ -27,7 +28,8 @@ class ventaForm(ModelForm):
         self.helper = FormHelper()
         self.helper.form_id = 'id-ventaForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class nuevaOrdenProduccionForm(ModelForm):
     class Meta:
@@ -39,7 +41,7 @@ class nuevaOrdenProduccionForm(ModelForm):
         self.helper.form_id = 'id-nuevaOrdenProduccionForm'
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Aceptar'))
-        self.helper.add_input(Submit('cancel', 'Cancel'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class modificarOrdenProduccionForm(forms.Form):
     Servicios = forms.ModelMultipleChoiceField(Servicio.objects.all())
@@ -48,7 +50,8 @@ class modificarOrdenProduccionForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_id = 'id-modificarOrdenProduccionForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Modificar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class enviarFaseProduccionForm(forms.Form):
 
@@ -57,7 +60,8 @@ class enviarFaseProduccionForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_id = 'id-enviarFaseProduccionForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Enviar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class finalizarFaseProduccionForm(forms.Form):
 
@@ -66,7 +70,8 @@ class finalizarFaseProduccionForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_id = 'id-finalizarFaseProduccionForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Button('submit', 'Finalizar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class registrarLoteForm(ModelForm):
     class Meta:
@@ -77,7 +82,8 @@ class registrarLoteForm(ModelForm):
         self.helper = FormHelper()
         self.helper.form_id = 'id-registrarLoteForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class modificarLoteForm(forms.Form):
     Peso = forms.IntegerField(label ="PesoLote", min_value = 0)
@@ -88,7 +94,8 @@ class modificarLoteForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_id = 'id-modificarLoteForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Modificar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))        
 
 class registrarFardoForm(ModelForm):
     class Meta:
@@ -99,7 +106,8 @@ class registrarFardoForm(ModelForm):
         self.helper = FormHelper()
         self.helper.form_id = 'id-registrarFardoForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class modificarFardoForm(forms.Form):
     Tipo = forms.ModelChoiceField(TipoFardo.objects.all())
@@ -116,7 +124,8 @@ class modificarFardoForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_id = 'id-modificarFardoForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Modificar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class registrarEstanciaForm(ModelForm):
     class Meta:
@@ -127,7 +136,8 @@ class registrarEstanciaForm(ModelForm):
         self.helper = FormHelper()
         self.helper.form_id = 'id-registrarEstanciaForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class modificarEstanciaForm(forms.Form):
     Nombre = forms.CharField(label ="Nombre", max_length = 50)
@@ -149,7 +159,8 @@ class registrarProductorForm(ModelForm):
         self.helper = FormHelper()
         self.helper.form_id = 'id-registrarProductorForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class modificarProductorForm(forms.Form):
     Nombre = forms.CharField(label ="Nombre", max_length = 50)
@@ -162,7 +173,8 @@ class modificarProductorForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_id = 'id-modificarProductorForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Modificar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class registrarRepresentanteForm(ModelForm):
     class Meta:
@@ -173,7 +185,8 @@ class registrarRepresentanteForm(ModelForm):
         self.helper = FormHelper()
         self.helper.form_id = 'id-registrarRepresentanteForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class modificarRepresentanteForm(forms.Form):
     Nombre = forms.CharField(label ="Nombre", max_length = 50)
@@ -187,7 +200,8 @@ class modificarRepresentanteForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_id = 'id-modificarRepresentanteForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class registrarMaquinariaForm(ModelForm):
     class Meta:
@@ -198,15 +212,17 @@ class registrarMaquinariaForm(ModelForm):
         self.helper = FormHelper()
         self.helper.form_id = 'id-registrarMaquinariaForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
 
 class modificarMaquinariaForm(forms.Form):
     Tipo = forms.ModelChoiceField(Servicio.objects.all())
-    Descripcion = forms.CharField(label ="Descripcion", max_length = 50)
+    Descripcion = forms.CharField(label ="Descripción", max_length = 50)
 
     def __init__(self, *args, **kwargs):
         super(modificarMaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = 'id-modificarMaquinariaForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
+        self.helper.add_input(Submit('submit', 'Modificar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))
