@@ -15,7 +15,7 @@ class Productor (Persona):
     CUIL = models.CharField(max_length=50, primary_key = True)
         
     def __unicode__(self):
-        return "%s" % str(str(self.Nombre) + " " + str(self.Apellido) + " " + str(self.Estancia.Nombre))
+        return "%s" % str(str(self.Nombre) + " " + str(self.Apellido))
 
 class Representante(Persona): 
     NroLegajo = models.PositiveIntegerField(max_length=50, primary_key = True)
@@ -25,7 +25,7 @@ class Representante(Persona):
         pass
         
     def __unicode__(self):
-        return "%s" % str(str(self.NroLegajo) + " " + str(self.Nombre) + " " + str(self.Apellido) + " " + str(self.Estancia.Nombre))
+        return "%s" % str(str(self.NroLegajo) + " " + str(self.Nombre) + " " + str(self.Apellido))
 
 class Estancia(models.Model):
     Nombre = models.CharField(max_length=50)
