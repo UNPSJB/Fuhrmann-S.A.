@@ -2,16 +2,18 @@
 from django.forms import ModelForm
 from django import forms
 from appWeb.models import *
+
  
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
 
-class compraForm(ModelForm):
-    class Meta:
-        model = CompraLote
-        exclude = ['Registrada']
+class compraForm(forms.Form):
+    Representante = forms.ModelChoiceField(Representante.objects.all())
+    Estancia = forms.ModelChoiceField(Estancia.objects.all())
+    FechaLlegada = forms.DateField(label = "Fecha de Llegada")
+
     def __init__(self, *args, **kwargs):
         super(compraForm, self).__init__(*args, **kwargs)
         
@@ -21,9 +23,12 @@ class compraForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Registrar'))
         self.helper.add_input(Submit('cancel', 'Cancelar'))
 
-class ventaForm(ModelForm):
-    class Meta:
-        model = Venta
+
+class ventaForm(forms.Form):
+    FechaVenta = forms.DateField(label = "Fecha de Venta")
+    Cliente = forms.CharField(label ="Cliente", max_length = 50)
+    LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(), label = "Lote Venta")
+    
     def __init__(self, *args, **kwargs):
         super(ventaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
