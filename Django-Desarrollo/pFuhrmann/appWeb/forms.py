@@ -90,8 +90,8 @@ class registrarLoteForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_id = 'id-registrarLoteForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-default"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default btn-gr", onClick="alert('asd');"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success", onClick="alert('asd');"))
         
 class modificarLoteForm(forms.Form):
     Peso = forms.IntegerField(label ="PesoLote", min_value = 0)

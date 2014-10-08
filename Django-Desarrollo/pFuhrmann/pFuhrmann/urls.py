@@ -4,15 +4,15 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     
-	url(r'^index/','appWeb.views.index'),
-	url(r'^$','appWeb.views.index'),
-	
+    url(r'^index/','appWeb.views.index'),
+    url(r'^$','appWeb.views.index'),
+    
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
     #Registrar Operacion
     url(r'^compra/$', 'appWeb.views.nuevaCompra'),
- 	url(r'^venta/$', 'appWeb.views.nuevaVenta'),
+    url(r'^venta/$', 'appWeb.views.nuevaVenta'),
 
     #Orden de produccion
     url(r'^nuevaOrdenProduccion/$', 'appWeb.views.nuevaOrdenProduccion'),
