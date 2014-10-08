@@ -79,8 +79,13 @@ def registrarLote(request):
 	if request.method == 'POST':
 		formulario = registrarLoteForm(request.POST, request.FILES)
 		if formulario.is_valid():
-			formulario.save()
-			return HttpResponseRedirect('/registrarLote')
+			peso = formulario.cleaned_data['Peso']
+			cantFardos = formulario.cleaned_data['CantFardos']
+			lote = Lote(Peso = peso, CantFardos = cantFardos)
+			lote.is_staff = True
+			lote.save()	
+			
+			return HttpResponseRedirect('/index')
 	else:
 		formulario = registrarLoteForm()
 	return render_to_response('registrarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))

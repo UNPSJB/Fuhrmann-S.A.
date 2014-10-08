@@ -9,31 +9,23 @@
 
         <title>Fuhrmann S.A </title>
 
+        <!-- StyleSheets -->    
         <link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
-       
-
         <!-- Custom CSS -->
         <link href="{{STATIC_URL}}css/modern-business.css" rel="stylesheet">
-        <link href="{{STATIC_URL}}css/sticky.css" rel="stylesheet">
-
         <!-- Bootstrap Core CSS -->
         <link href="{{STATIC_URL}}css/bootstrap.min.css" rel="stylesheet">
-
         <!-- Custom CSS -->
         <link href="{{STATIC_URL}}css/sb-admin.css" rel="stylesheet">
 
+        <!-- Custom CSS FOR DATEPICKER-->
+        <link href="{{STATIC_URL}}JQueryCustom/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet">
         <!-- Morris Charts CSS -->
         <link href="{{STATIC_URL}}css/plugins/morris.css" rel="stylesheet">
-
         <!-- Custom Fonts -->
         <link href="{{STATIC_URL}}font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        {% block stylesheet %}{% endblock %}
+    
     </head>
 
     <body>
@@ -69,7 +61,7 @@
 
                     
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-home"></i>ESTANCIAS <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-home"></i> ESTANCIAS <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/registrarEstancia" title= "Registrar Estancia">Registrar Estancia</a></li>
                             <li><a href="/modificarEstancia" title= "Modificar Estancia">Modificar Estancia</a></li>
@@ -90,7 +82,7 @@
                     </li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i>PERSONAL <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i> PERSONAL <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/registrarProductor" title="Registrar Productor">Registrar Productor</a></li>
                             <li><a href="/modificarProductor" title="Modificar Productor">Modificar Productor</a></li>
@@ -132,29 +124,35 @@
 
     {% block contenido %}{% endblock %}
 
-   <div id="footer">
+    <div id="footer">
         <p align=center>Fuhrmann S.A &copy; 2014. Designed by Carabajal Diego - Santos Carla - Wheeler Mariana - Raies Matias</p>
         <input align=right title= "Gmail" href="#" type = image src ="{{STATIC_URL}}img/gmail.png" width = "40" height = "40"></input> 
         <input align=right title= "Twitter" href="#" type = image src ="{{STATIC_URL}}img/twitter.png" width = "40" height = "40"></input>
         <input align=right title= "Facebook" href="#" type = image src ="{{STATIC_URL}}img/facebook.png" width = "40" height = "40"></input>
     </div>
 
+
+    <!-- JavaScripts -->
     <!-- Morris Charts JavaScript -->
     <script src="{{STATIC_URL}}js/plugins/morris/raphael.min.js"></script>
     <script src="{{STATIC_URL}}js/plugins/morris/morris.min.js"></script>
     <script src="{{STATIC_URL}}js/plugins/morris/morris-data.js"></script>
     <!-- jQuery Version 1.11.0 -->
+    <script src="{{STATIC_URL}}JQueryCustom/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script src="{{STATIC_URL}}js/jquery-1.11.0.js"></script>
-
+    <!--For datepicker-->
+    <script src="{{STATIC_URL}}js/jquery-ui.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-
+    
     <!-- Script to Activate the Carousel -->
     <script>
     $('.carousel').carousel({
         interval: 5000 //changes the speed
         
     })
-    </script>     
+    </script>
+
+    {% block scripts %}{% endblock %}
 </html>
 

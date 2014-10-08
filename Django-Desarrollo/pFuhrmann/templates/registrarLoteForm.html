@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}   
 {% load crispy_forms_tags %}
 
 {% block contenido %}
@@ -19,4 +19,16 @@
 		</div>
 	</div>
 </div>
+
+ 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(function() {
+        $( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy', 
+                                        inline: true
+        });
+    });
+</script>
 {% endblock %}
