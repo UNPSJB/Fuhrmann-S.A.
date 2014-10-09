@@ -11,8 +11,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     #Registrar Operacion
-    url(r'^compra/$', 'appWeb.views.nuevaCompra'),
-    url(r'^venta/$', 'appWeb.views.nuevaVenta'),
+    url(r'^registrarCompra/$', 'appWeb.views.registrarCompra'),
+    url(r'^registrarVenta/$', 'appWeb.views.registrarVenta'),
 
     #Orden de produccion
     url(r'^nuevaOrdenProduccion/$', 'appWeb.views.nuevaOrdenProduccion'),

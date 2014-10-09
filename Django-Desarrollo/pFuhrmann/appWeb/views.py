@@ -17,24 +17,22 @@ def index (request):
 
 
 # Funciones para crear formularios
-
-def nuevaCompra(request):
+def registrarCompra(request):
     if request.method == 'POST':
         formulario = compraForm(request.POST, request.FILES)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/compra')
+            return HttpResponseRedirect('/registrarCompra')
     else:
         formulario = compraForm()
     return render_to_response('compraForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-
-def nuevaVenta(request):
+def registrarVenta(request):
     if request.method == 'POST':
         formulario = ventaForm(request.POST, request.FILES)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/venta')
+            return HttpResponseRedirect('/registarVenta')
     else:
         formulario = ventaForm()
     return render_to_response('ventaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))

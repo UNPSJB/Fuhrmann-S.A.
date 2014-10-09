@@ -1,5 +1,24 @@
 from django.db import models
 
+class CompraLote(models.Model):
+    NroCompra = models.AutoField(primary_key = True)
+    Representante = models.ForeignKey('Representante')
+    Estancia = models.ForeignKey('Estancia')
+    FechaLlegada = models.DateField()
+    
+    def __unicode__(self):
+        return ""
+        
+class Venta(models.Model):
+    NroVenta = models.AutoField(primary_key = True)
+    LoteVenta = models.OneToOneField('LoteVenta')
+    Cliente = models.CharField(max_length=50)
+    FechaVenta = models.DateField()
+
+    def __unicode__(self):
+        return ""
+
+
 class Persona(models.Model):
     Nombre = models.CharField(max_length=50)
     Apellido = models.CharField(max_length=50)
@@ -20,10 +39,7 @@ class Productor (Persona):
 class Representante(Persona): 
     NroLegajo = models.PositiveIntegerField(max_length=50, primary_key = True)
     Zona = models.CharField(max_length=50)
-        
-    def registrarCompra():
-        pass
-        
+                
     def __unicode__(self):
         return "%s" % str(str(self.NroLegajo) + " " + str(self.Nombre) + " " + str(self.Apellido))
 
@@ -72,13 +88,6 @@ class TipoFardo(models.Model):
     def __unicode__(self):
         return ""
 
-class CompraLote(models.Model):
-    NroCompra = models.AutoField(primary_key = True)
-    Representante = models.ForeignKey('Representante')
-    FechaLlegada = models.DateField()
-    
-    def __unicode__(self):
-        return ""
 
 class OrdenProduccion(models.Model):
     NroOrden = models.AutoField(primary_key = True)
@@ -126,14 +135,6 @@ class LoteVenta(models.Model):
     def __unicode__(self):
         return ""
 
-class Venta(models.Model):
-    NroVenta = models.AutoField(primary_key = True)
-    LoteVenta = models.OneToOneField('LoteVenta')
-    Cliente = models.CharField(max_length=50)
-    FechaVenta = models.DateField()
-
-    def __unicode__(self):
-        return ""
 
 class Cuadricula(models.Model):
     NroCuadricula = models.AutoField(primary_key = True)

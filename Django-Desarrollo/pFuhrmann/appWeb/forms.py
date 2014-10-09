@@ -1,41 +1,31 @@
 #encoding:utf-8
 from django.forms import ModelForm
 from django import forms
-from appWeb.models import *
-
- 
+from appWeb.models import * 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
-
-class compraForm(forms.Form):
-    Representante = forms.ModelChoiceField(Representante.objects.all())
-    Estancia = forms.ModelChoiceField(Estancia.objects.all())
-    FechaLlegada = forms.DateField(label = "Fecha de Llegada")
-
+class compraForm(forms.ModelForm):
+    
+    class Meta:
+        model = CompraLote
+    
     def __init__(self, *args, **kwargs):
         super(compraForm, self).__init__(*args, **kwargs)
-        
-        self.helper = FormHelper()
-        self.helper.form_id = 'id-compraForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Registrar'))
-        self.helper.add_input(Submit('cancel', 'Cancelar'))
+        self.helper = FormHelper()   
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-
-class ventaForm(forms.Form):
-    FechaVenta = forms.DateField(label = "Fecha de Venta")
-    Cliente = forms.CharField(label ="Cliente", max_length = 50)
-    LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(), label = "Lote Venta")
+class ventaForm(forms.ModelForm):
+    class Meta:
+        model = Venta
     
     def __init__(self, *args, **kwargs):
         super(ventaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-ventaForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Registrar'))
-        self.helper.add_input(Submit('cancel', 'Cancelar'))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 class nuevaOrdenProduccionForm(ModelForm):
     class Meta:
@@ -90,7 +80,7 @@ class LoteForm(forms.ModelForm):
         super(LoteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success", onClick="alert('asd');"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success", onClick = "location.href='/index'"))
     
 class registrarLoteForm(forms.Form):
     Peso = forms.IntegerField(label ="Peso Lote", min_value = 0)
