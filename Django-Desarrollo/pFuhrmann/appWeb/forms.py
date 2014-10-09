@@ -79,6 +79,19 @@ class finalizarFaseProduccionForm(forms.Form):
         self.helper.add_input(Button('submit', 'Finalizar'))
         self.helper.add_input(Submit('cancel', 'Cancelar'))
 
+class LoteForm(forms.ModelForm):
+    date = forms.DateField(widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
+    
+    class Meta:
+        model = Lote
+        exclude = ("Baja",)
+
+    def __init__(self, *args, **kwargs):
+        super(LoteForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success", onClick="alert('asd');"))
+    
 class registrarLoteForm(forms.Form):
     Peso = forms.IntegerField(label ="Peso Lote", min_value = 0)
     CantFardos = forms.IntegerField(label ="Cantidad Fardos", min_value = 0)
@@ -104,6 +117,19 @@ class modificarLoteForm(forms.Form):
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Modificar'))
         self.helper.add_input(Submit('cancel', 'Cancelar'))        
+
+class eliminarLoteForm(forms.Form):
+
+    idLote = forms.CharField(label ="Id Lote:")
+
+    def __init__(self, *args, **kwargs):
+        super(eliminarLoteForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-modificarLoteForm'
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Eliminar'))
+        self.helper.add_input(Submit('cancel', 'Cancelar'))    
+
 
 class registrarFardoForm(ModelForm):
     class Meta:
@@ -132,10 +158,6 @@ class modificarFardoForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_id = 'id-modificarFardoForm'
         self.helper.form_method = 'post'
-        self.helper.layout = Layout ('email', 
-                                     'password',
-                                     'remember_me',)
-
         self.helper.add_input(Submit('submit', 'Modificar'))
         self.helper.add_input(Submit('cancel', 'Cancelar'))
 

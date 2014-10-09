@@ -77,38 +77,40 @@ def finalizarFaseProduccion(request):
     
 def registrarLote(request):
     if request.method == 'POST':
-        formulario = registrarLoteForm(request.POST, request.FILES)
+        formulario = LoteForm(request.POST, request.FILES)
         if formulario.is_valid():
-            peso = formulario.cleaned_data['Peso']
-            cantFardos = formulario.cleaned_data['CantFardos']
-            lote = Lote(Peso = peso, CantFardos = cantFardos)
-            lote.is_staff = True
-            lote.save() 
-            
+            formulario.save()
             return HttpResponseRedirect('/index')
     else:
-        formulario = registrarLoteForm()
+        formulario = LoteForm()
     return render_to_response('registrarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def modificarLote(request):
     lote = Lote.objects.all()
     return render_to_response('modificarLote.html', {'lista':lote}, context_instance=RequestContext(request))
-    
-def modificarLoteF(request):
+
+def modificarLoteF(request, pk):
+    lote = Lote.objects.get(pk=pk)
     if request.method == 'POST':
-        formulario = modificarLoteForm(request.POST, request.FILES)
+        formulario = LoteForm(request.POST, request.FILES, instance=lote)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/modificarLoteF')
+            return HttpResponseRedirect('/index')
     else:
-        formulario = modificarLoteForm()
-    return render_to_response('modificarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+        formulario = LoteForm(instance = lote)
+    return render_to_response('registrarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
     
 
 def eliminarLote(request):
-    lote = Lote.objects.all()
+    lote = Lote.objects.all()   
     return render_to_response('eliminarLoteForm.html', {'lista':lote}, context_instance=RequestContext(request))
-    
+
+def eliminarLoteId(request, pk):
+    lote = Lote.objects.get(pk=pk)
+    lote.delete()
+    lote = Lote.objects.all()
+    return render_to_response('eliminarLoteForm.html', {'lista':lote}, context_instance=RequestContext(request))    
+
 def registrarFardo(request):
     if request.method == 'POST':
         formulario = registrarFardoForm(request.POST, request.FILES)

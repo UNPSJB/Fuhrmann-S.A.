@@ -22,17 +22,18 @@
                             <th width="10%">Cant. Fardos</th>
                         </tr>
                         {% for dato in lista %}
-                        <tr onclick = "this.style.backgroundColor = '#F2F2F2' ">
-                            <td width="10%">{{dato.NroLote}}</td>
+                        <tr onclick = "this.style.backgroundColor = '#000000'; value=document.getElementById('tableLote').rows[0].cells[0].childNodes[0].nodeValue">
+                            <td width="10%" id="nroLote">{{dato.NroLote}}</td>
                             <td width="10%">{{dato.Peso}}</td>
                             <td width="10%">{{dato.CantFardos}}</td>
+                            <td width="10%"><a href="/eliminarLote/{{dato.NroLote}}">Eliminar</a></td>
                         </tr>
-
                         {% empty %}
                             <li> Aún no hay Lotes Cargados </li>
                         {% endfor %}        
                     </thead>
                 </table>
+                        <div id='value' ></div>
 
                 <a class="btn btn-default btn-gr" type= "button" title= "Eliminar"  href="#">Eliminar</a>
                 <a class="btn btn-default btn-gr" type= "button" title= "Cancelar"  href="/index">Cancelar</a>

@@ -33,15 +33,15 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="/index" title="Home . Fuhrmann S.A" font-color:blue>Fuhrmann S.A</a>
+                <a class="navbar-brand" href="/index" title="Home . Fuhrmann S.A"><font size="5.2" color= "E6E0F8">Fuhrmann S.A</font></a>
             </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right">                
-                    <li><a href="#" title="Iniciar Sesion" onmouseDown = "alert('Error 404 - Dont Implement')">Iniciar Sesion</a></li>
-                    <li><a href="#" title="Sobre" onmouseDown = "alert('Error 404 - Dont Implement')">Acerca De</a></li>
-                    <li><a href="#"title="Contactanos"  onmouseDown = "alert('Error 404 - Dont Implement')">Contacto </a></li>
+                    <li><a href="#" class ="btn" title="Iniciar Sesion" data-toggle="tooltip" data-placement="bottom" onmouseDown = "alert('Error 404 - Dont Implement')">Iniciar Sesión</a></li>
+                    <li><a href="#" class ="btn" title="Acerca de Nosotros" data-toggle="tooltip" data-placement="bottom" onmouseDown = "alert('Error 404 - Dont Implement')">Acerca De</a></li>
+                    <li><a href="#" class ="btn" title="Contacto" data-toggle="tooltip" data-placement="bottom" onmouseDown = "alert('Error 404 - Dont Implement')">Contacto </a></li>
 
                     <li><a href="#">  </a></li> <!-- Para que se vea espaciado -->
                 </ul>
@@ -52,57 +52,57 @@
                 <ul class="nav navbar-nav navbar-left">
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-desktop"></i> REGISTRO DE OPERACIÓN <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title = "Registro de Operación"><i class="fa fa-fw fa-desktop"></i> REGISTRO DE OPERACIÓN <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/compra" title="Registrar Compra">Registrar Compra</a></li>
-                            <li><a href="/venta" title="Registrar Venta">Registrar Venta</a></li>
+                            <li><a class ="btn" href="/compra" title="Registrar Compra">Registrar Compra</a></li>
+                            <li><a class ="btn" href="/venta" title="Registrar Venta">Registrar Venta</a></li>
                         </ul>
                     </li>
 
                     
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-home"></i> ESTANCIAS <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title = "Estancias"><i class="fa fa-fw fa-home"></i> ESTANCIAS <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/registrarEstancia" title= "Registrar Estancia">Registrar Estancia</a></li>
-                            <li><a href="/modificarEstancia" title= "Modificar Estancia">Modificar Estancia</a></li>
-                            <li><a href="/eliminarEstancia" title= "Eliminar Estancia">Eliminar Estancia</a></li>
+                            <li><a class ="btn" href="/registrarEstancia" title= "Registrar Estancia">Registrar Estancia</a></li>
+                            <li><a class ="btn" href="/modificarEstancia" title= "Modificar Estancia">Modificar Estancia</a></li>
+                            <li><a class ="btn" href="/eliminarEstancia" title= "Eliminar Estancia">Eliminar Estancia</a></li>
                         </ul>
                     </li>
 
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-edit"></i> LOTES & FARDOS <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title = "Lotes y Fardos"><i class="fa fa-fw fa-edit"></i> LOTES & FARDOS <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/registrarLote" title= "Registrar Lote">Registrar Lote</a></li>
-                            <li><a href="/modificarLote" title= "Modificar Lote">Modificar Lote</a></li>
-                            <li><a href="/eliminarLote" title= "Eliminar Lote">Eliminar Lote</a></li>
-                            <li><a href="/registrarFardo" title= "Registrar Fardos">Registrar Fardo</a></li>
-                            <li><a href="/modificarFardo" title="Modificar Fardos">Modificar Fardo</a></li>
+                            <li><a class ="btn" href="/registrarLote" title= "Registrar Lote">Registrar Lote</a></li>
+                            <li><a class ="btn" href="/modificarLote" title= "Modificar Lote">Modificar Lote</a></li>
+                            <li><a class ="btn" href="/eliminarLote" title= "Eliminar Lote">Eliminar Lote</a></li>
+                            <li><a class ="btn" href="/registrarFardo" title= "Registrar Fardos">Registrar Fardo</a></li>
+                            <li><a class ="btn" href="/modificarFardo" title="Modificar Fardos">Modificar Fardo</a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i> PERSONAL <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title = "Registro de Personal"><i class="fa fa-fw fa-user"></i> PERSONAL <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/registrarProductor" title="Registrar Productor">Registrar Productor</a></li>
-                            <li><a href="/modificarProductor" title="Modificar Productor">Modificar Productor</a></li>
-                            <li><a href="/eliminarProductor" title="Eliminar Productor">Eliminar Productor</a></li>
-                            <li><a href="/registrarRepresentante" title= "Registrar Representante">Registrar Representante</a></li>
-                            <li><a href="/modificarRepresentante" title="Modificar Representante">Modificar Representante</a></li>
-                            <li><a href="/eliminarRepresentante" title= "Eliminar Representante">Eliminar Representante</a></li>
+                            <li><a class ="btn" href="/registrarProductor" title="Registrar Productor">Registrar Productor</a></li>
+                            <li><a class ="btn" href="/modificarProductor" title="Modificar Productor">Modificar Productor</a></li>
+                            <li><a class ="btn" href="/eliminarProductor" title="Eliminar Productor">Eliminar Productor</a></li>
+                            <li><a class ="btn" href="/registrarRepresentante" title= "Registrar Representante">Registrar Representante</a></li>
+                            <li><a class ="btn" href="/modificarRepresentante" title="Modificar Representante">Modificar Representante</a></li>
+                            <li><a class ="btn" href="/eliminarRepresentante" title= "Eliminar Representante">Eliminar Representante</a></li>
                         </ul>
                     </li>  
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-desktop"></i> PRODUCCIÓN <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title = "Producción"><i class="fa fa-fw fa-desktop"></i> PRODUCCIÓN <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/nuevaOrdenProduccion" title= "Generar Orden de Producción">Generar Orden de Producción</a></li>
-                            <li><a href="/modificarOrdenProduccion" title= "Modificar Orden de Producción">Modificar Orden de Producción</a></li>
-                            <li><a href="/cancelarOrdenProduccion" title="Cancelar Orden de Producción">Cancelar Orden de Producción</a></li>
-                            <li><a href="/enviarFaseProduccion" title="Enviar a Fase de Producción" >Enviar a Fase de Producción</a></li>
-                            <li><a href="/finalizarFaseProduccion" title="Finalizar Fase de Producción">Finalizar Fase de Producción</a></li>
-                            <li><a href="/registrarMaquinaria" title="Registrar Maquinaria">Registrar Maquinaria</a></li>
-                            <li><a href="/modificarMaquinaria" title="Modificar Maquinaria">Modificar Maquinaria</a></li>
-                            <li><a href="/eliminarMaquinaria" title="Eliminar Maquinaria">Eliminar Maquinaria</a></li>
+                            <li><a class ="btn" href="/nuevaOrdenProduccion" title= "Generar Orden de Producción">Generar Orden de Producción</a></li>
+                            <li><a class ="btn" href="/modificarOrdenProduccion" title= "Modificar Orden de Producción">Modificar Orden de Producción</a></li>
+                            <li><a class ="btn" href="/cancelarOrdenProduccion" title="Cancelar Orden de Producción">Cancelar Orden de Producción</a></li>
+                            <li><a class ="btn" href="/enviarFaseProduccion" title="Enviar a Fase de Producción" >Enviar a Fase de Producción</a></li>
+                            <li><a class ="btn" href="/finalizarFaseProduccion" title="Finalizar Fase de Producción">Finalizar Fase de Producción</a></li>
+                            <li><a class ="btn" href="/registrarMaquinaria" title="Registrar Maquinaria">Registrar Maquinaria</a></li>
+                            <li><a class ="btn" href="/modificarMaquinaria" title="Modificar Maquinaria">Modificar Maquinaria</a></li>
+                            <li><a class ="btn" href="/eliminarMaquinaria" title="Eliminar Maquinaria">Eliminar Maquinaria</a></li>
                         </ul>
                     </li>
 
@@ -145,14 +145,15 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
     
-    <!-- Script to Activate the Carousel -->
-    <script>
-    $('.carousel').carousel({
-        interval: 5000 //changes the speed
-        
-    })
-    </script>
+    
 
+    <script>
+        $('.dropdown-toggle').tooltip()
+        $('.btn').tooltip()
+        $('.carousel').carousel({ /* Script to Activate the Carousel */
+            interval: 5000 /* changes the speed */
+        })
+    </script>
     {% block scripts %}{% endblock %}
 </html>
 

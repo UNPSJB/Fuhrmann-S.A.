@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     #Lotes y Fardos
     url(r'^registrarLote/$', 'appWeb.views.registrarLote'),
     url(r'^modificarLote/$', 'appWeb.views.modificarLote'),
+    url(r'^modificarLote/(\d+)/$', 'appWeb.views.modificarLoteF'),
     url(r'^eliminarLote/$', 'appWeb.views.eliminarLote'),
     url(r'^registrarFardo/$', 'appWeb.views.registrarFardo'),
     url(r'^modificarFardo/$', 'appWeb.views.modificarFardo'),
@@ -54,4 +55,7 @@ urlpatterns = patterns('',
     url(r'^modificarProductorF/$', 'appWeb.views.modificarProductorF'),
     url(r'^modificarRepresentanteF/$', 'appWeb.views.modificarRepresentanteF'),
     url(r'^modificarMaquinariaF/$', 'appWeb.views.modificarMaquinariaF'),
+
+    #Url's Dinamicas
+    url(r'^eliminarLote/(?P<pk>\d+)/$', 'appWeb.views.eliminarLoteId'),
 )
