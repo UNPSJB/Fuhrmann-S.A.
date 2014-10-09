@@ -4,7 +4,7 @@ class CompraLote(models.Model):
     NroCompra = models.AutoField(primary_key = True)
     Representante = models.ForeignKey('Representante')
     Estancia = models.ForeignKey('Estancia')
-    FechaLlegada = models.DateField()
+    FechaLlegada = models.DateField(blank = False)
     
     def __unicode__(self):
         return ""
@@ -13,11 +13,10 @@ class Venta(models.Model):
     NroVenta = models.AutoField(primary_key = True)
     LoteVenta = models.OneToOneField('LoteVenta')
     Cliente = models.CharField(max_length=50)
-    FechaVenta = models.DateField()
+    FechaVenta = models.DateField(blank=True)
 
     def __unicode__(self):
         return ""
-
 
 class Persona(models.Model):
     Nombre = models.CharField(max_length=50)
@@ -107,7 +106,6 @@ class OrdenProduccion(models.Model):
     def __unicode__(self):
         return u"%s - %s" % (self.NroOrden, u", ".join([unicode(s) for s in self.Servicio.all()]))
 
-
 class DetalleOrden(models.Model):
     NroDetalle = models.AutoField(primary_key = True)
     OrdenProduccion = models.OneToOneField('OrdenProduccion')
@@ -122,7 +120,6 @@ class Servicio(models.Model):
     def __unicode__(self):
         return u"%s" % (self.Nombre)
 
-
 class LoteVenta(models.Model):
     NroPartida = models.AutoField(primary_key = True)
     ServicioRealizado = ('Lavado', 'Peinado', 'Cardado')
@@ -132,9 +129,9 @@ class LoteVenta(models.Model):
     Servicio = models.ManyToManyField('Servicio')
     Baja = models.BooleanField(default=False)
     OrdenProduccion = models.OneToOneField('OrdenProduccion')
+    
     def __unicode__(self):
         return ""
-
 
 class Cuadricula(models.Model):
     NroCuadricula = models.AutoField(primary_key = True)
