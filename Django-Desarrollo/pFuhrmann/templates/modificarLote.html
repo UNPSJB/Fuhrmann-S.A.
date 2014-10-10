@@ -6,7 +6,7 @@
     <div class="well">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
-                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Modificar Lote</h4>
+                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Listado de Lotes</h4>
                 <div class="btn-group pull-right">
                     <a class="btn btn-default" type="button" href="#" title="Ayuda"><span class="glyphicon glyphicon-question-sign"></span></a>
                     <a class="btn btn-default " type="button" href="#" title="Info"><span class="glyphicon glyphicon-info-sign"></span></a>
@@ -29,10 +29,13 @@
                             <th width="10%">Cant. Fardos</th>
                         </tr>
                         {% for dato in lista %}
-                        <tr onclick = "this.style.backgroundColor = '#F2F2F2' ">
-                            <td width="10%">{{dato.NroLote}}</td>
+                        <tr>
+                            <td width="10%" id="nroLote">{{dato.NroLote}}</td>
                             <td width="10%">{{dato.Peso}}</td>
                             <td width="10%">{{dato.CantFardos}}</td>
+                            <td width="5%"><a href="/modificarLote/{{dato.NroLote}}" class="glyphicon glyphicon-edit"></a>
+                                            <a href="/eliminarLote/{{dato.NroLote}}" class="glyphicon glyphicon-remove"></a>                               
+                            </td>
                         </tr>
 
                         {% empty %}
@@ -40,9 +43,6 @@
                         {% endfor %}        
                     </thead>
                 </table>
-
-                <a class="btn btn-default btn-gr" type= "button" title= "Modificar"  href="/modificarLoteF">Modificar</a>
-                <a class="btn btn-default btn-gr" type= "button" title= "Cancelar"  href="/index">Cancelar</a>
                 <script type ="text/javascript"> </script>
             </div>
         </div>

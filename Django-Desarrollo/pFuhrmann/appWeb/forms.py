@@ -104,20 +104,7 @@ class LoteForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success", onClick="location.href='/index'"))
     
-#class registrarLoteForm(forms.Form):
- #   Peso = forms.IntegerField(label ="Peso Lote", min_value = 0)
-  #  CantFardos = forms.IntegerField(label ="Cantidad Fardos", min_value = 0)
-   # date = forms.DateField(widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
-    # required = False, es para que no se lo pida como obligatorio
-    
-  #  def __init__(self, *args, **kwargs):
-   #     super(registrarLoteForm, self).__init__(*args, **kwargs)
-    #    self.helper = FormHelper()
-     #   self.helper.form_id = 'id-registrarLoteForm'
-      #  self.helper.form_method = 'post'
-       # self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
-        #self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
-        
+
 class modificarLoteForm(forms.Form):
     Peso = forms.IntegerField(label ="PesoLote", min_value = 0)
     CantFardos = forms.IntegerField(label ="Cant.Fardos", min_value = 0)
@@ -129,19 +116,6 @@ class modificarLoteForm(forms.Form):
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Modificar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
-
-class eliminarLoteForm(forms.Form):
-
-    idLote = forms.CharField(label ="Id Lote:")
-
-    def __init__(self, *args, **kwargs):
-        super(eliminarLoteForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_id = 'id-modificarLoteForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Eliminar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
-
 
 class registrarFardoForm(ModelForm):
     class Meta:

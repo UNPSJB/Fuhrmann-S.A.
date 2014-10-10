@@ -73,19 +73,20 @@ def finalizarFaseProduccion(request):
     orden = OrdenProduccion.objects.all()
     return render_to_response('finalizarFaseProduccionForm.html', {'lista':orden}, context_instance=RequestContext(request))
     
+
+def listadoLotes(request):
+    lote = Lote.objects.all()   
+    return render_to_response('modificarLote.html', {'lista':lote}, context_instance=RequestContext(request))
+
 def registrarLote(request):
     if request.method == 'POST':
         formulario = LoteForm(request.POST, request.FILES)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/index')
+            return HttpResponseRedirect('/lotes')
     else:
         formulario = LoteForm()
     return render_to_response('registrarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
-def modificarLote(request):
-    lote = Lote.objects.all()
-    return render_to_response('modificarLote.html', {'lista':lote}, context_instance=RequestContext(request))
 
 def modificarLoteF(request, pk):
     lote = Lote.objects.get(pk=pk)
@@ -93,21 +94,16 @@ def modificarLoteF(request, pk):
         formulario = LoteForm(request.POST, request.FILES, instance=lote)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/index')
+            return HttpResponseRedirect('/lotes')
     else:
         formulario = LoteForm(instance = lote)
     return render_to_response('registrarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-    
-
-def eliminarLote(request):
-    lote = Lote.objects.all()   
-    return render_to_response('eliminarLoteForm.html', {'lista':lote}, context_instance=RequestContext(request))
 
 def eliminarLoteId(request, pk):
     lote = Lote.objects.get(pk=pk)
     lote.delete()
     lote = Lote.objects.all()
-    return render_to_response('eliminarLoteForm.html', {'lista':lote}, context_instance=RequestContext(request))    
+    return render_to_response('modificarLote.html', {'lista':lote}, context_instance=RequestContext(request))    
 
 def registrarFardo(request):
     if request.method == 'POST':

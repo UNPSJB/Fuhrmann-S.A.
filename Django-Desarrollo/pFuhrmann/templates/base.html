@@ -73,9 +73,8 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title = "Lotes y Fardos"><i class="fa fa-fw fa-edit"></i> LOTES & FARDOS <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a class ="btn" href="/registrarLote" title= "Registrar Lote">Registrar Lote</a></li>
-                            <li><a class ="btn" href="/modificarLote" title= "Modificar Lote">Modificar Lote</a></li>
-                            <li><a class ="btn" href="/eliminarLote" title= "Eliminar Lote">Eliminar Lote</a></li>
+                            <li><a class ="btn" href="/lotes" title= "Registrar Lote">Listado Lotes</a></li>
+                            <li><a class ="btn" href="/registrarLote" title= "Modificar Lote">Registrar Lote</a></li>
                             <li><a class ="btn" href="/registrarFardo" title= "Registrar Fardos">Registrar Fardo</a></li>
                             <li><a class ="btn" href="/modificarFardo" title="Modificar Fardos">Modificar Fardo</a></li>
                         </ul>
@@ -148,6 +147,7 @@
     
 
     <script>
+        $('.glyphicon').tooltip() 
         $('.dropdown-toggle').tooltip()
         $('.btn').tooltip()
         $('.carousel').carousel({ /* Script to Activate the Carousel */
