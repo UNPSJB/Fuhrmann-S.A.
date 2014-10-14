@@ -174,7 +174,7 @@ def modificarEstanciaF(request, pk):
             return HttpResponseRedirect('/modificarEstanciaF')
     else:
         formulario = modificarEstanciaForm(instance = estancia)
-    return render_to_response('registrarEstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    return render_to_response('modificarEstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarEstanciaId(request, pk):
     estancia = Estancia.objects.get(pk=pk)
@@ -213,8 +213,12 @@ def modificarProductorF(request):
     
 def eliminarProductor(request):
     productores = Productor.objects.all()
-    return render_to_response('eliminarProductorForm.html', {'lista':productores}, context_instance=RequestContext(request))
+    return render_to_response('eliminarProductorForm.html', {'lista':productor}, context_instance=RequestContext(request))
     
+def listadoProductores(request):
+    productor = Productor.objects.all()
+    return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
+
 
 def registrarRepresentante(request):
     if request.method == 'POST':

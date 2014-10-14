@@ -44,6 +44,7 @@ urlpatterns = patterns('',
 
     #Adm. Personas
     url(r'^registrarProductor/$', 'appWeb.views.registrarProductor'),
+    url(r'^listadoProductores/$', 'appWeb.views.listadoProductores'),
     url(r'^modificarProductor/$', 'appWeb.views.modificarProductor'),
     url(r'^eliminarProductor/$', 'appWeb.views.eliminarProductor'),
     url(r'^registrarRepresentante/$', 'appWeb.views.registrarRepresentante'),
