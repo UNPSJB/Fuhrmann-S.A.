@@ -37,7 +37,7 @@ class registrarEstanciaForm(forms.ModelForm):
         super(registrarEstanciaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Estancia Registrada!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 class modificarEstanciaForm(forms.Form):
     Nombre = forms.CharField(label ="Nombre", max_length = 50)
@@ -61,8 +61,8 @@ class LoteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LoteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Lote Registrada!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success", onClick="location.href='/index'"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Lote Registrado!')"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default", onClick="location.href='/index'"))
     
 class modificarLoteForm(forms.Form):
     Peso = forms.IntegerField(label ="PesoLote", min_value = 0)
@@ -85,7 +85,7 @@ class registrarFardoForm(ModelForm):
         super(registrarFardoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Fardos Registrados!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 class modificarFardoForm(forms.Form):
     Tipo = forms.ModelChoiceField(TipoFardo.objects.all())
@@ -115,7 +115,7 @@ class registrarProductorForm(forms.ModelForm):
         self.helper.form_id = 'id-registrarProductorForm'
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Productor Registrado!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 class modificarProductorForm(forms.Form):
     Nombre = forms.CharField(label ="Nombre", max_length = 50)
@@ -138,7 +138,7 @@ class registrarRepresentanteForm(ModelForm):
         super(registrarRepresentanteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Representante Registrado!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 class modificarRepresentanteForm(forms.Form):
     Nombre = forms.CharField(label ="Nombre", max_length = 50)
@@ -166,8 +166,8 @@ class nuevaOrdenProduccionForm(ModelForm):
         self.helper = FormHelper()
         self.helper.form_id = 'id-nuevaOrdenProduccionForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Submit('submit', 'Aceptar', css_class="btn btn-success",onClick = "alert('Representante Registrado!')"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 class modificarOrdenProduccionForm(forms.Form):
     Servicios = forms.ModelMultipleChoiceField(Servicio.objects.all())
@@ -209,7 +209,7 @@ class registrarMaquinariaForm(ModelForm):
         super(registrarMaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Maquinaria Registrada!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 class modificarMaquinariaForm(forms.Form):
     Tipo = forms.ModelChoiceField(Servicio.objects.all())
