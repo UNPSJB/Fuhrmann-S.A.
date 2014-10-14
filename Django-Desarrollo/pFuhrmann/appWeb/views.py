@@ -45,10 +45,6 @@ def listadoVenta(request):
     venta = Venta.objects.all()
     return render_to_response('listadoVenta.html', {'lista':venta}, context_instance=RequestContext(request))
 
-
-
-
-
 def nuevaOrdenProduccion(request):
     if request.method == 'POST':
         formulario = nuevaOrdenProduccionForm(request.POST, request.FILES)
@@ -156,19 +152,27 @@ def modificarEstancia(request):
     estancia = Estancia.objects.all()
     return render_to_response('modificarEstancia.html', {'lista':estancia}, context_instance=RequestContext(request))
     
-def modificarEstanciaF(request):
+def modificarEstanciaF(request, pk):
+    estancia = Estancia.objects.get(pk=pk)
     if request.method == 'POST':
-        formulario = modificarEstanciaForm(request.POST, request.FILES)
+        formulario = modificarEstanciaForm(request.POST, request.FILES, instance=estancia)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/modificarEstanciaF')
     else:
-        formulario = modificarEstanciaForm()
-    return render_to_response('modificarEstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-    
-def eliminarEstancia(request):
+        formulario = modificarEstanciaForm(instance = estancia)
+    return render_to_response('registrarEstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+def eliminarEstanciaId(request, pk):
+    estancia = Estancia.objects.get(pk=pk)
+    estancia.delete()
     estancia = Estancia.objects.all()
-    return render_to_response('eliminarEstanciaForm.html', {'lista':estancia}, context_instance=RequestContext(request))
+    return render_to_response('modificarEstancia.html', {'lista':estancia}, context_instance=RequestContext(request))    
+
+def listadoEstancias(request):
+    estancia = Estancia.objects.all()
+    return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))
+
     
 def registrarProductor(request):
     if request.method == 'POST':

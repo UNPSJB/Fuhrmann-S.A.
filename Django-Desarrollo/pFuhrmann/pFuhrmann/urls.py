@@ -34,8 +34,10 @@ urlpatterns = patterns('',
 
     #Adm. Estancias
     url(r'^registrarEstancia/$', 'appWeb.views.registrarEstancia'),
+    url(r'^listadoEstancias/$', 'appWeb.views.listadoEstancias'),
     url(r'^modificarEstancia/$', 'appWeb.views.modificarEstancia'),
-    url(r'^eliminarEstancia/$', 'appWeb.views.eliminarEstancia'),
+    url(r'^modificarEstancia/(\d+)$', 'appWeb.views.modificarEstanciaF'),
+    url(r'^eliminarEstancia/(\d+)$', 'appWeb.views.eliminarEstanciaId'),
 
     #Adm. Personas
     url(r'^registrarProductor/$', 'appWeb.views.registrarProductor'),
@@ -61,4 +63,5 @@ urlpatterns = patterns('',
 
     #Url's Dinamicas
     url(r'^eliminarLote/(?P<pk>\d+)/$', 'appWeb.views.eliminarLoteId'),
+    url(r'^eliminarEstancia/(?P<pk>\d+)/$', 'appWeb.views.eliminarEstanciaId'),
 )
