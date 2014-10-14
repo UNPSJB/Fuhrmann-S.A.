@@ -29,12 +29,12 @@
                         {% for dato in lista %}
                         <tr onclick = "this.style.backgroundColor = '#F2F2F2' ">
                             <td width="10%">{{dato.NroSerie}}</td>
-                            <td width="10%">{{dato.Servicio}}</td>
+                            <td width="10%">{{dato.TipoMaquinaria}}</td>
                             <td width="10%">{{dato.Descripcion}}</td>
                         </tr>
 
                         {% empty %}
-                            <li> Aún no hay Maquinaria Cargada </li>
+                            <li> No existen maquinarias registradas </li>
                         {% endfor %}        
                     </thead>
                 </table>
