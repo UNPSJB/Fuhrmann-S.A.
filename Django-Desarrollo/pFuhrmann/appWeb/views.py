@@ -268,5 +268,8 @@ def eliminarMaquinaria(request):
     maquinaria = Maquinaria.objects.all()
     return render_to_response('eliminarMaquinariaForm.html', {'lista':maquinaria}, context_instance=RequestContext(request))
     
+def listadoMaquinaria(request):
+    maquinaria = Maquinaria.objects.all()
+    return render_to_response('listadoMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
 
 

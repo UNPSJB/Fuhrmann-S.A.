@@ -141,7 +141,7 @@ class Cuadricula(models.Model):
 
 class Maquinaria(models.Model):
     NroSerie = models.PositiveIntegerField(max_length=50, primary_key = True)
-    TipoMaquinaria = models.ForeignKey('Servicio')
+    TipoMaquinaria = models.OneToOneField('Servicio')
     Descripcion = models.CharField(max_length=50, null = True)
 
     def __unicode__(self):

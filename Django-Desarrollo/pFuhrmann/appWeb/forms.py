@@ -111,8 +111,6 @@ class registrarProductorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(registrarProductorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-registrarProductorForm'
-        self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Productor Registrado!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
@@ -163,8 +161,6 @@ class nuevaOrdenProduccionForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(nuevaOrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-nuevaOrdenProduccionForm'
-        self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Aceptar', css_class="btn btn-success",onClick = "alert('Representante Registrado!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
@@ -199,7 +195,7 @@ class finalizarFaseProduccionForm(forms.Form):
         self.helper.add_input(Button('submit', 'Finalizar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-class registrarMaquinariaForm(ModelForm):
+class registrarMaquinariaForm(forms.ModelForm):
     class Meta:
         model = Maquinaria
         exclude = ['Baja']
@@ -210,12 +206,13 @@ class registrarMaquinariaForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Maquinaria Registrada!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarMaquinariaForm(forms.Form):
-    Tipo = forms.ModelChoiceField(Servicio.objects.all())
-    Descripcion = forms.CharField(label ="Descripción", max_length = 50)
+class modificarMaquinariaForm(forms.ModelForm):
+    class Meta:
+        model = Maquinaria
+        
 
     def __init__(self, *args, **kwargs):
         super(modificarMaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Modificar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))

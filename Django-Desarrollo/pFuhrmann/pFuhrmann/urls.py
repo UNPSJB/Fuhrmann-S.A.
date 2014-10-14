@@ -53,6 +53,7 @@ urlpatterns = patterns('',
     url(r'^registrarMaquinaria/$', 'appWeb.views.registrarMaquinaria'),
     url(r'^modificarMaquinaria/$', 'appWeb.views.modificarMaquinaria'),
     url(r'^eliminarMaquinaria/$', 'appWeb.views.eliminarMaquinaria'),
+    url(r'^listadoMaquinaria/$', 'appWeb.views.listadoMaquinaria'),
 
     #Url's de Forms para modificar Datos
     url(r'^modificarOrdenProduccionF/$', 'appWeb.views.modificarOrdenProduccionF'),

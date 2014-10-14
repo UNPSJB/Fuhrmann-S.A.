@@ -9,7 +9,7 @@
                 <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Eliminar Maquinaria</h4>
                 <div class="btn-group pull-right">
                     <a class="btn btn-default" type="button" href="#" title="Ayuda"><span class="glyphicon glyphicon-question-sign"></span></a>
-                    <a class="btn btn-default btn-gr" type="button" href="#" title="Listado"><span class="glyphicon glyphicon-list-alt"></span></a>
+                    <a class="btn btn-default btn-gr" type="button" href="/listadoMaquinaria" title="Listado"><span class="glyphicon glyphicon-list-alt"></span></a>
                 </div>
             </div>
             <div class="panel-body">
@@ -23,12 +23,12 @@
                         {% for dato in lista %}
                         <tr onclick = "this.style.backgroundColor = '#F2F2F2' ">
                             <td width="10%">{{dato.NroSerie}}</td>
-                            <td width="10%">{{dato.Servicio}}</td>
+                            <td width="10%">{{dato.TipoMaquinaria}}</td>
                             <td width="10%">{{dato.Descripcion}}</td>
                         </tr>
 
                         {% empty %}
-                            <li> Aún no hay maquinarias registradas</li>
+                            <li> No existen maquinarias registradas</li>
                         {% endfor %}        
                     </thead>
                 </table>
