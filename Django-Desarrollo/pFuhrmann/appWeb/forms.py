@@ -25,7 +25,7 @@ class ventaForm(forms.ModelForm):
         super(ventaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 #ESTANCIA
 class registrarEstanciaForm(forms.ModelForm):

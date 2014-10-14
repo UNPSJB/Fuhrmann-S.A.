@@ -12,8 +12,9 @@ urlpatterns = patterns('',
 
     #Registrar Operacion
     url(r'^registrarCompra/$', 'appWeb.views.registrarCompra'),
-    url(r'^registrarVenta/$', 'appWeb.views.registrarVenta'),
     url(r'^listadoCompra/$', 'appWeb.views.listadoCompra'),
+    url(r'^registrarVenta/$', 'appWeb.views.registrarVenta'),
+    url(r'^listadoVenta/$', 'appWeb.views.listadoVenta'),
 
     #Orden de produccion
     url(r'^nuevaOrdenProduccion/$', 'appWeb.views.nuevaOrdenProduccion'),

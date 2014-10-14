@@ -9,7 +9,6 @@ class CompraLote(models.Model):
     def __unicode__(self):
         return "%s" % (str(self.NroCompra) + " " + str(self.FechaLlegada))
 
-        
 class Venta(models.Model):
     NroVenta = models.AutoField(primary_key = True)
     LoteVenta = models.OneToOneField('LoteVenta')

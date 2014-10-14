@@ -31,7 +31,6 @@ def listadoCompra(request):
     compra = CompraLote.objects.all()
     return render_to_response('listadoCompra.html', {'lista':compra}, context_instance=RequestContext(request))
 
-
 def registrarVenta(request):
     if request.method == 'POST':
         formulario = ventaForm(request.POST, request.FILES)
@@ -41,6 +40,14 @@ def registrarVenta(request):
     else:
         formulario = ventaForm()
     return render_to_response('ventaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+def listadoVenta(request):
+    venta = Venta.objects.all()
+    return render_to_response('listadoVenta.html', {'lista':venta}, context_instance=RequestContext(request))
+
+
+
+
 
 def nuevaOrdenProduccion(request):
     if request.method == 'POST':
