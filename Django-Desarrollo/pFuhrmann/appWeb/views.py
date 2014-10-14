@@ -55,6 +55,10 @@ def nuevaOrdenProduccion(request):
         formulario = nuevaOrdenProduccionForm()
     return render_to_response('nuevaOrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+def listadoOrden(request):
+    op = OrdenProduccion.objects.all()
+    return render_to_response('listadoOrden.html', {'lista':op}, context_instance=RequestContext(request))
+
 def modificarOrdenProduccion(request):
     orden = OrdenProduccion.objects.all()
     return render_to_response('modificarOrdenProduccion.html', {'lista':orden}, context_instance=RequestContext(request))
