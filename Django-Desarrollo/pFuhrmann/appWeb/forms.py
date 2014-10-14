@@ -50,9 +50,7 @@ class modificarEstanciaForm(forms.ModelForm):
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 #LOTES&FARDOS
-class LoteForm(forms.ModelForm):
-    fecha = forms.DateField(widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
-    
+class LoteForm(forms.ModelForm):    
     class Meta:
         model = Lote
         exclude = ("Baja",)
