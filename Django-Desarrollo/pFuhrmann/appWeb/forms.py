@@ -151,7 +151,7 @@ class modificarRepresentanteForm(forms.Form):
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 #PRODUCCION
-class nuevaOrdenProduccionForm(ModelForm):
+class nuevaOrdenProduccionForm(forms.ModelForm):
     class Meta:
         model = OrdenProduccion
         exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual']
@@ -159,40 +159,41 @@ class nuevaOrdenProduccionForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(nuevaOrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Aceptar', css_class="btn btn-success",onClick = "alert('Representante Registrado!')"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick = "alert('Orden de produccion Registrada!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarOrdenProduccionForm(forms.Form):
+class modificarOrdenProduccionForm(forms.ModelForm):
     Servicios = forms.ModelMultipleChoiceField(Servicio.objects.all())
-    
+    class Meta:
+        model = OrdenProduccion
+
     def __init__(self, *args, **kwargs):
         super(modificarOrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-modificarOrdenProduccionForm'
-        self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Modificar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-class enviarFaseProduccionForm(forms.Form):
+class enviarFaseProduccionForm(forms.ModelForm):
+    class Meta:
+        model = OrdenProduccion
 
     def __init__(self, *args, **kwargs):
         super(enviarFaseProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-enviarFaseProduccionForm'
-        self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Enviar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-class finalizarFaseProduccionForm(forms.Form):
-
+class finalizarFaseProduccionForm(forms.ModelForm):
+    class Meta:
+        model = OrdenProduccion
+    
     def __init__(self, *args, **kwargs):
         super(finalizarFaseProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-finalizarFaseProduccionForm'
-        self.helper.form_method = 'post'
         self.helper.add_input(Button('submit', 'Finalizar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
+#Maquinaria
 class registrarMaquinariaForm(forms.ModelForm):
     class Meta:
         model = Maquinaria
@@ -211,5 +212,4 @@ class modificarMaquinariaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(modificarMaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Modificar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
