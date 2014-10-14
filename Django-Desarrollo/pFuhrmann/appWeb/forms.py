@@ -51,7 +51,7 @@ class modificarEstanciaForm(forms.ModelForm):
 
 #LOTES&FARDOS
 class LoteForm(forms.ModelForm):
-    date = forms.DateField(widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
+    fecha = forms.DateField(widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
     
     class Meta:
         model = Lote
@@ -65,7 +65,7 @@ class LoteForm(forms.ModelForm):
     
 class modificarLoteForm(forms.Form):
     Peso = forms.IntegerField(label ="PesoLote", min_value = 0)
-    CantFardos = forms.IntegerField(label ="Cant.Fardos", min_value = 0)
+    CantFardos = forms.IntegerField(label ="CantFardos", min_value = 0)
 
     def __init__(self, *args, **kwargs):
         super(modificarLoteForm, self).__init__(*args, **kwargs)

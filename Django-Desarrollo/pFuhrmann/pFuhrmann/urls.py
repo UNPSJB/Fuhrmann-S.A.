@@ -25,11 +25,13 @@ urlpatterns = patterns('',
     
     #Lotes y Fardos
     url(r'^registrarLote/$', 'appWeb.views.registrarLote'),
-    url(r'^lotes/$', 'appWeb.views.listadoLotes'),
+    url(r'^listadoLotes/$', 'appWeb.views.listadoLotes'),
+    url(r'^modificarLote/$', 'appWeb.views.modificarLote'),
     url(r'^modificarLote/(\d+)/$', 'appWeb.views.modificarLoteF'),
     url(r'^eliminarLote/(\d+)/$', 'appWeb.views.eliminarLoteId'),
 
     url(r'^registrarFardo/$', 'appWeb.views.registrarFardo'),
+    url(r'^listadoFardos/$', 'appWeb.views.listadoFardos'),
     url(r'^modificarFardo/$', 'appWeb.views.modificarFardo'),
 
     #Adm. Estancias
