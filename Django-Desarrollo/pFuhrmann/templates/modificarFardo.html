@@ -3,7 +3,7 @@
 
 {% block contenido %}
 <div class="container">
-        <div class="panel panel-default">
+        <div class="panel panel-red">
             <div class="panel-heading clearfix">
                 <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Modificar Fardo</h4>
                 <div class="btn-group pull-right">
@@ -40,7 +40,7 @@
                             <td width="10%">{{dato.Peso}}</td>
                             <td width="10%">{{dato.Rinde}}</td>
                             <td width="10%">{{dato.Finura}}</td>
-                            <td width="10%">{{dato.CoheficienteVariacion}}</td>
+                            <td width="10%">{{dato.CoeficienteVariacion}}</td>
                             <td width="10%">{{dato.AlturaMedia}}</td>
                             <td width="10%">{{dato.Micronaje}}</td>
                             <td width="10%">{{dato.Romana}}</td>
@@ -52,10 +52,9 @@
                         {% endfor %}        
                     </thead>
                 </table>
-
-                <a class="btn btn-default btn-gr" type= "button" title= "Modificar"  href="/modificarFardoF">Edit</a>               
-                <a class="btn btn-default btn-gr" type= "button" title= "Cancelar"  href="/index">Cancelar</a>
-               
+                 <div class="btn-group pull-right">
+                    <a class="btn btn-default btn-gr" type= "button" href="/index">Cancelar</a>
+                </div>   
                 <script type ="text/javascript"> </script>
             </div>
         </div>
