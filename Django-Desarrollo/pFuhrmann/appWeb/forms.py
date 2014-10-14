@@ -208,7 +208,6 @@ class modificarMaquinariaForm(forms.ModelForm):
     class Meta:
         model = Maquinaria
         
-
     def __init__(self, *args, **kwargs):
         super(modificarMaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()

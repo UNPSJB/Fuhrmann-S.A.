@@ -25,12 +25,17 @@
                             <th width="10%">Nro. Serie</th>
                             <th width="10%">Servicio</th>
                             <th width="10%">Descripción</th>
+                            <th width="10%">Modificar</th>
+                            <th width="10%">Eliminar</th>
                         </tr>
                         {% for dato in lista %}
                         <tr onclick = "this.style.backgroundColor = '#F2F2F2' ">
                             <td width="10%">{{dato.NroSerie}}</td>
                             <td width="10%">{{dato.TipoMaquinaria}}</td>
                             <td width="10%">{{dato.Descripcion}}</td>
+                            <td width="5%"><a href="/modificarMaquinaria/{{dato.NroSerie}}" class="glyphicon glyphicon-edit"></a>
+                            <td width="5%"><a href="/eliminarMaquinaria/{{dato.NroSerie}}" class="glyphicon glyphicon-remove"></a>                               
+                            </td>
                         </tr>
 
                         {% empty %}

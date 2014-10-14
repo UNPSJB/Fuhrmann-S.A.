@@ -254,19 +254,22 @@ def modificarMaquinaria(request):
     maquinaria = Maquinaria.objects.all()
     return render_to_response('modificarMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
     
-def modificarMaquinariaF(request):
+def modificarMaquinariaF(request, pk):
+    maquinaria = Maquinaria.objects.get(pk=pk)
     if request.method == 'POST':
-        formulario = modificarMaquinariaForm(request.POST, request.FILES)
+        formulario = modificarMaquinariaForm(request.POST, request.FILES, instance = maquinaria)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/modificarMaquinariaF')
     else:
-        formulario = modificarMaquinariaForm()
+        formulario = modificarMaquinariaForm(instance = maquinaria)
     return render_to_response('modificarMaquinariaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-    
-def eliminarMaquinaria(request):
+
+def eliminarMaquinariaId(request,pk):
+    maquinaria = Maquinaria.objects.get(pk=pk)    
+    maquinaria.delete()
     maquinaria = Maquinaria.objects.all()
-    return render_to_response('eliminarMaquinariaForm.html', {'lista':maquinaria}, context_instance=RequestContext(request))
+    return render_to_response('modificarMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))    
     
 def listadoMaquinaria(request):
     maquinaria = Maquinaria.objects.all()
