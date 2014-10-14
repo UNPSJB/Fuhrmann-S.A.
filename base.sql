@@ -12,10 +12,27 @@ values ('Mariana','Anacleta','15377666','13668','mariana@gmail.com', false);
 insert into "appWeb_persona"("Nombre", "Apellido", "DNI", "Telefono", "Email", "Baja")
 values ('Carolina','Cerati','14377666','13768','carolina@gmail.com', false);
 
+insert into "appWeb_persona"("Nombre", "Apellido", "DNI", "Telefono", "Email", "Baja")
+values ('Roberto','Carlos','14377667','137689','roberto@gmail.com', false);
+insert into "appWeb_persona"("Nombre", "Apellido", "DNI", "Telefono", "Email", "Baja")
+values ('Diego','Van Haaster','14377668','137681','diego@gmail.com', false);
+insert into "appWeb_persona"("Nombre", "Apellido", "DNI", "Telefono", "Email", "Baja")
+values ('Gloria','Schanz','14377669','137685','gloria@gmail.com', false);
+insert into "appWeb_persona"("Nombre", "Apellido", "DNI", "Telefono", "Email", "Baja")
+values ('Sebastian','Lopez','14377676','137686','sebastian@gmail.com', false);
+insert into "appWeb_persona"("Nombre", "Apellido", "DNI", "Telefono", "Email", "Baja")
+values ('Esteban','Williams','14377688','137687','esteban@gmail.com', false);
+
 select * from "appWeb_productor"
 insert into "appWeb_productor"("persona_ptr_id", "CUIL")values ('23766565', '7676767')
 insert into "appWeb_productor"("persona_ptr_id", "CUIL")values ('12377666', '12377666')
 insert into "appWeb_productor"("persona_ptr_id", "CUIL")values ('17102446', '17102446')
+
+insert into "appWeb_productor"("persona_ptr_id", "CUIL")values ('14377667', '14377667')
+insert into "appWeb_productor"("persona_ptr_id", "CUIL")values ('14377688', '14377688')
+insert into "appWeb_productor"("persona_ptr_id", "CUIL")values ('14377676', '14377676')
+insert into "appWeb_productor"("persona_ptr_id", "CUIL")values ('14377668', '14377668')
+
 
 select * from "appWeb_representante"
 insert into "appWeb_representante"("persona_ptr_id", "NroLegajo","Zona")values ('23757565','1','Sur')
@@ -66,3 +83,6 @@ select * from "appWeb_ordenproduccion"
 insert into "appWeb_ordenproduccion"("NroOrden","FechaEmision","CantRequerida","CV","AlturaMedia", "Micronaje", "Romana","Micronaje","Romana", "FechaInicioProduccion","FechaFinProduccion", "MaquinaActual_id","EnProduccion", "Finalizada" )
 values ('1','3/10/2014','1000','','''''''''''''')
 
+select * from "appWeb_loteventa"
+insert into "appWeb_loteventa"("NroPartida", "FechaCierreOrden", "Cantidad", "Cuadricula_id", "Baja", "OrdenProduccion_id")
+values ('1','4/10/2014','1','1',False,'1')
