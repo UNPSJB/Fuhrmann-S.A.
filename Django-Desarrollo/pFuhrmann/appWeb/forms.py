@@ -137,7 +137,7 @@ class registrarRepresentanteForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(registrarRepresentanteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Representante Registrado!')"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Representante Registrado!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 class modificarRepresentanteForm(forms.Form):

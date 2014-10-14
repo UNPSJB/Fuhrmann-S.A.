@@ -137,7 +137,6 @@ def modificarFardoF(request):
         formulario = modificarFardoForm()
     return render_to_response('modificarFardoForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
     
-
 def registrarEstancia(request):
     if request.method == 'POST':
         formulario = registrarEstanciaForm(request.POST, request.FILES)
