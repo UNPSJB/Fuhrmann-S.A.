@@ -14,7 +14,7 @@ class compraForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(compraForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()   
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert(Compra Registrada!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 class ventaForm(forms.ModelForm):
@@ -24,7 +24,7 @@ class ventaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ventaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"onClick="alert(Venta Registrada!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 #ESTANCIA
@@ -36,7 +36,7 @@ class registrarEstanciaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(registrarEstanciaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert(Estancia Registrada!')"))))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 class modificarEstanciaForm(forms.Form):
