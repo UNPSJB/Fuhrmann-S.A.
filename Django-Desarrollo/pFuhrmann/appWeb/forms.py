@@ -63,7 +63,7 @@ class LoteForm(forms.ModelForm):
     
 class modificarLoteForm(forms.Form):
     Peso = forms.IntegerField(label ="PesoLote", min_value = 0)
-    CantFardos = forms.IntegerField(label ="CantFardos", min_value = 0)
+    CantFardos = forms.IntegerField(label ="CantidadFardos", min_value = 0)
 
     def __init__(self, *args, **kwargs):
         super(modificarLoteForm, self).__init__(*args, **kwargs)
