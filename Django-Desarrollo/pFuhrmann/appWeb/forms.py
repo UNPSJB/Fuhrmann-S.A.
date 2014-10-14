@@ -14,7 +14,7 @@ class compraForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(compraForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()   
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert(Compra Registrada!')"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Compra Registrada!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 class ventaForm(forms.ModelForm):
@@ -24,7 +24,7 @@ class ventaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ventaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert(Venta Registrada!')"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Venta Registrada!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 #ESTANCIA
@@ -36,7 +36,7 @@ class registrarEstanciaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(registrarEstanciaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert(Estancia Registrada!')"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Estancia Registrada!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 class modificarEstanciaForm(forms.Form):
@@ -61,7 +61,7 @@ class LoteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LoteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Lote Registrada!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success", onClick="location.href='/index'"))
     
 class modificarLoteForm(forms.Form):
@@ -84,7 +84,7 @@ class registrarFardoForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(registrarFardoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Fardos Registrados!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 class modificarFardoForm(forms.Form):
@@ -114,7 +114,7 @@ class registrarProductorForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_id = 'id-registrarProductorForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Productor Registrado!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 class modificarProductorForm(forms.Form):
@@ -137,7 +137,7 @@ class registrarRepresentanteForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(registrarRepresentanteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar'))
+self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Representante Registrado!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 class modificarRepresentanteForm(forms.Form):
@@ -152,7 +152,7 @@ class modificarRepresentanteForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_id = 'id-modificarRepresentanteForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('submit', 'Modificar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 #PRODUCCION
@@ -208,7 +208,7 @@ class registrarMaquinariaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(registrarMaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Maquinaria Registrada!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 class modificarMaquinariaForm(forms.Form):
