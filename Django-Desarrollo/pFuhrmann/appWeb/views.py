@@ -27,6 +27,11 @@ def registrarCompra(request):
         formulario = compraForm()
     return render_to_response('compraForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+def listadoCompra(request):
+    compra = CompraLote.objects.all()
+    return render_to_response('listadoCompra.html', {'lista':compra}, context_instance=RequestContext(request))
+
+
 def registrarVenta(request):
     if request.method == 'POST':
         formulario = ventaForm(request.POST, request.FILES)

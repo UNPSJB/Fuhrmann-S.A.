@@ -4,10 +4,11 @@ class CompraLote(models.Model):
     NroCompra = models.AutoField(primary_key = True)
     Representante = models.ForeignKey('Representante')
     Estancia = models.ForeignKey('Estancia')
-    FechaLlegada = models.DateField(blank = False)
+    FechaLlegada = models.DateField()
     
     def __unicode__(self):
-        return ""
+        return "%s" % (str(self.NroCompra) + " " + str(self.FechaLlegada))
+
         
 class Venta(models.Model):
     NroVenta = models.AutoField(primary_key = True)
