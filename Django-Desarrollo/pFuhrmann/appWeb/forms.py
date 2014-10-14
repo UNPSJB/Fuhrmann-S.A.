@@ -39,11 +39,10 @@ class registrarEstanciaForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Estancia Registrada!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarEstanciaForm(forms.Form):
-    Nombre = forms.CharField(label ="Nombre", max_length = 50)
-    Zona = forms.CharField(label ="Zona", max_length = 50)
-    Provincia = forms.CharField(label ="Provincia", max_length = 50)
-    
+class modificarEstanciaForm(forms.ModelForm):
+    class Meta:
+        model = Estancia
+        
     def __init__(self, *args, **kwargs):
         super(modificarEstanciaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()

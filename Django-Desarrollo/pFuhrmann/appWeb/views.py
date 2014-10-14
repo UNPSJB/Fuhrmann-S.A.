@@ -150,7 +150,7 @@ def registrarEstancia(request):
 def modificarEstancia(request):
     estancia = Estancia.objects.all()
     return render_to_response('modificarEstancia.html', {'lista':estancia}, context_instance=RequestContext(request))
-    
+
 def modificarEstanciaF(request, pk):
     estancia = Estancia.objects.get(pk=pk)
     if request.method == 'POST':
