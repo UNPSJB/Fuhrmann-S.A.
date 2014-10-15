@@ -37,19 +37,22 @@ urlpatterns = patterns('',
 
     #Adm. Estancias
     url(r'^registrarEstancia/$', 'appWeb.views.registrarEstancia'),
-    url(r'^listadoEstancias/$', 'appWeb.views.listadoEstancias'),
     url(r'^modificarEstancia/$', 'appWeb.views.modificarEstancia'),
     url(r'^modificarEstancia/(\d+)$', 'appWeb.views.modificarEstanciaF'),
     url(r'^eliminarEstancia/(\d+)$', 'appWeb.views.eliminarEstanciaId'),
+    url(r'^listadoEstancias/$', 'appWeb.views.listadoEstancias'),
 
     #Adm. Personas
     url(r'^registrarProductor/$', 'appWeb.views.registrarProductor'),
-    url(r'^listadoProductores/$', 'appWeb.views.listadoProductores'),
     url(r'^modificarProductor/$', 'appWeb.views.modificarProductor'),
+    url(r'^modificarProductor/(\d+)$', 'appWeb.views.modificarProductorF'),
     url(r'^eliminarProductor/$', 'appWeb.views.eliminarProductor'),
+    url(r'^listadoProductores/$', 'appWeb.views.listadoProductores'),
     url(r'^registrarRepresentante/$', 'appWeb.views.registrarRepresentante'),
     url(r'^modificarRepresentante/$', 'appWeb.views.modificarRepresentante'),
+    url(r'^modificarRepresentante/(\d+)$', 'appWeb.views.modificarRepresentanteF'),
     url(r'^eliminarRepresentante/$', 'appWeb.views.eliminarRepresentante'),
+    url(r'^listadoRepresentante/$', 'appWeb.views.listadoRepresentante'),
 
     #Adm. Maquinaria
     url(r'^registrarMaquinaria/$', 'appWeb.views.registrarMaquinaria'),
@@ -71,4 +74,7 @@ urlpatterns = patterns('',
     url(r'^eliminarLote/(?P<pk>\d+)/$', 'appWeb.views.eliminarLoteId'),
     url(r'^eliminarEstancia/(?P<pk>\d+)/$', 'appWeb.views.eliminarEstanciaId'),
     url(r'^eliminarMaquinaria/(?P<pk>\d+)/$', 'appWeb.views.eliminarMaquinariaId'),
+    url(r'^eliminarRepresentante/(?P<pk>\d+)/$', 'appWeb.views.eliminarRepresentante'),
+    url(r'^eliminarProductor/(?P<pk>\d+)/$', 'appWeb.views.eliminarProductor'),
+
 )

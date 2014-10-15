@@ -3,7 +3,7 @@
 
 {% block contenido %}
 <div class="container">
-        <div class="panel panel-default">
+        <div class="panel panel-red">
             <div class="panel-heading clearfix">
                 <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Modificar Productor</h4>
                 <div class="btn-group pull-right">
@@ -28,8 +28,8 @@
                             <th width="10%">Dni</th>
                             <th width="10%">Telefono</th>
                             <th width="10%">Email</th>
-                            
-
+                            <th width="10%">Modificar</th>
+                            <th width="10%">Eliminar</th>
                         </tr>
                         {% for dato in lista %}
                         <tr onclick = "this.style.backgroundColor = '#F2F2F2' ">
@@ -39,7 +39,8 @@
                             <td width="10%">{{dato.DNI}}</td>
                             <td width="10%">{{dato.Telefono}}</td>
                             <td width="10%">{{dato.Email}}</td>
-                            
+                            <td width="5%"><a href="/modificarProductor/{{dato.CUIT}}" class="glyphicon glyphicon-edit"></a>
+                            <td width="5%"><a href="/eliminarProductor/{{dato.CUIT}}" class="glyphicon glyphicon-remove"></a>
                         </tr>
 
                         {% empty %}
@@ -48,7 +49,6 @@
                     </thead>
                 </table>
 
-                <a class="btn btn-default btn-gr" type= "button" title= "Modificar"  href="/modificarProductorF">Modificar</a>
                 <a class="btn btn-default btn-gr" type= "button" title= "Cancelar"  href="/index">Cancelar</a>
                 
                 <script type ="text/javascript"> </script>

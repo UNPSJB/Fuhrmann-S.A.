@@ -104,7 +104,6 @@ class modificarFardoForm(forms.Form):
 class registrarProductorForm(forms.ModelForm):
     class Meta:
         model = Productor
-        exclude = ['Baja']
     
     def __init__(self, *args, **kwargs):
         super(registrarProductorForm, self).__init__(*args, **kwargs)
@@ -112,22 +111,18 @@ class registrarProductorForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Productor Registrado!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarProductorForm(forms.Form):
-    Nombre = forms.CharField(label ="Nombre", max_length = 50)
-    Apellido = forms.CharField(label ="Apellido", max_length = 50)
-    Telefono = forms.CharField(label ="Telefono", max_length = 50)
-    Email = forms.EmailField(label ="Email", max_length = 50)
+class modificarProductorForm(forms.ModelForm):
+    class Meta:
+        model = Productor
 
     def __init__(self, *args, **kwargs):
         super(modificarProductorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Modificar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-class registrarRepresentanteForm(ModelForm):
+class registrarRepresentanteForm(forms.ModelForm):
     class Meta:
         model = Representante
-        exclude = ['Baja']
     
     def __init__(self, *args, **kwargs):
         super(registrarRepresentanteForm, self).__init__(*args, **kwargs)
@@ -135,19 +130,13 @@ class registrarRepresentanteForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Representante Registrado!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarRepresentanteForm(forms.Form):
-    Nombre = forms.CharField(label ="Nombre", max_length = 50)
-    Apellido = forms.CharField(label ="Apellido", max_length = 50)
-    Telefono = forms.CharField(label ="Telefono", max_length = 50)
-    Email = forms.EmailField(label ="Email", max_length = 50)
-    Zona = forms.CharField(label ="Zona", max_length = 50)
+class modificarRepresentanteForm(forms.ModelForm):
+    class Meta:
+        model = Representante
 
     def __init__(self, *args, **kwargs):
         super(modificarRepresentanteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-modificarRepresentanteForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Modificar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 #PRODUCCION
@@ -170,7 +159,6 @@ class modificarOrdenProduccionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(modificarOrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Modificar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 class enviarFaseProduccionForm(forms.ModelForm):
