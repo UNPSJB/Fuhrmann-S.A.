@@ -190,7 +190,7 @@ def eliminarEstancia(request, pk):
     estancia = Estancia.objects.get(pk=pk)
     estancia.delete()
     estancia = Estancia.objects.all()
-    return render_to_response('modificarEstancia.html', {'lista':estancia}, context_instance=RequestContext(request))    
+    return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))    
 
 #PRODUCTOR
 def registrarProductor(request):

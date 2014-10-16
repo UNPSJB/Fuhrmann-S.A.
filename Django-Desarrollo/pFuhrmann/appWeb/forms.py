@@ -37,7 +37,7 @@ class VentaForm(forms.ModelForm):
 # ----------- Formularios de Estancias
 class EstanciaForm(forms.ModelForm):
     # Override de Cuit
-    CUIT = ARCUITField(label="El cuit", help_text="Un cuit")
+    #CUIT = ARCUITField(label="El cuit", help_text="Un cuit")
     # Campo nuevo
     algo = forms.IntegerField()
     # Ver django-selectable para autocompletado
@@ -57,8 +57,8 @@ class EstanciaForm(forms.ModelForm):
             raise ValidationError("Algo no puede ser 2")
         return self.cleaned_data['algo']
 
-    def clean_CUIT(self):
-        return int(self.cleaned_data['CUIT'].replace('-', ''))
+    #def clean_CUIT(self):
+     #   return int(self.cleaned_data['CUIT'].replace('-', ''))
         
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
