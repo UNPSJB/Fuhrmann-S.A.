@@ -41,23 +41,25 @@ urlpatterns = patterns('',
     url(r'^modificarEstancia/(\d+)/$', 'appWeb.views.modificarEstancia'),
     url(r'^eliminarEstancia/(\d+)/$', 'appWeb.views.eliminarEstancia'),
     
-    #Adm. Personas
+    # ------ Adm. Productor
     url(r'^registrarProductor/$', 'appWeb.views.registrarProductor'),
     url(r'^modificarProductor/$', 'appWeb.views.modificarProductor'),
     url(r'^modificarProductor/(\d+)$', 'appWeb.views.modificarProductorF'),
-    url(r'^eliminarProductor/$', 'appWeb.views.eliminarProductor'),
+    url(r'^eliminarProductor/(\d+)/$', 'appWeb.views.eliminarProductor'),
     url(r'^listadoProductores/$', 'appWeb.views.listadoProductores'),
+
+    # ------ Adm. Representante
     url(r'^registrarRepresentante/$', 'appWeb.views.registrarRepresentante'),
     url(r'^modificarRepresentante/$', 'appWeb.views.modificarRepresentante'),
     url(r'^modificarRepresentante/(\d+)$', 'appWeb.views.modificarRepresentanteF'),
-    url(r'^eliminarRepresentante/$', 'appWeb.views.eliminarRepresentante'),
+    url(r'^eliminarRepresentante/(\d+)/$', 'appWeb.views.eliminarRepresentante'),
     url(r'^listadoRepresentante/$', 'appWeb.views.listadoRepresentante'),
 
-    #Adm. Maquinaria
+    ## ------ Adm. Maquinaria
     url(r'^registrarMaquinaria/$', 'appWeb.views.registrarMaquinaria'),
     url(r'^modificarMaquinaria/$', 'appWeb.views.modificarMaquinaria'),
     url(r'^modificarMaquinaria/(\d+)$', 'appWeb.views.modificarMaquinariaF'),
-    url(r'^eliminarMaquinaria/(\d+)$', 'appWeb.views.eliminarMaquinariaId'),
+    url(r'^eliminarMaquinaria/(\d+)/$', 'appWeb.views.eliminarMaquinaria'),
     url(r'^listadoMaquinaria/$', 'appWeb.views.listadoMaquinaria'),
 
     #Url's de Forms para modificar Datos
@@ -70,8 +72,6 @@ urlpatterns = patterns('',
 
     #Url's Dinamicas
     url(r'^eliminarLote/(?P<pk>\d+)/$', 'appWeb.views.eliminarLoteId'),
-    url(r'^eliminarMaquinaria/(?P<pk>\d+)/$', 'appWeb.views.eliminarMaquinariaId'),
-    url(r'^eliminarRepresentante/(?P<pk>\d+)/$', 'appWeb.views.eliminarRepresentante'),
-    url(r'^eliminarProductor/(?P<pk>\d+)/$', 'appWeb.views.eliminarProductor'),
+
 
 )
