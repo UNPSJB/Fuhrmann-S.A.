@@ -195,14 +195,14 @@ def eliminarEstancia(request, pk):
 #PRODUCTOR
 def registrarProductor(request):
     if request.method == 'POST':
-        formulario = registrarProductorForm(request.POST)
+        formulario = ProductorForm(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/registrarProductor')
     else:
-        formulario = registrarProductorForm()
+        formulario = ProductorForm()
         formulario.setup('Registrar', css_class="btn btn-success")
-    return render_to_response('registrarProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def modificarProductor(request):
     productores = Productor.objects.all()

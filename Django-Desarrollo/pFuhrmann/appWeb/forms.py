@@ -64,15 +64,6 @@ class EstanciaForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-class modificarEstanciaForm(forms.ModelForm):
-    class Meta:
-        model = Estancia
-        
-    def __init__(self, *args, **kwargs):
-        super(modificarEstanciaForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoEstancias'"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 #LOTES&FARDOS
 class registrarLoteForm(forms.ModelForm):    
@@ -132,27 +123,17 @@ class modificarFardoForm(forms.ModelForm):
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 #PERSONAL
-class registrarProductorForm(forms.ModelForm):
+class ProductorForm(forms.ModelForm):
     class Meta:
         model = Productor
     
     def __init__(self, *args, **kwargs):
-        super(registrarProductorForm, self).__init__(*args, **kwargs)
+        super(ProductorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
     
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-
-class modificarProductorForm(forms.ModelForm):
-    class Meta:
-        model = Productor
-
-    def __init__(self, *args, **kwargs):
-        super(modificarProductorForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoProductores'"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 class registrarRepresentanteForm(forms.ModelForm):
     class Meta:
