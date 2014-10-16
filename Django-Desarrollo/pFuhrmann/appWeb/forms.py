@@ -8,27 +8,32 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
-#REGISTRO DE OPERACION
-class compraForm(forms.ModelForm):    
+# ----------- Formulario de Compras
+class CompraForm(forms.ModelForm):    
     class Meta:
         model = CompraLote
     
     def __init__(self, *args, **kwargs):
-        super(compraForm, self).__init__(*args, **kwargs)
+        super(CompraForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()   
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Compra Registrada!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class ventaForm(forms.ModelForm):
+    def setup(self, *args, **kwarg):
+        self.helper.add_input(Submit('submit', *args, **kwarg))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+
+# ----------- Formulario de Ventas
+class VentaForm(forms.ModelForm):
     class Meta:
         model = Venta
     
     def __init__(self, *args, **kwargs):
-        super(ventaForm, self).__init__(*args, **kwargs)
+        super(VentaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Venta Registrada!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
+    def setup(self, *args, **kwarg):
+        self.helper.add_input(Submit('submit', *args, **kwarg))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+        
 # ----------- Formularios de Estancias
 class EstanciaForm(forms.ModelForm):
     # Override de Cuit

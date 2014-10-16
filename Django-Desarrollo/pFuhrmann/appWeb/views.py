@@ -17,22 +17,27 @@ def index (request):
 
 
 # Funciones para crear formularios
-#COMPRA
-def registrarCompra(request):
-    if request.method == 'POST':
-        formulario = compraForm(request.POST, request.FILES)
-        if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect('/registrarCompra')
-    else:
-        formulario = compraForm()
-    return render_to_response('compraForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
+# --------------- Administracion de Compra
 def listadoCompra(request):
     compra = CompraLote.objects.all()
     return render_to_response('listadoCompra.html', {'lista':compra}, context_instance=RequestContext(request))
 
-#VENTA
+def registrarCompra(request):
+    if request.method == 'POST':
+        formulario = CompraForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return HttpResponseRedirect('/listadoCompra')
+    else:
+        formulario = CompraForm()
+        formulario.setup('Registrar', css_class="btn btn-success")
+    return render_to_response('compraForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+# --------------- Administracion de Venta
+def listadoVenta(request):
+    venta = Venta.objects.all()
+    return render_to_response('listadoVenta.html', {'lista':venta}, context_instance=RequestContext(request))
+
 def registrarVenta(request):
     if request.method == 'POST':
         formulario = ventaForm(request.POST, request.FILES)
@@ -43,9 +48,6 @@ def registrarVenta(request):
         formulario = ventaForm()
     return render_to_response('ventaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-def listadoVenta(request):
-    venta = Venta.objects.all()
-    return render_to_response('listadoVenta.html', {'lista':venta}, context_instance=RequestContext(request))
 
 #ORDEN DE PRODUCCION
 def nuevaOrdenProduccion(request):
