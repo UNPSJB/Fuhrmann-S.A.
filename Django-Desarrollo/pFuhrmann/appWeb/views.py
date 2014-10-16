@@ -101,7 +101,8 @@ def modificarLoteF(request, pk):
 
 def eliminarLoteId(request, pk):
     lote = Lote.objects.get(pk=pk)
-    lote.delete()
+    lote.Baja = True
+    lote.save()
     lote = Lote.objects.all()
     return render_to_response('modificarLote.html', {'lista':lote}, context_instance=RequestContext(request))    
 
