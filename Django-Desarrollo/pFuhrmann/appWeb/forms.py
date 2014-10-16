@@ -103,7 +103,7 @@ class modificarFardoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(modificarFardoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/ListadoFardos'"))
+        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoFardos'"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
 #PERSONAL
