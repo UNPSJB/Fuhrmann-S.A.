@@ -91,12 +91,12 @@ def finalizarFaseProduccion(request):
 #LOTES
 def registrarLote(request):
     if request.method == 'POST':
-        formulario = LoteForm(request.POST, request.FILES)
+        formulario = registrarLoteForm(request.POST, request.FILES)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/modificarLote')
+            return HttpResponseRedirect('/registrarLote')
     else:
-        formulario = LoteForm()
+        formulario = registrarLoteForm()
     return render_to_response('registrarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def modificarLote(request):
@@ -106,13 +106,13 @@ def modificarLote(request):
 def modificarLoteF(request, pk):
     lote = Lote.objects.get(pk=pk)
     if request.method == 'POST':
-        formulario = LoteForm(request.POST, request.FILES, instance=lote)
+        formulario = modificarLoteForm(request.POST, request.FILES, instance = lote)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/modificarLoteF')
     else:
-        formulario = LoteForm(instance = lote)
-    return render_to_response('registrarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+        formulario = modificarLoteForm(instance = lote)
+    return render_to_response('modificarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarLoteId(request, pk):
     lote = Lote.objects.get(pk=pk)
@@ -243,12 +243,12 @@ def modificarRepresentante(request):
 def modificarRepresentanteF(request,pk):
     representante = Representante.objects.get(pk=pk)
     if request.method == 'POST':
-        formulario = modificarRepresentanteForm(request.POST, request.FILES, intance = representante)
+        formulario = modificarRepresentanteForm(request.POST, request.FILES, intance=representante)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/modificarRepresentanteF')
     else:
-        formulario = modificarRepresentanteForm(intance = representante)
+        formulario = modificarRepresentanteForm(instance=representante)
     return render_to_response('modificarRepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
     
 def eliminarRepresentante(request,pk):
