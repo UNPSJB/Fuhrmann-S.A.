@@ -4,11 +4,11 @@ class CompraLote(models.Model):
     NroCompra = models.AutoField(primary_key = True)
     Representante = models.ForeignKey('Representante')
     Estancia = models.ForeignKey('Estancia')
-    FechaLlegada = models.DateField(blank = False)
+    FechaLlegada = models.DateField()
     
     def __unicode__(self):
-        return ""
-        
+        return "%s" % (str(self.NroCompra) + " " + str(self.FechaLlegada))
+
 class Venta(models.Model):
     NroVenta = models.AutoField(primary_key = True)
     LoteVenta = models.OneToOneField('LoteVenta')
@@ -152,7 +152,7 @@ class Cuadricula(models.Model):
 
 class Maquinaria(models.Model):
     NroSerie = models.PositiveIntegerField(max_length=50, primary_key = True)
-    TipoMaquinaria = models.ForeignKey('Servicio')
+    TipoMaquinaria = models.OneToOneField('Servicio')
     Descripcion = models.CharField(max_length=50, null = True)
 
     def __unicode__(self):

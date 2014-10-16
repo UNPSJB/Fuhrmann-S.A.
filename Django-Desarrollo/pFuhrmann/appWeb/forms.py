@@ -6,16 +6,16 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
-class compraForm(forms.ModelForm):
-    
+#REGISTRO DE OPERACION
+class compraForm(forms.ModelForm):    
     class Meta:
         model = CompraLote
     
     def __init__(self, *args, **kwargs):
         super(compraForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()   
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Compra Registrada!')"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 class ventaForm(forms.ModelForm):
     class Meta:
@@ -24,110 +24,73 @@ class ventaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ventaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Venta Registrada!')"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class registrarEstanciaForm(ModelForm):
+#ESTANCIA
+class registrarEstanciaForm(forms.ModelForm):
     class Meta:
         model = Estancia
-
         exclude = ['Baja']
+
     def __init__(self, *args, **kwargs):
         super(registrarEstanciaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Estancia Registrada!')"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarEstanciaForm(forms.Form):
-    Nombre = forms.CharField(label ="Nombre", max_length = 50)
-    Zona = forms.CharField(label ="Zona", max_length = 50)
-    Provincia = forms.CharField(label ="Provincia", max_length = 50)
+class modificarEstanciaForm(forms.ModelForm):
+    class Meta:
+        model = Estancia
+        
     def __init__(self, *args, **kwargs):
         super(modificarEstanciaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Aceptar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoEstancias'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-
-class nuevaOrdenProduccionForm(ModelForm):
-    class Meta:
-        model = OrdenProduccion
-        exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual']
-    def __init__(self, *args, **kwargs):
-        super(nuevaOrdenProduccionForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_id = 'id-nuevaOrdenProduccionForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Aceptar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
-
-class modificarOrdenProduccionForm(forms.Form):
-    Servicios = forms.ModelMultipleChoiceField(Servicio.objects.all())
-    def __init__(self, *args, **kwargs):
-        super(modificarOrdenProduccionForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_id = 'id-modificarOrdenProduccionForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Modificar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
-
-class enviarFaseProduccionForm(forms.Form):
-
-    def __init__(self, *args, **kwargs):
-        super(enviarFaseProduccionForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_id = 'id-enviarFaseProduccionForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Enviar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
-
-class finalizarFaseProduccionForm(forms.Form):
-
-    def __init__(self, *args, **kwargs):
-        super(finalizarFaseProduccionForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_id = 'id-finalizarFaseProduccionForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Button('submit', 'Finalizar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
-
-class LoteForm(forms.ModelForm):
-    date = forms.DateField(widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
-    
+#LOTES&FARDOS
+class registrarLoteForm(forms.ModelForm):    
     class Meta:
         model = Lote
         exclude = ("Baja",)
 
     def __init__(self, *args, **kwargs):
-        super(LoteForm, self).__init__(*args, **kwargs)
+        super(registrarLoteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success", onClick="location.href='/index'"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Lote Registrado!')"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default", onClick="location.href='/index'"))
     
+class modificarLoteForm(forms.ModelForm):
+    class Meta:
+        model = Lote
 
-class modificarLoteForm(forms.Form):
     Peso = forms.IntegerField(label ="PesoLote", min_value = 0)
-    CantFardos = forms.IntegerField(label ="Cant.Fardos", min_value = 0)
+    CantFardos = forms.IntegerField(label ="CantidadFardos", min_value = 0)
 
     def __init__(self, *args, **kwargs):
         super(modificarLoteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = 'id-modificarLoteForm'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Modificar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoLotes'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 class registrarFardoForm(ModelForm):
     class Meta:
         model = Fardo
         exclude = ['Baja']
+    
     def __init__(self, *args, **kwargs):
         super(registrarFardoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Fardos Registrados!')"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarFardoForm(forms.Form):
+class modificarFardoForm(forms.ModelForm):
+    class Meta:
+        model = Fardo
+
     Tipo = forms.ModelChoiceField(TipoFardo.objects.all())
     Peso = forms.IntegerField(label ="Peso", min_value = 0)
     Rinde = forms.IntegerField(label ="Rinde", min_value = 0)
@@ -140,76 +103,111 @@ class modificarFardoForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(modificarFardoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Modificar'))
+        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoFardos'"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-class registrarProductorForm(ModelForm):
+#PERSONAL
+class registrarProductorForm(forms.ModelForm):
     class Meta:
         model = Productor
-        exclude = ['Baja']
+    
     def __init__(self, *args, **kwargs):
         super(registrarProductorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-registrarProductorForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Registrar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Productor Registrado!')"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarProductorForm(forms.Form):
-    Nombre = forms.CharField(label ="Nombre", max_length = 50)
-    Apellido = forms.CharField(label ="Apellido", max_length = 50)
-    Telefono = forms.CharField(label ="Telefono", max_length = 50)
-    Email = forms.EmailField(label ="Email", max_length = 50)
+class modificarProductorForm(forms.ModelForm):
+    class Meta:
+        model = Productor
 
     def __init__(self, *args, **kwargs):
         super(modificarProductorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Modificar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoProductores'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class registrarRepresentanteForm(ModelForm):
+class registrarRepresentanteForm(forms.ModelForm):
     class Meta:
         model = Representante
-        exclude = ['Baja']
+    
     def __init__(self, *args, **kwargs):
         super(registrarRepresentanteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Representante Registrado!')"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarRepresentanteForm(forms.Form):
-    Nombre = forms.CharField(label ="Nombre", max_length = 50)
-    Apellido = forms.CharField(label ="Apellido", max_length = 50)
-    Telefono = forms.CharField(label ="Telefono", max_length = 50)
-    Email = forms.EmailField(label ="Email", max_length = 50)
-    Zona = forms.CharField(label ="Zona", max_length = 50)
+class modificarRepresentanteForm(forms.ModelForm):
+    class Meta:
+        model = Representante
 
     def __init__(self, *args, **kwargs):
         super(modificarRepresentanteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-modificarRepresentanteForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Registrar'))
+        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoRepresentante'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
+
+#PRODUCCION
+class nuevaOrdenProduccionForm(forms.ModelForm):
+    class Meta:
+        model = OrdenProduccion
+        exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual']
+    
+    def __init__(self, *args, **kwargs):
+        super(nuevaOrdenProduccionForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick = "alert('Orden de produccion Registrada!')"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
+
+class modificarOrdenProduccionForm(forms.ModelForm):
+    Servicios = forms.ModelMultipleChoiceField(Servicio.objects.all())
+    class Meta:
+        model = OrdenProduccion
+
+    def __init__(self, *args, **kwargs):
+        super(modificarOrdenProduccionForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoOrden'"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-class registrarMaquinariaForm(ModelForm):
+class enviarFaseProduccionForm(forms.ModelForm):
+    class Meta:
+        model = OrdenProduccion
+
+    def __init__(self, *args, **kwargs):
+        super(enviarFaseProduccionForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Enviar'))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+
+class finalizarFaseProduccionForm(forms.ModelForm):
+    class Meta:
+        model = OrdenProduccion
+    
+    def __init__(self, *args, **kwargs):
+        super(finalizarFaseProduccionForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Button('submit', 'Finalizar'))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+
+#Maquinaria
+class registrarMaquinariaForm(forms.ModelForm):
     class Meta:
         model = Maquinaria
         exclude = ['Baja']
+    
     def __init__(self, *args, **kwargs):
         super(registrarMaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-registrarMaquinariaForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Registrar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Maquinaria Registrada!')"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarMaquinariaForm(forms.Form):
-    Tipo = forms.ModelChoiceField(Servicio.objects.all())
-    Descripcion = forms.CharField(label ="Descripción", max_length = 50)
-
+class modificarMaquinariaForm(forms.ModelForm):
+    class Meta:
+        model = Maquinaria
+        
     def __init__(self, *args, **kwargs):
         super(modificarMaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Modificar'))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoMaquinaria'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
