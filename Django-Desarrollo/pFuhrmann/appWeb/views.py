@@ -43,11 +43,11 @@ def registrarVenta(request):
         formulario = VentaForm(request.POST)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/registarVenta')
+            return HttpResponseRedirect('/listadoVenta')
     else:
         formulario = ventaForm()
+        formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ventaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
 
 #ORDEN DE PRODUCCION
 def nuevaOrdenProduccion(request):
