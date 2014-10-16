@@ -54,12 +54,23 @@ class Estancia(models.Model):
     def __unicode__(self):
         return "%s" % str(str(self.Nombre) + " " + str(self.Provincia))
 
+# First, define the Manager subclass.
+class BajaLogicaManager(models.Manager):
+    def __init__(self, **kwargs):
+        super(BajaLogicaManager, self).__init__()
+        self.kwargs = kwargs
+
+    def get_queryset(self):
+        return super(BajaLogicaManager, self).get_queryset().filter(**self.kwargs)
+
 class Lote(models.Model):
     NroLote = models.AutoField(primary_key = True)
     Peso = models.PositiveIntegerField(max_length=50)
     CantFardos = models.PositiveIntegerField(max_length=50)
     Baja = models.BooleanField(default=False)
 
+    objects = BajaLogicaManager(Baja = False)
+    elimindos = BajaLogicaManager(Baja = True)
     def __unicode__(self):
         return ""
 
