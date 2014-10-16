@@ -153,41 +153,41 @@ def listadoFardos(request):
     fardo = Fardo.objects.all()
     return render_to_response('listadoFardos.html', {'lista':fardo}, context_instance=RequestContext(request))
 
-#ESTANCIA
+# --------------- Administracion de Estancias
+def listadoEstancias(request):
+    estancia = Estancia.objects.all()
+    return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))
+
 def registrarEstancia(request):
     if request.method == 'POST':
-        formulario = registrarEstanciaForm(request.POST, request.FILES)
+        formulario = EstanciaForm(request.POST)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/registrarEstancia')
+            return HttpResponseRedirect('/listadoEstancias')
     else:
-        formulario = registrarEstanciaForm()
+        formulario = EstanciaForm()
+    formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('registrarEstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-def modificarEstancia(request):
-    estancia = Estancia.objects.all()
-    return render_to_response('modificarEstancia.html', {'lista':estancia}, context_instance=RequestContext(request))
-
-def modificarEstanciaF(request, pk):
-    estancia = Estancia.objects.get(pk=pk)
+def modificarEstancia(request, pk=None):
+    estancia = None
+    if pk is not None:
+        estancia = get_object_or_404(Estancia, pk=pk) 
     if request.method == 'POST':
-        formulario = modificarEstanciaForm(request.POST, request.FILES, instance=estancia)
+        formulario = EstanciaForm(request.POST, instance=estancia)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/modificarEstanciaF')
+            return HttpResponseRedirect('/listadoEstancias')
     else:
-        formulario = modificarEstanciaForm(instance = estancia)
-    return render_to_response('modificarEstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+        formulario = EstanciaForm(instance = estancia)
+    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
+    return render_to_response('registrarEstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-def eliminarEstanciaId(request, pk):
+def eliminarEstancia(request, pk):
     estancia = Estancia.objects.get(pk=pk)
     estancia.delete()
     estancia = Estancia.objects.all()
     return render_to_response('modificarEstancia.html', {'lista':estancia}, context_instance=RequestContext(request))    
-
-def listadoEstancias(request):
-    estancia = Estancia.objects.all()
-    return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))
 
 #PRODUCTOR
 def registrarProductor(request):

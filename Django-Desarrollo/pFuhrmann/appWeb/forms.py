@@ -1,7 +1,9 @@
 #encoding:utf-8
 from django.forms import ModelForm
 from django import forms
+from django.core.exceptions import ValidationError
 from appWeb.models import * 
+from localflavor.ar.forms import ARCUITField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
@@ -27,17 +29,35 @@ class ventaForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Venta Registrada!')"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-#ESTANCIA
-class registrarEstanciaForm(forms.ModelForm):
+# ----------- Formularios de Estancias
+class EstanciaForm(forms.ModelForm):
+    # Override de Cuit
+    CUIT = ARCUITField(label="El cuit", help_text="Un cuit")
+    # Campo nuevo
+    algo = forms.IntegerField()
+    # Ver django-selectable para autocompletado
     class Meta:
         model = Estancia
         exclude = ['Baja']
+        widgets = {
+            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
+        }
 
     def __init__(self, *args, **kwargs):
-        super(registrarEstanciaForm, self).__init__(*args, **kwargs)
+        super(EstanciaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Estancia Registrada!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
+
+    def clean_algo(self):
+        if self.cleaned_data['algo'] == 2:
+            raise ValidationError("Algo no puede ser 2")
+        return self.cleaned_data['algo']
+
+    def clean_CUIT(self):
+        return int(self.cleaned_data['CUIT'].replace('-', ''))
+        
+    def setup(self, *args, **kwarg):
+        self.helper.add_input(Submit('submit', *args, **kwarg))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
 class modificarEstanciaForm(forms.ModelForm):
     class Meta:

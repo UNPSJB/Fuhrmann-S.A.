@@ -27,17 +27,17 @@ body {
 
 header.carousel {
    
-    height: 500px;
+    height: 490px;
 }
 
 header.carousel .item,
 header.carousel .item.active,
 header.carousel .carousel-inner {
-    height: 500%;
+    height: 100%;
 }
 
 header.carousel .fill {
-    width: 80%;
+    width: 100%;
     height: 80%;
     background-position: center;
     background-size: cover;
