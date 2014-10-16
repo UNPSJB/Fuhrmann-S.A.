@@ -40,7 +40,7 @@ def listadoVenta(request):
 
 def registrarVenta(request):
     if request.method == 'POST':
-        formulario = ventaForm(request.POST, request.FILES)
+        formulario = VentaForm(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/registarVenta')
@@ -52,7 +52,7 @@ def registrarVenta(request):
 #ORDEN DE PRODUCCION
 def nuevaOrdenProduccion(request):
     if request.method == 'POST':
-        formulario = nuevaOrdenProduccionForm(request.POST, request.FILES)
+        formulario = nuevaOrdenProduccionForm(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/nuevaOrdenProduccion')
@@ -70,7 +70,7 @@ def modificarOrdenProduccion(request):
     
 def modificarOrdenProduccionF(request):
     if request.method == 'POST':
-        formulario = modificarOrdenProduccionForm(request.POST, request.FILES)
+        formulario = modificarOrdenProduccionForm(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/modificarOrdenProduccionF')
@@ -93,7 +93,7 @@ def finalizarFaseProduccion(request):
 #LOTES
 def registrarLote(request):
     if request.method == 'POST':
-        formulario = registrarLoteForm(request.POST, request.FILES)
+        formulario = registrarLoteForm(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/registrarLote')
@@ -108,7 +108,7 @@ def modificarLote(request):
 def modificarLoteF(request, pk):
     lote = Lote.objects.get(pk=pk)
     if request.method == 'POST':
-        formulario = modificarLoteForm(request.POST, request.FILES, instance = lote)
+        formulario = modificarLoteForm(request.POST, instance = lote)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/modificarLoteF')
@@ -130,7 +130,7 @@ def listadoLotes(request):
 #FARDOS
 def registrarFardo(request):
     if request.method == 'POST':
-        formulario = registrarFardoForm(request.POST, request.FILES)
+        formulario = registrarFardoForm(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/registrarFardo')
@@ -144,7 +144,7 @@ def modificarFardo(request):
     
 def modificarFardoF(request):
     if request.method == 'POST':
-        formulario = modificarFardoForm(request.POST, request.FILES)
+        formulario = modificarFardoForm(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/modificarFardoF')
@@ -195,7 +195,7 @@ def eliminarEstancia(request, pk):
 #PRODUCTOR
 def registrarProductor(request):
     if request.method == 'POST':
-        formulario = registrarProductorForm(request.POST, request.FILES)
+        formulario = registrarProductorForm(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/registrarProductor')
@@ -210,7 +210,7 @@ def modificarProductor(request):
 def modificarProductorF(request,pk):
     productor = Productor.objects.get(pk=pk)
     if request.method == 'POST':
-        formulario = modificarProductorForm(request.POST, request.FILES, instance=productor)
+        formulario = modificarProductorForm(request.POST, instance=productor)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/modificarProductorF')
@@ -231,7 +231,7 @@ def listadoProductores(request):
 #REPRESENTANTE
 def registrarRepresentante(request):
     if request.method == 'POST':
-        formulario = registrarRepresentanteForm(request.POST, request.FILES)
+        formulario = registrarRepresentanteForm(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/registrarRepresentante')
@@ -246,7 +246,7 @@ def modificarRepresentante(request):
 def modificarRepresentanteF(request,pk):
     representante = Representante.objects.get(pk=pk)
     if request.method == 'POST':
-        formulario = modificarRepresentanteForm(request.POST, request.FILES, intance=representante)
+        formulario = modificarRepresentanteForm(request.POST, intance=representante)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/modificarRepresentanteF')
@@ -267,7 +267,7 @@ def listadoRepresentante(request):
 #MAQUINARIAS    
 def registrarMaquinaria(request):
     if request.method == 'POST':
-        formulario = registrarMaquinariaForm(request.POST, request.FILES)
+        formulario = registrarMaquinariaForm(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/registrarMaquinaria')
@@ -282,7 +282,7 @@ def modificarMaquinaria(request):
 def modificarMaquinariaF(request, pk):
     maquinaria = Maquinaria.objects.get(pk=pk)
     if request.method == 'POST':
-        formulario = modificarMaquinariaForm(request.POST, request.FILES, instance = maquinaria)
+        formulario = modificarMaquinariaForm(request.POST, instance = maquinaria)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/modificarMaquinariaF')
