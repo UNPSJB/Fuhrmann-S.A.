@@ -8,11 +8,6 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
-
-
-#COMPRAS
-
-
 # ------------- Formulario de Compras
 class CompraForm(forms.ModelForm):    
     FechaLlegada = forms.DateField(label = "Fecha de Llegada",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
@@ -27,13 +22,9 @@ class CompraForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-
-#VENTAS
-
 # ------------- Formulario de Ventas
-
-
 class VentaForm(forms.ModelForm):
+    LoteVenta = forms.ModelMultipleChoiceField(LoteVenta.objects.all(),label = "Lote Venta")
     FechaVenta = forms.DateField(label = "Fecha",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
 
     class Meta:
@@ -46,8 +37,6 @@ class VentaForm(forms.ModelForm):
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-   
-#ESTANCIA
 
 # ------------- Formularios de Estancia
 
