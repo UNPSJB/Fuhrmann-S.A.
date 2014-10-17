@@ -219,23 +219,18 @@ class finalizarFaseProduccionForm(forms.ModelForm):
 #-----------------Formularios de Maquinaria
 
 
-class registrarMaquinariaForm(forms.ModelForm):
+class MaquinariaForm(forms.ModelForm):
     class Meta:
         model = Maquinaria
         exclude = ['Baja']
     
     def __init__(self, *args, **kwargs):
-        super(registrarMaquinariaForm, self).__init__(*args, **kwargs)
+        super(MaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Maquinaria Registrada!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarMaquinariaForm(forms.ModelForm):
-    class Meta:
-        model = Maquinaria
-        
-    def __init__(self, *args, **kwargs):
-        super(modificarMaquinariaForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoMaquinaria'"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
+    def setup(self, *args, **kwarg):
+        self.helper.add_input(Submit('submit', *args, **kwarg))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+
+
+
