@@ -32,12 +32,12 @@ header.carousel {
 header.carousel .item,
 header.carousel .item.active,
 header.carousel .carousel-inner {
-    height: 100%;
+    height: 130%;
 }
 
 header.carousel .fill {
     width: 100%;
-    height: 100%;
+    height: 80%;
     background-position: center;
     background-size: cover;
 }
