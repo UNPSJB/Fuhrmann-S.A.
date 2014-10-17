@@ -42,7 +42,7 @@ class VentaForm(forms.ModelForm):
 
 class EstanciaForm(forms.ModelForm):
     # Override de Cuit
-    #CUIT = ARCUITField(label="El cuit", help_text="Un cuit")
+    CUIT = ARCUITField(label="El cuit", help_text="Un cuit")
     # Campo nuevo
     algo = forms.IntegerField()
     # Ver django-selectable para autocompletado
@@ -155,6 +155,9 @@ class ProductorForm(forms.ModelForm):
 class RepresentanteForm(forms.ModelForm):
     class Meta:
         model = Representante
+        widgets = {
+            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
+        }
     
     def __init__(self, *args, **kwargs):
         super(RepresentanteForm, self).__init__(*args, **kwargs)
