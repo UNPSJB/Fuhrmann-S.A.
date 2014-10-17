@@ -15,6 +15,7 @@ from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
 # ------------- Formulario de Compras
 class CompraForm(forms.ModelForm):    
+    FechaLlegada = forms.DateField(label = "Fecha de Llegada",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
     class Meta:
         model = CompraLote
     
@@ -33,6 +34,8 @@ class CompraForm(forms.ModelForm):
 
 
 class VentaForm(forms.ModelForm):
+    FechaVenta = forms.DateField(label = "Fecha",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
+
     class Meta:
         model = Venta
     

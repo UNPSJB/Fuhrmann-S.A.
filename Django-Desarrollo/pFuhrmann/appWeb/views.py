@@ -45,7 +45,7 @@ def registrarVenta(request):
             formulario.save()
             return HttpResponseRedirect('/listadoVenta')
     else:
-        formulario = ventaForm()
+        formulario = VentaForm()
         formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ventaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
