@@ -217,14 +217,13 @@ class finalizarFaseProduccionForm(forms.ModelForm):
         self.helper.add_input(Button('submit', 'Finalizar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-#MAQUINARIA
-
 #-----------------Formularios de Maquinaria
-
-
 class MaquinariaForm(forms.ModelForm):
+    NroSerie = forms.IntegerField(label = "Nro. Serie")
+    TipoMaquinaria = forms.ModelMultipleChoiceField(Servicio.objects.all(), label = "Servicio")
     class Meta:
         model = Maquinaria
+        exclude = ['NroSerie']
         exclude = ['Baja']
     
     def __init__(self, *args, **kwargs):
@@ -234,6 +233,3 @@ class MaquinariaForm(forms.ModelForm):
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-
-
-

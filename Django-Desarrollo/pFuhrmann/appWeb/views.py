@@ -299,12 +299,15 @@ def registrarMaquinaria(request):
             return HttpResponseRedirect('/listadoMaquinaria')
     else:
         formulario = MaquinariaForm()
+        formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('MaquinariaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
 
 def modificarMaquinaria(request, pk=None):
     maquinaria = None
     if pk is not None:
         maquinaria = get_object_or_404(Maquinaria, pk=pk) 
+        exclude = ['NroSerie']
     if request.method == 'POST':
         formulario = MaquinariaForm(request.POST, instance=maquinaria)
         if formulario.is_valid():
@@ -312,6 +315,7 @@ def modificarMaquinaria(request, pk=None):
             return HttpResponseRedirect('/listadoMaquinaria')
     else:
         formulario = MaquinariaForm(instance = maquinaria)
+        exclude = ['NroSerie']
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('MaquinariaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
