@@ -44,7 +44,7 @@ class Representante(Persona):
 
 class Estancia(models.Model):
     Nombre = models.CharField(max_length=50)
-    CUIT = models.PositiveIntegerField(max_length=50, primary_key = True)
+    CUIT = models.CharField(max_length=13, primary_key = True)
     Provincia = models.CharField(max_length=50)
     Zona = models.CharField(max_length=50)
     Baja = models.BooleanField(default=False)
