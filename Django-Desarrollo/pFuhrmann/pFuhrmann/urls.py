@@ -38,14 +38,14 @@ urlpatterns = patterns('',
     # ------ Adm. Estancias
     url(r'^listadoEstancias/$', 'appWeb.views.listadoEstancias'),
     url(r'^modificarEstancia/$', 'appWeb.views.modificarEstancia'),
-    url(r'^modificarEstancia/(\d+)/$', 'appWeb.views.modificarEstancia'),
-    url(r'^eliminarEstancia/(\d+)/$', 'appWeb.views.eliminarEstancia'),
+    url(r'^modificarEstancia/([\d-]+)/$', 'appWeb.views.modificarEstancia'),
+    url(r'^eliminarEstancia/([\d-]+)/$', 'appWeb.views.eliminarEstancia'),
     
     # ------ Adm. Productor
     url(r'^listadoProductores/$', 'appWeb.views.listadoProductores'),
     url(r'^modificarProductor/$', 'appWeb.views.modificarProductor'),
-    url(r'^modificarProductor/(\d+)$', 'appWeb.views.modificarProductor'),
-    url(r'^eliminarProductor/(\d+)/$', 'appWeb.views.eliminarProductor'),
+    url(r'^modificarProductor/([\d-]+)/$', 'appWeb.views.modificarProductor'),
+    url(r'^eliminarProductor/([\d-]+)/$', 'appWeb.views.eliminarProductor'),
     
 
     # ------ Adm. Representante
