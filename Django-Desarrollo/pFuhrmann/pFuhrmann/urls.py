@@ -44,14 +44,14 @@ urlpatterns = patterns('',
     # ------ Adm. Productor
     url(r'^registrarProductor/$', 'appWeb.views.registrarProductor'),
     url(r'^modificarProductor/$', 'appWeb.views.modificarProductor'),
-    url(r'^modificarProductor/(\d+)$', 'appWeb.views.modificarProductorF'),
+    url(r'^modificarProductor/(\d+)$', 'appWeb.views.modificarProductor'),
     url(r'^eliminarProductor/(\d+)/$', 'appWeb.views.eliminarProductor'),
     url(r'^listadoProductores/$', 'appWeb.views.listadoProductores'),
 
     # ------ Adm. Representante
     url(r'^registrarRepresentante/$', 'appWeb.views.registrarRepresentante'),
     url(r'^modificarRepresentante/$', 'appWeb.views.modificarRepresentante'),
-    url(r'^modificarRepresentante/(\d+)$', 'appWeb.views.modificarRepresentanteF'),
+    url(r'^modificarRepresentante/(\d+)$', 'appWeb.views.modificarRepresentante'),
     url(r'^eliminarRepresentante/(\d+)/$', 'appWeb.views.eliminarRepresentante'),
     url(r'^listadoRepresentante/$', 'appWeb.views.listadoRepresentante'),
 
@@ -66,8 +66,6 @@ urlpatterns = patterns('',
     url(r'^modificarOrdenProduccionF/$', 'appWeb.views.modificarOrdenProduccionF'),
     url(r'^modificarLoteF/$', 'appWeb.views.modificarLoteF'),
     url(r'^modificarFardoF/$', 'appWeb.views.modificarFardoF'),
-    url(r'^modificarProductorF/$', 'appWeb.views.modificarProductorF'),
-    url(r'^modificarRepresentanteF/$', 'appWeb.views.modificarRepresentanteF'),
     url(r'^modificarMaquinariaF/$', 'appWeb.views.modificarMaquinariaF'),
 
     #Url's Dinamicas

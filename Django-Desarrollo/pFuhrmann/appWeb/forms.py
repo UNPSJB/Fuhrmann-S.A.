@@ -8,7 +8,12 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
-# ----------- Formulario de Compras
+
+
+#COMPRAS
+
+
+# ------------- Formulario de Compras
 class CompraForm(forms.ModelForm):    
     class Meta:
         model = CompraLote
@@ -21,7 +26,12 @@ class CompraForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-# ----------- Formulario de Ventas
+
+#VENTAS
+
+# ------------- Formulario de Ventas
+
+
 class VentaForm(forms.ModelForm):
     class Meta:
         model = Venta
@@ -33,8 +43,11 @@ class VentaForm(forms.ModelForm):
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-        
-# ----------- Formularios de Estancias
+   
+#ESTANCIA
+
+# ------------- Formularios de Estancia
+
 class EstanciaForm(forms.ModelForm):
     # Override de Cuit
     #CUIT = ARCUITField(label="El cuit", help_text="Un cuit")
@@ -66,6 +79,9 @@ class EstanciaForm(forms.ModelForm):
 
 
 #LOTES&FARDOS
+
+
+
 class registrarLoteForm(forms.ModelForm):    
     class Meta:
         model = Lote
@@ -122,7 +138,12 @@ class modificarFardoForm(forms.ModelForm):
         self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoFardos'"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
+
+
 #PERSONAL
+
+# ---------------Formularios de Productor
+
 class ProductorForm(forms.ModelForm):
     class Meta:
         model = Productor
@@ -135,31 +156,30 @@ class ProductorForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-class registrarRepresentanteForm(forms.ModelForm):
+
+# ---------------Formularios de Representante
+
+
+class RepresentanteForm(forms.ModelForm):
     class Meta:
         model = Representante
     
     def __init__(self, *args, **kwargs):
-        super(registrarRepresentanteForm, self).__init__(*args, **kwargs)
+        super(RepresentanteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Representante Registrado!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
+        
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-class modificarRepresentanteForm(forms.ModelForm):
-    class Meta:
-        model = Representante
 
-    def __init__(self, *args, **kwargs):
-        super(modificarRepresentanteForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoRepresentante'"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
 #PRODUCCION
+
+# ---------------Formularios de Orden de Produccion
+
+
 class nuevaOrdenProduccionForm(forms.ModelForm):
     class Meta:
         model = OrdenProduccion
@@ -202,7 +222,11 @@ class finalizarFaseProduccionForm(forms.ModelForm):
         self.helper.add_input(Button('submit', 'Finalizar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-#Maquinaria
+#MAQUINARIA
+
+#-----------------Formularios de Maquinaria
+
+
 class registrarMaquinariaForm(forms.ModelForm):
     class Meta:
         model = Maquinaria

@@ -157,6 +157,7 @@ def listadoFardos(request):
     return render_to_response('listadoFardos.html', {'lista':fardo}, context_instance=RequestContext(request))
 
 # --------------- Administracion de Estancias
+
 def listadoEstancias(request):
     estancia = Estancia.objects.all()
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))
@@ -170,7 +171,7 @@ def registrarEstancia(request):
     else:
         formulario = EstanciaForm()
     formulario.setup('Registrar', css_class="btn btn-success")
-    return render_to_response('registrarEstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def modificarEstancia(request, pk=None):
     estancia = None
@@ -184,7 +185,7 @@ def modificarEstancia(request, pk=None):
     else:
         formulario = EstanciaForm(instance = estancia)
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
-    return render_to_response('registrarEstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarEstancia(request, pk):
     estancia = Estancia.objects.get(pk=pk)
@@ -192,74 +193,86 @@ def eliminarEstancia(request, pk):
     estancia = Estancia.objects.all()
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))    
 
+
+# --------------- Administracion de Personal
+
 #PRODUCTOR
+
+    
+def listadoProductores(request):
+    productor = Productor.objects.all()
+    return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
+
+
 def registrarProductor(request):
     if request.method == 'POST':
         formulario = ProductorForm(request.POST)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/registrarProductor')
+            return HttpResponseRedirect('/listadoProductores')
     else:
         formulario = ProductorForm()
         formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-def modificarProductor(request):
-    productores = Productor.objects.all()
-    return render_to_response('modificarProductor.html', {'lista':productores}, context_instance=RequestContext(request))
-    
-def modificarProductorF(request,pk):
-    productor = Productor.objects.get(pk=pk)
+
+def modificarProductor(request, pk=None):
+    productor = None
+    if pk is not None:
+        productor = get_object_or_404(Productor, pk=pk) 
     if request.method == 'POST':
-        formulario = modificarProductorForm(request.POST, instance=productor)
+        formulario = ProductorForm(request.POST, instance=productor)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/modificarProductorF')
+            return HttpResponseRedirect('/listadoProductor')
     else:
-        formulario = modificarProductorForm(instance=productor)
-    return render_to_response('modificarProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+        formulario = ProductorForm(instance = productor)
+    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
+    return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarProductor(request,pk):
     productor = Productor.objects.get(pk=pk)
     productor.delete()
     productor = Productor.objects.all()
     return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
-    
-def listadoProductores(request):
-    productor = Productor.objects.all()
-    return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
+
+
 
 #REPRESENTANTE
+
+#-----------Administracion de Representante
+
+
 def listadoRepresentante(request):
     representante = Representante.objects.all()
     return render_to_response('listadoRepresentante.html', {'lista':representante}, context_instance=RequestContext(request))
 
 def registrarRepresentante(request):
     if request.method == 'POST':
-        formulario = registrarRepresentanteForm(request.POST)
+        formulario = RepresentanteForm(request.POST)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/registrarRepresentante')
+            return HttpResponseRedirect('/listadoRepresentante')
     else:
-        formulario = registrarRepresentanteForm()
+        formulario = RepresentanteForm()
         formulario.setup('Registrar', css_class="btn btn-success")
-    return render_to_response('registrarRepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    return render_to_response('RepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-def modificarRepresentante(request):
-    representantes = Representante.objects.all()
-    return render_to_response('modificarRepresentante.html', {'lista':representantes}, context_instance=RequestContext(request))
-    
-def modificarRepresentanteF(request,pk):
-    representante = Representante.objects.get(pk=pk)
+def modificarRepresentante(request, pk=None):
+    representante = None
+    if pk is not None:
+        representante = get_object_or_404(Representante, pk=pk) 
     if request.method == 'POST':
-        formulario = modificarRepresentanteForm(request.POST, intance=representante)
+        formulario = RepresentanteForm(request.POST, instance=representante)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/modificarRepresentanteF')
+            return HttpResponseRedirect('/listadoRepresentante')
     else:
-        formulario = modificarRepresentanteForm(instance=representante)
-    return render_to_response('modificarRepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-    
+        formulario = RepresentanteForm(instance = representante)
+    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
+    return render_to_response('RepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+
 def eliminarRepresentante(request,pk):
     representante = Representante.objects.get(pk=pk)
     representante.delete()
@@ -267,7 +280,9 @@ def eliminarRepresentante(request,pk):
     return render_to_response('listadoRepresentante.html', {'lista':representante}, context_instance=RequestContext(request))
 
 
-#-----------Administracion de Maquinarias    
+#-----------Administracion de Maquinarias  
+
+
 def listadoMaquinaria(request):
     maquinaria = Maquinaria.objects.all()
     return render_to_response('listadoMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
