@@ -1,12 +1,20 @@
 #encoding:utf-8
 from django.forms import ModelForm
 from django import forms
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from appWeb.models import * 
 from localflavor.ar.forms import ARCUITField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
+
+
+# ------------- Login
+class LoginForm(forms.Form):
+    username = forms.CharField(label = "Usuario")
+    password = forms.CharField(widget=forms.PasswordInput, label = "Contraseña") 
+    
 
 # ------------- Formulario de Compras
 class CompraForm(forms.ModelForm):    
