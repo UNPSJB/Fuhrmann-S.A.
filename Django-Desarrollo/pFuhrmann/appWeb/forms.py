@@ -8,13 +8,9 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
-
-
-#COMPRAS
-
-
 # ------------- Formulario de Compras
 class CompraForm(forms.ModelForm):    
+    FechaLlegada = forms.DateField(label = "Fecha de Llegada",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
     class Meta:
         model = CompraLote
     
@@ -26,13 +22,11 @@ class CompraForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-
-#VENTAS
-
 # ------------- Formulario de Ventas
-
-
 class VentaForm(forms.ModelForm):
+    LoteVenta = forms.ModelMultipleChoiceField(LoteVenta.objects.all(),label = "Lote Venta")
+    FechaVenta = forms.DateField(label = "Fecha",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
+
     class Meta:
         model = Venta
     
@@ -43,14 +37,12 @@ class VentaForm(forms.ModelForm):
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-   
-#ESTANCIA
 
 # ------------- Formularios de Estancia
 
 class EstanciaForm(forms.ModelForm):
     # Override de Cuit
-    #CUIT = ARCUITField(label="El cuit", help_text="Un cuit")
+    CUIT = ARCUITField(label="El cuit", help_text="Un cuit")
     # Campo nuevo
     algo = forms.IntegerField()
     # Ver django-selectable para autocompletado
@@ -162,6 +154,9 @@ class ProductorForm(forms.ModelForm):
 class RepresentanteForm(forms.ModelForm):
     class Meta:
         model = Representante
+        widgets = {
+            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
+        }
     
     def __init__(self, *args, **kwargs):
         super(RepresentanteForm, self).__init__(*args, **kwargs)
@@ -221,28 +216,19 @@ class finalizarFaseProduccionForm(forms.ModelForm):
         self.helper.add_input(Button('submit', 'Finalizar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-#MAQUINARIA
-
 #-----------------Formularios de Maquinaria
-
-
-class registrarMaquinariaForm(forms.ModelForm):
+class MaquinariaForm(forms.ModelForm):
+    NroSerie = forms.IntegerField(label = "Nro. Serie",required=False)
+    Descripcion = forms.CharField(required = False)
+    TipoMaquinaria = forms.ModelMultipleChoiceField(Servicio.objects.all(), label = "Servicio")
     class Meta:
         model = Maquinaria
         exclude = ['Baja']
     
     def __init__(self, *args, **kwargs):
-        super(registrarMaquinariaForm, self).__init__(*args, **kwargs)
+        super(MaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Maquinaria Registrada!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarMaquinariaForm(forms.ModelForm):
-    class Meta:
-        model = Maquinaria
-        
-    def __init__(self, *args, **kwargs):
-        super(modificarMaquinariaForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoMaquinaria'"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
+    def setup(self, *args, **kwarg):
+        self.helper.add_input(Submit('submit', *args, **kwarg))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
