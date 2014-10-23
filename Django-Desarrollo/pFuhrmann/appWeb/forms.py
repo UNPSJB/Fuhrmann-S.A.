@@ -137,8 +137,6 @@ class modificarFardoForm(forms.ModelForm):
         self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoFardos'"))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-
-
 #PERSONAL
 
 # ---------------Formularios de Productor
@@ -146,7 +144,10 @@ class modificarFardoForm(forms.ModelForm):
 class ProductorForm(forms.ModelForm):
     class Meta:
         model = Productor
-    
+
+    Telefono = forms.CharField(label = "Telefono", required = False)
+    Email = forms.CharField(label = "Email", required = False)
+
     def __init__(self, *args, **kwargs):
         super(ProductorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -163,9 +164,10 @@ class RepresentanteForm(forms.ModelForm):
     NroLegajo = forms.IntegerField(label = "Nro.Legajo")
     class Meta:
         model = Representante
-        widgets = {
-            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
-        }
+
+    Telefono = forms.CharField(label = "Telefono", required = False)
+    Email = forms.CharField(label = "Email", required = False)
+    widgets = {'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])}
     
     def __init__(self, *args, **kwargs):
         super(RepresentanteForm, self).__init__(*args, **kwargs)
