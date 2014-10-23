@@ -5,7 +5,7 @@ from appWeb import views
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^login/$',views.LoginView.as_view()),   
+
     url(r'^index/','appWeb.views.index'),
     url(r'^$','appWeb.views.index'),
     
@@ -72,5 +72,3 @@ urlpatterns = patterns('',
     #Url's Dinamicas
     url(r'^eliminarLote/(?P<pk>\d+)/$', 'appWeb.views.eliminarLoteId'),
 )
-
-

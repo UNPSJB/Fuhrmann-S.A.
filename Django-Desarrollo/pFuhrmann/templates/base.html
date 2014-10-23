@@ -1,18 +1,4 @@
 <!DOCTYPE html>
-{% load static %}
-
-    {% block css %}{% endblock css %}
-</head>
-<body>
-    {% if request.user.is_authenticated %}
-        {% block content %}{% endblock content %}
-    {% else %}
-        {% block login %}{% endblock login %}
-    {% endif %}
-  
-    {% block js %}{% endblock js %}
-</body>
-</html>  
 <html lang="en">
     <head>
         <meta charset="utf-8">
