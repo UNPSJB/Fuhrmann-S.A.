@@ -156,4 +156,4 @@ class Maquinaria(models.Model):
     Descripcion = models.CharField(max_length=50, null = True)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.tipoMaquinaria, self.NroSerie)
+        return u"%s - %s" % (self.TipoMaquinaria, self.NroSerie)

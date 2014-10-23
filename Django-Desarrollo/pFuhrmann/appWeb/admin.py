@@ -14,3 +14,5 @@ admin.site.register(Servicio)
 admin.site.register(LoteVenta)
 admin.site.register(Venta)
 admin.site.register(Cuadricula)
+admin.site.register(Maquinaria)
+

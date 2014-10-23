@@ -226,9 +226,9 @@ class finalizarFaseProduccionForm(forms.ModelForm):
 
 #-----------------Formularios de Maquinaria
 class MaquinariaForm(forms.ModelForm):
-    NroSerie = forms.IntegerField(label = "Nro. Serie",required=False)
+    NroSerie = forms.IntegerField(label = "Nro. Serie")
     Descripcion = forms.CharField(required = False)
-    TipoMaquinaria = forms.ModelMultipleChoiceField(Servicio.objects.all(), label = "Servicio")
+    TipoMaquinaria = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio")
     class Meta:
         model = Maquinaria
         exclude = ['Baja']
