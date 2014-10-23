@@ -22,12 +22,16 @@
                             <th width="10%">Nro. Lote</th>
                             <th width="10%">Peso (Kg)</th>
                             <th width="10%">Cantidad Fardos</th>
+                            <th width="10%">Modificar</th>
+                            <th width="10%">Eliminar</th>
                         </tr>
                         {% for dato in lista %}
                         <tr>
                             <td width="10%" id="nroLote">{{dato.NroLote}}</td>
                             <td width="10%">{{dato.Peso}}</td>
                             <td width="10%">{{dato.CantFardos}}</td>
+                            <td width="5%"><a href="/modificarLote/{{dato.NroLote}}" class="glyphicon glyphicon-edit"></a>
+                            <td width="5%"><a href="/eliminarLote/{{dato.NroLote}}" class="glyphicon glyphicon-remove"></a>
                         </tr>
 
                         {% empty %}
@@ -36,7 +40,8 @@
                     </thead>
                 </table>
                 <script type ="text/javascript"> </script>
-                <div class="btn-group pull-right">
+                <div class="pull-right">
+                    <a class="btn btn-default btn-gr" type= "button" href="/registrarLote">Agregar</a>
                     <a class="btn btn-default btn-gr" type= "button" href="/index">Salir</a>
                 </div>    
             </div>

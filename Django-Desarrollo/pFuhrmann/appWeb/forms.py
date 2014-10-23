@@ -80,33 +80,32 @@ class EstanciaForm(forms.ModelForm):
 
 #LOTES&FARDOS
 
+# ------------- Formularios de Lotes
 
 
-class registrarLoteForm(forms.ModelForm):    
+class LoteForm(forms.ModelForm):    
     class Meta:
         model = Lote
         exclude = ("Baja",)
-
-    def __init__(self, *args, **kwargs):
-        super(registrarLoteForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick="alert('Lote Registrado!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default", onClick="location.href='/index'"))
+        if Lote is None:
+            exclude = ("Peso",)
+    if Lote is None:
+        Peso = forms.IntegerField(label ="PesoLote", min_value = 0)
     
-class modificarLoteForm(forms.ModelForm):
-    class Meta:
-        model = Lote
-
-    Peso = forms.IntegerField(label ="PesoLote", min_value = 0)
     CantFardos = forms.IntegerField(label ="CantidadFardos", min_value = 0)
 
+
     def __init__(self, *args, **kwargs):
-        super(modificarLoteForm, self).__init__(*args, **kwargs)
+        super(LoteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-modificarLoteForm'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoLotes'"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
+
+    def setup(self, *args, **kwarg):
+        self.helper.add_input(Submit('submit', *args, **kwarg))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+
+
+# ------------- Formularios de Fardo
+
 
 class registrarFardoForm(ModelForm):
     class Meta:

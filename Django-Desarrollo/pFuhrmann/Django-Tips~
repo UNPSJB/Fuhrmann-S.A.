@@ -1,0 +1,3 @@
+   # date = forms.DateField(widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
+    # required = False, es para que no se lo pida como obligatorio
+    

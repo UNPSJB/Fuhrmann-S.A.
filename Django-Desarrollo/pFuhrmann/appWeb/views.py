@@ -105,30 +105,21 @@ def finalizarFaseProduccion(request):
     return render_to_response('finalizarFaseProduccionForm.html', {'lista':orden}, context_instance=RequestContext(request))   
 
 #LOTES
-def registrarLote(request):
+def registrarLote(request, pk=None):
+    lote = None
+    if pk is not None:
+        lote = get_object_or_404(Lote, pk=pk)
+
     if request.method == 'POST':
-        formulario = registrarLoteForm(request.POST)
+        formulario = LoteForm(request.POST, instance = lote)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/registrarLote')
+            return HttpResponseRedirect('/listadoLotes')
     else:
-        formulario = registrarLoteForm()
+        formulario = LoteForm(instance = lote)
+
+    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('registrarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
-def modificarLote(request):
-    lote = Lote.objects.all()   
-    return render_to_response('modificarLote.html', {'lista':lote}, context_instance=RequestContext(request))
-
-def modificarLoteF(request, pk):
-    lote = Lote.objects.get(pk=pk)
-    if request.method == 'POST':
-        formulario = modificarLoteForm(request.POST, instance = lote)
-        if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect('/modificarLoteF')
-    else:
-        formulario = modificarLoteForm(instance = lote)
-    return render_to_response('modificarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarLoteId(request, pk):
     lote = Lote.objects.get(pk=pk)
@@ -141,6 +132,7 @@ def listadoLotes(request):
     lote = Lote.objects.all()
     return render_to_response('listadoLotes.html', {'lista':lote}, context_instance=RequestContext(request))
 
+
 #FARDOS
 def registrarFardo(request):
     if request.method == 'POST':
@@ -152,10 +144,6 @@ def registrarFardo(request):
         formulario = registrarFardoForm()
     return render_to_response('registrarFardoForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-def modificarFardo(request):
-    fardo = Fardo.objects.all()
-    return render_to_response('modificarFardo.html', {'lista':fardo}, context_instance=RequestContext(request))
-    
 def modificarFardoF(request):
     if request.method == 'POST':
         formulario = modificarFardoForm(request.POST)

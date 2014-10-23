@@ -29,13 +29,12 @@ urlpatterns = patterns('',
     #Lotes y Fardos
     url(r'^registrarLote/$', 'appWeb.views.registrarLote'),
     url(r'^listadoLotes/$', 'appWeb.views.listadoLotes'),
-    url(r'^modificarLote/$', 'appWeb.views.modificarLote'),
-    url(r'^modificarLote/(\d+)/$', 'appWeb.views.modificarLoteF'),
+    url(r'^modificarLote/(\d+)/$', 'appWeb.views.registrarLote'),
     url(r'^eliminarLote/(\d+)/$', 'appWeb.views.eliminarLoteId'),
 
     url(r'^registrarFardo/$', 'appWeb.views.registrarFardo'),
     url(r'^listadoFardos/$', 'appWeb.views.listadoFardos'),
-    url(r'^modificarFardo/$', 'appWeb.views.modificarFardo'),
+    url(r'^modificarFardo/$', 'appWeb.views.registrarFardo'),
 
     # ------ Adm. Estancias
     url(r'^listadoEstancias/$', 'appWeb.views.listadoEstancias'),
@@ -65,7 +64,6 @@ urlpatterns = patterns('',
 
     #Url's de Forms para modificar Datos
     url(r'^modificarOrdenProduccionF/$', 'appWeb.views.modificarOrdenProduccionF'),
-    url(r'^modificarLoteF/$', 'appWeb.views.modificarLoteF'),
     url(r'^modificarFardoF/$', 'appWeb.views.modificarFardoF'),
 
 
