@@ -18,3 +18,12 @@
     </div>
 </div>
 {% endblock %}
+{% block scripts %}
+<script>
+    $(function() {
+        $( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy', 
+                                        inline: true
+        });
+    });
+</script>
+{% endblock %}

@@ -50,7 +50,7 @@ class VentaForm(forms.ModelForm):
 
 class EstanciaForm(forms.ModelForm):
     # Override de Cuit
-    CUIT = ARCUITField(label="El cuit", help_text="Un cuit")
+    CUIT = ARCUITField(label="CUIT", help_text="Un cuit")
     # Campo nuevo
     algo = forms.IntegerField()
     # Ver django-selectable para autocompletado
@@ -160,6 +160,7 @@ class ProductorForm(forms.ModelForm):
 
 
 class RepresentanteForm(forms.ModelForm):
+    NroLegajo = forms.IntegerField(label = "Nro.Legajo")
     class Meta:
         model = Representante
         widgets = {
@@ -183,7 +184,11 @@ class RepresentanteForm(forms.ModelForm):
 
 
 class nuevaOrdenProduccionForm(forms.ModelForm):
+    CantRequerida = forms.IntegerField(label = "Cantidad Requerida(Kg.)")
+    FechaInicioProduccion = forms.DateField(label = "Inicio Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = True)
+    FechaFinProduccion = forms.DateField(label = "Fin Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = True)
     class Meta:
+
         model = OrdenProduccion
         exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual']
     
