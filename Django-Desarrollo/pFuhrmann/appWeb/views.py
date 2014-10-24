@@ -148,14 +148,14 @@ def registrarFardo(request, pk=None):
     if request.method == 'POST':
         formulario = FardoForm(request.POST, instance = fardo)
         if formulario.is_valid():
-            pk = formulario.cleaned_data['Lote'].NroLote
+            pk1 = formulario.cleaned_data['Lote'].NroLote
 
-            if pk is None:
+            if pk1 is not None:
                 for x in xrange(formulario.cleaned_data['Lote'].CantFardos): # Segun la cantidad de fardos en lote, son las instancia que creo
                     formulario.save()
                     formulario = FardoForm(request.POST)
                 
-                lote = Lote.objects.get(pk = pk)            # Seteo la baja de lote para que no se pueda volver a cargar los fardos de ese lote
+                lote = Lote.objects.get(pk = pk1)            # Seteo la baja de lote para que no se pueda volver a cargar los fardos de ese lote
                 lote.Baja = True
             else:
                 lote_id = fardo.Lote_id                     # obtener el lote asociado
