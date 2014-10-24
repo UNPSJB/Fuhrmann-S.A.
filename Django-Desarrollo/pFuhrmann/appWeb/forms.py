@@ -124,16 +124,10 @@ class FardoForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(FardoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-<<<<<<< HEAD
     
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-
-=======
-        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoFardos'"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
->>>>>>> 6a0f602c023b0f520ba3dea9bbe52683a3aec49e
 
 #PERSONAL
 

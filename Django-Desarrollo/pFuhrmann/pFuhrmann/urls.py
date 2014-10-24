@@ -62,14 +62,6 @@ urlpatterns = patterns('',
     url(r'^eliminarMaquinaria/(\d+)/$', 'appWeb.views.eliminarMaquinaria'),
     
 
-    #Url's de Forms para modificar Datos
-<<<<<<< HEAD
-    url(r'^modificarOrdenProduccionF/$', 'appWeb.views.modificarOrdenProduccionF'),
-=======
-    url(r'^modificarFardoF/$', 'appWeb.views.modificarFardoF'),
-
-
     #Url's Dinamicas
     url(r'^eliminarLote/(?P<pk>\d+)/$', 'appWeb.views.eliminarLoteId'),
->>>>>>> 6a0f602c023b0f520ba3dea9bbe52683a3aec49e
 )
