@@ -32,7 +32,7 @@ class CompraForm(forms.ModelForm):
 
 # ------------- Formulario de Ventas
 class VentaForm(forms.ModelForm):
-    LoteVenta = forms.ModelMultipleChoiceField(LoteVenta.objects.all(),label = "Lote Venta")
+    LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(),label = "Lote Venta")
     FechaVenta = forms.DateField(label = "Fecha",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
 
     class Meta:

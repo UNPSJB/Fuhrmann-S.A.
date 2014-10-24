@@ -55,6 +55,10 @@ def registrarVenta(request):
     if request.method == 'POST':
         formulario = VentaForm(request.POST)
         if formulario.is_valid():
+            pk = formulario.cleaned_data['LoteVenta'].NroPartida
+            loteV = LoteVenta.objects.get(pk = pk)            # Seteo la baja de lote para que no se pueda volver a cargar los fardos de ese lote
+            loteV.Baja = True
+            loteV.save()
             formulario.save()
             return HttpResponseRedirect('/listadoVenta')
     else:

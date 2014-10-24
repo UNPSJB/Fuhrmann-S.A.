@@ -141,8 +141,11 @@ class LoteVenta(models.Model):
     Baja = models.BooleanField(default=False)
     OrdenProduccion = models.OneToOneField('OrdenProduccion')
     
+    objects = BajaLogicaManager(Baja = False)       # Mostrar objetos con baja = false
+    eliminados = BajaLogicaManager(Baja = True)     # Mostrar objetos con baja = true
+
     def __unicode__(self):
-        return ""
+        return "%s" % (str(self.NroPartida))
 
 class Cuadricula(models.Model):
     NroCuadricula = models.AutoField(primary_key = True)
