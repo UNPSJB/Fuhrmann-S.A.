@@ -78,13 +78,13 @@ class EstanciaForm(forms.ModelForm):
 class LoteForm(forms.ModelForm):    
     class Meta:
         model = Lote
-        exclude = ("Baja",)
-        if Lote is None:
-            exclude = ("Peso",)
-    if Lote is None:
-        Peso = forms.IntegerField(label ="PesoLote", min_value = 0)
+      #  if *args is None:
+      #      exclude = ("Peso", "Baja", )
+      #  else:
+        exclude = ("Baja", )
     
-    CantFardos = forms.IntegerField(label ="CantidadFardos", min_value = 0)
+    
+    CantFardos = forms.IntegerField(label ="Cantidad de Fardos", min_value = 0)
 
 
     def __init__(self, *args, **kwargs):
@@ -99,36 +99,27 @@ class LoteForm(forms.ModelForm):
 # ------------- Formularios de Fardo
 
 
-class registrarFardoForm(ModelForm):
+class FardoForm(ModelForm):
     class Meta:
         model = Fardo
-        exclude = ['Baja']
+        exclude = ['Baja', 'DetalleOrden']
+
+   # if this.instance is not None:
+   #     print "sad"
+        
+    Lote = forms.ModelChoiceField(Lote.objects.all(), label ="Lote de Fardos")
+    TipoFardo = forms.ModelChoiceField(TipoFardo.objects.all(), label ="Tipo de Fardo")
+    CV = forms.FloatField(label ="Coeficiente de Variacion", min_value = 0)
+    AlturaMedia = forms.FloatField(label ="Altura Media", min_value = 0)
+    Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula", required = False)
+
+    def __init__(self, *args, **kwargs):
+        super(FardoForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
     
-    def __init__(self, *args, **kwargs):
-        super(registrarFardoForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success", onClick="alert('Fardos Registrados!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
-
-class modificarFardoForm(forms.ModelForm):
-    class Meta:
-        model = Fardo
-
-    Tipo = forms.ModelChoiceField(TipoFardo.objects.all())
-    Peso = forms.IntegerField(label ="Peso", min_value = 0)
-    Rinde = forms.IntegerField(label ="Rinde", min_value = 0)
-    Finura = forms.IntegerField(label ="Finura", min_value = 0)
-    CoeficienteVariacion = forms.IntegerField(label ="CoeficienteVariacion", min_value = 0)
-    AlturaMedia = forms.IntegerField(label ="AlturaMedia", min_value = 0)
-    Micronaje = forms.IntegerField(label ="Micronaje", min_value = 0)
-    Romana = forms.IntegerField(label ="Romana", min_value = 0)
-
-    def __init__(self, *args, **kwargs):
-        super(modificarFardoForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoFardos'"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
-
+    def setup(self, *args, **kwarg):
+        self.helper.add_input(Submit('submit', *args, **kwarg))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
 
 #PERSONAL

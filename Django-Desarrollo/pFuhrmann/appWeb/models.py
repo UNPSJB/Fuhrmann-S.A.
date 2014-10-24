@@ -68,14 +68,17 @@ class Lote(models.Model):
     Peso = models.PositiveIntegerField(max_length=50)
     CantFardos = models.PositiveIntegerField(max_length=50)
     Baja = models.BooleanField(default=False)
+    Compra = models.OneToOneField('CompraLote')
 
-    objects = BajaLogicaManager(Baja = False)
-    elimindos = BajaLogicaManager(Baja = True)
+    objects = BajaLogicaManager(Baja = False)       # Mostrar objetos con baja = false
+    eliminados = BajaLogicaManager(Baja = True)     # Mostrar objetos con baja = true
+
     def __unicode__(self):
-        return ""
+        return u"%s" % self.NroLote
 
 class Fardo(models.Model):
     NroFardo = models.AutoField(primary_key = True)
+    Lote = models.ForeignKey('Lote')
     TipoFardo = models.ForeignKey('TipoFardo')
     Peso = models.FloatField()
     Rinde = models.FloatField()
@@ -86,7 +89,6 @@ class Fardo(models.Model):
     Romana = models.FloatField()
     Cuadricula = models.ForeignKey('Cuadricula', null = True)
     DetalleOrden = models.ForeignKey('DetalleOrden', null = True)
-    Compra = models.OneToOneField('CompraLote')
 
     def __unicode__(self):
         return ""
@@ -96,7 +98,7 @@ class TipoFardo(models.Model):
     Descripcion = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return ""
+        return u"%s" % self.Nombre
 
 
 class OrdenProduccion(models.Model):
@@ -148,7 +150,7 @@ class Cuadricula(models.Model):
     NroCuadricula = models.AutoField(primary_key = True)
 
     def __unicode__(self):
-        return ""
+        return "%s Cuadri" % self.NroCuadricula
 
 class Maquinaria(models.Model):
     NroSerie = models.PositiveIntegerField(max_length=50, primary_key = True)

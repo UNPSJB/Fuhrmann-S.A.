@@ -117,7 +117,7 @@ def eliminarLoteId(request, pk):
     lote.Baja = True
     lote.save()
     lote = Lote.objects.all()
-    return render_to_response('modificarLote.html', {'lista':lote}, context_instance=RequestContext(request))    
+    return render_to_response('listadoLotes.html', {'lista':lote}, context_instance=RequestContext(request))    
 
 def listadoLotes(request):
     lote = Lote.objects.all()
@@ -125,26 +125,41 @@ def listadoLotes(request):
 
 
 #FARDOS
-def registrarFardo(request):
+def registrarFardo(request, pk=None):
+    fardo = None
+    if pk is not None:
+        fardo = get_object_or_404(Fardo, pk=pk)
+
     if request.method == 'POST':
-        formulario = registrarFardoForm(request.POST)
+        formulario = FardoForm(request.POST, instance = fardo)
         if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect('/registrarFardo')
+            pk = formulario.cleaned_data['Lote'].NroLote
+
+            if pk is None:
+                for x in xrange(formulario.cleaned_data['Lote'].CantFardos): # Segun la cantidad de fardos en lote, son las instancia que creo
+                    formulario.save()
+                    formulario = FardoForm(request.POST)
+                
+                lote = Lote.objects.get(pk = pk)            # Seteo la baja de lote para que no se pueda volver a cargar los fardos de ese lote
+                lote.Baja = True
+            else:
+                lote_id = fardo.Lote_id                     # obtener el lote asociado
+                l = Lote.objects.get(NroLote = lote_id )    # Obtener el lote con id = lote_id 
+                f_set = l.fardo_set                         # obtener todos los fardos asociados al lote obtenido antes
+                                
+                for f in f_set.all():                       # Coleccion de fardos
+                    formulario = FardoForm(request.POST, instance = f)  # Modifico todos los fardos del mismo lote al modificar uno
+                    formulario.save()
+
+            return HttpResponseRedirect('/listadoFardos')
     else:
-        formulario = registrarFardoForm()
+        formulario = FardoForm(instance = fardo)
+
+    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('registrarFardoForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-def modificarFardoF(request):
-    if request.method == 'POST':
-        formulario = modificarFardoForm(request.POST)
-        if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect('/modificarFardoF')
-    else:
-        formulario = modificarFardoForm()
-    return render_to_response('modificarFardoForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-    
+
+
 def listadoFardos(request):
     fardo = Fardo.objects.all()
     return render_to_response('listadoFardos.html', {'lista':fardo}, context_instance=RequestContext(request))

@@ -32,7 +32,7 @@ urlpatterns = patterns('',
 
     url(r'^registrarFardo/$', 'appWeb.views.registrarFardo'),
     url(r'^listadoFardos/$', 'appWeb.views.listadoFardos'),
-    url(r'^modificarFardo/$', 'appWeb.views.registrarFardo'),
+    url(r'^modificarFardo/(\d+)/$', 'appWeb.views.registrarFardo'),
 
     # ------ Adm. Estancias
     url(r'^listadoEstancias/$', 'appWeb.views.listadoEstancias'),
@@ -62,11 +62,4 @@ urlpatterns = patterns('',
 
     #Url's de Forms para modificar Datos
     url(r'^modificarOrdenProduccionF/$', 'appWeb.views.modificarOrdenProduccionF'),
-    url(r'^modificarFardoF/$', 'appWeb.views.modificarFardoF'),
-
-
-    #Url's Dinamicas
-    url(r'^eliminarLote/(?P<pk>\d+)/$', 'appWeb.views.eliminarLoteId'),
-
-
 )
