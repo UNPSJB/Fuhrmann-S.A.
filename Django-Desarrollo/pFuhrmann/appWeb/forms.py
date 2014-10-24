@@ -185,7 +185,7 @@ class RepresentanteForm(forms.ModelForm):
 # ---------------Formularios de Orden de Produccion
 
 
-class nuevaOrdenProduccionForm(forms.ModelForm):
+class OrdenProduccionForm(forms.ModelForm):
     CantRequerida = forms.IntegerField(label = "Cantidad Requerida(Kg.)")
     FechaInicioProduccion = forms.DateField(label = "Inicio Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = True)
     FechaFinProduccion = forms.DateField(label = "Fin Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = True)
@@ -195,21 +195,12 @@ class nuevaOrdenProduccionForm(forms.ModelForm):
         exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual']
     
     def __init__(self, *args, **kwargs):
-        super(nuevaOrdenProduccionForm, self).__init__(*args, **kwargs)
+        super(OrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick = "alert('Orden de produccion Registrada!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarOrdenProduccionForm(forms.ModelForm):
-    Servicios = forms.ModelMultipleChoiceField(Servicio.objects.all())
-    class Meta:
-        model = OrdenProduccion
-
-    def __init__(self, *args, **kwargs):
-        super(modificarOrdenProduccionForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoOrden'"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+    def setup(self, *args, **kwarg):
+        self.helper.add_input(Submit('submit', *args, **kwarg))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
 class enviarFaseProduccionForm(forms.ModelForm):
     class Meta:

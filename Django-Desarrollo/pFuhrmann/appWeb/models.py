@@ -133,11 +133,9 @@ class Servicio(models.Model):
 
 class LoteVenta(models.Model):
     NroPartida = models.AutoField(primary_key = True)
-    ServicioRealizado = ('Lavado', 'Peinado', 'Cardado')
     FechaCierreOrden = models.DateField() 
     Cantidad = models.PositiveIntegerField(max_length=50)
     Cuadricula = models.ForeignKey('Cuadricula')
-    Servicio = models.ManyToManyField('Servicio')
     Baja = models.BooleanField(default=False)
     OrdenProduccion = models.OneToOneField('OrdenProduccion')
     

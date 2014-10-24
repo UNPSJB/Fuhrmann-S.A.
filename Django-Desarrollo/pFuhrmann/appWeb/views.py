@@ -64,34 +64,36 @@ def registrarVenta(request):
 
 
 #ORDEN DE PRODUCCION
-def nuevaOrdenProduccion(request):
+def registrarOrdenProduccion(request):
     if request.method == 'POST':
-        formulario = nuevaOrdenProduccionForm(request.POST)
+        formulario = OrdenProduccionForm(request.POST)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/nuevaOrdenProduccion')
+            return HttpResponseRedirect('/listadoOrden')
     else:
-        formulario = nuevaOrdenProduccionForm()
-    return render_to_response('nuevaOrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+        formulario = OrdenProduccionForm()
+        formulario.setup('Registrar', css_class="btn btn-success")
+    return render_to_response('OrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def listadoOrden(request):
     op = OrdenProduccion.objects.all()
     return render_to_response('listadoOrden.html', {'lista':op}, context_instance=RequestContext(request))
-
-def modificarOrdenProduccion(request):
-    orden = OrdenProduccion.objects.all()
-    return render_to_response('modificarOrdenProduccion.html', {'lista':orden}, context_instance=RequestContext(request))
     
-def modificarOrdenProduccionF(request):
+def modificarOrdenProduccion(request, pk):
     if request.method == 'POST':
-        formulario = modificarOrdenProduccionForm(request.POST)
+        formulario = modificarOrdenProduccion(request.POST, instance = op)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/modificarOrdenProduccionF')
+            return HttpResponseRedirect('/listadoOrden')
     else:
-        formulario = modificarOrdenProduccionForm()
-    return render_to_response('modificarOrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+        formulario = modificarOrdenProduccion(instance= op)
+        formulario.setup('Modificar', css_class="btn btn-success")
+    return render_to_response('modificarOrdenProduccion.html', {'formulario':formulario}, context_instance=RequestContext(request))
     
+   
+    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
+    return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
 def cancelarOrdenProduccion(request):
     orden = OrdenProduccion.objects.all()
     return render_to_response('cancelarOrdenProduccionForm.html', {'lista':orden}, context_instance=RequestContext(request))

@@ -23,35 +23,35 @@
                 <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tableLote" width="100%">
                     <thead>
                         <tr>
-                            <th width="10%">Nro. Orden</th>
-                            <th width="10%">Fecha Emisión</th>
-                            <th width="10%">Kg</th>
+                            <th width="7%">Nro. Orden</th>
+                            <th width="10%">F Emisión</th>
+                            <th width="5%">Kg</th>
+                            <th width="5%">CV</th>
                             <th width="10%">Servicio</th>
-                            <th width="10%">CV</th>
-                            <th width="10%">Altura Media</th>
-                            <th width="10%">Micronaje</th>
-                            <th width="10%">Romana</th>
-                            <th width="10%">Fecha Inicio</th>
-                            <th width="10%">Fecha Fin</th>
+                            <th width="5%">Hm</th>
+                            <th width="5%">Micronaje</th>
+                            <th width="5%">Romana</th>
+                            <th width="10%">F Inicio</th>
+                            <th width="10%">F Fin</th>
                             <th width="10%">Maquinaria</th>
-                            <th width="10%">En Producción</th>
-                            <th width="10%">Finalizada</th>
+                            <th width="5%">Proceso</th>
+                            <th width="5%">Terminada</th>
                         </tr>
                         {% for dato in lista %}
                         <tr>
-                            <td width="10%" id="nroOrden">{{dato.NroOrden}}</td>
+                            <td width="7%" id="nroOrden">{{dato.NroOrden}}</td>
                             <td width="10%">{{dato.FechaEmision}}</td>
-                            <td width="10%">{{dato.CantRequerida}}</td>
-                            <td width="10%">{{dato.Servicio}}</td>
-                            <td width="10%">{{dato.CV}}</td>
-                            <td width="10%">{{dato.AlturaMedia}}</td>
-                            <td width="10%">{{dato.Micronaje}}</td>
-                            <td width="10%">{{dato.Romana}}</td>
+                            <td width="5%">{{dato.CantRequerida}}</td>
+                            <td width="5%">{{dato.CV}}</td>
+                            <td width="5%">{{dato.Servicio_id}}</td>
+                            <td width="5%">{{dato.AlturaMedia}}</td>
+                            <td width="5%">{{dato.Micronaje}}</td>
+                            <td width="5%">{{dato.Romana}}</td>
                             <td width="10%">{{dato.FechaIncioProduccion}}</td>
                             <td width="10%">{{dato.FechaFinProduccion}}</td>
                             <td width="10%">{{dato.MaquinaActual}}</td>
-                            <td width="10%">{{dato.EnProduccion}}</td>
-                            <td width="10%">{{dato.Finalizada}}</td>
+                            <td width="5%">{{dato.EnProduccion}}</td>
+                            <td width="5%">{{dato.Finalizada}}</td>
 
                         </tr>
 
