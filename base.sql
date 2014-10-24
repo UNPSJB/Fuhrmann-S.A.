@@ -80,9 +80,12 @@ insert into "appWeb_fardo"("NroFardo", "TipoFardo_id", "Peso", "Rinde", "Finura"
 values ()
 
 select * from "appWeb_ordenproduccion"
-insert into "appWeb_ordenproduccion"("NroOrden","FechaEmision","CantRequerida","CV","AlturaMedia", "Micronaje", "Romana","Micronaje","Romana", "FechaInicioProduccion","FechaFinProduccion", "MaquinaActual_id","EnProduccion", "Finalizada" )
-values ('1','3/10/2014','1000','','''''''''''''')
+insert into "appWeb_ordenproduccion"("NroOrden","FechaEmision","CantRequerida","CV","AlturaMedia", "Micronaje", "Romana", "FechaInicioProduccion","FechaFinProduccion", "MaquinaActual_id","EnProduccion","Finalizada")
+values ('2','3/10/2014','1000','1','1','1','1','3/07/2014','7/10/2014','2',False,True)
 
 select * from "appWeb_loteventa"
 insert into "appWeb_loteventa"("NroPartida", "FechaCierreOrden", "Cantidad", "Cuadricula_id", "Baja", "OrdenProduccion_id")
 values ('1','4/10/2014','1','1',False,'1')
+
+insert into "appWeb_loteventa"("NroPartida", "FechaCierreOrden", "Cantidad", "Cuadricula_id", "Baja", "OrdenProduccion_id")
+values ('2','4/10/2014','1','1',False,'2')

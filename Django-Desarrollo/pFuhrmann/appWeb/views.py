@@ -1,3 +1,4 @@
+import urlparse
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from appWeb.models import *
@@ -10,7 +11,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-
+from django.conf import settings
+from django.contrib.auth import (REDIRECT_FIELD_NAME, login, logout, authenticate)
+from django.core.urlresolvers import reverse
+from django.views.generic.edit import FormView
+from django.http import *
+from django.shortcuts import render_to_response,redirect
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
@@ -55,34 +64,36 @@ def registrarVenta(request):
 
 
 #ORDEN DE PRODUCCION
-def nuevaOrdenProduccion(request):
+def registrarOrdenProduccion(request):
     if request.method == 'POST':
-        formulario = nuevaOrdenProduccionForm(request.POST)
+        formulario = OrdenProduccionForm(request.POST)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/nuevaOrdenProduccion')
+            return HttpResponseRedirect('/listadoOrden')
     else:
-        formulario = nuevaOrdenProduccionForm()
-    return render_to_response('nuevaOrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+        formulario = OrdenProduccionForm()
+        formulario.setup('Registrar', css_class="btn btn-success")
+    return render_to_response('OrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def listadoOrden(request):
     op = OrdenProduccion.objects.all()
     return render_to_response('listadoOrden.html', {'lista':op}, context_instance=RequestContext(request))
-
-def modificarOrdenProduccion(request):
-    orden = OrdenProduccion.objects.all()
-    return render_to_response('modificarOrdenProduccion.html', {'lista':orden}, context_instance=RequestContext(request))
     
-def modificarOrdenProduccionF(request):
+def modificarOrdenProduccion(request, pk):
     if request.method == 'POST':
-        formulario = modificarOrdenProduccionForm(request.POST)
+        formulario = modificarOrdenProduccion(request.POST, instance = op)
         if formulario.is_valid():
             formulario.save()
-            return HttpResponseRedirect('/modificarOrdenProduccionF')
+            return HttpResponseRedirect('/listadoOrden')
     else:
-        formulario = modificarOrdenProduccionForm()
-    return render_to_response('modificarOrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+        formulario = modificarOrdenProduccion(instance= op)
+        formulario.setup('Modificar', css_class="btn btn-success")
+    return render_to_response('modificarOrdenProduccion.html', {'formulario':formulario}, context_instance=RequestContext(request))
     
+   
+    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
+    return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
 def cancelarOrdenProduccion(request):
     orden = OrdenProduccion.objects.all()
     return render_to_response('cancelarOrdenProduccionForm.html', {'lista':orden}, context_instance=RequestContext(request))

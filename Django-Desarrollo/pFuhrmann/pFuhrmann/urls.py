@@ -1,9 +1,11 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from appWeb import views
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    
+
     url(r'^index/','appWeb.views.index'),
     url(r'^$','appWeb.views.index'),
     
@@ -17,7 +19,7 @@ urlpatterns = patterns('',
     url(r'^listadoVenta/$', 'appWeb.views.listadoVenta'),
 
     #Orden de produccion
-    url(r'^nuevaOrdenProduccion/$', 'appWeb.views.nuevaOrdenProduccion'),
+    url(r'^registrarOrdenProduccion/$', 'appWeb.views.registrarOrdenProduccion'),
     url(r'^modificarOrdenProduccion/$', 'appWeb.views.modificarOrdenProduccion'),
     url(r'^cancelarOrdenProduccion/$', 'appWeb.views.cancelarOrdenProduccion'),
     url(r'^enviarFaseProduccion/$', 'appWeb.views.enviarFaseProduccion'),
@@ -61,5 +63,13 @@ urlpatterns = patterns('',
     
 
     #Url's de Forms para modificar Datos
+<<<<<<< HEAD
     url(r'^modificarOrdenProduccionF/$', 'appWeb.views.modificarOrdenProduccionF'),
+=======
+    url(r'^modificarFardoF/$', 'appWeb.views.modificarFardoF'),
+
+
+    #Url's Dinamicas
+    url(r'^eliminarLote/(?P<pk>\d+)/$', 'appWeb.views.eliminarLoteId'),
+>>>>>>> 6a0f602c023b0f520ba3dea9bbe52683a3aec49e
 )

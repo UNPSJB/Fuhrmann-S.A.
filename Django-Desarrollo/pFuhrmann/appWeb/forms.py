@@ -1,12 +1,20 @@
 #encoding:utf-8
 from django.forms import ModelForm
 from django import forms
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from appWeb.models import * 
 from localflavor.ar.forms import ARCUITField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
+
+
+# ------------- Login
+class LoginForm(forms.Form):
+    username = forms.CharField(label = "Usuario")
+    password = forms.CharField(widget=forms.PasswordInput, label = "Contraseña") 
+    
 
 # ------------- Formulario de Compras
 class CompraForm(forms.ModelForm):    
@@ -42,7 +50,7 @@ class VentaForm(forms.ModelForm):
 
 class EstanciaForm(forms.ModelForm):
     # Override de Cuit
-    CUIT = ARCUITField(label="El cuit", help_text="Un cuit")
+    CUIT = ARCUITField(label="CUIT", help_text="Un cuit")
     # Campo nuevo
     algo = forms.IntegerField()
     # Ver django-selectable para autocompletado
@@ -116,11 +124,16 @@ class FardoForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(FardoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+<<<<<<< HEAD
     
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
+=======
+        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoFardos'"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+>>>>>>> 6a0f602c023b0f520ba3dea9bbe52683a3aec49e
 
 #PERSONAL
 
@@ -129,7 +142,10 @@ class FardoForm(ModelForm):
 class ProductorForm(forms.ModelForm):
     class Meta:
         model = Productor
-    
+
+    Telefono = forms.CharField(label = "Telefono", required = False)
+    Email = forms.CharField(label = "Email", required = False)
+
     def __init__(self, *args, **kwargs):
         super(ProductorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -143,11 +159,13 @@ class ProductorForm(forms.ModelForm):
 
 
 class RepresentanteForm(forms.ModelForm):
+    NroLegajo = forms.IntegerField(label = "Nro.Legajo")
     class Meta:
         model = Representante
-        widgets = {
-            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
-        }
+
+    Telefono = forms.CharField(label = "Telefono", required = False)
+    Email = forms.CharField(label = "Email", required = False)
+    widgets = {'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])}
     
     def __init__(self, *args, **kwargs):
         super(RepresentanteForm, self).__init__(*args, **kwargs)
@@ -165,27 +183,22 @@ class RepresentanteForm(forms.ModelForm):
 # ---------------Formularios de Orden de Produccion
 
 
-class nuevaOrdenProduccionForm(forms.ModelForm):
+class OrdenProduccionForm(forms.ModelForm):
+    CantRequerida = forms.IntegerField(label = "Cantidad Requerida(Kg.)")
+    FechaInicioProduccion = forms.DateField(label = "Inicio Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = True)
+    FechaFinProduccion = forms.DateField(label = "Fin Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = True)
     class Meta:
+
         model = OrdenProduccion
         exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual']
     
     def __init__(self, *args, **kwargs):
-        super(nuevaOrdenProduccionForm, self).__init__(*args, **kwargs)
+        super(OrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.add_input(Submit('submit', 'Registrar', css_class="btn btn-success",onClick = "alert('Orden de produccion Registrada!')"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "location.href='/index'"))
 
-class modificarOrdenProduccionForm(forms.ModelForm):
-    Servicios = forms.ModelMultipleChoiceField(Servicio.objects.all())
-    class Meta:
-        model = OrdenProduccion
-
-    def __init__(self, *args, **kwargs):
-        super(modificarOrdenProduccionForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Button('submit', 'Modificar', css_class="btn btn-default",onClick = "location.href='/listadoOrden'"))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
+    def setup(self, *args, **kwarg):
+        self.helper.add_input(Submit('submit', *args, **kwarg))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
 class enviarFaseProduccionForm(forms.ModelForm):
     class Meta:
@@ -209,9 +222,9 @@ class finalizarFaseProduccionForm(forms.ModelForm):
 
 #-----------------Formularios de Maquinaria
 class MaquinariaForm(forms.ModelForm):
-    NroSerie = forms.IntegerField(label = "Nro. Serie",required=False)
+    NroSerie = forms.IntegerField(label = "Nro. Serie")
     Descripcion = forms.CharField(required = False)
-    TipoMaquinaria = forms.ModelMultipleChoiceField(Servicio.objects.all(), label = "Servicio")
+    TipoMaquinaria = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio")
     class Meta:
         model = Maquinaria
         exclude = ['Baja']
