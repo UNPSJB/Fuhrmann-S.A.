@@ -257,22 +257,17 @@ def registrarOrdenProduccion(request):
         formulario = OrdenProduccionForm()
         formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('OrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
     
 def modificarOrdenProduccion(request, pk):
     if request.method == 'POST':
-        formulario = modificarOrdenProduccion(request.POST, instance = op)
+        formulario = OrdenProduccionForm(request.POST, instance = op)
         if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect('/listadoOrden')
-    else:
-        formulario = modificarOrdenProduccion(instance= op)
-        formulario.setup('Modificar', css_class="btn btn-success")
+            if OrdenProduccion.EnProduccion == True:  
+                formulario.save()
+                formulario = OrdenProduccionForm(instance= op)
+                formulario.setup('Modificar', css_class="btn btn-success")
+                return HttpResponseRedirect('/listadoOrden')
     return render_to_response('modificarOrdenProduccion.html', {'formulario':formulario}, context_instance=RequestContext(request))
-    
-   
-    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
-    return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def cancelarOrdenProduccion(request):
     orden = OrdenProduccion.objects.all()

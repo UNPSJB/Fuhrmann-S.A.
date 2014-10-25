@@ -61,7 +61,12 @@
                     </thead>
                 </table>
                 <script type ="text/javascript"> </script>
-                <div class="btn-group pull-right">
+                <div class="pull-right">
+                    <a class="btn btn-default btn-gr" type= "button" href="/registrarOrdenProduccion">Nueva</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/listadoOrden">Modificar</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/cancelarOrdenProduccion/{{dato.NroOrden}}">Anular</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/enviarOrdenProduccion/{{dato.NroOrden}}">Procesar</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/finalizarOrdenProduccion/{{dato.NroOrden}}">Finalizar</a>
                     <a class="btn btn-default btn-gr" type= "button" href="/index">Salir</a>
                 </div>            
         </div>
