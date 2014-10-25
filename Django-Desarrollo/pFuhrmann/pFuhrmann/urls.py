@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     url(r'^listadoVenta/$', 'appWeb.views.listadoVenta'),
 
     #Orden de produccion
-    url(r'^registrarOrdenProduccion/$', 'appWeb.views.registrarOrdenProduccion'),
+    url(r'^registrarOrdenProduccion/$', 'appWeb.views.listadoOrden'),
     url(r'^modificarOrdenProduccion/$', 'appWeb.views.modificarOrdenProduccion'),
     url(r'^cancelarOrdenProduccion/$', 'appWeb.views.cancelarOrdenProduccion'),
     url(r'^enviarFaseProduccion/$', 'appWeb.views.enviarFaseProduccion'),
