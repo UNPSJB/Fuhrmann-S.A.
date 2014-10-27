@@ -20,9 +20,21 @@ from django.shortcuts import render_to_response,redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
+
+def nuevo_usuario(request):
+    if request.method =='POST':
+        formulario = UserCreationForm(request.POST)
+        if formulario.is_valid:
+            formulario.save()
+            return HttpResponseRedirect('/')
+    else:
+        formulario = UserCreationForm()
+    return render_to_response('nuevousuario.html', {'formulario':formulario}, context_instance= RequestContext(request))
 
 # --------------- Administracion de Compra
 

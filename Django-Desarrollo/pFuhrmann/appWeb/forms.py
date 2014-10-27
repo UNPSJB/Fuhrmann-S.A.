@@ -9,12 +9,6 @@ from localflavor.ar.forms import ARCUITField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
-
-
-# ------------- Login
-class LoginForm(forms.Form):
-    username = forms.CharField(label = "Usuario")
-    password = forms.CharField(widget=forms.PasswordInput, label = "Contraseña") 
     
 
 # ------------- Formulario de Compras
