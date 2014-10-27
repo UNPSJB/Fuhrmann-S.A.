@@ -93,7 +93,7 @@ class LoteForm(forms.ModelForm):
     
     
     CantFardos = forms.IntegerField(label ="Cantidad de Fardos", min_value = 0)
-
+    Compra = forms.ModelChoiceField(CompraLote.objects.all(), label ="Compra del Lote")
 
     def __init__(self, *args, **kwargs):
         super(LoteForm, self).__init__(*args, **kwargs)
