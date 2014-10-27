@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from appWeb.models import * 
 from localflavor.ar.forms import ARCUITField
-
+from localflavor.ar.forms import ARDNIField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
@@ -72,11 +72,9 @@ class EstanciaForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-
 #LOTES&FARDOS
 
 # ------------- Formularios de Lotes
-
 
 class LoteForm(forms.ModelForm):    
     class Meta:
@@ -85,7 +83,6 @@ class LoteForm(forms.ModelForm):
       #      exclude = ("Peso", "Baja", )
       #  else:
         exclude = ("Baja", )
-    
     
     CantFardos = forms.IntegerField(label ="Cantidad de Fardos", min_value = 0)
     Compra = forms.ModelChoiceField(CompraLote.objects.all(), label ="Compra del Lote")
@@ -98,9 +95,7 @@ class LoteForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-
 # ------------- Formularios de Fardo
-
 
 class FardoForm(ModelForm):
     class Meta:
@@ -129,6 +124,8 @@ class FardoForm(ModelForm):
 # ---------------Formularios de Productor
 
 class ProductorForm(forms.ModelForm):
+    DNI = ARDNIField(label="DNI")
+
     class Meta:
         model = Productor
         exclude = ['Baja']
@@ -148,7 +145,9 @@ class ProductorForm(forms.ModelForm):
 # ---------------Formularios de Representante
 
 class RepresentanteForm(forms.ModelForm):
+    DNI = ARDNIField(label="DNI")
     NroLegajo = forms.IntegerField(label = "Nro.Legajo")
+    
     class Meta:
         exclude = ['Baja']
         model = Representante
