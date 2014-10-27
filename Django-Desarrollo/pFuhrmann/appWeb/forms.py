@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from appWeb.models import * 
 from localflavor.ar.forms import ARCUITField
+
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
@@ -136,6 +137,7 @@ class FardoForm(ModelForm):
 class ProductorForm(forms.ModelForm):
     class Meta:
         model = Productor
+        exclude = ['Baja']
 
     Telefono = forms.CharField(label = "Telefono", required = False)
     Email = forms.CharField(label = "Email", required = False)
@@ -154,6 +156,7 @@ class ProductorForm(forms.ModelForm):
 class RepresentanteForm(forms.ModelForm):
     NroLegajo = forms.IntegerField(label = "Nro.Legajo")
     class Meta:
+        exclude = ['Baja']
         model = Representante
         widgets = {
             'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])

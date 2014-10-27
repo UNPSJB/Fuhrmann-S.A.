@@ -21,7 +21,7 @@ class Venta(models.Model):
 class Persona(models.Model):
     Nombre = models.CharField(max_length=50)
     Apellido = models.CharField(max_length=50)
-    DNI = models.CharField(max_length=50, primary_key = True)
+    DNI = models.CharField(max_length=10, primary_key = True)
     Telefono = models.CharField(max_length=50, null = True)
     Email = models.EmailField(null = True)
     Baja = models.BooleanField(default=False)
@@ -30,7 +30,7 @@ class Persona(models.Model):
         return "%s" % str(str(self.Nombre) + " " + str(self.Apellido))
 
 class Productor (Persona):
-    CUIL = models.CharField(max_length=50, primary_key = True)
+    CUIL = models.CharField(max_length=13, primary_key = True)
         
     def __unicode__(self):
         return "%s" % str(str(self.Nombre) + " " + str(self.Apellido))
