@@ -32,7 +32,7 @@ class CompraForm(forms.ModelForm):
 
 # ------------- Formulario de Ventas
 class VentaForm(forms.ModelForm):
-    LoteVenta = forms.ModelMultipleChoiceField(LoteVenta.objects.all(),label = "Lote Venta")
+    LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(),label = "Lote Venta")
     FechaVenta = forms.DateField(label = "Fecha",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
 
     class Meta:
@@ -151,16 +151,17 @@ class ProductorForm(forms.ModelForm):
 
 # ---------------Formularios de Representante
 
-
 class RepresentanteForm(forms.ModelForm):
     NroLegajo = forms.IntegerField(label = "Nro.Legajo")
     class Meta:
         model = Representante
+        widgets = {
+            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
+        }
 
     Telefono = forms.CharField(label = "Telefono", required = False)
     Email = forms.CharField(label = "Email", required = False)
-    widgets = {'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])}
-    
+ 
     def __init__(self, *args, **kwargs):
         super(RepresentanteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
