@@ -113,28 +113,32 @@ class LoteForm(forms.ModelForm):
 
 # ------------- Formularios de Fardo
 
+def FardoFormFactory(edit=False):
+    class FardoForm(ModelForm):
+        class Meta:
+            model = Fardo
+            exclude = ['Baja', 'DetalleOrden']
 
-class FardoForm(ModelForm):
-    class Meta:
-        model = Fardo
-        exclude = ['Baja', 'DetalleOrden']
-
-   # if this.instance is not None:
-   #     print "sad"
+       # if this.instance is not None:
+       #     print "sad"
         
-    Lote = forms.ModelChoiceField(Lote.objects.all(), label ="Lote de Fardos")
-    TipoFardo = forms.ModelChoiceField(TipoFardo.objects.all(), label ="Tipo de Fardo")
-    CV = forms.FloatField(label ="Coeficiente de Variacion", min_value = 0)
-    AlturaMedia = forms.FloatField(label ="Altura Media", min_value = 0)
-    Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula", required = False)
+        if edit:
+            Lote = forms.ModelChoiceField(Lote.eliminados.all(), label ="Lote de Fardos")
+        else:
+            Lote = forms.ModelChoiceField(Lote.noEliminados.all(), label ="Lote de Fardos")
+        TipoFardo = forms.ModelChoiceField(TipoFardo.objects.all(), label ="Tipo de Fardo")
+        CV = forms.FloatField(label ="Coeficiente de Variacion", min_value = 0)
+        AlturaMedia = forms.FloatField(label ="Altura Media", min_value = 0)
+        Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula", required = False)
 
-    def __init__(self, *args, **kwargs):
-        super(FardoForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-    
-    def setup(self, *args, **kwarg):
-        self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+        def __init__(self, *args, **kwargs):
+            super(FardoForm, self).__init__(*args, **kwargs)
+            self.helper = FormHelper()
+        
+        def setup(self, *args, **kwarg):
+            self.helper.add_input(Submit('submit', *args, **kwarg))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+    return FardoForm
 
 #PERSONAL
 

@@ -183,7 +183,7 @@ def registrarFardo(request, pk=None):
         fardo = get_object_or_404(Fardo, pk=pk)
 
     if request.method == 'POST':
-        formulario = FardoForm(request.POST, instance = fardo)
+        formulario = FardoFormFactory(fardo is not None)(request.POST, instance = fardo)
         if formulario.is_valid():
             pk1 = formulario.cleaned_data['Lote'].NroLote   # Obtengo el pk del lote registrado
             lote = Lote.objects.get(NroLote = pk1)          # Obtengo el lote del que pertenecen los fardos
@@ -191,7 +191,7 @@ def registrarFardo(request, pk=None):
             if pk is None:
                 for x in xrange(formulario.cleaned_data['Lote'].CantFardos): # Segun la cantidad de fardos en lote, son las instancia que creo
                     formulario.save()
-                    formulario = FardoForm(request.POST)
+                    formulario = FardoFormFactory(fardo is not None)(request.POST)
                 
                 lote.Baja = True                            # Seteo la baja de lote para que no se pueda volver a cargar los fardos de ese lote
                 lote.save()
@@ -199,12 +199,12 @@ def registrarFardo(request, pk=None):
                 f_set = lote.fardo_set                      # obtener todos los fardos asociados al lote obtenido antes
                                 
                 for f in f_set.all():                       # Coleccion de fardos
-                    formulario = FardoForm(request.POST, instance = f)  # Modifico todos los fardos del mismo lote al modificar uno
+                    formulario = FardoFormFactory(fardo is not None)(request.POST, instance = f)  # Modifico todos los fardos del mismo lote al modificar uno
                     formulario.save()
 
             return HttpResponseRedirect('/listadoFardos')
     else:
-        formulario = FardoForm(instance = fardo)
+        formulario = FardoFormFactory(fardo is not None)(instance = fardo)
 
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('registrarFardoForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
