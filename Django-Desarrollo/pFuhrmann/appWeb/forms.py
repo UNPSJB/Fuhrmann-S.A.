@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from appWeb.models import * 
 from localflavor.ar.forms import ARCUITField
+from localflavor.ar.forms import ARDNIField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
@@ -86,10 +87,12 @@ class EstanciaForm(forms.ModelForm):
 class LoteForm(forms.ModelForm):    
     class Meta:
         model = Lote
+      #  if *args is None:
+      #      exclude = ("Peso", "Baja", )
+      #  else:
         exclude = ("Baja", )
-
+    
     CantFardos = forms.IntegerField(label ="Cantidad de Fardos", min_value = 0)
-    Peso = forms.IntegerField(label ="Peso", min_value = 0)
     Compra = forms.ModelChoiceField(CompraLote.objects.all(), label ="Compra del Lote")
 
     def __init__(self, *args, **kwargs):
@@ -115,6 +118,9 @@ class FardoForm(ModelForm):
     class Meta:
         model = Fardo
         exclude = ['Baja', 'DetalleOrden']
+
+   # if this.instance is not None:
+   #     print "sad"
         
     Lote = forms.ModelChoiceField(Lote.objects.all(), label ="Lote de Fardos")
     TipoFardo = forms.ModelChoiceField(TipoFardo.objects.all(), label ="Tipo de Fardo")
@@ -135,8 +141,11 @@ class FardoForm(ModelForm):
 # ---------------Formularios de Productor
 
 class ProductorForm(forms.ModelForm):
+    DNI = ARDNIField(label="DNI")
+
     class Meta:
         model = Productor
+        exclude = ['Baja']
 
     Telefono = forms.CharField(label = "Telefono", required = False)
     Email = forms.CharField(label = "Email", required = False)
@@ -153,8 +162,11 @@ class ProductorForm(forms.ModelForm):
 # ---------------Formularios de Representante
 
 class RepresentanteForm(forms.ModelForm):
+    DNI = ARDNIField(label="DNI")
     NroLegajo = forms.IntegerField(label = "Nro.Legajo")
+    
     class Meta:
+        exclude = ['Baja']
         model = Representante
         widgets = {
             'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
