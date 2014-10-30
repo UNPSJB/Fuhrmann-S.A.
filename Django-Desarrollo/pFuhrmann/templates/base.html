@@ -141,8 +141,9 @@
         })
     </script>
 
+    
     <script>
-    function confirmar(url, title, message) { /* Funcion para confirmar operaciones, 
+    function eliminar(url, title, message) { /* Funcion para confirmar operaciones, 
                                         recibe como parametros la url en caso 
                                             de aceptar y el titulo */
         $( '<div>' + message + '</div>').dialog({
@@ -152,20 +153,20 @@
             autoOpen: true,
             draggable: false,
             show: {
-                effect: "drop",
+                effect: "Clip",
                 duration: 800
             },
             
             hide: {
-                effect: "drop",
+                effect: "Clip",
                 duration: 800
             },
             buttons: {
-                Aceptar: function() {
+                Si: function() {
                 window.location=url
                 $( this ).dialog( "close" );
                 },
-                Cancel: function() {
+                No: function() {
                 $( this ).dialog( "close" );
                 }
             }
