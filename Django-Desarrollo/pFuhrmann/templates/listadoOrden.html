@@ -27,7 +27,6 @@
                             <th width="10%">Fecha de Emisión</th>
                             <th width="5%">Kg</th>
                             <th width="5%">CV</th>
-                            <th width="10%">Servicio</th>
                             <th width="5%">Hm</th>
                             <th width="5%">Micronaje</th>
                             <th width="5%">Romana</th>
@@ -39,15 +38,14 @@
                         </tr>
                         {% for dato in lista %}
                         <tr>
-                            <td width="7%" id="nroOrden">{{dato.NroOrden}}</td>
+                            <td width="7%" >{{dato.NroOrden}}</td>
                             <td width="10%">{{dato.FechaEmision}}</td>
                             <td width="5%">{{dato.CantRequerida}}</td>
                             <td width="5%">{{dato.CV}}</td>
-                            <td width="5%">{{dato.Servicio_id}}</td>
                             <td width="5%">{{dato.AlturaMedia}}</td>
                             <td width="5%">{{dato.Micronaje}}</td>
                             <td width="5%">{{dato.Romana}}</td>
-                            <td width="10%">{{dato.FechaIncioProduccion}}</td>
+                            <td width="10%">{{dato.FechaInicioProduccion}}</td>
                             <td width="10%">{{dato.FechaFinProduccion}}</td>
                             <td width="10%">{{dato.MaquinaActual}}</td>
                             <td width="5%">{{dato.EnProduccion}}</td>

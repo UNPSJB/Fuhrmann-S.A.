@@ -183,7 +183,7 @@ def registrarFardo(request, pk=None):
         fardo = get_object_or_404(Fardo, pk=pk)
 
     if request.method == 'POST':
-        formulario = FardoFormFactory(fardo is not None)(request.POST, instance = fardo)
+        formulario = FardoFormFactory(fardo is not None)(request.POST, instance = fardo) 
         if formulario.is_valid():
             pk1 = formulario.cleaned_data['Lote'].NroLote   # Obtengo el pk del lote registrado
             lote = Lote.objects.get(NroLote = pk1)          # Obtengo el lote del que pertenecen los fardos

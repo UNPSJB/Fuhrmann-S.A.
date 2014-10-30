@@ -132,7 +132,7 @@ class Servicio(models.Model):
     Descripcion = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return u"%s" % (self.Nombre)
+        return u"%s" % self.Nombre
 
 class LoteVenta(models.Model):
     NroPartida = models.AutoField(primary_key = True)
