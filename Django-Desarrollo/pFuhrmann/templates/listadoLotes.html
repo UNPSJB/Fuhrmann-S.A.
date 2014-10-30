@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block contenido %}
+
 <div class="container">
         <div class="panel panel-yellow">
             <div class="panel-heading clearfix">
@@ -30,22 +31,32 @@
                             <td style="text-align:center;" width="6%" id="nroLote">{{dato.NroLote}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Peso}}</td>
                             <td style="text-align:center;" width="10%">{{dato.CantFardos}}</td>
-                            <td style="text-align:center;" width="3%"><a href="/modificarLote/{{dato.NroLote}}" class="glyphicon glyphicon-edit"></a>
-                            <td style="text-align:center;" width="3%"><a href="/eliminarLote/{{dato.NroLote}}" class="glyphicon glyphicon-remove"></a>
+                            
+                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarLote/{{dato.NroLote}}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            
+                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="confirmar('/eliminarLote/{{dato.NroLote}}', '¿Eliminar Lote?')"><span class="glyphicon glyphicon-remove"></span></a></td>
+                           
                         </tr>
 
+                        <div id="dialog-confirm"></div> <!-- Dialog para que se vea el cartel de confirmacion-->
+
                         {% empty %}
-                            <li> No existen lotes registrados </li>
+                            <li> No existen Lotes pendientes de cargar Fardos </li>
                         {% endfor %}        
-                    </thead>
+                    </thead>    
                 </table>
-                <script type ="text/javascript"> </script>
+
                 <div class="pull-right">
                     <a class="btn btn-default btn-gr" type= "button" href="/registrarLote">Agregar</a>
-                    <a class="btn btn-default btn-gr" type= "button" href="/index">Salir</a>
+                    <a class="btn btn-default btn-gr" type= "button" onclick="history.back()">Salir</a>
                 </div>    
             </div>
         </div>
     </div>
 </div>
+
+    {% block scripts %}
+        <script type ="text/javascript"> </script>
+    {% endblock %}
+
 {% endblock %}

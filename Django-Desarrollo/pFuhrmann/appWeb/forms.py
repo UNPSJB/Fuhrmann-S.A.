@@ -86,13 +86,10 @@ class EstanciaForm(forms.ModelForm):
 class LoteForm(forms.ModelForm):    
     class Meta:
         model = Lote
-      #  if *args is None:
-      #      exclude = ("Peso", "Baja", )
-      #  else:
         exclude = ("Baja", )
-    
-    
+
     CantFardos = forms.IntegerField(label ="Cantidad de Fardos", min_value = 0)
+    Peso = forms.IntegerField(label ="Peso", min_value = 0)
     Compra = forms.ModelChoiceField(CompraLote.objects.all(), label ="Compra del Lote")
 
     def __init__(self, *args, **kwargs):
@@ -102,7 +99,14 @@ class LoteForm(forms.ModelForm):
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-
+    
+    def clean_Peso(self):
+        peso = self.cleaned_data['Peso']
+        cantidad =  self.cleaned_data['CantFardos']
+        
+        if ( ( peso / cantidad ) < 280 ) or ( ( peso / cantidad ) > 300 ):
+            raise ValidationError("El Peso debe ser 280-300kg por Fardo")
+        return peso
 
 # ------------- Formularios de Fardo
 
@@ -111,9 +115,6 @@ class FardoForm(ModelForm):
     class Meta:
         model = Fardo
         exclude = ['Baja', 'DetalleOrden']
-
-   # if this.instance is not None:
-   #     print "sad"
         
     Lote = forms.ModelChoiceField(Lote.objects.all(), label ="Lote de Fardos")
     TipoFardo = forms.ModelChoiceField(TipoFardo.objects.all(), label ="Tipo de Fardo")

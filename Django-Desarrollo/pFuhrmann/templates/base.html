@@ -26,6 +26,9 @@
         <link href="{{STATIC_URL}}css/plugins/morris.css" rel="stylesheet">
         <!-- Custom Fonts -->
         <link href="{{STATIC_URL}}font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <!-- Modal box Fonts -->
+        <link href="{{STATIC_URL}}css/jquery.modal.css" rel="stylesheet">
+
         {% block stylesheet %}{% endblock %}
     
     </head>
@@ -125,8 +128,9 @@
     <script src="{{STATIC_URL}}js/jquery-ui.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-    
-    
+    <!-- Modal box JQuery -->
+    <script src="{{STATIC_URL}}js/jquery.modal.min.js"></script>
+
 
     <script>
         $('.glyphicon').tooltip() 
@@ -136,6 +140,39 @@
             interval: 5000 /* changes the speed */
         })
     </script>
+
+    <script>
+    function confirmar(url, title) { /* Funcion para confirmar operaciones, 
+                                        recibe como parametros la url en caso 
+                                            de aceptar y el titulo */
+        $( "#dialog-confirm" ).dialog({
+            title: title,
+            resizable: false,
+            modal: true,
+            autoOpen: true,
+            draggable: false,
+            show: {
+                effect: "drop",
+                duration: 800
+            },
+            
+            hide: {
+                effect: "drop",
+                duration: 800
+            },
+            buttons: {
+                Aceptar: function() {
+                window.location=url
+                $( this ).dialog( "close" );
+                },
+                Cancel: function() {
+                $( this ).dialog( "close" );
+                }
+            }
+        });
+    };
+    </script>
+
     {% block scripts %}{% endblock %}
 </html>
 
