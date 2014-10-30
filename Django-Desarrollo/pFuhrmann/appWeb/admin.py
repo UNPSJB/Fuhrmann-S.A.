@@ -1,8 +1,11 @@
 from django.contrib import admin
 from appWeb.models import *
 
+class RepresentanteAdmin(admin.ModelAdmin):
+	search_fields = ( 'DNI', 'Nombre', 'Apellido')
+
 admin.site.register(Productor)
-admin.site.register(Representante)
+admin.site.register(Representante, RepresentanteAdmin)
 admin.site.register(Estancia)
 admin.site.register(Lote)
 admin.site.register(Fardo)

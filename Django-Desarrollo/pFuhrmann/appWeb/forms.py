@@ -9,6 +9,12 @@ from localflavor.ar.forms import ARDNIField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
+
+
+# ------------- Login
+class LoginForm(forms.Form):
+    username = forms.CharField(label = "Usuario")
+    password = forms.CharField(widget=forms.PasswordInput, label = "Contraseña") 
     
 
 # ------------- Formulario de Compras
@@ -72,9 +78,11 @@ class EstanciaForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
+
 #LOTES&FARDOS
 
 # ------------- Formularios de Lotes
+
 
 class LoteForm(forms.ModelForm):    
     class Meta:
@@ -94,30 +102,41 @@ class LoteForm(forms.ModelForm):
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+    
+    def clean_Peso(self):
+        peso = self.cleaned_data['Peso']
+        cantidad =  self.cleaned_data['CantFardos']
+        
+        if ( ( peso / cantidad ) < 280 ) or ( ( peso / cantidad ) > 300 ):
+            raise ValidationError("El Peso debe ser 280-300kg por Fardo")
+        return peso
 
 # ------------- Formularios de Fardo
 
-class FardoForm(ModelForm):
-    class Meta:
-        model = Fardo
-        exclude = ['Baja', 'DetalleOrden']
+def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
+    class FardoForm(ModelForm):
+        class Meta:
+            model = Fardo
+            exclude = ['Baja', 'DetalleOrden']
 
-   # if this.instance is not None:
-   #     print "sad"
+        if edit:
+            Lote = forms.ModelChoiceField(Lote.eliminados.all(), label ="Lote de Fardos")
+        else:
+            Lote = forms.ModelChoiceField(Lote.noEliminados.all(), label ="Lote de Fardos")
+
+        TipoFardo = forms.ModelChoiceField(TipoFardo.objects.all(), label ="Tipo de Fardo")
+        CV = forms.FloatField(label ="Coeficiente de Variacion", min_value = 0)
+        AlturaMedia = forms.FloatField(label ="Altura Media", min_value = 0)
+        Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula", required = False)
+
+        def __init__(self, *args, **kwargs):
+            super(FardoForm, self).__init__(*args, **kwargs)
+            self.helper = FormHelper()
         
-    Lote = forms.ModelChoiceField(Lote.objects.all(), label ="Lote de Fardos")
-    TipoFardo = forms.ModelChoiceField(TipoFardo.objects.all(), label ="Tipo de Fardo")
-    CV = forms.FloatField(label ="Coeficiente de Variacion", min_value = 0)
-    AlturaMedia = forms.FloatField(label ="Altura Media", min_value = 0)
-    Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula", required = False)
-
-    def __init__(self, *args, **kwargs):
-        super(FardoForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-    
-    def setup(self, *args, **kwarg):
-        self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+        def setup(self, *args, **kwarg):
+            self.helper.add_input(Submit('submit', *args, **kwarg))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+    return FardoForm
 
 #PERSONAL
 
@@ -175,13 +194,14 @@ class RepresentanteForm(forms.ModelForm):
 
 
 class OrdenProduccionForm(forms.ModelForm):
-    CantRequerida = forms.IntegerField(label = "Cantidad Requerida(Kg.)")
-    FechaInicioProduccion = forms.DateField(label = "Inicio Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = True)
-    FechaFinProduccion = forms.DateField(label = "Fin Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = True)
+    
     class Meta:
-
         model = OrdenProduccion
-        exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual']
+        exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual', 'FechaFinProduccion', 'FechaInicioProduccion']
+
+    CantRequerida = forms.IntegerField(label = "Cantidad Requerida (Kg)")
+    AlturaMedia = forms.FloatField(label = "Altura Media")
+  #  FechaInicioProduccion = forms.DateField(label = "Inicio de Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False)
     
     def __init__(self, *args, **kwargs):
         super(OrdenProduccionForm, self).__init__(*args, **kwargs)

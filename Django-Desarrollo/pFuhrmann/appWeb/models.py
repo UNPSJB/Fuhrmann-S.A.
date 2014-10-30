@@ -65,12 +65,13 @@ class BajaLogicaManager(models.Manager):
 
 class Lote(models.Model):
     NroLote = models.AutoField(primary_key = True)
-    Peso = models.PositiveIntegerField(max_length=50)
     CantFardos = models.PositiveIntegerField(max_length=50)
+    Peso = models.PositiveIntegerField(max_length=50)
     Baja = models.BooleanField(default=False)
     Compra = models.OneToOneField('CompraLote')
 
-    objects = BajaLogicaManager(Baja = False)       # Mostrar objetos con baja = false
+    objects = BajaLogicaManager()                   # Mostrar todos los objetos
+    noEliminados = eliminados = BajaLogicaManager(Baja = False)     # Mostrar objetos con baja = false
     eliminados = BajaLogicaManager(Baja = True)     # Mostrar objetos con baja = true
 
     def __unicode__(self):
@@ -131,7 +132,7 @@ class Servicio(models.Model):
     Descripcion = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return u"%s" % (self.Nombre)
+        return u"%s" % self.Nombre
 
 class LoteVenta(models.Model):
     NroPartida = models.AutoField(primary_key = True)
