@@ -34,11 +34,9 @@
                             
                             <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarLote/{{dato.NroLote}}"><span class="glyphicon glyphicon-edit"></span></a></td>
                             
-                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="confirmar('/eliminarLote/{{dato.NroLote}}', '¿Eliminar Lote?')"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="confirmar('/eliminarLote/{{dato.NroLote}}', '¿Eliminar Lote?', 'Esta seguro de que quiere eliminar este lote?')"><span class="glyphicon glyphicon-remove"></span></a></td>
                            
                         </tr>
-
-                        <div id="dialog-confirm"></div> <!-- Dialog para que se vea el cartel de confirmacion-->
 
                         {% empty %}
                             <li> No existen Lotes pendientes de cargar Fardos </li>
