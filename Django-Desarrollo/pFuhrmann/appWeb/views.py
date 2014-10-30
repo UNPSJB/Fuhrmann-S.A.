@@ -63,10 +63,6 @@ def ingresar(request):
 def privado(request):
     usuario = request.user
     return render_to_response('privado.html',{'usuario':usuario},context_instance=RequestContext(request))
-
-def cerrar(request):
-    logout(request)
-    return HttpResponseRedirect('/')
 # --------------- Administracion de Compra
 
 def listadoCompra(request):
