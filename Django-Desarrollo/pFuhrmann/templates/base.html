@@ -146,7 +146,7 @@
     function eliminar(url, title, message) { /* Funcion para confirmar operaciones, 
                                         recibe como parametros la url en caso 
                                             de aceptar y el titulo */
-        $( '<div>' + message + '</div>').dialog({
+        $( '<div><h5>' +message+'</h5></div>').dialog({
             title: title,
             resizable: false,
             modal: true,
