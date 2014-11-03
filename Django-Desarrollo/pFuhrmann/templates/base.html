@@ -173,5 +173,34 @@
     };
     </script>
 
+    <script>
+    function ayuda(title, message) { /* Funcion para confirmar operaciones, 
+                                        recibe como parametros la url en caso 
+                                            de aceptar y el titulo */
+        $( '<div><h5>' +message+'</h5></div>').dialog({
+            title: title,
+            resizable: false,
+            modal: true,
+            autoOpen: true,
+            draggable: false,
+            show: {
+                effect: "Clip",
+                duration: 800
+            },
+            
+            hide: {
+                effect: "Clip",
+                duration: 800
+            },
+            buttons: {
+                Ok: function() {
+                $( this ).dialog( "close" );
+                },
+            }
+        });
+    };
+    </script>
+
+
     {% block scripts %}{% endblock %}
 </html>
