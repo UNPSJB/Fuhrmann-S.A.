@@ -144,12 +144,12 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
             self.helper.layout = Layout(
 
                 Fieldset( 
-                    '<font color = "Teal" size=3 face="Comic Sans MS">Datos Primarios de Fardos </font>',
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos Primarios </font>',
                     Field('Lote', css_class= ".col-lg-3",placeholder='asd'),
                     Field('TipoFardo', placeholder="Tipo de Fardos"),
                 ),
                 Fieldset(
-                    '<font color = "Teal" size=3 face="Comic Sans MS">Especificaciones de Fardos</font>',
+                    '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones</font>',
                     Field('Peso', placeholder="Peso de Fardos"),
                     Field('Rinde', placeholder="Rinde de Fardos"),
                     Field('Finura', placeholder="Finura de Fardos"),
@@ -159,11 +159,11 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
                     Field('Romana', placeholder="Romana de Fardos"),
                 ),
                 Fieldset(
-                    '<font color = "Teal" size=3 face="Comic Sans MS">Ubicacion de Fardos</font>',
+                    '<font color = "Black" size=3 face="Comic Sans MS">Ubicacion</font>',
                     Field('Cuadricula', placeholder="Ubicacion en Cuadricula"),
                 ),
                 
-                HTML('<p>Atencion! Campos (*) obligatorios.</p>'),
+                HTML('<p>(*)Campos obligatorios.</p>'),
             )
 
         def setup(self, *args, **kwarg):
