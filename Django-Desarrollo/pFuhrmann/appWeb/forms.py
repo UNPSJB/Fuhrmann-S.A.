@@ -19,13 +19,27 @@ class LoginForm(forms.Form):
 
 # ------------- Formulario de Compras
 class CompraForm(forms.ModelForm):    
-    FechaLlegada = forms.DateField(label = "Fecha de Llegada",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
+    FechaLlegada = forms.DateField(label = "Fecha de Llegada",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
     class Meta:
         model = CompraLote
     
     def __init__(self, *args, **kwargs):
         super(CompraForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()   
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+
+            Fieldset( 
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos de compra</font>',
+                Field('Representante', css_class= ".col-lg-3",placeholder='Representante'),
+                Field('Estancia', placeholder="Estancia"),
+                Field('FechaLlegada', placeholder="Fecha de llegada"),
+            ),
+            
+            HTML('<p>(*)Campos obligatorios.</p>'),
+        )
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
@@ -34,7 +48,7 @@ class CompraForm(forms.ModelForm):
 # ------------- Formulario de Ventas
 class VentaForm(forms.ModelForm):
     LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(),label = "Lote Venta")
-    FechaVenta = forms.DateField(label = "Fecha",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
+    FechaVenta = forms.DateField(label = "Fecha Venta",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
 
     class Meta:
         model = Venta
@@ -42,6 +56,21 @@ class VentaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(VentaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+
+            Fieldset( 
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos de Venta</font>',
+                Field('LoteVenta', css_class= ".col-lg-3",placeholder='Lote de venta'),
+                Field('Cliente', placeholder="Cliente"),
+                Field('FechaVenta', placeholder="Fecha de venta"),
+            ),
+            
+            HTML('<p>(*)Campos obligatorios.</p>'),
+        )
+
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
