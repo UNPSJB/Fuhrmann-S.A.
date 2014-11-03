@@ -35,8 +35,9 @@
                             <td style="text-align:center;" width="10%">{{dato.Nombre}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Provincia}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Zona}}</td>
-                            <td style="text-align:center;" width="3%"><a href="/modificarEstancia/{{dato.CUIT}}" class="glyphicon glyphicon-edit"></a>
-                            <td style="text-align:center;" width="3%"><a href="/eliminarEstancia/{{dato.CUIT}}" class="glyphicon glyphicon-remove"></a>
+                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarEstancia/{{dato.CUIT}}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            
+                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarEstancia/{{dato.CUIT}}', 'Eliminar Estancia', '¿Está seguro que quiere eliminar esta estancia?')"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
 
                         {% empty %}

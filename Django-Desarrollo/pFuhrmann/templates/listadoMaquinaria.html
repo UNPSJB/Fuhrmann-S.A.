@@ -32,7 +32,7 @@
                             <td style="text-align:center;" width="10%" id="nroSerie">{{dato.NroSerie}}</td>
                             <td style="text-align:center;" width="10%">{{dato.TipoMaquinaria}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Descripcion}}</td>
-                            <td style="text-align:center;" width="3%"><a href="/eliminarMaquinaria/{{dato.NroSerie}}" class="glyphicon glyphicon-remove"></a> 
+                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarMaquinaria/{{dato.NroSerie}}', 'Eliminar Maquinaria', '¿Está seguro que quiere eliminar esta maquinaria?')"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
 
                         {% empty %}
