@@ -1,4 +1,4 @@
-    {% extends 'base.html' %}
+     {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
 {% block contenido %}
@@ -38,10 +38,8 @@
                             <td style="text-align:center;" width="10%">{{dato.Apellido}}</td>
                             <td style="text-align:center;" width="10%">{{dato.DNI}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Telefono}}</td>
-                            <td style="text-align:center;" width="10%">{{dato.Email}}</td>
-                            
-                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarProductor/{{dato.CUIL}"><span class="glyphicon glyphicon-edit"></span></a></td>
-                            
+                            <td style="text-align:center;" width="10%">{{dato.Email}}</td>                          
+                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarProductor/{{dato.CUIL}}"><span class="glyphicon glyphicon-edit"></span></a></td>  
                             <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarProductor/{{dato.CUIL}}', 'Eliminar Productor', '¿Está seguro que quiere eliminar este productor?')"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
 
