@@ -77,7 +77,7 @@ def registrarCompra(request):
             return HttpResponseRedirect('/listadoCompra')
     else:
         formulario = CompraForm()
-        formulario.setup('Registrar', css_class="btn btn-success")
+    formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('compraForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 # --------------- Administracion de Venta
@@ -98,7 +98,7 @@ def registrarVenta(request):
             return HttpResponseRedirect('/listadoVenta')
     else:
         formulario = VentaForm()
-        formulario.setup('Registrar', css_class="btn btn-success")
+    formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ventaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 # --------------- Administracion de Estancias
@@ -333,7 +333,8 @@ def registrarMaquinaria(request):
             return HttpResponseRedirect('/listadoMaquinaria')
     else:
         formulario = MaquinariaForm()
-        formulario.setup('Registrar', css_class="btn btn-success")
+    
+    formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('MaquinariaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarMaquinaria(request,pk):

@@ -19,13 +19,27 @@ class LoginForm(forms.Form):
 
 # ------------- Formulario de Compras
 class CompraForm(forms.ModelForm):    
-    FechaLlegada = forms.DateField(label = "Fecha de Llegada",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
+    FechaLlegada = forms.DateField(label = "Fecha de Llegada",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
     class Meta:
         model = CompraLote
     
     def __init__(self, *args, **kwargs):
         super(CompraForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()   
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+
+            Fieldset( 
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos de compra</font>',
+                Field('Representante', css_class= ".col-lg-3",placeholder='Representante'),
+                Field('Estancia', placeholder="Estancia"),
+                Field('FechaLlegada', placeholder="Fecha de llegada"),
+            ),
+            
+            HTML('<p>(*)Campos obligatorios.</p>'),
+        )
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
@@ -34,7 +48,7 @@ class CompraForm(forms.ModelForm):
 # ------------- Formulario de Ventas
 class VentaForm(forms.ModelForm):
     LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(),label = "Lote Venta")
-    FechaVenta = forms.DateField(label = "Fecha",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False) #Ejemplo Datepicker
+    FechaVenta = forms.DateField(label = "Fecha Venta",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
 
     class Meta:
         model = Venta
@@ -42,6 +56,21 @@ class VentaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(VentaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+
+            Fieldset( 
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos de Venta</font>',
+                Field('LoteVenta', css_class= ".col-lg-3",placeholder='Lote de venta'),
+                Field('Cliente', placeholder="Cliente"),
+                Field('FechaVenta', placeholder="Fecha de venta"),
+            ),
+            
+            HTML('<p>(*)Campos obligatorios.</p>'),
+        )
+
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
@@ -51,7 +80,7 @@ class VentaForm(forms.ModelForm):
 
 class EstanciaForm(forms.ModelForm):
     # Override de Cuit
-    CUIT = ARCUITField(label="CUIT", help_text="Un cuit")
+    CUIT = ARCUITField(label="CUIT")
     # Campo nuevo
     algo = forms.IntegerField()
     # Ver django-selectable para autocompletado
@@ -65,11 +94,27 @@ class EstanciaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EstanciaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
 
-    def clean_algo(self):
-        if self.cleaned_data['algo'] == 2:
-            raise ValidationError("Algo no puede ser 2")
-        return self.cleaned_data['algo']
+            Fieldset( 
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos de Estancia </font>',
+                Field('Nombre', placeholder="Nombre de Estancia"),
+                Field('CUIT', placeholder="CUIT de Estancia"),
+                Field('Provincia', placeholder="Provincia"),
+                Field('Zona'),
+                Field('Representante'),
+                Field('Productor'),
+            ),
+            HTML('<p>(*)Campos obligatorios.</p>'),
+        )    
+
+    #def clean_algo(self):
+    #    if self.cleaned_data['algo'] == 2:
+    #        raise ValidationError("Algo no puede ser 2")
+    #    return self.cleaned_data['algo']
 
     #def clean_CUIT(self):
      #   return int(self.cleaned_data['CUIT'].replace('-', ''))
@@ -158,12 +203,12 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
             self.helper.layout = Layout(
 
                 Fieldset( 
-                    '<font color = "Teal" size=3 face="Comic Sans MS">Datos Primarios de Fardos </font>',
-                    Field('Lote'),
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos Primarios </font>',
+                    Field('Lote', css_class= ".col-lg-3",placeholder='asd'),
                     Field('TipoFardo', placeholder="Tipo de Fardos"),
                 ),
                 Fieldset(
-                    '<font color = "Teal" size=3 face="Comic Sans MS">Especificaciones de Fardos</font>',
+                    '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones</font>',
                     Field('Peso', placeholder="Peso de Fardos"),
                     Field('Rinde', placeholder="Rinde de Fardos"),
                     Field('Finura', placeholder="Finura de Fardos"),
@@ -173,11 +218,11 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
                     Field('Romana', placeholder="Romana de Fardos"),
                 ),
                 Fieldset(
-                    '<font color = "Teal" size=3 face="Comic Sans MS">Ubicacion de Fardos</font>',
+                    '<font color = "Black" size=3 face="Comic Sans MS">Ubicacion</font>',
                     Field('Cuadricula', placeholder="Ubicacion en Cuadricula"),
                 ),
                 
-                HTML('<p>Atencion! Campos (*) obligatorios.</p>'),
+                HTML('<p>(*)Campos obligatorios.</p>'),
             )
 
         def setup(self, *args, **kwarg):
@@ -241,6 +286,7 @@ class RepresentanteForm(forms.ModelForm):
 
 
 class OrdenProduccionForm(forms.ModelForm):
+    
     class Meta:
         model = OrdenProduccion
         exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual', 'FechaFinProduccion', 'FechaInicioProduccion']
@@ -322,6 +368,19 @@ class MaquinariaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+            Fieldset( 
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos de Maquinaria</font>',
+                Field('NroSerie', css_class= ".col-lg-3",placeholder='Nro de maquinaria'),
+                Field('TipoMaquinaria'),
+                Field('Descripcion', placeholder="Descripcion"),
+            ),
+            
+            HTML('<p>(*)Campos obligatorios.</p>'),
+        )
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
