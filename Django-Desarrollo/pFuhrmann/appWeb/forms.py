@@ -255,9 +255,9 @@ class ProductorForm(forms.ModelForm):
             Fieldset( 
                 '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
                 Field('Nombre', css_class= ".col-lg-3",placeholder='Ingrese su nombre'),
-                Field('Apellido', placeholder="Insgrese su apellido"),
+                Field('Apellido', placeholder="Ingrese su apellido"),
                 Field('DNI', placeholder="Ingrese su DNI"),
-                Field('CUIL', placeholder="Inserte su CUIL"),
+                Field('CUIL', placeholder="Ingrese su CUIL"),
             ),
             Fieldset(
                 '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
@@ -300,7 +300,7 @@ class RepresentanteForm(forms.ModelForm):
                 Field('Nombre', css_class= ".col-lg-3",placeholder='Ingrese su nombre'),
                 Field('Apellido', placeholder="Insgrese su apellido"),
                 Field('DNI', placeholder="Ingrese su DNI"),
-                Field('NroLegajo', placeholder="Inserte su CUIL"),
+                Field('NroLegajo', placeholder="Ingrese su CUIL"),
             ),
             Fieldset(
                 '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
