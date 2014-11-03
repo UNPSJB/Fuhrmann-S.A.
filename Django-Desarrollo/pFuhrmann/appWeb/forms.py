@@ -143,7 +143,7 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
             self.helper.field_class = 'col-lg-8'
             self.helper.layout = Layout(
 
-                Fieldset(
+                Fieldset( 
                     '<font color = "Teal" size=3 face="Comic Sans MS">Datos Primarios de Fardos </font>',
                     Field('Lote', css_class= ".col-lg-3",placeholder='asd'),
                     Field('TipoFardo', placeholder="Tipo de Fardos"),
