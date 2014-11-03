@@ -42,11 +42,11 @@
                             <td style="text-align:center;" width="5%">{{dato.EnProduccion}}</td>
                             <td style="text-align:center;" width="5%">{{dato.Finalizada}}</td>
                             <td style="text-align:center;" width="40%">
-                                <a class="btn btn-default" href="/modificarFardo/{{dato.NroFardo}}" title="Ver Detalle"><span class="glyphicon glyphicon-edit"></span></a>
+                                <a class="btn btn-default" href="/modificarFardo/{{dato.NroFardo}}" title="Ver Detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
                                 <a class="btn btn-default" href="/modificarFardo/{{dato.NroFardo}}" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
-                                <a class="btn btn-default" href="/cancelarOrdenProduccion/{{dato.NroOrden}}" title="Cancelar" ><span class="glyphicon glyphicon-edit"></span></a>
-                                <a class="btn btn-default" href="/enviarOrdenProduccion/{{dato.NroOrden}}" title="Enviar a Produccion"><span class="glyphicon glyphicon-edit"></span></a>
-                                <a class="btn btn-default" href="finalizarOrdenProduccion/{{dato.NroOrden}}" title="Finalizar Produccion"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                <a class="btn btn-default" href="/cancelarOrdenProduccion/{{dato.NroOrden}}" title="Cancelar" ><span class="glyphicon glyphicon-remove"></span></a>
+                                <a class="btn btn-default" href="/enviarOrdenProduccion/{{dato.NroOrden}}" title="Enviar a Produccion"><span class="glyphicon glyphicon-share-alt"></span></a>
+                                <a class="btn btn-default" href="finalizarOrdenProduccion/{{dato.NroOrden}}" title="Finalizar Produccion"><span class="glyphicon glyphicon-warning-sign"></span></a></td>
 
                         </tr>
 
@@ -58,9 +58,6 @@
                 <script type ="text/javascript"> </script>
                 <div class="pull-right">
                     <a class="btn btn-default btn-gr" type= "button" href="/registrarOrdenProduccion">Nueva</a>
-                    <a class="btn btn-default btn-gr" type= "button" href="/cancelarOrdenProduccion/{{dato.NroOrden}}">Anular</a>
-                    <a class="btn btn-default btn-gr" type= "button" href="/enviarOrdenProduccion/{{dato.NroOrden}}">Procesar</a>
-                    <a class="btn btn-default btn-gr" type= "button" href="/finalizarOrdenProduccion/{{dato.NroOrden}}">Finalizar</a>
                     <a class="btn btn-default btn-gr" type= "button" href="/index">Salir</a>
                 </div>            
         </div>

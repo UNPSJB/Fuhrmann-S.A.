@@ -150,12 +150,12 @@ class LoteForm(forms.ModelForm):
         self.helper.layout = Layout(
         
             Fieldset( 
-                '<font color = "Teal" size=3 face="Comic Sans MS">Datos Primarios del Lote </font>',
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos Primarios del Lote </font>',
                 Field('CantFardos', placeholder="Cantidad de Fardos del lote"),
                 Field('Peso', placeholder="Peso del Lote"),
                 Field('Compra'),
             ),
-            HTML('<p>Atencion! Campos (*) obligatorios.</p>'),
+            HTML('<p>(*)Campos obligatorios.</p>'),
         )
 
     def setup(self, *args, **kwarg):
@@ -344,18 +344,18 @@ class OrdenProduccionForm(forms.ModelForm):
         self.helper.layout = Layout(
 
             Fieldset( 
-                '<font color = "Teal" size=3 face="Comic Sans MS">Datos Primarios de Orden de Produccion </font>',
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos Primarios de Orden de Produccion </font>',
                 Field('CantRequerida', placeholder="Cantidad en Kilos requeridos"),
                 Field('Servicio', placeholder="Servicios a Realizar"),
             ),
             Fieldset(
-                '<font color = "Teal" size=3 face="Comic Sans MS">Especificaciones de Orden de Produccion</font>',
+                '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones de Orden de Produccion</font>',
                 Field('CV', placeholder="Coeficiente de Variacion requerido"),
                 Field('AlturaMedia', placeholder="Altura Media requerida"),
                 Field('Micronaje', placeholder="Micronaje requerido"),
                 Field('Romana', placeholder="Romana requerida"),
             ),
-            HTML('<p>Atencion! Campos (*) obligatorios.</p>'),
+            HTML('<p>(*)Campos obligatorios.</p>'),
         )
 
     def setup(self, *args, **kwarg):
@@ -419,4 +419,4 @@ class MaquinariaForm(forms.ModelForm):
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+        self.helper.add_input(Button('cancelar', 'Cancelar',css_class="btn btn-default",onClick = "history.back()"))
