@@ -7,8 +7,8 @@ from appWeb.models import *
 from localflavor.ar.forms import ARCUITField
 from localflavor.ar.forms import ARDNIField
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
-from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
+from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, Fieldset, ButtonHolder
+from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions, InlineField
 
 
 # ------------- Login
@@ -120,19 +120,52 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
             exclude = ['Baja', 'DetalleOrden']
 
         if edit:
-            Lote = forms.ModelChoiceField(Lote.eliminados.all(), label ="Lote de Fardos")
+            Lote = forms.ModelChoiceField(Lote.eliminados.all(), label ="Lote de Fardos (*)")
         else:
-            Lote = forms.ModelChoiceField(Lote.noEliminados.all(), label ="Lote de Fardos")
+            Lote = forms.ModelChoiceField(Lote.noEliminados.all(), label ="Lote de Fardos (*)")
 
-        TipoFardo = forms.ModelChoiceField(TipoFardo.objects.all(), label ="Tipo de Fardo")
-        CV = forms.FloatField(label ="Coeficiente de Variacion", min_value = 0)
-        AlturaMedia = forms.FloatField(label ="Altura Media", min_value = 0)
-        Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula", required = False)
+        TipoFardo = forms.ModelChoiceField(TipoFardo.objects.all(), label ="Tipo de Fardo (*)")
+        CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
+        AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
+        Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula ", required = False)
+   
+        Peso = forms.FloatField(label ="Peso (*)", min_value = 0)
+        Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
+        Finura = forms.FloatField(label ="Finura (*)", min_value = 0)
+        Micronaje = forms.FloatField(label ="Micronaje (*)", min_value = 0)
+        Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
 
         def __init__(self, *args, **kwargs):
             super(FardoForm, self).__init__(*args, **kwargs)
             self.helper = FormHelper()
-        
+            self.helper.form_class = 'form-horizontal'
+            self.helper.label_class = 'col-lg-2'
+            self.helper.field_class = 'col-lg-8'
+            self.helper.layout = Layout(
+
+                Fieldset(
+                    '<font color = "Teal" size=3 face="Comic Sans MS">Datos Primarios de Fardos </font>',
+                    Field('Lote', css_class= ".col-lg-3",placeholder='asd'),
+                    Field('TipoFardo', placeholder="Tipo de Fardos"),
+                ),
+                Fieldset(
+                    '<font color = "Teal" size=3 face="Comic Sans MS">Especificaciones de Fardos</font>',
+                    Field('Peso', placeholder="Peso de Fardos"),
+                    Field('Rinde', placeholder="Rinde de Fardos"),
+                    Field('Finura', placeholder="Finura de Fardos"),
+                    Field('CV', placeholder="Coeficiente de Variacion de Fardos"),
+                    Field('AlturaMedia', placeholder="Altura Media de Fardos"),
+                    Field('Micronaje', placeholder="Micronaje de Fardos"),
+                    Field('Romana', placeholder="Romana de Fardos"),
+                ),
+                Fieldset(
+                    '<font color = "Teal" size=3 face="Comic Sans MS">Ubicacion de Fardos</font>',
+                    Field('Cuadricula', placeholder="Ubicacion en Cuadricula"),
+                ),
+                
+                HTML('<p>Atencion! Campos (*) obligatorios.</p>'),
+            )
+
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submit', *args, **kwarg))
             self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))

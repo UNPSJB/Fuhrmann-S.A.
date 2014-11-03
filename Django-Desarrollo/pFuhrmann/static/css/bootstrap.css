@@ -11,6 +11,9 @@ html {
       -ms-text-size-adjust: 100%;
 }
 
+.asteriskField {
+                    display: none;
+}
 
 body {
   margin: 0;
