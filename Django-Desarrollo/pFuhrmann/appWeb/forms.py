@@ -321,4 +321,4 @@ class MaquinariaForm(forms.ModelForm):
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+        self.helper.add_input(Button('cancelar', 'Cancelar',css_class="btn btn-default",onClick = "history.back()"))
