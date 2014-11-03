@@ -51,7 +51,7 @@ class VentaForm(forms.ModelForm):
 
 class EstanciaForm(forms.ModelForm):
     # Override de Cuit
-    CUIT = ARCUITField(label="CUIT", help_text="Un cuit")
+    CUIT = ARCUITField(label="CUIT")
     # Campo nuevo
     algo = forms.IntegerField()
     # Ver django-selectable para autocompletado
@@ -65,11 +65,27 @@ class EstanciaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EstanciaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
 
-    def clean_algo(self):
-        if self.cleaned_data['algo'] == 2:
-            raise ValidationError("Algo no puede ser 2")
-        return self.cleaned_data['algo']
+            Fieldset( 
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos de Estancia </font>',
+                Field('Nombre', placeholder="Nombre de Estancia"),
+                Field('CUIT', placeholder="CUIT de Estancia"),
+                Field('Provincia', placeholder="Provincia"),
+                Field('Zona'),
+                Field('Representante'),
+                Field('Productor'),
+            ),
+            HTML('<p>(*)Campos obligatorios.</p>'),
+        )    
+
+    #def clean_algo(self):
+    #    if self.cleaned_data['algo'] == 2:
+    #        raise ValidationError("Algo no puede ser 2")
+    #    return self.cleaned_data['algo']
 
     #def clean_CUIT(self):
      #   return int(self.cleaned_data['CUIT'].replace('-', ''))
@@ -77,7 +93,7 @@ class EstanciaForm(forms.ModelForm):
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-
+   
 
 #LOTES&FARDOS
 
