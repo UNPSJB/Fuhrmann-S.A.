@@ -247,9 +247,27 @@ class ProductorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProductorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-    
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+
+            Fieldset( 
+                '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
+                Field('Nombre', css_class= ".col-lg-3",placeholder='Ingrese su nombre'),
+                Field('Apellido', placeholder="Insgrese su apellido"),
+                Field('DNI', placeholder="Ingrese su DNI"),
+                Field('CUIL', placeholder="Inserte su CUIL"),
+            ),
+            Fieldset(
+                '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
+                Field('Telefono', placeholder="Ingrese su telefono"),
+                Field('Email', placeholder="Ingrese su Email"),
+            ),
+        )
+
     def setup(self, *args, **kwarg):
-        self.helper.add_input(Submit('submit', *args, **kwarg))
+        self.helper.add_input(Submit('submibl', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
 
@@ -272,7 +290,24 @@ class RepresentanteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RepresentanteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+
+            Fieldset( 
+                '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
+                Field('Nombre', css_class= ".col-lg-3",placeholder='Ingrese su nombre'),
+                Field('Apellido', placeholder="Insgrese su apellido"),
+                Field('DNI', placeholder="Ingrese su DNI"),
+                Field('NroLegajo', placeholder="Inserte su CUIL"),
+            ),
+            Fieldset(
+                '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
+                Field('Telefono', placeholder="Ingrese su telefono"),
+                Field('Email', placeholder="Ingrese su Email"),
+                Field('Zona', placeholder="Ingrese su Zona"),
+            ),)
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
@@ -384,4 +419,4 @@ class MaquinariaForm(forms.ModelForm):
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+        self.helper.add_input(Button('cancelar', 'Cancelar',css_class="btn btn-default",onClick = "history.back()"))
