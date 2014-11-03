@@ -305,6 +305,19 @@ class MaquinariaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MaquinariaForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+            Fieldset( 
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos de Maquinaria</font>',
+                Field('NroSerie', css_class= ".col-lg-3",placeholder='Nro de maquinaria'),
+                Field('TipoMaquinaria'),
+                Field('Descripcion', placeholder="Descripcion"),
+            ),
+            
+            HTML('<p>(*)Campos obligatorios.</p>'),
+        )
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
