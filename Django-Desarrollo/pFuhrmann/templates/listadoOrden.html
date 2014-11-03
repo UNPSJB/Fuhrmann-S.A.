@@ -23,33 +23,30 @@
                 <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tableLote" width="100%">
                     <thead>
                         <tr>
-                            <th width="7%">Número Orden</th>
-                            <th width="10%">Fecha de Emisión</th>
-                            <th width="5%">Kg</th>
-                            <th width="5%">CV</th>
-                            <th width="5%">Hm</th>
-                            <th width="5%">Micronaje</th>
-                            <th width="5%">Romana</th>
-                            <th width="10%">F Inicio</th>
-                            <th width="10%">F Fin</th>
-                            <th width="10%">Maquinaria</th>
-                            <th width="5%">Proceso</th>
-                            <th width="5%">Terminada</th>
+                            <th style="text-align:center;" width="15%">Fecha de Emisión</th>
+                            <th style="text-align:center;" width="5%">Kg</th>
+                            <th style="text-align:center;" width="15%">Inicio Produccion</th>
+                            <th style="text-align:center;" width="15%">Fin Produccion</th>
+                            <th style="text-align:center;" width="12%">Maquina Actual</th>
+                            <th style="text-align:center;" width="5%">Proceso</th>
+                            <th style="text-align:center;" width="5%">Finalizada</th>
+                            <th style="text-align:center;" width="40%">Acciones</th>
                         </tr>
                         {% for dato in lista %}
                         <tr>
-                            <td width="7%" >{{dato.NroOrden}}</td>
-                            <td width="10%">{{dato.FechaEmision}}</td>
-                            <td width="5%">{{dato.CantRequerida}}</td>
-                            <td width="5%">{{dato.CV}}</td>
-                            <td width="5%">{{dato.AlturaMedia}}</td>
-                            <td width="5%">{{dato.Micronaje}}</td>
-                            <td width="5%">{{dato.Romana}}</td>
-                            <td width="10%">{{dato.FechaInicioProduccion}}</td>
-                            <td width="10%">{{dato.FechaFinProduccion}}</td>
-                            <td width="10%">{{dato.MaquinaActual}}</td>
-                            <td width="5%">{{dato.EnProduccion}}</td>
-                            <td width="5%">{{dato.Finalizada}}</td>
+                            <td style="text-align:center;" width="10%">{{dato.FechaEmision}}</td>
+                            <td style="text-align:center;" width="5%">{{dato.CantRequerida}}</td>
+                            <td style="text-align:center;" width="10%">{{dato.FechaInicioProduccion}}</td>
+                            <td style="text-align:center;" width="10%">{{dato.FechaFinProduccion}}</td>
+                            <td style="text-align:center;" width="12%">{{dato.MaquinaActual}}</td>
+                            <td style="text-align:center;" width="5%">{{dato.EnProduccion}}</td>
+                            <td style="text-align:center;" width="5%">{{dato.Finalizada}}</td>
+                            <td style="text-align:center;" width="40%">
+                                <a class="btn btn-default" href="/modificarFardo/{{dato.NroFardo}}" title="Ver Detalle"><span class="glyphicon glyphicon-edit"></span></a>
+                                <a class="btn btn-default" href="/modificarFardo/{{dato.NroFardo}}" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
+                                <a class="btn btn-default" href="/cancelarOrdenProduccion/{{dato.NroOrden}}" title="Cancelar" ><span class="glyphicon glyphicon-edit"></span></a>
+                                <a class="btn btn-default" href="/enviarOrdenProduccion/{{dato.NroOrden}}" title="Enviar a Produccion"><span class="glyphicon glyphicon-edit"></span></a>
+                                <a class="btn btn-default" href="finalizarOrdenProduccion/{{dato.NroOrden}}" title="Finalizar Produccion"><span class="glyphicon glyphicon-edit"></span></a></td>
 
                         </tr>
 
@@ -61,7 +58,6 @@
                 <script type ="text/javascript"> </script>
                 <div class="pull-right">
                     <a class="btn btn-default btn-gr" type= "button" href="/registrarOrdenProduccion">Nueva</a>
-                    <a class="btn btn-default btn-gr" type= "button" href="/listadoOrden">Modificar</a>
                     <a class="btn btn-default btn-gr" type= "button" href="/cancelarOrdenProduccion/{{dato.NroOrden}}">Anular</a>
                     <a class="btn btn-default btn-gr" type= "button" href="/enviarOrdenProduccion/{{dato.NroOrden}}">Procesar</a>
                     <a class="btn btn-default btn-gr" type= "button" href="/finalizarOrdenProduccion/{{dato.NroOrden}}">Finalizar</a>

@@ -122,7 +122,7 @@ class EstanciaForm(forms.ModelForm):
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-   
+
 
 #LOTES&FARDOS
 
@@ -137,12 +137,26 @@ class LoteForm(forms.ModelForm):
       #  else:
         exclude = ("Baja", )
     
-    CantFardos = forms.IntegerField(label ="Cantidad de Fardos", min_value = 0)
-    Compra = forms.ModelChoiceField(CompraLote.objects.all(), label ="Compra del Lote")
+    CantFardos = forms.IntegerField(label ="Cantidad de Fardos (*)", min_value = 0)
+    Peso = forms.IntegerField(label ="Peso del Lote (*)", min_value = 0)
+    Compra = forms.ModelChoiceField(CompraLote.objects.all(), label ="Compra del Lote (*)")
 
     def __init__(self, *args, **kwargs):
         super(LoteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+        
+            Fieldset( 
+                '<font color = "Teal" size=3 face="Comic Sans MS">Datos Primarios del Lote </font>',
+                Field('CantFardos', placeholder="Cantidad de Fardos del lote"),
+                Field('Peso', placeholder="Peso del Lote"),
+                Field('Compra'),
+            ),
+            HTML('<p>Atencion! Campos (*) obligatorios.</p>'),
+        )
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
@@ -233,9 +247,27 @@ class ProductorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProductorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-    
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+
+            Fieldset( 
+                '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
+                Field('Nombre', css_class= ".col-lg-3",placeholder='Ingrese su nombre'),
+                Field('Apellido', placeholder="Insgrese su apellido"),
+                Field('DNI', placeholder="Ingrese su DNI"),
+                Field('CUIL', placeholder="Inserte su CUIL"),
+            ),
+            Fieldset(
+                '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
+                Field('Telefono', placeholder="Ingrese su telefono"),
+                Field('Email', placeholder="Ingrese su Email"),
+            ),
+        )
+
     def setup(self, *args, **kwarg):
-        self.helper.add_input(Submit('submit', *args, **kwarg))
+        self.helper.add_input(Submit('submibl', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
 
@@ -258,7 +290,24 @@ class RepresentanteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RepresentanteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+
+            Fieldset( 
+                '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
+                Field('Nombre', css_class= ".col-lg-3",placeholder='Ingrese su nombre'),
+                Field('Apellido', placeholder="Insgrese su apellido"),
+                Field('DNI', placeholder="Ingrese su DNI"),
+                Field('NroLegajo', placeholder="Inserte su CUIL"),
+            ),
+            Fieldset(
+                '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
+                Field('Telefono', placeholder="Ingrese su telefono"),
+                Field('Email', placeholder="Ingrese su Email"),
+                Field('Zona', placeholder="Ingrese su Zona"),
+            ),)
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
@@ -277,17 +326,50 @@ class OrdenProduccionForm(forms.ModelForm):
         model = OrdenProduccion
         exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual', 'FechaFinProduccion', 'FechaInicioProduccion']
 
-    CantRequerida = forms.IntegerField(label = "Cantidad Requerida (Kg)")
-    AlturaMedia = forms.FloatField(label = "Altura Media")
+    CantRequerida = forms.IntegerField(label = "Cantidad Requerida (*)", min_value = 0)
+    CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
+    AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
+    Micronaje = forms.FloatField(label ="Micronaje (*)", min_value = 0)
+    Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
+    Servicio = forms.ModelMultipleChoiceField(Servicio.objects.all(), label ="Servicios a Realizar (*)")
+
   #  FechaInicioProduccion = forms.DateField(label = "Inicio de Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False)
     
     def __init__(self, *args, **kwargs):
         super(OrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+
+            Fieldset( 
+                '<font color = "Teal" size=3 face="Comic Sans MS">Datos Primarios de Orden de Produccion </font>',
+                Field('CantRequerida', placeholder="Cantidad en Kilos requeridos"),
+                Field('Servicio', placeholder="Servicios a Realizar"),
+            ),
+            Fieldset(
+                '<font color = "Teal" size=3 face="Comic Sans MS">Especificaciones de Orden de Produccion</font>',
+                Field('CV', placeholder="Coeficiente de Variacion requerido"),
+                Field('AlturaMedia', placeholder="Altura Media requerida"),
+                Field('Micronaje', placeholder="Micronaje requerido"),
+                Field('Romana', placeholder="Romana requerida"),
+            ),
+            HTML('<p>Atencion! Campos (*) obligatorios.</p>'),
+        )
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+
+
+
+
+
+
+
+
+
 
 class enviarFaseProduccionForm(forms.ModelForm):
     class Meta:
