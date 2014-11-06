@@ -82,13 +82,14 @@ class EstanciaForm(forms.ModelForm):
     # Override de Cuit
     CUIT = ARCUITField(label="CUIT")
     # Campo nuevo
-    algo = forms.IntegerField()
+    #algo = forms.IntegerField()
     # Ver django-selectable para autocompletado
     class Meta:
         model = Estancia
         exclude = ['Baja']
         widgets = {
-            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
+            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')]),
+            'Provincia': forms.Select(choices=[('Chubut', 'Chubut'), ('Santa Cruz', 'Santa Cruz'), ('Buenos Aires', 'Buenos Aires')])
         }
 
     def __init__(self, *args, **kwargs):
@@ -103,18 +104,13 @@ class EstanciaForm(forms.ModelForm):
                 '<font color = "Black" size=3 face="Comic Sans MS">Datos de Estancia </font>',
                 Field('Nombre', placeholder="Nombre de Estancia"),
                 Field('CUIT', placeholder="CUIT de Estancia"),
-                Field('Provincia', placeholder="Provincia"),
+                Field('Provincia'),
                 Field('Zona'),
                 Field('Representante'),
                 Field('Productor'),
             ),
             HTML('<p>(*)Campos obligatorios.</p>'),
         )    
-
-    #def clean_algo(self):
-    #    if self.cleaned_data['algo'] == 2:
-    #        raise ValidationError("Algo no puede ser 2")
-    #    return self.cleaned_data['algo']
 
     #def clean_CUIT(self):
      #   return int(self.cleaned_data['CUIT'].replace('-', ''))
