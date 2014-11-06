@@ -45,6 +45,8 @@ class CompraForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
+    
+
 # ------------- Formulario de Ventas
 class VentaForm(forms.ModelForm):
     LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(),label = "Lote Venta")
