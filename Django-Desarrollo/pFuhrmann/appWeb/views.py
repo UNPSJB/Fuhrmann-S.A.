@@ -36,6 +36,7 @@ def nuevo_usuario(request):
             return HttpResponseRedirect('/')
     else:
         formulario = UserCreationForm()
+    
     return render_to_response('nuevousuario.html', {'formulario':formulario}, context_instance= RequestContext(request))
 
 def ingresar(request):
@@ -219,7 +220,7 @@ def registrarProductor(request):
             return HttpResponseRedirect('/listadoProductores')
     else:
         formulario = ProductorForm()
-        formulario.setup('Registrar', css_class="btn btn-success")
+    formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def modificarProductor(request, pk=None):
