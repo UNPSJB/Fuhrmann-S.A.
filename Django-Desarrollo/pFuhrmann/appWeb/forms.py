@@ -82,7 +82,7 @@ class VentaForm(forms.ModelForm):
 # ********************************* Formularios de Estancia *********************************
 
 class EstanciaForm(forms.ModelForm):
-<<<<<<< HEAD
+
     
     CUIT = ARCUITField(label="CUIT (*)")
     Nombre = forms.CharField(label="Nombre (*)")
@@ -92,9 +92,6 @@ class EstanciaForm(forms.ModelForm):
 
     # Ver django-selectable para autocompletado
     class Meta:
-=======
-    class Meta:                         # Ver django-selectable para autocompletado
->>>>>>> 58e701b90be6b32a26390be68faa23444469286c
         model = Estancia
         exclude = ['Baja']
         widgets = {
