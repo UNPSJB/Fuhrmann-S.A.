@@ -86,7 +86,6 @@ class Fardo(models.Model):
     Finura = models.FloatField()
     CV = models.FloatField()
     AlturaMedia = models.FloatField()
-    Micronaje = models.FloatField()
     Romana = models.FloatField()
     Cuadricula = models.ForeignKey('Cuadricula', null = True)
     DetalleOrden = models.ForeignKey('DetalleOrden', null = True)
@@ -116,6 +115,7 @@ class OrdenProduccion(models.Model):
     MaquinaActual = models.ForeignKey('Maquinaria', null = True)
     EnProduccion = models.BooleanField(default=False)
     Finalizada = models.BooleanField(default=False)
+    Cancelada = models.BooleanField(default=False)
 
     def __unicode__(self):
         return u"%s - %s" % (self.NroOrden, u", ".join([unicode(s) for s in self.Servicio.all()]))

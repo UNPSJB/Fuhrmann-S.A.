@@ -79,18 +79,15 @@ class VentaForm(forms.ModelForm):
 # ********************************* Formularios de Estancia *********************************
 
 class EstanciaForm(forms.ModelForm):
-    # Override de Cuit
-    CUIT = ARCUITField(label="CUIT")
-    # Campo nuevo
-    algo = forms.IntegerField()
-    # Ver django-selectable para autocompletado
-    class Meta:
+    class Meta:                         # Ver django-selectable para autocompletado
         model = Estancia
         exclude = ['Baja']
         widgets = {
             'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')]),
             'Provincia': forms.Select(choices=[('Chubut', 'Chubut'), ('Santa Cruz', 'Santa Cruz'), ('Buenos Aires', 'Buenos Aires')])
         }
+  
+    CUIT = ARCUITField(label="CUIT")    # Override de Cuit
 
     def __init__(self, *args, **kwargs):
         super(EstanciaForm, self).__init__(*args, **kwargs)
@@ -99,7 +96,6 @@ class EstanciaForm(forms.ModelForm):
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-8'
         self.helper.layout = Layout(
-
             Fieldset( 
                 '<font color = "Black" size=3 face="Comic Sans MS">Datos de Estancia </font>',
                 Field('Nombre', placeholder="Nombre de Estancia"),
@@ -112,9 +108,6 @@ class EstanciaForm(forms.ModelForm):
             HTML('<p>(*)Campos obligatorios.</p>'),
         )    
 
-    #def clean_CUIT(self):
-     #   return int(self.cleaned_data['CUIT'].replace('-', ''))
-        
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
@@ -328,8 +321,6 @@ class OrdenProduccionForm(forms.ModelForm):
     Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
     Servicio = forms.ModelMultipleChoiceField(Servicio.objects.all(), label ="Servicios a Realizar (*)")
 
-  #  FechaInicioProduccion = forms.DateField(label = "Inicio de Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False)
-    
     def __init__(self, *args, **kwargs):
         super(OrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -347,7 +338,7 @@ class OrdenProduccionForm(forms.ModelForm):
                 '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones de Orden de Produccion</font>',
                 Field('CV', placeholder="Coeficiente de Variacion requerido"),
                 Field('AlturaMedia', placeholder="Altura Media requerida"),
-                Field('Micronaje', placeholder="Micronaje requerido"),
+                Field('Finura', placeholder="Micronaje requerido"),
                 Field('Romana', placeholder="Romana requerida"),
             ),
             HTML('<p>(*)Campos obligatorios.</p>'),
@@ -356,13 +347,6 @@ class OrdenProduccionForm(forms.ModelForm):
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-
-
-
-
-
-
-
 
 
 
