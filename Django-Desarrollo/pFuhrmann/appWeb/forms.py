@@ -88,7 +88,8 @@ class EstanciaForm(forms.ModelForm):
         model = Estancia
         exclude = ['Baja']
         widgets = {
-            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
+            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')]),
+            'Provincia': forms.Select(choices=[('Chubut', 'Chubut'), ('Santa Cruz', 'Santa Cruz'), ('Buenos Aires', 'Buenos Aires')])
         }
 
     def __init__(self, *args, **kwargs):
@@ -103,13 +104,16 @@ class EstanciaForm(forms.ModelForm):
                 '<font color = "Black" size=3 face="Comic Sans MS">Datos de Estancia </font>',
                 Field('Nombre', placeholder="Nombre de Estancia"),
                 Field('CUIT', placeholder="CUIT de Estancia"),
-                Field('Provincia', placeholder="Provincia"),
+                Field('Provincia'),
                 Field('Zona'),
                 Field('Representante'),
                 Field('Productor'),
             ),
             HTML('<p>(*)Campos obligatorios.</p>'),
         )    
+
+    #def clean_CUIT(self):
+     #   return int(self.cleaned_data['CUIT'].replace('-', ''))
         
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
@@ -123,6 +127,9 @@ class EstanciaForm(forms.ModelForm):
 class LoteForm(forms.ModelForm):    
     class Meta:
         model = Lote
+      #  if *args is None:
+      #      exclude = ("Peso", "Baja", )
+      #  else:
         exclude = ("Baja", )
     
     CantFardos = forms.IntegerField(label ="Cantidad de Fardos (*)", min_value = 0)
@@ -243,9 +250,9 @@ class ProductorForm(forms.ModelForm):
             Fieldset( 
                 '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
                 Field('Nombre', css_class= ".col-lg-3",placeholder='Ingrese su nombre'),
-                Field('Apellido', placeholder="Insgrese su apellido"),
+                Field('Apellido', placeholder="Ingrese su apellido"),
                 Field('DNI', placeholder="Ingrese su DNI"),
-                Field('CUIL', placeholder="Inserte su CUIL"),
+                Field('CUIL', placeholder="Ingrese su CUIL"),
             ),
             Fieldset(
                 '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
@@ -288,7 +295,7 @@ class RepresentanteForm(forms.ModelForm):
                 Field('Nombre', css_class= ".col-lg-3",placeholder='Ingrese su nombre'),
                 Field('Apellido', placeholder="Insgrese su apellido"),
                 Field('DNI', placeholder="Ingrese su DNI"),
-                Field('NroLegajo', placeholder="Inserte su CUIL"),
+                Field('NroLegajo', placeholder="Ingrese su CUIL"),
             ),
             Fieldset(
                 '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
@@ -321,6 +328,8 @@ class OrdenProduccionForm(forms.ModelForm):
     Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
     Servicio = forms.ModelMultipleChoiceField(Servicio.objects.all(), label ="Servicios a Realizar (*)")
 
+  #  FechaInicioProduccion = forms.DateField(label = "Inicio de Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False)
+    
     def __init__(self, *args, **kwargs):
         super(OrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -347,6 +356,13 @@ class OrdenProduccionForm(forms.ModelForm):
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+
+
+
+
+
+
+
 
 
 
