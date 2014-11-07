@@ -179,15 +179,14 @@
                                         recibe como parametros la url en caso 
                                             de aceptar y el titulo */
         
-        $("#dialog-message").dialog({
-            title: title,
+        $( '<div><h5>' +message+'</h5></div>').dialog({
+            title: 'Ayuda',
             resizable: false,
             modal: true,
             autoOpen: true,
             draggable: false,
             width:600,
             heigth:100,
-            dialogClass: 'ui-dialog-osx',
             show: {
                 effect: "Clip",
                 duration: 800

@@ -9,9 +9,15 @@ from localflavor.ar.forms import ARDNIField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, Fieldset, ButtonHolder
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions, InlineField
-   
 
-# ------------- Formulario de Compras
+
+# ********************************* Login *********************************
+class LoginForm(forms.Form):
+    username = forms.CharField(label = "Usuario")
+    password = forms.CharField(widget=forms.PasswordInput, label = "Contraseña") 
+    
+
+# ********************************* Formulario de Compras *********************************
 class CompraForm(forms.ModelForm):    
     FechaLlegada = forms.DateField(label = "Fecha de Llegada",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
     class Meta:
@@ -39,9 +45,7 @@ class CompraForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-    
-
-# ------------- Formulario de Ventas
+# ********************************* Formulario de Ventas *********************************
 class VentaForm(forms.ModelForm):
     LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(),label = "Lote Venta")
     FechaVenta = forms.DateField(label = "Fecha Venta",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
@@ -72,21 +76,18 @@ class VentaForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-# ------------- Formularios de Estancia
+# ********************************* Formularios de Estancia *********************************
 
 class EstanciaForm(forms.ModelForm):
-    # Override de Cuit
-    CUIT = ARCUITField(label="CUIT")
-    # Campo nuevo
-    #algo = forms.IntegerField()
-    # Ver django-selectable para autocompletado
-    class Meta:
+    class Meta:                         # Ver django-selectable para autocompletado
         model = Estancia
         exclude = ['Baja']
         widgets = {
             'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')]),
             'Provincia': forms.Select(choices=[('Chubut', 'Chubut'), ('Santa Cruz', 'Santa Cruz'), ('Buenos Aires', 'Buenos Aires')])
         }
+  
+    CUIT = ARCUITField(label="CUIT")    # Override de Cuit
 
     def __init__(self, *args, **kwargs):
         super(EstanciaForm, self).__init__(*args, **kwargs)
@@ -95,7 +96,6 @@ class EstanciaForm(forms.ModelForm):
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-8'
         self.helper.layout = Layout(
-
             Fieldset( 
                 '<font color = "Black" size=3 face="Comic Sans MS">Datos de Estancia </font>',
                 Field('Nombre', placeholder="Nombre de Estancia"),
@@ -108,9 +108,6 @@ class EstanciaForm(forms.ModelForm):
             HTML('<p>(*)Campos obligatorios.</p>'),
         )    
 
-    #def clean_CUIT(self):
-     #   return int(self.cleaned_data['CUIT'].replace('-', ''))
-        
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
@@ -118,8 +115,7 @@ class EstanciaForm(forms.ModelForm):
 
 #LOTES&FARDOS
 
-# ------------- Formularios de Lotes
-
+# ********************************* Formularios de Lotes *********************************
 
 class LoteForm(forms.ModelForm):    
     class Meta:
@@ -142,7 +138,7 @@ class LoteForm(forms.ModelForm):
         self.helper.layout = Layout(
         
             Fieldset( 
-                '<font color = "Black" size=3 face="Comic Sans MS">Datos Primarios del Lote </font>',
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos Principales </font>',
                 Field('CantFardos', placeholder="Cantidad de Fardos del lote"),
                 Field('Peso', placeholder="Peso del Lote"),
                 Field('Compra'),
@@ -162,7 +158,7 @@ class LoteForm(forms.ModelForm):
             raise ValidationError("El Peso debe ser 280-300kg por Fardo")
         return peso
 
-# ------------- Formularios de Fardo
+# ********************************* Formularios de Fardo *********************************
 
 def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
     class FardoForm(ModelForm):
@@ -195,7 +191,7 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
             self.helper.layout = Layout(
 
                 Fieldset( 
-                    '<font color = "Black" size=3 face="Comic Sans MS">Datos Primarios </font>',
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos Principales </font>',
                     Field('Lote', css_class= ".col-lg-3",placeholder='asd'),
                     Field('TipoFardo', placeholder="Tipo de Fardos"),
                 ),
@@ -224,7 +220,7 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
 
 #PERSONAL
 
-# ---------------Formularios de Productor
+# ********************************* Formularios de Productor *********************************
 
 class ProductorForm(forms.ModelForm):
     DNI = ARDNIField(label="DNI")
@@ -263,7 +259,7 @@ class ProductorForm(forms.ModelForm):
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
 
-# ---------------Formularios de Representante
+# ********************************* Formularios de Representante *********************************
 
 class RepresentanteForm(forms.ModelForm):
     DNI = ARDNIField(label="DNI")
@@ -309,7 +305,7 @@ class RepresentanteForm(forms.ModelForm):
 
 #PRODUCCION
 
-# ---------------Formularios de Orden de Produccion
+# ********************************* Formularios de Orden de Produccion *********************************
 
 
 class OrdenProduccionForm(forms.ModelForm):
@@ -321,12 +317,10 @@ class OrdenProduccionForm(forms.ModelForm):
     CantRequerida = forms.IntegerField(label = "Cantidad Requerida (*)", min_value = 0)
     CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
     AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
-    Micronaje = forms.FloatField(label ="Micronaje (*)", min_value = 0)
+    Finura = forms.FloatField(label ="Micronaje (*)", min_value = 0)        # Unidad de Medida Micrones
     Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
     Servicio = forms.ModelMultipleChoiceField(Servicio.objects.all(), label ="Servicios a Realizar (*)")
 
-  #  FechaInicioProduccion = forms.DateField(label = "Inicio de Produccion",widget = forms.TextInput(attrs = {'id':'datepicker'}), required = False)
-    
     def __init__(self, *args, **kwargs):
         super(OrdenProduccionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -344,7 +338,7 @@ class OrdenProduccionForm(forms.ModelForm):
                 '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones de Orden de Produccion</font>',
                 Field('CV', placeholder="Coeficiente de Variacion requerido"),
                 Field('AlturaMedia', placeholder="Altura Media requerida"),
-                Field('Micronaje', placeholder="Micronaje requerido"),
+                Field('Finura', placeholder="Micronaje requerido"),
                 Field('Romana', placeholder="Romana requerida"),
             ),
             HTML('<p>(*)Campos obligatorios.</p>'),
@@ -353,13 +347,6 @@ class OrdenProduccionForm(forms.ModelForm):
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-
-
-
-
-
-
-
 
 
 
@@ -383,7 +370,10 @@ class finalizarFaseProduccionForm(forms.ModelForm):
         self.helper.add_input(Button('submit', 'Finalizar'))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-success",onClick = "location.href='/index'"))
 
-#-----------------Formularios de Maquinaria
+
+
+# ********************************* Formularios de Maquinaria *********************************
+
 class MaquinariaForm(forms.ModelForm):
     NroSerie = forms.IntegerField(label = "Nro. Serie")
     Descripcion = forms.CharField(required = False)

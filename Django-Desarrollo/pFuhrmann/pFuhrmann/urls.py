@@ -22,9 +22,10 @@ urlpatterns = patterns('',
 
     #Orden de produccion
     url(r'^registrarOrdenProduccion/$', 'appWeb.views.registrarOrdenProduccion'),
-    url(r'^modificarOrdenProduccion/$', 'appWeb.views.modificarOrdenProduccion'),
-    url(r'^cancelarOrdenProduccion/$', 'appWeb.views.cancelarOrdenProduccion'),
+    url(r'^modificarOrdenProduccion/(\d+)/$', 'appWeb.views.registrarOrdenProduccion'),
+    url(r'^cancelarOrdenProduccion/(\d+)/$', 'appWeb.views.cancelarOrdenProduccion'),
     url(r'^enviarFaseProduccion/$', 'appWeb.views.enviarFaseProduccion'),
+    url(r'^verOrdenProduccion/(\d+)/$', 'appWeb.views.verOrdenProduccion'),
     url(r'^finalizarFaseProduccion/$', 'appWeb.views.finalizarFaseProduccion'),
     url(r'^listadoOrden/$', 'appWeb.views.listadoOrden'),
     
@@ -40,8 +41,8 @@ urlpatterns = patterns('',
 
     # ------ Adm. Estancias
     url(r'^listadoEstancias/$', 'appWeb.views.listadoEstancias'),
-    url(r'^modificarEstancia/$', 'appWeb.views.modificarEstancia'),
-    url(r'^modificarEstancia/([\d-]+)/$', 'appWeb.views.modificarEstancia'),
+    url(r'^registrarEstancia/$', 'appWeb.views.registrarEstancia'),
+    url(r'^modificarEstancia/([\d-]+)/$', 'appWeb.views.registrarEstancia'),
     url(r'^eliminarEstancia/([\d-]+)/$', 'appWeb.views.eliminarEstancia'),
     
     # ------ Adm. Productor

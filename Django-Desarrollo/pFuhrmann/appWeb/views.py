@@ -23,10 +23,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 
+
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
 
-# --------------- Administracion de Usuario
+# ********************************* Administracion de Usuario *********************************
 
 def nuevo_usuario(request):
     if request.method =='POST':
@@ -64,7 +65,10 @@ def ingresar(request):
 def privado(request):
     usuario = request.user
     return render_to_response('privado.html',{'usuario':usuario},context_instance=RequestContext(request))
-# --------------- Administracion de Compra
+
+
+
+# ********************************* Administracion de Compra *********************************
 
 def listadoCompra(request):
     compra = CompraLote.objects.all()
@@ -81,7 +85,10 @@ def registrarCompra(request):
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('compraForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-# --------------- Administracion de Venta
+
+
+
+# ********************************* Administracion de Venta *********************************
 
 def listadoVenta(request):
     venta = Venta.objects.all()
@@ -102,34 +109,27 @@ def registrarVenta(request):
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ventaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-# --------------- Administracion de Estancias
+
+
+# ********************************* Administracion de Estancias *********************************
 
 def listadoEstancias(request):
     estancia = Estancia.objects.all()
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))
 
-def registrarEstancia(request):
-    if request.method == 'POST':
-        formulario = EstanciaForm(request.POST)
-        if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect('/listadoEstancias')
-    else:
-        formulario = EstanciaForm()
-    formulario.setup('Registrar', css_class="btn btn-success")
-    return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
-def modificarEstancia(request, pk=None):
+def registrarEstancia(request, pk=None):
     estancia = None
     if pk is not None:
         estancia = get_object_or_404(Estancia, pk=pk) 
+    
     if request.method == 'POST':
-        formulario = EstanciaForm(request.POST, instance=estancia)
+        formulario = EstanciaForm(request.POST, instance = estancia)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoEstancias')
     else:
         formulario = EstanciaForm(instance = estancia)
+    
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
@@ -139,7 +139,8 @@ def eliminarEstancia(request, pk):
     estancia = Estancia.objects.all()
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))    
 
-# --------------- Administracion de Lotes
+
+# ********************************* Administracion de Lotes *********************************
 
 def listadoLotes(request):
     lote = Lote.noEliminados.all()
@@ -168,7 +169,9 @@ def eliminarLoteId(request, pk):
     lote = Lote.noEliminados.all()
     return render_to_response('listadoLotes.html', {'lista':lote}, context_instance=RequestContext(request))    
 
-# --------------- Administracion de Fardos
+
+
+# ********************************* Administracion de Fardos *********************************
 
 def listadoFardos(request):
     fardo = Fardo.objects.all()
@@ -206,7 +209,8 @@ def registrarFardo(request, pk=None):
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('registrarFardoForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-# --------------- Administracion de Productor
+
+# ********************************* Administracion de Productor *********************************
     
 def listadoProductores(request):
     productor = Productor.objects.all()
@@ -243,7 +247,9 @@ def eliminarProductor(request,pk):
     productor = Productor.objects.all()
     return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
 
-#-----------Administracion de Representante
+
+
+# ********************************* Administracion de Representante *********************************
 
 def listadoRepresentante(request):
     representante = Representante.objects.all()
@@ -280,37 +286,58 @@ def eliminarRepresentante(request,pk):
     representante = Representante.objects.all()
     return render_to_response('listadoRepresentante.html', {'lista':representante}, context_instance=RequestContext(request))
 
-# --------------- Administracion de Produccion
+
+
+# ********************************* Administracion de Produccion *********************************
 
 def listadoOrden(request):
     op = OrdenProduccion.objects.all()
     return render_to_response('listadoOrden.html', {'lista':op}, context_instance=RequestContext(request))
 
-def registrarOrdenProduccion(request):
+def registrarOrdenProduccion(request, pk=None):
+    orden = None
+    if pk is not None:
+        orden = get_object_or_404(OrdenProduccion, pk=pk)
+
     if request.method == 'POST':
-        formulario = OrdenProduccionForm(request.POST)
+        formulario = OrdenProduccionForm(request.POST, instance = orden)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoOrden')
     else:
-        formulario = OrdenProduccionForm()
-        formulario.setup('Registrar', css_class="btn btn-success")
+        formulario = OrdenProduccionForm(instance = orden)
+        
+    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('OrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-    
-def modificarOrdenProduccion(request, pk):
-    if request.method == 'POST':
-        formulario = OrdenProduccionForm(request.POST, instance = op)
-        if formulario.is_valid():
-            if OrdenProduccion.EnProduccion == True:  
-                formulario.save()
-                formulario = OrdenProduccionForm(instance= op)
-                formulario.setup('Modificar', css_class="btn btn-success")
-                return HttpResponseRedirect('/listadoOrden')
-    return render_to_response('modificarOrdenProduccion.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-def cancelarOrdenProduccion(request):
-    orden = OrdenProduccion.objects.all()
-    return render_to_response('cancelarOrdenProduccionForm.html', {'lista':orden}, context_instance=RequestContext(request))
+
+
+def verOrdenProduccion(request, pk):
+    orden = OrdenProduccion.objects.get(NroOrden = pk)
+    detalles = orden.detalleorden_set   # Obtengo los detales de la orden
+
+    fardosL = []
+    cantidades = []
+    prueba = []
+
+    for detalle in detalles.all():                      # Recorro los detalles
+        fardo = detalle.fardo_set.first()               # Obtengo el primer fardo
+        cantidades.append(detalle.fardo_set.count())    # Cantidad de fardos de un detalle
+        fardosL.append(fardo)                           # agrego los fardos a la lista, como 1 detalle tiene los fardos iguales,
+                                                        # obtengo el primero y lo muestro en el html
+        peso = detalle.fardo_set.count() * fardo.Peso
+        prueba.append({'nroDetalle':detalle.NroDetalle,'estancia':fardo.Lote.Compra.Estancia.Nombre,'cantidad':detalle.fardo_set.count(),'peso':peso, 'Finura':fardo.Finura, 'HM':fardo.AlturaMedia, 'CVH':fardo.CV, 'Rinde':fardo.Rinde, 'Romana':fardo.Romana})
+
+
+    return render_to_response('datosOrden.html', {'orden':orden, 'detalles':prueba}, context_instance=RequestContext(request))
+
+
+
+def cancelarOrdenProduccion(request, pk):
+    orden = OrdenProduccion.objects.get( NroOrden=pk )
+    orden.Cancelada = True
+    orden.save()
+    return HttpResponseRedirect('/listadoOrden')    
     
 def enviarFaseProduccion(request):
     orden = OrdenProduccion.objects.all()
@@ -320,7 +347,9 @@ def finalizarFaseProduccion(request):
     orden = OrdenProduccion.objects.all()
     return render_to_response('finalizarFaseProduccionForm.html', {'lista':orden}, context_instance=RequestContext(request))   
 
-#-----------Administracion de Maquinarias  
+
+
+# ********************************* Administracion de Maquinarias *********************************
 
 def listadoMaquinaria(request):
     maquinaria = Maquinaria.objects.all()
