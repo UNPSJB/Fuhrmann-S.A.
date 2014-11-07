@@ -43,7 +43,7 @@ class Representante(Persona):
         return "%s" % str(str(self.NroLegajo) + " " + str(self.Nombre) + " " + str(self.Apellido))
 
 class Estancia(models.Model):
-    Nombre = models.CharField(max_length=50)
+    Nombre   = models.CharField(max_length=50)
     CUIT = models.CharField(max_length=13, primary_key = True)
     Provincia = models.CharField(max_length=50)
     Zona = models.CharField(max_length=50)
@@ -92,7 +92,7 @@ class Fardo(models.Model):
     DetalleOrden = models.ForeignKey('DetalleOrden', null = True)
 
     def __unicode__(self):
-        return ""
+        return u"%d" % self.NroFardo
 
 class TipoFardo(models.Model):
     Nombre = models.CharField(max_length=50, primary_key = True)
@@ -109,7 +109,7 @@ class OrdenProduccion(models.Model):
     Servicio = models.ManyToManyField('Servicio')
     CV = models.FloatField()
     AlturaMedia = models.FloatField()
-    Micronaje = models.FloatField()
+    Finura = models.FloatField() # Medida Micrones
     Romana = models.FloatField()
     FechaInicioProduccion = models.DateField(null = True) 
     FechaFinProduccion = models.DateField(null = True) 
@@ -122,10 +122,9 @@ class OrdenProduccion(models.Model):
 
 class DetalleOrden(models.Model):
     NroDetalle = models.AutoField(primary_key = True)
-    OrdenProduccion = models.OneToOneField('OrdenProduccion')
-    Fardo = models.OneToOneField('Fardo') #Cuando se crea el detalle, tiene que tener asociado 1 fardo
+    OrdenProduccion = models.ForeignKey('OrdenProduccion')
     def __unicode__(self):
-        return ""
+        return u"Nro. Detalle: %s" % self.NroDetalle
 
 class Servicio(models.Model):
     Nombre = models.CharField(max_length=50, primary_key = True)

@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^modificarOrdenProduccion/$', 'appWeb.views.modificarOrdenProduccion'),
     url(r'^cancelarOrdenProduccion/$', 'appWeb.views.cancelarOrdenProduccion'),
     url(r'^enviarFaseProduccion/$', 'appWeb.views.enviarFaseProduccion'),
+    url(r'^verOrdenProduccion/(\d+)/$', 'appWeb.views.verOrdenProduccion'),
     url(r'^finalizarFaseProduccion/$', 'appWeb.views.finalizarFaseProduccion'),
     url(r'^listadoOrden/$', 'appWeb.views.listadoOrden'),
     

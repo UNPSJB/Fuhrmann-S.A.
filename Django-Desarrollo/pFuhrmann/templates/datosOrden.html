@@ -1,0 +1,143 @@
+
+<div class="panel-body">
+    <div class="col-md-1"></div>
+
+    <div class="col-xs-12">
+        <form class="form-horizontal"> 
+            
+            <fieldset>
+                <legend>
+                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Datos Principales</h4></font>
+                </legend>
+                <div class="jumbotron">
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Nro. Orden</label></div>
+                        <div id="datoNroOrden" class="controls col-md-6"><label>{{orden.NroOrden}}</label></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Fecha de Emision</label></div>
+                        <div class="controls col-md-6"><label>{{orden.FechaEmision}}</label></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Cantidad Requerida</label></div>
+                        <div class="controls col-md-6"><label>{{orden.CantRequerida}}</label></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Servicios a Realizar</label></div>
+
+                        <div class="controls col-md-6">
+                                {% for servicio in orden.Servicio.all %}
+                                    <label>{{servicio.Nombre}} - </label>
+                                {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        
+        
+            <fieldset>
+                <legend>
+                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Datos de Especificaciones</h4></font>
+                </legend>
+                <div class="jumbotron">
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Coeficiente de Variacion</label></div>
+                        <div class="controls col-md-6"><label>{{orden.CV}}</label></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Altura Media</label></div>
+                        <div class="controls col-md-6"><label>{{orden.AlturaMedia}}</label></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Finura</label></div>
+                        <div class="controls col-md-6"><label>{{orden.Finura}}</label></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Romana</label></div>
+                        <div class="controls col-md-6"><label>{{orden.Romana}}</label></div>
+                    </div>
+                </div>    
+            </fieldset>
+        
+        
+            <fieldset>
+                <legend>
+                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Datos de Procesamiento</h4></font>
+                </legend>
+                <div class="jumbotron">
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Fecha Inicio de Produccion</label></div>
+                        <div class="controls col-md-6"><label>{{orden.FechaInicioProduccion}}</label></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Fecha Fin de Produccion</label></div>
+                        <div class="controls col-md-6"><label>{{orden.FechaFinProduccion}}</label></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Maquina Actual</label></div>
+                        <div class="controls col-md-6"><label>{{orden.MaquinaActual}}</label></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>En Produccion</label></div>
+                        <div class="controls col-md-6"><label>{{orden.EnProduccion}}</label></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls col-md-6"><label>Finalizada</label></div>
+                        <div class="controls col-md-6"><label>{{orden.Finalizada}}</label></div>
+                    </div>
+                </div>
+            </fieldset>
+               
+            <fieldset>
+                <legend>
+                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Especificaciones de Lana a Procesar</h4></font>
+                </legend>
+                <div class="jumbotron"> 
+                         <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tableLote" width="100%">
+                            <thead>
+                                     <tr>
+                                        <th style="text-align:center;" width="10%">Nro.</th>
+                                        <th style="text-align:center;" width="40%">Descripcion</th>
+                                        <th style="text-align:center;" width="10%">Fardos</th>
+                                        <th style="text-align:center;" width="10%">Neto</th>
+                                        <th style="text-align:center;" width="10%">Micr.</th>
+                                        <th style="text-align:center;" width="10%">HM</th>
+                                        <th style="text-align:center;" width="10%">CVH</th>
+                                        <th style="text-align:center;" width="10%">Rinde</th>
+                                    </tr>
+          
+                                {% regroup detalles by nroDetalle as datos %}<ul>
+                                    {% for nroDetalle in datos %}       
+                                        {% for item in nroDetalle.list %}
+                                             <tr>
+                                                <td style="text-align:center;" width="10%">{{nroDetalle.grouper}}</td>
+                                                <td style="text-align:center;" width="40%">{{item.estancia}}</td>
+                                                <td style="text-align:center;" width="10%">{{item.cantidad}}</td>
+                                                <td style="text-align:center;" width="10%">{{item.peso}}</td>
+                                                <td style="text-align:center;" width="10%">{{item.Micronaje}}.</td>
+                                                <td style="text-align:center;" width="10%">{{item.HM}}</td>
+                                                <td style="text-align:center;" width="10%">{{item.CVH}}</td>
+                                                <td style="text-align:center;" width="10%">{{item.Rinde}}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+                                    <tr>
+                                            <td style="text-align:center;" width="10%"></td>
+                                            <td style="text-align:center;" width="40%"></td>
+                                            <td style="text-align:center;" width="10%">{{item.cantidad}}</td>
+                                            <td style="text-align:center;" width="10%">{{item.peso}}</td>
+                                            <td style="text-align:center;" width="10%">{{item.Finura}}.</td>
+                                            <td style="text-align:center;" width="10%">{{item.HM}}</td>
+                                            <td style="text-align:center;" width="10%">{{item.CVH}}</td>
+                                            <td style="text-align:center;" width="10%">{{item.Rinde}}</td>
+                                    </tr>
+                                </ul>
+                            </thead>
+                        </table>
+                    <button class="btn btn-success" title="Agregar Detalle" t><span class="glyphicon glyphicon-plus"></span></button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>    
+
