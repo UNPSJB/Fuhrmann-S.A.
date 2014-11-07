@@ -19,7 +19,9 @@ class LoginForm(forms.Form):
 
 # ********************************* Formulario de Compras *********************************
 class CompraForm(forms.ModelForm):    
-    FechaLlegada = forms.DateField(label = "Fecha de Llegada",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
+    FechaLlegada = forms.DateField(label = "Fecha de Llegada (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
+    Estancia = forms.ModelChoiceField(Estancia.objects.all(),label= "Estancia (*)")
+    Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)")
     class Meta:
         model = CompraLote
     
@@ -47,8 +49,9 @@ class CompraForm(forms.ModelForm):
 
 # ********************************* Formulario de Ventas *********************************
 class VentaForm(forms.ModelForm):
-    LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(),label = "Lote Venta")
-    FechaVenta = forms.DateField(label = "Fecha Venta",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
+    LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(),label = "Lote Venta (*)")
+    Cliente = forms.CharField(label= "Cliente (*)")
+    FechaVenta = forms.DateField(label = "Fecha Venta (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
 
     class Meta:
         model = Venta
@@ -79,10 +82,13 @@ class VentaForm(forms.ModelForm):
 # ********************************* Formularios de Estancia *********************************
 
 class EstanciaForm(forms.ModelForm):
-    # Override de Cuit
-    CUIT = ARCUITField(label="CUIT")
-    # Campo nuevo
-    algo = forms.IntegerField()
+    
+    CUIT = ARCUITField(label="CUIT (*)")
+    Nombre = forms.CharField(label="Nombre (*)")
+    Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)")
+    Productor= forms.ModelChoiceField(Productor.objects.all(),label="Productor (*)")
+
+
     # Ver django-selectable para autocompletado
     class Meta:
         model = Estancia
@@ -102,8 +108,8 @@ class EstanciaForm(forms.ModelForm):
 
             Fieldset( 
                 '<font color = "Black" size=3 face="Comic Sans MS">Datos de Estancia </font>',
-                Field('Nombre', placeholder="Nombre de Estancia"),
-                Field('CUIT', placeholder="CUIT de Estancia"),
+                Field('Nombre', placeholder="Nombre"),
+                Field('CUIT', placeholder="CUIT  XX-XXXXXXXX-X"),
                 Field('Provincia'),
                 Field('Zona'),
                 Field('Representante'),
@@ -146,8 +152,8 @@ class LoteForm(forms.ModelForm):
         
             Fieldset( 
                 '<font color = "Black" size=3 face="Comic Sans MS">Datos Principales </font>',
-                Field('CantFardos', placeholder="Cantidad de Fardos del lote"),
-                Field('Peso', placeholder="Peso del Lote"),
+                Field('CantFardos', placeholder="Cantidad de fardos"),
+                Field('Peso', placeholder="Peso del lote"),
                 Field('Compra'),
             ),
             HTML('<p>(*)Campos obligatorios.</p>'),
@@ -204,13 +210,13 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
                 ),
                 Fieldset(
                     '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones</font>',
-                    Field('Peso', placeholder="Peso de Fardos"),
-                    Field('Rinde', placeholder="Rinde de Fardos"),
-                    Field('Finura', placeholder="Finura de Fardos"),
-                    Field('CV', placeholder="Coeficiente de Variacion de Fardos"),
-                    Field('AlturaMedia', placeholder="Altura Media de Fardos"),
-                    Field('Micronaje', placeholder="Micronaje de Fardos"),
-                    Field('Romana', placeholder="Romana de Fardos"),
+                    Field('Peso', placeholder="Peso"),
+                    Field('Rinde', placeholder="Rinde"),
+                    Field('Finura', placeholder="Finura"),
+                    Field('CV', placeholder="Coeficiente de Variacion"),
+                    Field('AlturaMedia', placeholder="Altura Media"),
+                    Field('Micronaje', placeholder="Micronaje"),
+                    Field('Romana', placeholder="Romana"),
                 ),
                 Fieldset(
                     '<font color = "Black" size=3 face="Comic Sans MS">Ubicacion</font>',
@@ -230,7 +236,10 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
 # ********************************* Formularios de Productor *********************************
 
 class ProductorForm(forms.ModelForm):
-    DNI = ARDNIField(label="DNI")
+    DNI = ARDNIField(label="DNI (*)")
+    CUIL = ARCUITField(label="CUIL (*)")
+    Nombre = forms.CharField(label="Nombre (*)")
+    Apellido = forms.CharField(label="Apellido (*)" )
 
     class Meta:
         model = Productor
@@ -249,17 +258,20 @@ class ProductorForm(forms.ModelForm):
 
             Fieldset( 
                 '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
-                Field('Nombre', css_class= ".col-lg-3",placeholder='Ingrese su nombre'),
-                Field('Apellido', placeholder="Ingrese su apellido"),
-                Field('DNI', placeholder="Ingrese su DNI"),
-                Field('CUIL', placeholder="Ingrese su CUIL"),
+                Field('Nombre', css_class= ".col-lg-3",placeholder='Nombre'),
+                Field('Apellido', placeholder="Apellido"),
+                Field('DNI', placeholder="DNI"),
+                Field('CUIL', placeholder="CUIL XX-XXXXXXXX-X"),
             ),
             Fieldset(
                 '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
-                Field('Telefono', placeholder="Ingrese su telefono"),
-                Field('Email', placeholder="Ingrese su Email"),
+                Field('Telefono', placeholder="Telefono"),
+                Field('Email', placeholder="Email"),
             ),
         )
+
+    #def clean_CUIL(self):
+    #    return int(self.cleaned_data['CUIL'].replace('-', ''))        
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submibl', *args, **kwarg))
@@ -269,8 +281,10 @@ class ProductorForm(forms.ModelForm):
 # ********************************* Formularios de Representante *********************************
 
 class RepresentanteForm(forms.ModelForm):
-    DNI = ARDNIField(label="DNI")
-    NroLegajo = forms.IntegerField(label = "Nro.Legajo")
+    DNI = ARDNIField(label="DNI (*)")
+    NroLegajo = forms.IntegerField(label ="Nro.Legajo (*)")
+    Nombre = forms.CharField(label="Nombre (*)")
+    Apellido = forms.CharField(label="Apellido (*)")
     
     class Meta:
         exclude = ['Baja']
@@ -292,16 +306,16 @@ class RepresentanteForm(forms.ModelForm):
 
             Fieldset( 
                 '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
-                Field('Nombre', css_class= ".col-lg-3",placeholder='Ingrese su nombre'),
-                Field('Apellido', placeholder="Insgrese su apellido"),
-                Field('DNI', placeholder="Ingrese su DNI"),
-                Field('NroLegajo', placeholder="Ingrese su CUIL"),
+                Field('Nombre', css_class= ".col-lg-3",placeholder='Nombre'),
+                Field('Apellido', placeholder="Apellido"),
+                Field('DNI', placeholder="DNI"),
+                Field('NroLegajo', placeholder="Nro de Legajo"),
             ),
             Fieldset(
                 '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
-                Field('Telefono', placeholder="Ingrese su telefono"),
-                Field('Email', placeholder="Ingrese su Email"),
-                Field('Zona', placeholder="Ingrese su Zona"),
+                Field('Telefono', placeholder="Telefono"),
+                Field('Email', placeholder="Email"),
+                Field('Zona', placeholder="Zona"),
             ),)
 
     def setup(self, *args, **kwarg):
@@ -359,13 +373,6 @@ class OrdenProduccionForm(forms.ModelForm):
 
 
 
-
-
-
-
-
-
-
 class enviarFaseProduccionForm(forms.ModelForm):
     class Meta:
         model = OrdenProduccion
@@ -391,9 +398,9 @@ class finalizarFaseProduccionForm(forms.ModelForm):
 # ********************************* Formularios de Maquinaria *********************************
 
 class MaquinariaForm(forms.ModelForm):
-    NroSerie = forms.IntegerField(label = "Nro. Serie")
+    NroSerie = forms.IntegerField(label = "Nro. Serie (*)")
     Descripcion = forms.CharField(required = False)
-    TipoMaquinaria = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio")
+    TipoMaquinaria = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)")
     class Meta:
         model = Maquinaria
         exclude = ['Baja']
@@ -407,7 +414,7 @@ class MaquinariaForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset( 
                 '<font color = "Black" size=3 face="Comic Sans MS">Datos de Maquinaria</font>',
-                Field('NroSerie', css_class= ".col-lg-3",placeholder='Nro de maquinaria'),
+                Field('NroSerie', css_class= ".col-lg-3",placeholder='Nro de Serie'),
                 Field('TipoMaquinaria'),
                 Field('Descripcion', placeholder="Descripcion"),
             ),
