@@ -38,7 +38,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="/index" ><font size="6.2" color= "E6E0F8">Fuhrmann S.A.</font></a>
+            
             </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -109,10 +109,11 @@
 
     <div id="footer">
         <p align=center>Fuhrmann S.A &copy; 2014. Designed by  Santos Carla - Raies Matias - Wheeler Mariana - Carabajal Diego </p>
-        <div align=right> Contactenos </div>
-        <input align=right title= "Gmail" href="#" type = image src ="{{STATIC_URL}}img/gmail.png" width = "40" height = "40"></input> 
-        <input align=right title= "Twitter" href="#" type = image src ="{{STATIC_URL}}img/twitter.png" width = "40" height = "40"></input>
-        <input align=right title= "Facebook" href="#" type = image src ="{{STATIC_URL}}img/facebook.png" width = "40" height = "40"></input>
+        <div align=left width="48" height="48"> Contactenos </div>
+
+        <input align=left title= "Gmail" href="#" type = image src ="{{STATIC_URL}}img/gmail.png" width = "40" height = "40"></input> 
+        <input align=left title= "Twitter" href="#" type = image src ="{{STATIC_URL}}img/twitter.png" width = "40" height = "40"></input>
+        <input align=leftright title= "Facebook" href="#" type = image src ="{{STATIC_URL}}img/facebook.png" width = "40" height = "40"></input>
     </div>
 
 
@@ -180,7 +181,7 @@
                                             de aceptar y el titulo */
         
         $( '<div><h5>' +message+'</h5></div>').dialog({
-            title: 'Ayuda',
+            title: title,
             resizable: false,
             modal: true,
             autoOpen: true,
@@ -198,7 +199,7 @@
                 duration: 800
             },
             buttons: {
-                Ok: function() {
+                Cerrar: function() {
                 $( this ).dialog( "close" );
 
                 },
