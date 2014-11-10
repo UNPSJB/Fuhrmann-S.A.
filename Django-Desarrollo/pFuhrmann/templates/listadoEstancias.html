@@ -35,7 +35,7 @@
                             <td style="text-align:center;" width="10%">{{dato.Nombre}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Provincia}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Zona}}</td>
-                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/registrarEstancia/{{dato.CUIT}}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarEstancia/{{dato.CUIT}}"><span class="glyphicon glyphicon-edit"></span></a></td>
                             
                             <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarEstancia/{{dato.CUIT}}', 'Eliminar Estancia', '¿Está seguro que quiere eliminar esta estancia?')"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
@@ -47,7 +47,7 @@
                 </table>
                 <script type ="text/javascript"> </script>
                 <div class="pull-right">
-                    <a class="btn btn-default btn-gr" type= "button" href="/registrarEstancia">Agregar</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/modificarEstancia">Agregar</a>
                     <a class="btn btn-default btn-gr" type= "button" href="/index">Salir</a>
                 </div>    
             </div>

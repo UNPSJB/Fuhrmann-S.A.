@@ -117,7 +117,7 @@ def listadoEstancias(request):
     estancia = Estancia.objects.all()
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))
 
-def registrarEstancia(request, pk=None):
+def modificarEstancia(request, pk=None):
     estancia = None
     if pk is not None:
         estancia = get_object_or_404(Estancia, pk=pk) 
