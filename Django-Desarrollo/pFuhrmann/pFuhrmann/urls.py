@@ -50,7 +50,8 @@ urlpatterns = patterns('',
     url(r'^modificarProductor/$', 'appWeb.views.modificarProductor'),
     url(r'^modificarProductor/([\d-]+)/$', 'appWeb.views.modificarProductor'),
     url(r'^eliminarProductor/([\d-]+)/$', 'appWeb.views.eliminarProductor'),
-    
+    url(r'^buscarProductor/(.*)/$', 'appWeb.views.buscarProductor'),
+
 
     # ------ Adm. Representante
     url(r'^listadoRepresentante/$', 'appWeb.views.listadoRepresentante'),
