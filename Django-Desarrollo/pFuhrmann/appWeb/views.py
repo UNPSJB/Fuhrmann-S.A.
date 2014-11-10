@@ -247,7 +247,29 @@ def eliminarProductor(request,pk):
     productor = Productor.objects.all()
     return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
 
+def buscarProductor(request, pkb):
+   
+    results = []
+   # query = request.GET.get('q', '')
 
+    #    qset = (
+     #       Q(Nombre__icontains=query) |
+     #       Q(Apellido__icontains=query) |
+     #       Q(DNI__icontains=query)
+     #   )
+    
+    resultsNombre = Persona.objects.all().filter(Nombre = pkb);
+    resultsDni = Persona.objects.all().filter(DNI = pkb);
+    resultsApellido = Persona.objects.all().filter(Apellido = pkb);
+
+    for persona in resultsNombre:
+        results.append(persona)
+    for persona in resultsDni:
+        results.append(persona)
+    for persona in resultsApellido:
+        results.append(persona)
+
+    return render_to_response("buscarProductor.html", { "results": results })    
 
 # ********************************* Administracion de Representante *********************************
 
