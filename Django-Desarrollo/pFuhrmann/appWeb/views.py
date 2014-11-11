@@ -23,6 +23,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 
+from django.core import serializers
+import ast
 
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
@@ -151,8 +153,13 @@ def registrarLote(request, pk=None):
         lote = get_object_or_404(Lote, pk=pk)
 
     if request.method == 'POST':
+
         formulario = LoteForm(request.POST, instance = lote)
         if formulario.is_valid():
+            estancia = formulario.cleaned_data['Compra'].Estancia
+           
+            formulario.cleaned_data['Estancia'] = estancia.CUIT
+            print formulario.cleaned_data['Estancia']
             formulario.save()
             return HttpResponseRedirect('/listadoLotes')
     else:
@@ -327,9 +334,42 @@ def verOrdenProduccion(request, pk):
         peso = detalle.fardo_set.count() * fardo.Peso
         prueba.append({'nroDetalle':detalle.NroDetalle,'estancia':fardo.Lote.Compra.Estancia.Nombre,'cantidad':detalle.fardo_set.count(),'peso':peso, 'Finura':fardo.Finura, 'HM':fardo.AlturaMedia, 'CVH':fardo.CV, 'Rinde':fardo.Rinde, 'Romana':fardo.Romana})
 
-
     return render_to_response('datosOrden.html', {'orden':orden, 'detalles':prueba}, context_instance=RequestContext(request))
 
+
+def mostrarEstancia (request, pk):
+    estancias = Estancia.objects.all()
+    return render_to_response('OrdenProduccion/agregarDetalle.html', {'estancias':estancias, 'NroOrden':pk}, context_instance=RequestContext(request))
+
+def mostrarLotes (request, pk):
+    estancia = Estancia.objects.get( CUIT = pk )
+    lotes_set = estancia.lote_set
+    lotes = lotes_set.all().filter(Baja = True)
+
+    data = serializers.serialize('json', lotes)
+    return HttpResponse(data, content_type='json')
+    
+def mostrarFardos (request, pk):
+    lote = Lote.objects.get( NroLote = pk )
+    fardos_set = lote.fardo_set
+    fardos = fardos_set.all().filter(DetalleOrden = None)
+    data = serializers.serialize('json', fardos)
+    return HttpResponse(data, content_type='json')
+    
+
+def agregarDetalle (request, campos = None, orden = None):
+   
+    detalle = DetalleOrden()
+    detalle.OrdenProduccion = OrdenProduccion.objects.get(NroOrden = orden)
+    detalle.save()
+
+    for campo in campos:
+        if campo != ',':
+            fardo = Fardo.objects.get(NroFardo = int(campo))
+            fardo.DetalleOrden = detalle
+            fardo.save()
+        
+    return HttpResponseRedirect('/listadoOrden')   
 
 
 def cancelarOrdenProduccion(request, pk):

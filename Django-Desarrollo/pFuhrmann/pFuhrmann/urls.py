@@ -28,7 +28,14 @@ urlpatterns = patterns('',
     url(r'^verOrdenProduccion/(\d+)/$', 'appWeb.views.verOrdenProduccion'),
     url(r'^finalizarFaseProduccion/$', 'appWeb.views.finalizarFaseProduccion'),
     url(r'^listadoOrden/$', 'appWeb.views.listadoOrden'),
-    
+    url(r'^agregarDetalle/(\d+)/$', 'appWeb.views.mostrarEstancia'),
+
+    url(r'^loteEstancia/([\d-]+)/$', 'appWeb.views.mostrarLotes'),
+    url(r'^fardosLote/(\d+)/$', 'appWeb.views.mostrarFardos'),
+    url(r'^agregaDetalleOrden/(?P<campos>.*)/(?P<orden>\d+)/$', 'appWeb.views.agregarDetalle'),
+
+
+
     #Lotes y Fardos
     url(r'^registrarLote/$', 'appWeb.views.registrarLote'),
     url(r'^listadoLotes/$', 'appWeb.views.listadoLotes'),

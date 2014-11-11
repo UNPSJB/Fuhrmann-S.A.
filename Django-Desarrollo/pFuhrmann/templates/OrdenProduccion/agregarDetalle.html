@@ -1,0 +1,124 @@
+<div class="panel-body">
+    <div class="col-xs-8">
+        <form class="form-horizontal"> 
+            
+            <fieldset>
+                <legend>
+                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Seleccione Estancia - Lote</h4></font>
+                </legend>
+                
+                <select id="estanciaCombo"> 
+                    <option value='0'>   ---  Seleccionar  ---   </option>
+                    {% for estancia in estancias %}
+                        <option value='{{estancia.CUIT}}'>{{estancia.Nombre}}</option>
+                    {% endfor %}
+                
+                </select> 
+
+                <select id="lotesCombo">
+                    <option value='0'>   ---  Seleccionar  ---   </option>
+                </select> 
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Seleccione Fardos</h4></font>
+                </legend>
+                <select id="FardosCombo" multiple="True"></select> 
+            </fieldset>
+        </form>
+    </div>
+</div>    
+
+<div class="modal-footer">
+    <div class="bootstrap-dialog-footer">
+        <div class="bootstrap-dialog-footer-buttons">
+            <button class="btn btn-default" onClick="submit({{NroOrden}})" type="Submit">Agregar</button>
+            <button class="btn btn-default" data-dismiss='modal' >Salir</button>
+        </div>
+    </div>  
+</div>
+
+
+<script type="text/javascript">
+
+var campos=[]      /* Variable global para poner los selected */
+
+function submit(orden){
+    $(this).getModal().close();
+    if (campos == "") {
+        BootstrapDialog.alert("asd");
+    }
+    else{
+        $.ajax({
+            type: 'get',
+            dataType: 'html',
+            url: '/agregaDetalleOrden/'+ campos + '/' + orden,
+        });
+    }
+}
+
+
+$( document ).ready(function() {
+
+    $("#FardosCombo").hide();
+    $("#estanciaCombo").change(function() 
+    {
+        var idEstancia = $(this).val();
+        var cbLotes = $("#lotesCombo");
+        var cbFardos = $("#FardosCombo");
+
+        cbLotes.empty();
+        cbLotes.append("<option value = 0>" + "--- Seleccionar ---" + "</option>");
+
+        $("#FardosCombo").hide();
+
+        /* Serializacion en Django: {"pk": ,"model":, "fields": { "nombre": "valor",} } */
+
+        $.ajax({
+            type: 'get',
+            dataType: 'html',
+            url: '/loteEstancia/'+idEstancia,
+            success: function(json){
+                lista = JSON.parse(json);
+                
+                for(var i in lista){
+                    cbLotes.append("<option value="+lista[i].pk+">Lote: " + lista[i].pk +' - Peso: '+ lista[i].fields.Peso +"</option>");
+                }
+            }
+        });
+    });
+
+    $("#lotesCombo").change(function() 
+    {
+        var idLote = $(this).val();
+        var cbFardos = $("#FardosCombo");
+
+        cbFardos.empty();
+       
+        $("#FardosCombo").show();
+
+        $.ajax({
+            type: 'get',
+            dataType: 'html',
+            url: '/fardosLote/'+idLote,
+            success: function(json){
+                lista = JSON.parse(json);
+                
+                for(var i in lista){
+                    cbFardos.append("<option value="+lista[i].pk+">Fardo: " + lista[i].pk +' - Peso: '+ lista[i].fields.Peso +"</option>");
+                }
+            }
+        });
+    });
+
+     $("#FardosCombo").change(function(){
+        campos = []
+        $("#FardosCombo option:selected").each(function() { 
+            campos.push($(this).val());
+        });         
+    });
+
+});
+
+</script>
+

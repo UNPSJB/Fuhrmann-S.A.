@@ -120,10 +120,7 @@ class EstanciaForm(forms.ModelForm):
 class LoteForm(forms.ModelForm):    
     class Meta:
         model = Lote
-      #  if *args is None:
-      #      exclude = ("Peso", "Baja", )
-      #  else:
-        exclude = ("Baja", )
+        exclude = ("Baja", "Estancia")
     
     CantFardos = forms.IntegerField(label ="Cantidad de Fardos (*)", min_value = 0)
     Peso = forms.IntegerField(label ="Peso del Lote (*)", min_value = 0)
@@ -317,7 +314,7 @@ class OrdenProduccionForm(forms.ModelForm):
     CantRequerida = forms.IntegerField(label = "Cantidad Requerida (*)", min_value = 0)
     CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
     AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
-    Finura = forms.FloatField(label ="Micronaje (*)", min_value = 0)        # Unidad de Medida Micrones
+    Finura = forms.FloatField(label ="Finura (*)", min_value = 0)        # Unidad de Medida Micrones
     Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
     Servicio = forms.ModelMultipleChoiceField(Servicio.objects.all(), label ="Servicios a Realizar (*)")
 

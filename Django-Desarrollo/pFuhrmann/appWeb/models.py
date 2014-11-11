@@ -3,7 +3,7 @@ from django.db import models
 class CompraLote(models.Model):
     NroCompra = models.AutoField(primary_key = True)
     Representante = models.ForeignKey('Representante')
-    Estancia = models.ForeignKey('Estancia')
+    Estancia = models.ForeignKey('Estancia', null = True)
     FechaLlegada = models.DateField()
     
     def __unicode__(self):
@@ -52,7 +52,8 @@ class Estancia(models.Model):
     Productor = models.OneToOneField('Productor', null = True)
     
     def __unicode__(self):
-        return "%s" % str(str(self.Nombre) + " " + str(self.Provincia))
+        return "%s" % str(str(self.Nombre) + " " + str(self.Provincia) + " " + str(self.CUIT) )
+
 
 # First, define the Manager subclass.
 class BajaLogicaManager(models.Manager):
@@ -69,6 +70,7 @@ class Lote(models.Model):
     Peso = models.PositiveIntegerField(max_length=50)
     Baja = models.BooleanField(default=False)
     Compra = models.OneToOneField('CompraLote')
+    Estancia = models.ForeignKey('Estancia', null = True)
 
     objects = BajaLogicaManager()                   # Mostrar todos los objetos
     noEliminados = eliminados = BajaLogicaManager(Baja = False)     # Mostrar objetos con baja = false
@@ -76,6 +78,7 @@ class Lote(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.NroLote
+
 
 class Fardo(models.Model):
     NroFardo = models.AutoField(primary_key = True)
@@ -123,9 +126,10 @@ class OrdenProduccion(models.Model):
 class DetalleOrden(models.Model):
     NroDetalle = models.AutoField(primary_key = True)
     OrdenProduccion = models.ForeignKey('OrdenProduccion')
+    
     def __unicode__(self):
-        return u"Nro. Detalle: %s" % self.NroDetalle
-
+        ""
+        
 class Servicio(models.Model):
     Nombre = models.CharField(max_length=50, primary_key = True)
     Descripcion = models.CharField(max_length=50)

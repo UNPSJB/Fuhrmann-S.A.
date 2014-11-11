@@ -12,7 +12,7 @@
                         <a class="btn btn-default" type="button" href="#" title="Ayuda" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-question-sign"></span></a>
                     </div>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" title="Buscar Ej: Nro. Orden - Dni - Nro. Maquina" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-search"></span></button>
+                        <a class="btn btn-default" type="button" title="Buscar Ej: Nro. Orden - Dni - Nro. Maquina" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-search"></span></a>
                     </span>
                     <input type="text" class="form-control" placeholder="Buscar"></input>
                 </div> 
@@ -57,27 +57,74 @@
                     {% endfor %}        
                 </thead>
             </table>
-
-            <div class="modal fade" id="myModal" role="dialog">
-                 <div id="contenidoModal"></div>    
-            </div>
+            
+            <div id='id'></div>
 
             <script type ="text/javascript"> </script>
             <div class="pull-right">
-                <a class="btn btn-default btn-gr" type= "button" href="/registrarOrdenProduccion">Nueva</a>
-                <a class="btn btn-default btn-gr" type= "button" href="/index">Salir</a>
+                <a class="btn btn-default btn-gr" type= "button" href="/registrarOrdenProduccion" >Nueva</a>
+                <a class="btn btn-default btn-gr" type= "button"  id = 'button'>Salir</a>
             </div>            
         </div>
     </div>
 </div>
 
+
+         <style>
+           .login-dialog .modal-dialog {
+                width: 900px;
+            }
+        </style>
+
 {% endblock %}
 
 {% block scripts %}
-    <script>
+    
+   <script>
+
+        function showModal1(id){
+            BootstrapDialog.show({
+                title: ('Agregar Detalle a Orden Produccion - Nro: '+id),
+                message: $('<div></div>').load('/agregarDetalle/'+id),
+                closable: false,
+                onshown: function(dialog) {
+                    var tier = $('.bootstrap-dialog').length - 1;
+                    dialog.$modal.prev(".modal-backdrop")
+                        .css("z-index", 1030 + tier * 30);
+                    dialog.$modal
+                        .css("z-index", 1040 + tier * 30);
+                },
+            });
+        }
+
         function showModal(id) {
-                $('#contenidoModal').load("/verOrdenProduccion/"+id);
-                $('#myModal').modal({ show: 'Clip' });
+
+                var dialog1 = new BootstrapDialog.show({
+                title: ('Datos de Orden Produccion - Nro: '+id),
+                cssClass: 'login-dialog',
+                closable: false,
+                message: $('<div>#id</div>').load('/verOrdenProduccion/'+id),
+                onshown: function(dialog) {
+                    var tier = $('.bootstrap-dialog').length - 1;
+                    dialog.$modal.prev(".modal-backdrop")
+                        .css("z-index", 1030 + tier * 30);
+                    dialog.$modal
+                        .css("z-index", 1040 + tier * 30);
+                },
+                buttons: [
+                {
+                    label: 'Agregar Detalle',
+                    action: function(dialog){
+                        showModal1(id);
+                    },
+                },
+                {
+                    label: 'Cancel',
+                    action: function(dialogRef){
+                        dialogRef.close();
+                    }
+                }]
+            });
         };
 
     </script>
