@@ -41,7 +41,7 @@ urlpatterns = patterns('',
 
     # ------ Adm. Estancias
     url(r'^listadoEstancias/$', 'appWeb.views.listadoEstancias'),
-    url(r'^modificarEstancia/$', 'appWeb.views.modificarEstancia'),
+    url(r'^registrarEstancia/$', 'appWeb.views.registrarEstancia'),
     url(r'^modificarEstancia/([\d-]+)/$', 'appWeb.views.modificarEstancia'),
     url(r'^eliminarEstancia/([\d-]+)/$', 'appWeb.views.eliminarEstancia'),
     

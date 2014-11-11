@@ -88,11 +88,12 @@ class EstanciaForm(forms.ModelForm):
     Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)")
     Productor= forms.ModelChoiceField(Productor.objects.all(),label="Productor (*)")
 
-
     # Ver django-selectable para autocompletado
     class Meta:
         model = Estancia
         exclude = ['Baja']
+       
+
         widgets = {
             'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')]), 
             'Provincia': forms.Select(choices=[('Chubut', 'Chubut'), ('Santa Cruz', 'Santa Cruz'), ('Buenos Aires', 'Buenos Aires')])

@@ -117,6 +117,19 @@ def listadoEstancias(request):
     estancia = Estancia.objects.all()
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))
 
+def registrarEstancia(request):
+    if request.method == 'POST':
+        formulario = EstanciaForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return HttpResponseRedirect('/listadoEstancias')
+    else:
+        formulario = EstanciaForm()
+    formulario.setup('Registrar', css_class="btn btn-success")
+    return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+
+
 def modificarEstancia(request, pk=None):
     estancia = None
     if pk is not None:
@@ -130,8 +143,8 @@ def modificarEstancia(request, pk=None):
     else:
         formulario = EstanciaForm(instance = estancia)
     
-    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
-    return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    formulario.setup('Modificar', css_class="btn btn-success")
+    return render_to_response('modificarEstancia.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarEstancia(request, pk):
     estancia = Estancia.objects.get(pk=pk)
