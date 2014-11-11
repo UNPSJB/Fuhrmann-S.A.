@@ -25,7 +25,6 @@
                             <th style="text-align:center;" width="10%">Peso (Kg)</th>
                             <th style="text-align:center;" width="10%">Cantidad de Fardos</th>
                             <th style="text-align:center;" width="3%">Modificar</th>
-                            <th style="text-align:center;" width="3%">Eliminar</th>
                         </tr>
                         {% for dato in lista %}
                         <tr>
@@ -34,9 +33,6 @@
                             <td style="text-align:center;" width="10%">{{dato.CantFardos}}</td>
                             
                             <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarLote/{{dato.NroLote}}"><span class="glyphicon glyphicon-edit"></span></a></td>
-                            
-                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarLote/{{dato.NroLote}}', 'Eliminar Lote', '¿Está seguro que quiere eliminar este lote?')"><span class="glyphicon glyphicon-remove"></span></a></td>
-                           
                         </tr>
 
                         {% empty %}

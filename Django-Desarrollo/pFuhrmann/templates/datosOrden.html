@@ -3,29 +3,27 @@
         <form class="form-horizontal"> 
             
             <fieldset>
-                <legend>
-                    <font color = "Black" size=2 face="Comic Sans MS"><h4>Datos Principales</h4></font>
+                <legend>               
+                    <div class="form-group">
+                        <div><font color = "Black" size=2 face="Comic Sans MS"><h4>Datos Principales</h4></font></div>
+                    </div>
                 </legend>
                 <div class="jumbotron">
                     <div class="form-group">
-                        <div class="controls col-md-6" size = 1><label>Nro. Orden</label></div>
-                        <div id="datoNroOrden" class="controls col-md-6"><label>{{orden.NroOrden}}</label></div>
+                        <div class="controls col-md-6"><font size=3 face="Comic Sans MS"><label>Fecha de Emision:</font></label></div>
+                        <div class="controls col-md-6"><font size=3 face="Comic Sans MS"><label>{{orden.FechaEmision}}</font></label></div>
                     </div>
                     <div class="form-group">
-                        <div class="controls col-md-6"><label>Fecha de Emision</label></div>
-                        <div class="controls col-md-6"><label>{{orden.FechaEmision}}</label></div>
+                        <div class="controls col-md-6"><font size=3 face="Comic Sans MS"><label>Cantidad Requerida:</font></label></div>
+                        <div class="controls col-md-6"><font size=3 face="Comic Sans MS"><label>{{orden.CantRequerida}} Kg.</font></label></div>
                     </div>
                     <div class="form-group">
-                        <div class="controls col-md-6"><label>Cantidad Requerida</label></div>
-                        <div class="controls col-md-6"><label>{{orden.CantRequerida}}</label></div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls col-md-6"><label>Servicios a Realizar</label></div>
+                        <div class="controls col-md-6"><font size=3 face="Comic Sans MS"><label>Servicios a Realizar:</font></label></div>
 
                         <div class="controls col-md-6">
-                                {% for servicio in orden.Servicio.all %}
-                                    <label>{{servicio.Nombre}} - </label>
-                                {% endfor %}
+                            {% for servicio in orden.Servicio.all %}
+                                <label><font size=3 face="Comic Sans MS">{{servicio.Nombre}} - </font></label>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -34,25 +32,44 @@
         
             <fieldset>
                 <legend>
-                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Datos de Especificaciones</h4></font>
+                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Especificaciones Tecnicas</h4></font>
                 </legend>
                 <div class="jumbotron">
-                    <div class="form-group">
-                        <div class="controls col-md-6"><label>Coeficiente de Variacion</label></div>
-                        <div class="controls col-md-6"><label>{{orden.CV}}</label></div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls col-md-6"><label>Altura Media</label></div>
-                        <div class="controls col-md-6"><label>{{orden.AlturaMedia}}</label></div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls col-md-6"><label>Finura</label></div>
-                        <div class="controls col-md-6"><label>{{orden.Finura}}</label></div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls col-md-6"><label>Romana</label></div>
-                        <div class="controls col-md-6"><label>{{orden.Romana}}</label></div>
-                    </div>
+
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tableLote" width="100%">
+                        <thead>
+                   
+                            <tr>
+                                <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Especificacion</font></th>
+                                <th style="text-align:center;" width="40%"><font size=3 face="Comic Sans MS">Valores</font></th>
+                                <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">UnidadMedida</font></th>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">C. Variacion</font></td>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{orden.CV}}</font></td>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">%</font></td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Altura Media</font></td>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{orden.AlturaMedia}}</font></td>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">mm</font></td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Finura</font></td>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{orden.Finura}}</font></td>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Micrones</font></td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Romana</font></td>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{orden.Romana}}</font></td>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">%</font></td>
+                            </tr>
+                        </head>
+                    </table>
                 </div>    
             </fieldset>
         
@@ -63,24 +80,24 @@
                 </legend>
                 <div class="jumbotron">
                     <div class="form-group">
-                        <div class="controls col-md-6"><label>Fecha Inicio de Produccion</label></div>
-                        <div class="controls col-md-6"><label>{{orden.FechaInicioProduccion}}</label></div>
+                        <div class="controls col-md-6"><label><font size=3 face="Comic Sans MS">Fecha Inicio de Produccion:</font></font></label></div>
+                        <div class="controls col-md-6"><label><font size=3 face="Comic Sans MS">{{orden.FechaInicioProduccion}}</font></label></div>
                     </div>
                     <div class="form-group">
-                        <div class="controls col-md-6"><label>Fecha Fin de Produccion</label></div>
-                        <div class="controls col-md-6"><label>{{orden.FechaFinProduccion}}</label></div>
+                        <div class="controls col-md-6"><label><font size=3 face="Comic Sans MS">Fecha Fin de Produccion:</font></label></div>
+                        <div class="controls col-md-6"><label><font size=3 face="Comic Sans MS">{{orden.FechaFinProduccion}}</font></label></div>
                     </div>
                     <div class="form-group">
-                        <div class="controls col-md-6"><label>Maquina Actual</label></div>
-                        <div class="controls col-md-6"><label>{{orden.MaquinaActual}}</label></div>
+                        <div class="controls col-md-6"><label><font size=3 face="Comic Sans MS">Maquina Actual:</font></label></div>
+                        <div class="controls col-md-6"><label><font size=3 face="Comic Sans MS">{{orden.MaquinaActual}}</font></label></div>
                     </div>
                     <div class="form-group">
-                        <div class="controls col-md-6"><label>En Produccion</label></div>
-                        <div class="controls col-md-6"><label>{{orden.EnProduccion}}</label></div>
+                        <div class="controls col-md-6"><label><font size=3 face="Comic Sans MS">En Produccion:</font></label></div>
+                        <div class="controls col-md-6"><label><font size=3 face="Comic Sans MS">{{orden.EnProduccion}}</font></label></div>
                     </div>
                     <div class="form-group">
-                        <div class="controls col-md-6"><label>Finalizada</label></div>
-                        <div class="controls col-md-6"><label>{{orden.Finalizada}}</label></div>
+                        <div class="controls col-md-6"><label><font size=3 face="Comic Sans MS">Finalizada:</font></label></div>
+                        <div class="controls col-md-6"><label><font size=3 face="Comic Sans MS">{{orden.Finalizada}}</font></label></div>
                     </div>
                 </div>
             </fieldset>
@@ -93,15 +110,15 @@
                      <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tableLote" width="100%">
                         <thead>
                                  <tr>
-                                    <th style="text-align:center;" width="10%">Nro.</th>
-                                    <th style="text-align:center;" width="40%">Descripcion</th>
-                                    <th style="text-align:center;" width="10%">Fardos</th>
-                                    <th style="text-align:center;" width="10%">Neto</th>
-                                    <th style="text-align:center;" width="10%">Finura</th>
-                                    <th style="text-align:center;" width="10%">HM</th>
-                                    <th style="text-align:center;" width="10%">CVH</th>
-                                    <th style="text-align:center;" width="10%">Rinde</th>
-                                    <th style="text-align:center;" width="10%">Romana</th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Nro.</font></th>
+                                    <th style="text-align:center;" width="40%"><font size=3 face="Comic Sans MS">Descripcion</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Fardos</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Neto</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Finura</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">HM</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">CVH</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Rinde</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Romana</font></th>
 
                                 </tr>
       
@@ -109,20 +126,29 @@
                                 {% for nroDetalle in datos %}       
                                     {% for item in nroDetalle.list %}
                                          <tr>
-                                            <td style="text-align:center;" width="10%">{{nroDetalle.grouper}}</td>
-                                            <td style="text-align:center;" width="40%">{{item.estancia}}</td>
-                                            <td style="text-align:center;" width="10%">{{item.cantidad}}</td>
-                                            <td style="text-align:center;" width="10%">{{item.peso}}</td>
-                                            <td style="text-align:center;" width="10%">{{item.Finura}}.</td>
-                                            <td style="text-align:center;" width="10%">{{item.HM}}</td>
-                                            <td style="text-align:center;" width="10%">{{item.CVH}}</td>
-                                            <td style="text-align:center;" width="10%">{{item.Rinde}}</td>
-                                            <td style="text-align:center;" width="10%">{{item.Romana}}</td>
-
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{nroDetalle.grouper}}</font></td>
+                                            <td style="text-align:center;" width="40%"><font size=3 face="Comic Sans MS">{{item.estancia}}</font></td>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.cantidad}}</font></td>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.peso}}</font></td>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.Finura}}</font></td>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.HM}}</font></td>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.CVH}}</font></td>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.Rinde}}</font></td>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.Romana}}</font></td>
                                         </tr>
                                     {% endfor %}
                                 {% endfor %}
-
+                                <tr>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS"></font></th>
+                                    <th style="text-align:center;" width="40%"><font size=3 face="Comic Sans MS"></font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Fardos</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Neto</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Finura</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">HM</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">CVH</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Rinde</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Romana</font></th>
+                                </tr>
                             </ul>
                         </thead>
                     </table>
@@ -132,4 +158,3 @@
 
     </div>
 </div>    
-

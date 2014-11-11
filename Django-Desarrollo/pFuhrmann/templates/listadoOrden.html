@@ -42,13 +42,16 @@
                         <td style="text-align:center;" width="5%">{{dato.Cancelada}}</td>
                         
                         <td style="text-align:center;" width="40%">
+                            
                             <a class="btn btn-default" onClick="showModal('{{dato.NroOrden}}')" title="Ver Detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
 
-
-                            <a class="btn btn-default" href="/modificarOrdenProduccion/{{dato.NroOrden}}" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
-                            <a class="btn btn-default" onClick="eliminar('/cancelarOrdenProduccion/{{dato.NroOrden}}', 'Cancelar O. Produccion', '¿Está seguro que quiere cancelar la Orden?')" title="Cancelar" ><span class="glyphicon glyphicon-remove"></span></a>
-                            <a class="btn btn-default" href="/enviarOrdenProduccion/{{dato.NroOrden}}" title="Enviar a Produccion"><span class="glyphicon glyphicon-share-alt"></span></a>
-                            <a class="btn btn-default" href="finalizarOrdenProduccion/{{dato.NroOrden}}" title="Finalizar Produccion"><span class="glyphicon glyphicon-warning-sign"></span></a>
+                            <a class="btn btn-default" onClick="comprobar('/modificarOrdenProduccion/{{dato.NroOrden}}', '{{dato.EnProduccion}}', '{{dato.Cancelada}}', '{{dato.Finalizada}}', 'Orden en Produccion o Cancelada!')" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
+                            
+                            <a class="btn btn-default" onClick="cancelar('{{dato.NroOrden}}', '{{dato.EnProduccion}}', '{{dato.Cancelada}}', '{{dato.Finalizada}}', 'Orden en Produccion o Cancelada!')" title="Cancelar" ><span class="glyphicon glyphicon-remove"></span></a>
+                            
+                            <a class="btn btn-default" href="#" title="Enviar a Produccion"><span class="glyphicon glyphicon-share-alt"></span></a>
+                            
+                            <a class="btn btn-default" href="#" title="Finalizar Produccion"><span class="glyphicon glyphicon-warning-sign"></span></a>
                             </td>
                     </tr>
 
@@ -70,23 +73,31 @@
 </div>
 
 
-         <style>
-           .login-dialog .modal-dialog {
-                width: 900px;
-            }
-        </style>
+ <style>
+   .show-dialog .modal-dialog {
+        width: 1000px;
+    }
+   .error-dialog .modal-dialog {
+        width: 400px;
+    }
+   .showfardo-dialog .modal-dialog {
+        width: 700px;
+    }
+</style>
 
 {% endblock %}
 
 {% block scripts %}
     
-   <script>
+    <script type="text/javascript">
+
 
         function showModal1(id){
             BootstrapDialog.show({
                 title: ('Agregar Detalle a Orden Produccion - Nro: '+id),
-                message: $('<div></div>').load('/agregarDetalle/'+id),
+                message: $('<div id="diss"></div>').load('/agregarDetalle/'+id),
                 closable: false,
+                cssClass: 'showfardo-dialog',
                 onshown: function(dialog) {
                     var tier = $('.bootstrap-dialog').length - 1;
                     dialog.$modal.prev(".modal-backdrop")
@@ -100,10 +111,10 @@
         function showModal(id) {
 
                 var dialog1 = new BootstrapDialog.show({
-                title: ('Datos de Orden Produccion - Nro: '+id),
-                cssClass: 'login-dialog',
+                title: ('Datos de Orden Produccion - Nro. Orden: '+id),
+                cssClass: 'show-dialog',
                 closable: false,
-                message: $('<div>#id</div>').load('/verOrdenProduccion/'+id),
+                message: $('<div></div>').load('/verOrdenProduccion/'+id),
                 onshown: function(dialog) {
                     var tier = $('.bootstrap-dialog').length - 1;
                     dialog.$modal.prev(".modal-backdrop")
@@ -127,7 +138,53 @@
             });
         };
 
+        function comprobar(url, proceso, cancel, finalizada, msg) { /* Funcion para confirmar operaciones, 
+                                            recibe como parametros la url en caso 
+                                                de aceptar y el titulo */    
+            if (proceso == 'True' || cancel == 'True' || finalizada == 'True'){
+                BootstrapDialog.show({
+                    title: 'Error',
+                    cssClass: 'error-dialog',
+                    message: msg,
+                    type: BootstrapDialog.TYPE_WARNING, 
+                    buttons: [
+                        {
+                            label: 'Aceptar',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+            else{
+                window.location=url;
+            }
+        }
+
+        function cancelar(orden, proceso, cancel, finalizada, msg){
+            
+            if (proceso == 'True' || cancel == 'True' || finalizada == 'True'){
+                BootstrapDialog.show({
+                    title: 'Error',
+                    cssClass: 'error-dialog',
+                    message: msg,
+                    type: BootstrapDialog.TYPE_WARNING, 
+                    buttons: [
+                        {
+                            label: 'Aceptar',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+            else{
+                eliminar('/cancelarOrdenProduccion/'+orden, 'Cancelar O. Produccion', '¿Está seguro que quiere cancelar la Orden?');
+            }
+        }
+
     </script>
+
 {% endblock %}
 
 
