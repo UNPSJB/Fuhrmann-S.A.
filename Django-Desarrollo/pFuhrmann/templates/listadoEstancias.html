@@ -9,7 +9,7 @@
                 <div class="btn-group pull-right">
                     <div class="input-group">
                         <div class="btn-group pull-right">
-                            <a class="btn btn-default" type="button" onClick="ayuda('Ayuda')" title="Ayuda"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <a class="btn btn-default" type="button" onClick="ayuda('Ayuda listado estancias', 'El <strong>listado de estancias</strong> muestra el CUIT, nombre, provincia, zona, representante y productor asociados a la estancia.</br><br>Ingrese en<strong> buscar </strong>el campo (CUIT, nombre, provincia, zona, representante o productor)por el cual desea filtrar las estancias.</br><br>Presione el boton <strong>agregar</strong> para registrar una nueva estancia.</br><br>Presione el boton <strong>modificar</strong> para cambiar datos de una estancia.</br><br>Presione el boton <strong>eliminar</strong> para eliminar una estancia.</br><br>Presione el boton <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" title="Buscar Ej: Nro. Orden - Dni - Nro. Maquina" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-search"></span></button>
@@ -26,6 +26,8 @@
                             <th style="text-align:center;" width="10%">Nombre</th>
                             <th style="text-align:center;" width="10%">Provincia</th>
                             <th style="text-align:center;" width="10%">Zona</th>
+                            <th style="text-align:center;" width="10%">Representante</th>
+                            <th style="text-align:center;" width="10%">Productor</th>
                             <th style="text-align:center;" width="3%">Modificar</th>
                             <th style="text-align:center;" width="3%">Eliminar</th>
                         </tr>
@@ -35,7 +37,9 @@
                             <td style="text-align:center;" width="10%">{{dato.Nombre}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Provincia}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Zona}}</td>
-                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/registrarEstancia/{{dato.CUIT}}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            <td style="text-align:center;" width="10%">{{dato.Representante}}</td>
+                            <td style="text-align:center;" width="10%">{{dato.Productor}}</td>
+                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarEstancia/{{dato.CUIT}}"><span class="glyphicon glyphicon-edit"></span></td>
                             
                             <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarEstancia/{{dato.CUIT}}', 'Eliminar Estancia', '¿Está seguro que quiere eliminar esta estancia?')"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>

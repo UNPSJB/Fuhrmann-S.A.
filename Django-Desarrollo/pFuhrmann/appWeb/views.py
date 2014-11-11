@@ -39,6 +39,7 @@ def nuevo_usuario(request):
             return HttpResponseRedirect('/')
     else:
         formulario = UserCreationForm()
+    
     return render_to_response('nuevousuario.html', {'formulario':formulario}, context_instance= RequestContext(request))
 
 def ingresar(request):
@@ -118,7 +119,20 @@ def listadoEstancias(request):
     estancia = Estancia.objects.all()
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))
 
-def registrarEstancia(request, pk=None):
+def registrarEstancia(request):
+    if request.method == 'POST':
+        formulario = EstanciaForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return HttpResponseRedirect('/listadoEstancias')
+    else:
+        formulario = EstanciaForm()
+    formulario.setup('Registrar', css_class="btn btn-success")
+    return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+
+
+def modificarEstancia(request, pk=None):
     estancia = None
     if pk is not None:
         estancia = get_object_or_404(Estancia, pk=pk) 
@@ -131,8 +145,8 @@ def registrarEstancia(request, pk=None):
     else:
         formulario = EstanciaForm(instance = estancia)
     
-    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
-    return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    formulario.setup('Modificar', css_class="btn btn-success")
+    return render_to_response('modificarEstancia.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarEstancia(request, pk):
     estancia = Estancia.objects.get(pk=pk)
@@ -230,7 +244,7 @@ def registrarProductor(request):
             return HttpResponseRedirect('/listadoProductores')
     else:
         formulario = ProductorForm()
-        formulario.setup('Registrar', css_class="btn btn-success")
+    formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def modificarProductor(request, pk=None):
@@ -253,7 +267,29 @@ def eliminarProductor(request,pk):
     productor = Productor.objects.all()
     return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
 
+def buscarProductor(request, pkb):
+   
+    results = []
+   # query = request.GET.get('q', '')
 
+    #    qset = (
+     #       Q(Nombre__icontains=query) |
+     #       Q(Apellido__icontains=query) |
+     #       Q(DNI__icontains=query)
+     #   )
+    
+    resultsNombre = Persona.objects.all().filter(Nombre = pkb);
+    resultsDni = Persona.objects.all().filter(DNI = pkb);
+    resultsApellido = Persona.objects.all().filter(Apellido = pkb);
+
+    for persona in resultsNombre:
+        results.append(persona)
+    for persona in resultsDni:
+        results.append(persona)
+    for persona in resultsApellido:
+        results.append(persona)
+
+    return render_to_response("buscarProductor.html", { "results": results })    
 
 # ********************************* Administracion de Representante *********************************
 

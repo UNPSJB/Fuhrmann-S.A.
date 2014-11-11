@@ -7,7 +7,7 @@ class CompraLote(models.Model):
     FechaLlegada = models.DateField()
     
     def __unicode__(self):
-        return "%s" % (str(self.NroCompra) + " " + str(self.FechaLlegada))
+        return "%s" % (str(self.Representante) + " - " + str(self.Estancia) + " - " + str(self.FechaLlegada))
 
 class Venta(models.Model):
     NroVenta = models.AutoField(primary_key = True)
@@ -16,7 +16,7 @@ class Venta(models.Model):
     FechaVenta = models.DateField(blank=True)
 
     def __unicode__(self):
-        return ""
+        return "%s" % (str(self.Cliente) + " - " + str(self.LoteVenta) + " - " + str(self.FechaVenta))
 
 class Persona(models.Model):
     Nombre = models.CharField(max_length=50)
@@ -27,20 +27,20 @@ class Persona(models.Model):
     Baja = models.BooleanField(default=False)
     
     def __unicode__(self):
-        return "%s" % str(str(self.Nombre) + " " + str(self.Apellido))
+        return "%s" % str(str(self.Nombre) + " - " + str(self.Apellido) + " - " + str(self.DNI))
 
 class Productor (Persona):
     CUIL = models.CharField(max_length=13, primary_key = True)
         
     def __unicode__(self):
-        return "%s" % str(str(self.Nombre) + " " + str(self.Apellido))
+        return "%s" % str(str(self.Nombre) + " " + str(self.Apellido) + " - CUIL: " + str(self.CUIL))
 
 class Representante(Persona): 
     NroLegajo = models.PositiveIntegerField(max_length=50, primary_key = True)
     Zona = models.CharField(max_length=50)
                 
     def __unicode__(self):
-        return "%s" % str(str(self.NroLegajo) + " " + str(self.Nombre) + " " + str(self.Apellido))
+        return "%s" % str(str(self.Nombre) + " " + str(self.Apellido) + " - DNI: " + str(self.DNI))
 
 class Estancia(models.Model):
     Nombre   = models.CharField(max_length=50)
@@ -79,7 +79,6 @@ class Lote(models.Model):
     def __unicode__(self):
         return u"%s" % self.NroLote
 
-
 class Fardo(models.Model):
     NroFardo = models.AutoField(primary_key = True)
     Lote = models.ForeignKey('Lote')
@@ -101,7 +100,7 @@ class TipoFardo(models.Model):
     Descripcion = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return u"%s" % self.Nombre
+        return "%s" % (str(self.Nombre))
 
 
 class OrdenProduccion(models.Model):
@@ -128,8 +127,8 @@ class DetalleOrden(models.Model):
     OrdenProduccion = models.ForeignKey('OrdenProduccion')
     
     def __unicode__(self):
-        ""
-        
+        return u"Nro. Detalle: %s" % self.NroDetalle
+
 class Servicio(models.Model):
     Nombre = models.CharField(max_length=50, primary_key = True)
     Descripcion = models.CharField(max_length=50)
@@ -163,4 +162,4 @@ class Maquinaria(models.Model):
     Descripcion = models.CharField(max_length=50, null = True)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.TipoMaquinaria, self.NroSerie)
+        return u"%s - %s" % (self.NroSerie, self.TipoMaquinaria)
