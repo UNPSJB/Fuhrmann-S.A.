@@ -83,9 +83,8 @@ class VentaForm(forms.ModelForm):
 
 class EstanciaForm(forms.ModelForm):
 
-    
-    CUIT = ARCUITField(label="CUIT (*)")
     Nombre = forms.CharField(label="Nombre (*)")
+    CUIT = ARCUITField(label="CUIT (*)")
     Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)")
     Productor= forms.ModelChoiceField(Productor.objects.all(),label="Productor (*)")
 
@@ -95,11 +94,11 @@ class EstanciaForm(forms.ModelForm):
         model = Estancia
         exclude = ['Baja']
         widgets = {
-            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')]),
+            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')]), 
             'Provincia': forms.Select(choices=[('Chubut', 'Chubut'), ('Santa Cruz', 'Santa Cruz'), ('Buenos Aires', 'Buenos Aires')])
         }
   
-    CUIT = ARCUITField(label="CUIT")    # Override de Cuit
+    CUIT = ARCUITField(label="CUIT (*)")    # Override de Cuit
 
     def __init__(self, *args, **kwargs):
         super(EstanciaForm, self).__init__(*args, **kwargs)
