@@ -7,7 +7,7 @@ class CompraLote(models.Model):
     FechaLlegada = models.DateField()
     
     def __unicode__(self):
-        return "%s" % (str(self.Representante) + " - " + str(self.Estancia) + " - " + str(self.FechaLlegada))
+        return "%s" % (str(self.Estancia) + " - " + str(self.FechaLlegada))
 
 class Venta(models.Model):
     NroVenta = models.AutoField(primary_key = True)

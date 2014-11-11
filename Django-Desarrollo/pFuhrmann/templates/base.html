@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,69 +38,65 @@
     <body>
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                
-            </div>
-
+        
         <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
-                <ul class="nav navbar-nav navbar-right">                
-                    <li><a href="/usuario" class ="btn" data-toggle="tooltip" data-placement="bottom">Iniciar Sesión</a></li>
-                    <li><a href="#" class ="btn" data-toggle="tooltip" data-placement="bottom" onmouseDown = "alert('Error 404 - Dont Implement')">Acerca De</a></li>
-                    
-                    <li><a href="#">  </a></li> <!-- Para que se vea espaciado -->
-                </ul>
+            <div class='row'> 
+                <div class = 'col-md-11'>
+                    <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
+                        <ul class="nav navbar-nav navbar-right">                
+                            <li><a href="/usuario" class ="btn" data-toggle="tooltip" data-placement="bottom">Iniciar Sesión</a></li>
+                            <li><a href="#" class ="btn" data-toggle="tooltip" data-placement="bottom" onmouseDown = "alert('Error 404 - Dont Implement')">Acerca De</a></li> 
+                        </ul>
+                    </div>
+                </div>
             </div>
-            
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
-                <ul class="nav navbar-nav navbar-left">
-                    <li><a href="#">  </a></li> <!-- Para que se vea espaciado -->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-desktop"></i> REGISTRO DE OPERACIÓN <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a class ="btn" href="/listadoCompra">Compras</a></li>
-                            <li><a class ="btn" href="/listadoVenta">Ventas</a></li>
+            <div class='row'>     
+                <div class='col-md-1'></div>
+                <div class = 'col-md-8'>
+                    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                    <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-desktop"></i> REGISTRO DE OPERACIÓN <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class ="btn" href="/listadoCompra">Compras</a></li>
+                                    <li><a class ="btn" href="/listadoVenta">Ventas</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown">
+
+                                <a href="/listadoEstancias" class="btn" data-toggle="btn" data-placement="bottom"><i class="fa fa-fw fa-home"></i> ESTANCIAS </a>
+
+                                
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-edit"></i> LOTES & FARDOS <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class ="btn" href="/listadoLotes">Lotes</a></li>
+                                    <li><a class ="btn" href="/listadoFardos">Fardos</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-user"></i> PERSONAL <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class ="btn" href="/listadoProductores">Productores</a></li>
+                                    <li><a class ="btn" href="/listadoRepresentante">Representantes</a></li>
+                                </ul>
+                            </li>  
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-desktop"></i> PRODUCCIÓN <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class ="btn" href="/listadoOrden">Orden de Producción</a></li>
+                                    <li><a class ="btn" href="/listadoMaquinaria">Maquinarias</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"></b></a></li> 
                         </ul>
-                    </li>
-
-                    <li><a href="#">  </a></li> <!-- Para que se vea espaciado -->
-                    <li class="dropdown">
-
-                        <a href="/listadoEstancias" class="btn" data-toggle="btn" data-placement="bottom"><i class="fa fa-fw fa-home"></i> ESTANCIAS </a>
-
-                        
-                    </li>
-                    <li><a href="#">  </a></li> <!-- Para que se vea espaciado -->
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-edit"></i> LOTES & FARDOS <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a class ="btn" href="/listadoLotes">Lotes</a></li>
-                            <li><a class ="btn" href="/listadoFardos">Fardos</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">  </a></li> <!-- Para que se vea espaciado -->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-user"></i> PERSONAL <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a class ="btn" href="/listadoProductores">Productores</a></li>
-                            <li><a class ="btn" href="/listadoRepresentante">Representantes</a></li>
-                        </ul>
-                    </li>  
-                    <li><a href="#">  </a></li> <!-- Para que se vea espaciado -->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-desktop"></i> PRODUCCIÓN <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a class ="btn" href="/listadoOrden">Orden de Producción</a></li>
-                            <li><a class ="btn" href="/listadoMaquinaria">Maquinarias</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"></b></a></li> 
-                </ul>
-
+                    </div>
+                </div>
             </div>
             <!-- /.navbar-collapse -->
             <!-- /.container -->
@@ -108,17 +104,20 @@
     </body>
 
     {% block contenido %}{% endblock %}
-
-    <div id="footer">
-        <p align=center>Fuhrmann S.A &copy; 2014. Designed by  Santos Carla - Raies Matias - Wheeler Mariana - Carabajal Diego </p>
-        <div align=left width="48" height="48"> Contactenos </div>
-
-        <input align=left title= "Gmail" href="#" type = image src ="{{STATIC_URL}}img/gmail.png" width = "40" height = "40"></input> 
-        <input align=left title= "Twitter" href="#" type = image src ="{{STATIC_URL}}img/twitter.png" width = "40" height = "40"></input>
-        <input align=leftright title= "Facebook" href="#" type = image src ="{{STATIC_URL}}img/facebook.png" width = "40" height = "40"></input>
+    <div class = "col-md-12">
+        <div id="footer">
+            <p align=center>Fuhrmann S.A &copy; 2014. Designed by  Santos Carla - Raies Matias - Wheeler Mariana - Carabajal Diego </p>
+            <div class="row">
+                <div class = "col-md-9"></div> 
+                <div class = "col-md-3">    
+                        Nro. Contacto: 280-442 4322 ¨¨¨
+                        <input  title= "Gmail" href="#" type = image src ="{{STATIC_URL}}img/gmail.png" height = "30"></input> 
+                        <input  title= "Twitter" href="#" type = image src ="{{STATIC_URL}}img/twitter.png" height = "30"></input>
+                        <input  title= "Facebook" href="#" type = image src ="{{STATIC_URL}}img/facebook.png"  height = "30"></input>
+                </div>
+            </div>
+        </div>
     </div>
-
-
    
     <!-- JavaScripts -->
     <!-- Morris Charts JavaScript -->
@@ -152,63 +151,43 @@
     function eliminar(url, title, message) { /* Funcion para confirmar operaciones, 
                                         recibe como parametros la url en caso 
                                             de aceptar y el titulo */
-        $( '<div><h5>' +message+'</h5></div>').dialog({
+
+        BootstrapDialog.show({
             title: title,
-            resizable: false,
-            modal: true,
-            autoOpen: true,
-            draggable: false,
-            show: {
-                effect: "Clip",
-                duration: 800
-            },
-            
-            hide: {
-                effect: "Clip",
-                duration: 800
-            },
-            buttons: {
-                Si: function() {
-                window.location=url
-                $( this ).dialog( "close" );
+            cssClass: 'error-dialog',
+            message: message,
+            type: BootstrapDialog.TYPE_WARNING, 
+            buttons: [
+                {
+                    label: 'Si',
+                    action: function(dialogRef){
+                        window.location=url
+                        dialogRef.close();
+                    }
                 },
-                No: function() {
-                $( this ).dialog( "close" );
-                }
-            }
+                {
+                    label: 'No',
+                    action: function(dialogRef){
+                        dialogRef.close();
+                    }
+                }]
         });
     };
-    </script>
 
-    <script>
-    function ayuda(title, message) { /* Funcion para confirmar operaciones, 
-                                        recibe como parametros la url en caso 
-                                            de aceptar y el titulo */
-        
-        $( '<div><h5>' +message+'</h5></div>').dialog({
+
+    function ayuda(title, message) {
+        BootstrapDialog.show({
             title: title,
-            resizable: false,
-            modal: true,
-            autoOpen: true,
-            draggable: false,
-            width:600,
-            heigth:100,
-            show: {
-                effect: "Clip",
-                duration: 800
-
-            },
-            
-            hide: {
-                effect: "Clip",
-                duration: 800
-            },
-            buttons: {
-                Cerrar: function() {
-                $( this ).dialog( "close" );
-
-                },
-            }
+            cssClass: 'error-dialog',
+            message: message,
+            type: BootstrapDialog.TYPE_INFO, 
+            buttons: [
+                {
+                    label: 'Aceptar',
+                    action: function(dialogRef){
+                        dialogRef.close();
+                    }
+                }]
         });
     };
     </script>
