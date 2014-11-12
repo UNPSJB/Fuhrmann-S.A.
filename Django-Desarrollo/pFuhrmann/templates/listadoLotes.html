@@ -10,17 +10,17 @@
                 <div class="btn-group pull-right">
                     <div class="input-group">
                        <div class="btn-group pull-right">
-                            <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('Ayuda listado lotes', 'El <strong>listado de lotes</strong> muestra el número de lote, peso y cantidad de fardos contenidos en el lote.</br><br>Ingrese en<strong>buscar </strong>el número de lote del cual desea obtener información .</br><br>Presione el botón <strong>agregar</strong> para registrar un nuevo lote.</br><br>Presione el boton <strong>salir</strong> para volver al menú principal.</br><br>Presione el boton <strong>modificar</strong> para cambiar datos de un lote.</br><br>Presione el boton <strong>eliminar</strong> para eliminar un lote.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('Ayuda listado lotes', 'El <strong>listado de lotes</strong> muestra el número de lote, peso y cantidad de fardos contenidos en el lote.</br><br>Ingrese en <strong>buscar </strong>el número de lote del cual desea obtener información o el nro de Compra.</br><br>Presione el botón <strong>agregar</strong> para registrar un nuevo lote.</br><br>Presione el boton <strong>salir</strong> para volver al menú principal.</br><br>Presione el boton <strong>modificar</strong> para cambiar datos de un lote.</br><br>Presione el boton <strong>eliminar</strong> para eliminar un lote.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" title="Buscar Ej: Nro. Lote" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-search"></span></button>
+                            <a class="btn btn-default" type="button" title="Buscar Ej: Nro. Lote" onClick="javascript: errorBuscar('/buscarLote/', $('#buscar').val());"><span class="glyphicon glyphicon-search"></span></a>
                         </span>
-                        <input type="text" class="form-control" placeholder="Buscar"></input>
+                        <input type="text" id = "buscar" class="form-control" placeholder="Buscar"></input>
                     </div> 
                 </div>
             </div>
             <div class="panel-body">
-                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tableLote" width="100%">
+                <table  class="table table-striped table-bordered table-condensed" id="tableLote">
                     <thead>
                         <tr>
                             <th style="text-align:center;" width="6%">Número de Lote</th>

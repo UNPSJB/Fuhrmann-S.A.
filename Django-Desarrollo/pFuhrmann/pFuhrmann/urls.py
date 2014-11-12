@@ -33,6 +33,7 @@ urlpatterns = patterns('',
     url(r'^loteEstancia/([\d-]+)/$', 'appWeb.views.mostrarLotes'),
     url(r'^fardosLote/(\d+)/$', 'appWeb.views.mostrarFardos'),
     url(r'^agregaDetalleOrden/(?P<campos>.*)/(?P<orden>\d+)/$', 'appWeb.views.agregarDetalle'),
+    url(r'^buscarOrden/(.*)/$', 'appWeb.views.buscarOrden'),
 
 
 
@@ -41,10 +42,12 @@ urlpatterns = patterns('',
     url(r'^listadoLotes/$', 'appWeb.views.listadoLotes'),
     url(r'^modificarLote/(\d+)/$', 'appWeb.views.registrarLote'),
     url(r'^eliminarLote/(\d+)/$', 'appWeb.views.eliminarLoteId'),
+    url(r'^buscarLote/(.*)/$', 'appWeb.views.buscarLote'),
 
     url(r'^registrarFardo/$', 'appWeb.views.registrarFardo'),
     url(r'^listadoFardos/$', 'appWeb.views.listadoFardos'),
     url(r'^modificarFardo/(\d+)/$', 'appWeb.views.registrarFardo'),
+    url(r'^buscarFardo/(.*)/$', 'appWeb.views.buscarFardo'),
 
     # ------ Adm. Estancias
     url(r'^listadoEstancias/$', 'appWeb.views.listadoEstancias'),

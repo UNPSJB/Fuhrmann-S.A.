@@ -12,7 +12,7 @@
                             <a class="btn btn-default" type="button" href="#" title="Ayuda" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
                         <span class="input-group-btn">
-                            <a class="btn btn-default" href="/buscarProductor/{{dato.DNI}}" type="button" title="Buscar Ej: Nombre " ><span class="glyphicon glyphicon-search"></span></a>
+                            <a class="btn btn-default" type="button" onClick="javascript: errorBuscar('/buscarProductor/', $('#buscar').val());"  title="Buscar Ej: Nombre " ><span class="glyphicon glyphicon-search"></span></a>
                         </span>
  
                         <input id = "buscar" type="text" class="form-control" placeholder="Buscar"></input>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tableLote" width="100%">
+                <table  class="table table-striped table-bordered table-condensed" id="tableLote">
                     <thead>
                         <tr>
                             <th style="text-align:center;" width="6%">CUIL</th>
@@ -40,8 +40,8 @@
                             <td style="text-align:center;" width="10%">{{dato.DNI}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Telefono}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Email}}</td>                          
-                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarProductor/{{dato.CUIL}}"><span class="glyphicon glyphicon-edit"></span></a></td>  
-                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarProductor/{{dato.CUIL}}', 'Eliminar Productor', '¿Está seguro que quiere eliminar este productor?')"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            <td style="text-align:center;" width="3%"><a class="btn btn-default" title = "Modificar Productor" href ="/modificarProductor/{{dato.CUIL}}"><span class="glyphicon glyphicon-edit"></span></a></td>  
+                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" title = "Eliminar Productor" onClick="eliminar('/eliminarProductor/{{dato.CUIL}}', 'Eliminar Productor', '¿Está seguro que quiere eliminar este productor?')"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
 
                         {% empty %}

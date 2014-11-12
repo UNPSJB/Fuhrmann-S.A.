@@ -109,12 +109,28 @@
         </nav>   
 
     </body>
+   
+<style>
+   .show-dialog .modal-dialog {
+        width: 1000px;
+    }
+   .error-dialog .modal-dialog {
+        width: 400px;
+    }
+   .showfardo-dialog .modal-dialog {
+        width: 700px;
+    }
+    .aviso-dialog .modal-dialog {
+        width: 600px;
+    }
+</style>
+
     {% block contenido %}{% endblock %}
    
    
     <div id="footer">
         <div class = "col-md-12">
-            <p align=center>Fuhrmann S.A &copy; 2014. Designed by  Santos Carla - Raies Matias - Wheeler Mariana - Carabajal Diego </p>
+            <p align=center>Fuhrmann S.A &copy; 2014. Designed by  Santos Carla - Raies Matias - Wheeler Mariana - Carabajal Diego. Todos los derechos reservados. </p>
         </div>
     </div>
    
@@ -177,7 +193,7 @@
     function ayuda(title, message) {
         BootstrapDialog.show({
             title: title,
-            cssClass: 'error-dialog',
+            cssClass: 'aviso-dialog',
             message: message,
             type: BootstrapDialog.TYPE_INFO, 
             buttons: [
@@ -189,6 +205,28 @@
                 }]
         });
     };
+
+
+    function errorBuscar(url, id){
+
+        if (id != ''){
+            window.location=url+id;
+        }
+        else{
+            BootstrapDialog.show({
+                title: "Error",
+                cssClass: 'error-dialog',
+                message: "Debe ingresar un criterio de Busqueda.",
+                type: BootstrapDialog.TYPE_DANGER, 
+                buttons: [{
+                        label: 'Aceptar',
+                        action: function(dialogRef){
+                            dialogRef.close();
+                        }
+                }]
+            });
+        }
+    }    
     </script>
 
 

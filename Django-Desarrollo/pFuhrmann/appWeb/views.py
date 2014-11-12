@@ -169,7 +169,7 @@ def registrarLote(request, pk=None):
 
     if request.method == 'POST':
 
-        formulario = LoteForm(request.POST, instance = lote)
+        formulario = LoteFormFactory(lote is not None)(request.POST, instance = lote)
         if formulario.is_valid():
             estancia = formulario.cleaned_data['Compra'].Estancia
            
@@ -178,7 +178,7 @@ def registrarLote(request, pk=None):
             formulario.save()
             return HttpResponseRedirect('/listadoLotes')
     else:
-        formulario = LoteForm(instance = lote)
+        formulario = LoteFormFactory(lote is not None)(instance = lote)
 
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('registrarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
@@ -268,22 +268,6 @@ def eliminarProductor(request,pk):
     productor = Productor.objects.all()
     return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
 
-def buscarProductor(request, pkb):
-   
-    results = []
-
-    resultsNombre = Persona.objects.all().filter(Nombre = pkb);
-    resultsDni = Persona.objects.all().filter(DNI = pkb);
-    resultsApellido = Persona.objects.all().filter(Apellido = pkb);
-
-    for persona in resultsNombre:
-        results.append(persona)
-    for persona in resultsDni:
-        results.append(persona)
-    for persona in resultsApellido:
-        results.append(persona)
-
-    return render_to_response("buscarProductor.html", { "results": results })    
 
 # ********************************* Administracion de Representante *********************************
 
@@ -443,3 +427,61 @@ def eliminarMaquinaria(request,pk):
     maquinaria.save()
     maquinaria = Maquinaria.objects.all()
     return render_to_response('listadoMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
+
+
+
+
+
+# ********************************* Busquedas por Criterio *********************************
+
+def buscarProductor(request, pkb):
+    results = []
+
+    results1 = Productor.objects.all().filter(Nombre = pkb)
+    results2 = Productor.objects.all().filter(DNI = pkb)
+    results3 = Productor.objects.all().filter(Apellido = pkb)
+
+    for obj in results1:
+        results.append(obj)
+    for obj in results2:
+        results.append(obj)
+    for obj in results3:
+        results.append(obj)
+
+    return render_to_response("listadoProductores.html", { "lista": results }, context_instance=RequestContext(request))
+
+def buscarOrden(request, pkb):
+    results = []
+
+    results1 = OrdenProduccion.objects.all().filter(NroOrden = pkb)
+
+    for obj in results1:
+        results.append(obj)
+ 
+    return render_to_response("listadoOrden.html", { "lista": results }, context_instance=RequestContext(request))
+
+def buscarFardo(request, pkb):
+    results = []
+
+    tipoFardo = TipoFardo.objects.all().filter(Nombre = pkb)
+    results1 = Fardo.objects.all().filter(TipoFardo = tipoFardo)
+
+    for obj in results1:
+        results.append(obj)
+ 
+    return render_to_response("listadoFardos.html", { "lista": results }, context_instance=RequestContext(request))
+
+def buscarLote(request, pkb):
+    results = []
+
+    compra = CompraLote.objects.all().filter(NroCompra = pkb)
+
+    results1 = Lote.objects.all().filter(Compra = compra)
+    results2 = Lote.objects.all().filter(NroLote = pkb)
+
+    for obj in results1:
+        results.append(obj)
+    for obj in results2:
+        results.append(obj) 
+
+    return render_to_response("listadoLotes.html", { "lista": results }, context_instance=RequestContext(request))

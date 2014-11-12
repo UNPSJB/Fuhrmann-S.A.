@@ -129,43 +129,53 @@ class EstanciaForm(forms.ModelForm):
 
 # ********************************* Formularios de Lotes *********************************
 
-class LoteForm(forms.ModelForm):    
-    class Meta:
-        model = Lote
-        exclude = ("Baja", "Estancia")
-    
-    CantFardos = forms.IntegerField(label ="Cantidad de Fardos (*)", min_value = 0)
-    Peso = forms.IntegerField(label ="Peso del Lote (*)", min_value = 0)
-    Compra = forms.ModelChoiceField(CompraLote.objects.all(), label ="Compra del Lote (*)")
+def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
-    def __init__(self, *args, **kwargs):
-        super(LoteForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-8'
-        self.helper.layout = Layout(
+    class LoteForm(forms.ModelForm):    
         
-            Fieldset( 
-                '<font color = "Black" size=3 face="Comic Sans MS">Datos Principales </font>',
-                Field('CantFardos', placeholder="Cantidad de fardos"),
-                Field('Peso', placeholder="Peso del lote"),
-                Field('Compra'),
-            ),
-            HTML('<p>(*)Campos obligatorios.</p>'),
-        )
+        class Meta:
+            model = Lote
+            exclude = ("Baja", "Estancia")
+  
+        CantFardos = forms.IntegerField(label ="Cantidad de Fardos (*)", min_value = 0)
+        Peso = forms.IntegerField(label ="Peso del Lote (*)", min_value = 0)
+        
+        if not edit:
+            Compra = forms.ModelChoiceField(CompraLote.objects.all().filter(lote = None), label ="Compra del Lote (*)")
+        else:
+            Compra = forms.ModelChoiceField(CompraLote.objects.all(), label ="Compra del Lote (*)", widget=forms.HiddenInput())
 
-    def setup(self, *args, **kwarg):
-        self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-    
-    def clean_Peso(self):
-        peso = self.cleaned_data['Peso']
-        cantidad =  self.cleaned_data['CantFardos']
+        def __init__(self, *args, **kwargs):
+            super(LoteForm, self).__init__(*args, **kwargs)
+            self.helper = FormHelper()
+            self.helper.form_class = 'form-horizontal'
+            self.helper.label_class = 'col-lg-2'
+            self.helper.field_class = 'col-lg-8'
+            self.helper.layout = Layout(
+            
+                Fieldset( 
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos Principales </font>',
+                    Field('CantFardos', placeholder="Cantidad de fardos"),
+                    Field('Peso', placeholder="Peso del lote"),
+                    Field('Compra'),
+                ),
+                HTML('<p>(*)Campos obligatorios.</p>'),
+            )
+
+        def setup(self, *args, **kwarg):
+            self.helper.add_input(Submit('submit', *args, **kwarg))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
         
-        if ( ( peso / cantidad ) < 280 ) or ( ( peso / cantidad ) > 300 ):
-            raise ValidationError("El Peso debe ser 280-300kg por Fardo")
-        return peso
+        def clean_Peso(self):
+            peso = self.cleaned_data['Peso']
+            cantidad =  self.cleaned_data['CantFardos']
+            
+            if ( ( peso / cantidad ) < 280 ) or ( ( peso / cantidad ) > 300 ):
+                raise ValidationError("El Peso debe ser 280-300kg por Fardo")
+            return peso
+    
+    return LoteForm
+
 
 # ********************************* Formularios de Fardo *********************************
 
@@ -176,19 +186,18 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
             exclude = ['Baja', 'DetalleOrden']
 
         if edit:
-            Lote = forms.ModelChoiceField(Lote.eliminados.all(), label ="Lote de Fardos (*)")
+            Lote = forms.ModelChoiceField(Lote.eliminados.all(), label ="Lote de Fardos (*)", widget=forms.HiddenInput())
+            Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula ", required = False, widget=forms.HiddenInput())
         else:
             Lote = forms.ModelChoiceField(Lote.noEliminados.all(), label ="Lote de Fardos (*)")
+            Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula ", required = False)
 
         TipoFardo = forms.ModelChoiceField(TipoFardo.objects.all(), label ="Tipo de Fardo (*)")
         CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
         AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
-        Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula ", required = False)
-   
         Peso = forms.FloatField(label ="Peso (*)", min_value = 0)
         Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
         Finura = forms.FloatField(label ="Finura (*)", min_value = 0)
-        Micronaje = forms.FloatField(label ="Micronaje (*)", min_value = 0)
         Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
 
         def __init__(self, *args, **kwargs):
@@ -211,7 +220,6 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
                     Field('Finura', placeholder="Finura"),
                     Field('CV', placeholder="Coeficiente de Variacion"),
                     Field('AlturaMedia', placeholder="Altura Media"),
-                    Field('Micronaje', placeholder="Micronaje"),
                     Field('Romana', placeholder="Romana"),
                 ),
                 Fieldset(
