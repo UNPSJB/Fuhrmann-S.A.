@@ -43,16 +43,16 @@
                 <div class = 'col-md-10'>
                     <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
                         <ul class="nav navbar-nav navbar-right">                
-                            <li><a href="/usuario" class ="btn" data-toggle="tooltip" data-placement="bottom">Iniciar Sesión</a></li>
-                            <li><a href="#" class ="btn" data-toggle="tooltip" data-placement="bottom" onmouseDown = "alert('Error 404 - Dont Implement')">Acerca De</a></li> 
+                            <li><a href="/usuario" class ="btn" data-toggle="tooltip" data-placement="bottom"  title = "Iniciar Sesion" >Iniciar Sesión</a></li>
+                            <li><a href="#" class ="btn" data-toggle="tooltip" data-placement="bottom" onmouseDown = "alert('Error 404 - Dont Implement')"  title = "Informacion de App" >Acerca De</a></li> 
                         </ul>
                     </div>
                 </div>
                 <div class='col-md-1'></div>
                 <div class= 'col-md-2'> 
-                    <input  title= "Gmail" href="#" type = image src ="{{STATIC_URL}}img/gmail.png" height = "30"></input> 
-                    <input  title= "Twitter" href="#" type = image src ="{{STATIC_URL}}img/twitter.png" height = "30"></input>
-                    <input  title= "Facebook" href="#" type = image src ="{{STATIC_URL}}img/facebook.png"  height = "30"></input>
+                    <input  title= "Gmail" href="#" type = image src ="{{STATIC_URL}}img/gmail.png" height = "30" ></input> 
+                    <input  title= "Twitter" href="#" type = image src ="{{STATIC_URL}}img/twitter.png" height = "30"  ></input>
+                    <input  title= "Facebook" href="#" type = image src ="{{STATIC_URL}}img/facebook.png"  height = "30" ></input>
                 </div>
             </div>
             <div class='row'>     
@@ -62,7 +62,7 @@
                     <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
                         <ul class="nav navbar-nav navbar-left">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-desktop"></i> <strong>REGISTRO DE OPERACIÓN </strong><b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"  title = "Registrar Compra - Venta" ><i class="fa fa-fw fa-desktop"></i> <strong>REGISTRO DE OPERACIÓN </strong><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a class ="btn" href="/listadoCompra">Compras</a></li>
                                     <li><a class ="btn" href="/listadoVenta">Ventas</a></li>
@@ -71,27 +71,27 @@
 
                             <li class="dropdown">
 
-                                <a href="/listadoEstancias" class="btn" data-toggle="btn" data-placement="bottom"><i class="fa fa-fw fa-home"></i> <strong>ESTANCIAS</strong> </a>
+                                <a href="/listadoEstancias" class="btn" data-toggle="btn" data-placement="bottom" title = "Adm. Estancias" ><i class="fa fa-fw fa-home"></i> <strong>ESTANCIAS</strong> </a>
 
                                 
                             </li>
 
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-edit"></i> <strong>LOTES & FARDOS</strong> <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"  title = "Adm.Lotes - Fardos" ><i class="fa fa-fw fa-edit"></i> <strong>LOTES & FARDOS</strong> <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a class ="btn" href="/listadoLotes">Lotes</a></li>
                                     <li><a class ="btn" href="/listadoFardos">Fardos</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-user"></i> <strong>PERSONAL </strong><b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"  title = "Adm. Personal" ><i class="fa fa-fw fa-user"></i> <strong>PERSONAL </strong><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a class ="btn" href="/listadoProductores">Productores</a></li>
                                     <li><a class ="btn" href="/listadoRepresentante">Representantes</a></li>
                                 </ul>
                             </li>  
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"><i class="fa fa-fw fa-desktop"></i> <strong>PRODUCCIÓN</strong> <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom"  title = "Procesos de Produccion" ><i class="fa fa-fw fa-desktop"></i> <strong>PRODUCCIÓN</strong> <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a class ="btn" href="/listadoOrden">Orden de Producción</a></li>
                                     <li><a class ="btn" href="/listadoMaquinaria">Maquinarias</a></li>

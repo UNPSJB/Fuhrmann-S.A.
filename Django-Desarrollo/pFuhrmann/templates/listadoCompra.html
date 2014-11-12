@@ -9,11 +9,11 @@
                 <div class="btn-group pull-right">
                     <div class="input-group">
                         <div class="btn-group pull-right">
-                            <a class="btn btn-default" type="button" onClick="ayuda('Ayuda listado compra', 'El <strong>listado de compras</strong> muestra el número de compra, nombre del representante, nombre de la estancia y fecha en la que llegará el lote comprado.</br><br>Ingrese en <strong>buscar</strong> el campo (Nro compra, nombre representante, nombre estancia o fecha de llegada) por el cual desea filtrar las compras.</br><br>Presione el boton <strong>agregar</strong> para registrar una nueva compra.</br><br>Presione el boton <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <a class="btn btn-default" type="button" title = "Ayuda"onClick="ayuda('Ayuda listado compra', 'El <strong>listado de compras</strong> muestra el número de compra, nombre del representante, nombre de la estancia y fecha en la que llegará el lote comprado.</br><br>Ingrese en <strong>buscar</strong> el campo (Nro compra, nombre representante, nombre estancia o fecha de llegada) por el cual desea filtrar las compras.</br><br>Presione el boton <strong>agregar</strong> para registrar una nueva compra.</br><br>Presione el boton <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
 
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" title="Buscar Ej: Nro. Orden - Dni - Nro. Maquina" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-search"></span></button>
+                            <button class="btn btn-default" type="button" title="Buscar Ej: Nro. Orden" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-search"></span></button>
                         </span>
                         <input type="text" class="form-control" placeholder="Buscar"></input>
                     </div> 
@@ -43,8 +43,8 @@
                 </table>
                 <script type ="text/javascript"> </script>
                 <div class="pull-right">
-                    <a class="btn btn-default btn-gr" type= "button" href="/registrarCompra">Agregar</a>
-                    <a class="btn btn-default btn-gr" type= "button" href="/index">Salir</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/registrarCompra" title = "Agregar Compra">Agregar</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/index" title = "Salir">Salir</a>
                 </div>            
         </div>
     </div>

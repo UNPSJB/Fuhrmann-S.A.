@@ -12,7 +12,7 @@
                             <a class="btn btn-default" type="button" href="#" title="Ayuda" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" title="Buscar Ej: Nro. Orden - Dni - Nro. Maquina" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-search"></span></button>
+                            <button class="btn btn-default" type="button" title="Buscar Ej: Nombre" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-search"></span></button>
                         </span>
                         <input type="text" class="form-control" placeholder="Buscar"></input>
                     </div> 
@@ -33,7 +33,7 @@
                             <th style="text-align:center;" width="3%">Eliminar</th>
                         </tr>
                         {% for dato in lista %}
-                        <tr onclick = "this.style.backgroundColor = '#F2F2F2' ">
+                        <tr>
                             <td style="text-align:center;" width="10%">{{dato.NroLegajo}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Nombre}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Apellido}}</td>
@@ -41,8 +41,8 @@
                             <td style="text-align:center;" width="10%">{{dato.Telefono}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Email}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Zona}}</td>
-                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarRepresentante/{{dato.NroLegajo}}"><span class="glyphicon glyphicon-edit"></span></a></td> 
-                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarRepresentante/{{dato.NroLegajo}}', 'Eliminar Representante', '¿Está seguro que quiere eliminar este representante?')"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarRepresentante/{{dato.NroLegajo}}"><span class="glyphicon glyphicon-edit"  title = "Modificar Representante" ></span></a></td> 
+                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarRepresentante/{{dato.NroLegajo}}', 'Eliminar Representante', '¿Está seguro que quiere eliminar este representante?')"  title = "Eliminar Representante" ><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
                         {% empty %}
                             <li> No existen representantes regitrados</li>
@@ -51,8 +51,8 @@
                 </table>
                 <script type ="text/javascript"> </script>
                 <div class="pull-right">
-                    <a class="btn btn-default btn-gr" type= "button" href="/modificarRepresentante">Agregar</a>
-                    <a class="btn btn-default btn-gr" type= "button" href="/index">Salir</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/modificarRepresentante" title = "Agregar Representante" >Agregar</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/index"  title = "Salir" >Salir</a>
                 </div>    
             </div>
         </div>

@@ -150,7 +150,8 @@ def modificarEstancia(request, pk=None):
 
 def eliminarEstancia(request, pk):
     estancia = Estancia.objects.get(pk=pk)
-    estancia.delete()
+    estancia.Baja = True
+    estancia.save()
     estancia = Estancia.objects.all()
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))    
 
@@ -270,14 +271,7 @@ def eliminarProductor(request,pk):
 def buscarProductor(request, pkb):
    
     results = []
-   # query = request.GET.get('q', '')
 
-    #    qset = (
-     #       Q(Nombre__icontains=query) |
-     #       Q(Apellido__icontains=query) |
-     #       Q(DNI__icontains=query)
-     #   )
-    
     resultsNombre = Persona.objects.all().filter(Nombre = pkb);
     resultsDni = Persona.objects.all().filter(DNI = pkb);
     resultsApellido = Persona.objects.all().filter(Apellido = pkb);
@@ -324,7 +318,8 @@ def modificarRepresentante(request, pk=None):
 
 def eliminarRepresentante(request,pk):
     representante = Representante.objects.get(pk=pk)
-    representante.delete()
+    representante.Baja = True
+    representante.save()
     representante = Representante.objects.all()
     return render_to_response('listadoRepresentante.html', {'lista':representante}, context_instance=RequestContext(request))
 
@@ -444,6 +439,7 @@ def registrarMaquinaria(request):
 
 def eliminarMaquinaria(request,pk):
     maquinaria = Maquinaria.objects.get(pk=pk)    
-    maquinaria.delete()
+    maquinaria.Baja = True
+    maquinaria.save()
     maquinaria = Maquinaria.objects.all()
     return render_to_response('listadoMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))

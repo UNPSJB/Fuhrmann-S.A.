@@ -160,6 +160,7 @@ class Maquinaria(models.Model):
     NroSerie = models.PositiveIntegerField(max_length=50, primary_key = True)
     TipoMaquinaria = models.OneToOneField('Servicio')
     Descripcion = models.CharField(max_length=50, null = True)
-
+    Baja = models.BooleanField(default=False)
+ 
     def __unicode__(self):
         return u"%s - %s" % (self.NroSerie, self.TipoMaquinaria)
