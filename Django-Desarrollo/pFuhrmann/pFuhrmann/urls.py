@@ -17,8 +17,11 @@ urlpatterns = patterns('',
     #Registrar Operacion
     url(r'^registrarCompra/$', 'appWeb.views.registrarCompra'),
     url(r'^listadoCompra/$', 'appWeb.views.listadoCompra'),
+    url(r'^buscarCompra/(.*)/$', 'appWeb.views.buscarCompra'),
+
     url(r'^registrarVenta/$', 'appWeb.views.registrarVenta'),
     url(r'^listadoVenta/$', 'appWeb.views.listadoVenta'),
+    url(r'^buscarVenta/(.*)/$', 'appWeb.views.buscarVenta'),
 
     #Orden de produccion
     url(r'^registrarOrdenProduccion/$', 'appWeb.views.registrarOrdenProduccion'),
@@ -54,6 +57,7 @@ urlpatterns = patterns('',
     url(r'^registrarEstancia/$', 'appWeb.views.registrarEstancia'),
     url(r'^modificarEstancia/([\d-]+)/$', 'appWeb.views.modificarEstancia'),
     url(r'^eliminarEstancia/([\d-]+)/$', 'appWeb.views.eliminarEstancia'),
+    url(r'^buscarEstancia/(.*)/$', 'appWeb.views.buscarEstancia'),
     
     # ------ Adm. Productor
     url(r'^listadoProductores/$', 'appWeb.views.listadoProductores'),
@@ -68,12 +72,14 @@ urlpatterns = patterns('',
     url(r'^registrarRepresentante/$', 'appWeb.views.modificarRepresentante'),
     url(r'^modificarRepresentante/(\d+)$', 'appWeb.views.modificarRepresentante'),
     url(r'^eliminarRepresentante/(\d+)/$', 'appWeb.views.eliminarRepresentante'),
+    url(r'^buscarRepresentante/(.*)/$', 'appWeb.views.buscarRepresentante'),
     
 
     ## ------ Adm. Maquinaria
     url(r'^listadoMaquinaria/$', 'appWeb.views.listadoMaquinaria'),
     url(r'^registrarMaquinaria/$', 'appWeb.views.registrarMaquinaria'),
     url(r'^eliminarMaquinaria/(\d+)/$', 'appWeb.views.eliminarMaquinaria'),
+    url(r'^buscarMaquinaria/(.*)/$', 'appWeb.views.buscarMaquinaria'),
 
 
 )

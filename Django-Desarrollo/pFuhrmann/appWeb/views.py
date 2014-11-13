@@ -435,6 +435,68 @@ def eliminarMaquinaria(request,pk):
 
 # ********************************* Busquedas por Criterio *********************************
 
+def buscarCompra(request, pkb):
+    results = []
+
+    results1 = CompraLote.objects.all().filter(NroCompra = pkb)
+
+    for obj in results1:
+        results.append(obj)
+ 
+    return render_to_response("listadoCompra.html", { "lista": results }, context_instance=RequestContext(request))
+
+
+def buscarVenta(request, pkb):
+    results = []
+
+    results1 = Venta.objects.all().filter(NroVenta = pkb)
+
+    for obj in results1:
+        results.append(obj)
+ 
+    return render_to_response("listadoVenta.html", { "lista": results }, context_instance=RequestContext(request))
+
+
+def buscarEstancia(request, pkb):
+    results = []
+
+    results1 = Estancia.objects.all().filter(CUIT = pkb)
+
+    for obj in results1:
+        results.append(obj)
+ 
+    return render_to_response("listadoEstancias.html", { "lista": results }, context_instance=RequestContext(request))
+
+
+def buscarLote(request, pkb):
+    results = []
+
+    compra = CompraLote.objects.all().filter(NroCompra = pkb)
+
+    results1 = Lote.objects.all().filter(Compra = compra)
+    results2 = Lote.objects.all().filter(NroLote = pkb)
+
+    for obj in results1:
+        results.append(obj)
+    for obj in results2:
+        results.append(obj) 
+
+    return render_to_response("listadoLotes.html", { "lista": results }, context_instance=RequestContext(request))
+
+
+def buscarFardo(request, pkb):
+    results = []
+
+    tipoFardo = TipoFardo.objects.all().filter(Nombre = pkb)
+    results1 = Fardo.objects.all().filter(TipoFardo = tipoFardo)
+
+    for obj in results1:
+        results.append(obj)
+ 
+    return render_to_response("listadoFardos.html", { "lista": results }, context_instance=RequestContext(request))
+
+
+
 def buscarProductor(request, pkb):
     results = []
 
@@ -451,6 +513,25 @@ def buscarProductor(request, pkb):
 
     return render_to_response("listadoProductores.html", { "lista": results }, context_instance=RequestContext(request))
 
+
+def buscarRepresentante(request, pkb):
+    results = []
+
+    results1 = Representante.objects.all().filter(Nombre = pkb)
+    results2 = Representante.objects.all().filter(Apellido = pkb)
+    results3 = Representante.objects.all().filter(DNI = pkb)
+
+    for obj in results1:
+        results.append(obj)
+    for obj in results2:
+        results.append(obj)
+    for obj in results3:
+        results.append(obj)
+
+
+    return render_to_response("listadoRepresentante.html", { "lista": results }, context_instance=RequestContext(request))
+
+
 def buscarOrden(request, pkb):
     results = []
 
@@ -461,28 +542,21 @@ def buscarOrden(request, pkb):
  
     return render_to_response("listadoOrden.html", { "lista": results }, context_instance=RequestContext(request))
 
-def buscarFardo(request, pkb):
+
+
+def buscarMaquinaria(request, pkb):
     results = []
 
-    tipoFardo = TipoFardo.objects.all().filter(Nombre = pkb)
-    results1 = Fardo.objects.all().filter(TipoFardo = tipoFardo)
+    results1 = Maquinaria.objects.all().filter(TipoMaquinaria = pkb)
+    
 
     for obj in results1:
         results.append(obj)
- 
-    return render_to_response("listadoFardos.html", { "lista": results }, context_instance=RequestContext(request))
+    
 
-def buscarLote(request, pkb):
-    results = []
+    return render_to_response("listadoMaquinaria.html", { "lista": results }, context_instance=RequestContext(request))
 
-    compra = CompraLote.objects.all().filter(NroCompra = pkb)
 
-    results1 = Lote.objects.all().filter(Compra = compra)
-    results2 = Lote.objects.all().filter(NroLote = pkb)
 
-    for obj in results1:
-        results.append(obj)
-    for obj in results2:
-        results.append(obj) 
 
-    return render_to_response("listadoLotes.html", { "lista": results }, context_instance=RequestContext(request))
+

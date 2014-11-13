@@ -9,10 +9,10 @@
                 <div class="btn-group pull-right">
                     <div class="input-group">
                         <div class="btn-group pull-right">
-                            <a class="btn btn-default" type="button" href="#" title="Ayuda" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('Ayuda listado productores', 'El <strong>listado de productores</strong> muestra el CUIL, nombre, apellido, DNI, telefono y mail del productor.</br><br>Ingrese en<strong> buscar </strong>el campo (nombre, apellido o DNI) por el cual desea filtrar los productores.</br><br>Presione el boton <strong>agregar</strong> para agregar un nuevo productor.</br><br>Presione el boton <strong>modificar</strong> para cambiar datos de un productor.</br><br>Presione el boton <strong>eliminar</strong> para eliminar un productor.</br><br>Presione el boton <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
                         <span class="input-group-btn">
-                            <a class="btn btn-default" type="button" onClick="javascript: errorBuscar('/buscarProductor/', $('#buscar').val());"  title="Buscar Ej: Nombre " ><span class="glyphicon glyphicon-search"></span></a>
+                            <a class="btn btn-default" type="button" onClick="javascript: errorBuscar('/buscarProductor/', $('#buscar').val());"  title="Buscar Ej: Nombre,Apellido,DNI " ><span class="glyphicon glyphicon-search"></span></a>
                         </span>
  
                         <input id = "buscar" type="text" class="form-control" placeholder="Buscar"></input>
