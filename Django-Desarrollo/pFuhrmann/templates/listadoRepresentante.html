@@ -9,12 +9,12 @@
                 <div class="btn-group pull-right">
                     <div class="input-group">
                         <div class="btn-group pull-right">
-                            <a class="btn btn-default" type="button" href="#" title="Ayuda" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('Ayuda listado representantes', 'El <strong>listado de representantes</strong> muestra el Nro.de legajo, nombre, apellido, DNI, telefono, mail y zona del productor.</br><br>Ingrese en<strong> buscar </strong>el campo (nombre, apellido o  DNI) por el cual desea filtrar los representantes.</br><br>Presione el boton <strong>agregar</strong> para agregar un nuevo representante.</br><br>Presione el boton <strong>modificar</strong> para cambiar datos de un representante.</br><br>Presione el boton <strong>eliminar</strong> para eliminar un representante.</br><br>Presione el boton <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" title="Buscar Ej: Nombre" onmouseDown = "alert('Error 404 - Dont Implement')"><span class="glyphicon glyphicon-search"></span></button>
+                            <a class="btn btn-default" type="button" title="Buscar Ej: Nombre, Apellido, DNI" onClick="javascript: errorBuscar('/buscarRepresentante/', $('#buscar').val());"><span class="glyphicon glyphicon-search"></span></a>
                         </span>
-                        <input type="text" class="form-control" placeholder="Buscar"></input>
+                        <input type="text" id = "buscar" class="form-control" placeholder="Buscar"></input>
                     </div> 
                 </div>
             </div>
@@ -25,7 +25,7 @@
                             <th style="text-align:center;" width="10%">Legajo</th>
                             <th style="text-align:center;" width="10%">Nombre</th>
                             <th style="text-align:center;" width="10%">Apellido</th>
-                            <th style="text-align:center;" width="10%">Dni</th>
+                            <th style="text-align:center;" width="10%">DNI</th>
                             <th style="text-align:center;" width="10%">Telefono</th>
                             <th style="text-align:center;" width="10%">Email</th>
                             <th style="text-align:center;" width="10%">Zona</th>
