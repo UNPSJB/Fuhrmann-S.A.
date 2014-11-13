@@ -173,8 +173,10 @@ def registrarLote(request, pk=None):
         if formulario.is_valid():
             estancia = formulario.cleaned_data['Compra'].Estancia
            
-            formulario.cleaned_data['Estancia'] = estancia.CUIT
+            formulario.cleaned_data['Estancia'] = estancia
             print formulario.cleaned_data['Estancia']
+            print formulario.cleaned_data['Estancia']
+
             formulario.save()
             return HttpResponseRedirect('/listadoLotes')
     else:
@@ -360,7 +362,6 @@ def mostrarLotes (request, pk):
     estancia = Estancia.objects.get( CUIT = pk )
     lotes_set = estancia.lote_set
     lotes = lotes_set.all().filter(Baja = True)
-
     data = serializers.serialize('json', lotes)
     return HttpResponse(data, content_type='json')
     
