@@ -501,16 +501,9 @@ def buscarEstancia(request, pkb):
 def buscarLote(request, pkb):
     results = []
 
-    if pkb.isdigit():
-        compra = CompraLote.objects.all().filter(NroCompra = pkb)
-        results1 = Lote.objects.all().filter(Compra = compra)
-        print results1
-        results2 = Lote.objects.all().filter(NroLote = pkb)
-        print results2
-        for obj in results1:
-            results.append(obj)
-        for obj in results2:
-            results.append(obj) 
+    results2 = Lote.objects.all().filter(NroLote = pkb)
+    for obj in results2:
+        results.append(obj)
 
 
     return render_to_response("listadoLotes.html", { "lista": results }, context_instance=RequestContext(request))
