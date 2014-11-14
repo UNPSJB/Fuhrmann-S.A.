@@ -1,4 +1,5 @@
 import urlparse
+from django.http import Http404
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from appWeb.models import *
@@ -452,11 +453,22 @@ def eliminarMaquinaria(request,pk):
 
 def buscarCompra(request, pkb):
     results = []
-
-    results1 = CompraLote.objects.all().filter(NroCompra = pkb)
-
+    
+    representante = Representante.objects.all().filter(Nombre = pkb)
+    representante2 = Representante.objects.all().filter(Apellido = pkb)
+    results1 = CompraLote.objects.all().filter(Representante = representante)
+    results2 = CompraLote.objects.all().filter(Representante = representante2)
+    
+    estancia = Estancia.objects.all().filter(Nombre = pkb)
+    results3 = CompraLote.objects.all().filter(Estancia = estancia)
+    
     for obj in results1:
         results.append(obj)
+    for obj in results2:
+        results.append(obj)
+    for obj in results3:
+        results.append(obj)
+ 
  
     return render_to_response("listadoCompra.html", { "lista": results }, context_instance=RequestContext(request))
 
@@ -464,7 +476,7 @@ def buscarCompra(request, pkb):
 def buscarVenta(request, pkb):
     results = []
 
-    results1 = Venta.objects.all().filter(NroVenta = pkb)
+    results1 = Venta.objects.all().filter(Cliente = pkb)
 
     for obj in results1:
         results.append(obj)
