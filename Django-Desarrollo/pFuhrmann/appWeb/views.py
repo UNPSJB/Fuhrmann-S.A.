@@ -235,7 +235,7 @@ def listadoProductores(request):
 
 def registrarProductor(request):
     if request.method == 'POST':
-        formulario = ProductorFormFactory(request.POST)
+        formulario = ProductorFormFactory(productor is not None)(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoProductores')
@@ -247,7 +247,7 @@ def registrarProductor(request):
 def modificarProductor(request, pk=None):
     productor = None
     if pk is not None:
-        productor = get_object_or_404(productor, pk=pk) 
+        productor = get_object_or_404(Productor, pk=pk) 
     if request.method == 'POST':
         formulario = ProductorFormFactory(productor is not None)(request.POST, instance=productor)
         if formulario.is_valid():

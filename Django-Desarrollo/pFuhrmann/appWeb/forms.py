@@ -251,25 +251,28 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
 
 def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
+
     class ProductorForm(forms.ModelForm):
         
         Nombre = forms.CharField(label="Nombre (*)")
         Apellido = forms.CharField(label="Apellido (*)" )
+       
 
         class Meta:
             model = Productor
             exclude = ['Baja']
 
-        Telefono = forms.CharField(label = "Telefono", required = False)
-        Email = forms.CharField(label = "Email", required = False)
+            Telefono = forms.CharField(label = "Telefono", required = False)
+            Email = forms.CharField(label = "Email", required = False)
 
-
-        if edit:
+        if not edit:
             DNI = ARDNIField(label="DNI (*)")
             CUIL = ARCUITField(label="CUIL (*)")
+
         else:
             DNI = ARDNIField(label="DNI (*)",widget=forms.HiddenInput())
             CUIL = ARCUITField(label="CUIL (*)",widget=forms.HiddenInput())
+
 
 
         def __init__(self, *args, **kwargs):
@@ -301,7 +304,7 @@ def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase 
             self.helper.add_input(Submit('submibl', *args, **kwarg))
             self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-    return ProductorForm
+    return ProductorForm        
 
 # ********************************* Formularios de Representante *********************************
 
