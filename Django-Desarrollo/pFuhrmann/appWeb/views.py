@@ -488,8 +488,11 @@ def buscarEstancia(request, pkb):
     results = []
 
     results1 = Estancia.objects.all().filter(CUIT = pkb)
+    results2 = Estancia.objects.all().filter(Nombre = pkb)
 
     for obj in results1:
+        results.append(obj)
+    for obj in results2:
         results.append(obj)
  
     return render_to_response("listadoEstancias.html", { "lista": results }, context_instance=RequestContext(request))
