@@ -81,48 +81,58 @@ class VentaForm(forms.ModelForm):
 
 # ********************************* Formularios de Estancia *********************************
 
-class EstanciaForm(forms.ModelForm):
 
-    Nombre = forms.CharField(label="Nombre (*)")
-    CUIT = ARCUITField(label="CUIT (*)")
-    Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)")
-    Productor= forms.ModelChoiceField(Productor.objects.all(),label="Productor (*)")
+def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
-    # Ver django-selectable para autocompletado
-    class Meta:
-        model = Estancia
-        exclude = ['Baja']
+    class EstanciaForm(forms.ModelForm):
+
+        Nombre = forms.CharField(label="Nombre (*)")
+
+        class Meta:
+            model = Estancia
+            exclude = ['Baja']
        
+            widgets = {
+                'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')]), 
+                'Provincia': forms.Select(choices=[('Chubut', 'Chubut'), ('Santa Cruz', 'Santa Cruz'), ('Buenos Aires', 'Buenos Aires')])
+            }
 
-        widgets = {
-            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')]), 
-            'Provincia': forms.Select(choices=[('Chubut', 'Chubut'), ('Santa Cruz', 'Santa Cruz'), ('Buenos Aires', 'Buenos Aires')])
-        }
-  
-    CUIT = ARCUITField(label="CUIT (*)")    # Override de Cuit
+        if not edit:
+            CUIT = ARCUITField(label="CUIT (*)")
+            Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)")
+            Productor= forms.ModelChoiceField(Productor.objects.all(),label="Productor (*)")
+        else:
+            CUIT = ARCUITField(label="CUIT (*)", widget=forms.HiddenInput())
+            Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)",widget=forms.HiddenInput())
+            Productor= forms.ModelChoiceField(Productor.objects.all(),label="Productor (*)",widget=forms.HiddenInput())
 
-    def __init__(self, *args, **kwargs):
-        super(EstanciaForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-8'
-        self.helper.layout = Layout(
-            Fieldset( 
-                '<font color = "Black" size=3 face="Comic Sans MS">Datos de Estancia </font>',
-                Field('Nombre', placeholder="Nombre"),
-                Field('CUIT', placeholder="CUIT  XX-XXXXXXXX-X"),
-                Field('Provincia'),
-                Field('Zona'),
-                Field('Representante'),
-                Field('Productor'),
-            ),
-            HTML('<p>(*)Campos obligatorios.</p>'),
-        )    
 
-    def setup(self, *args, **kwarg):
-        self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+
+        def __init__(self, *args, **kwargs):
+            super(EstanciaForm, self).__init__(*args, **kwargs)
+            self.helper = FormHelper()
+            self.helper.form_class = 'form-horizontal'
+            self.helper.label_class = 'col-lg-2'
+            self.helper.field_class = 'col-lg-8'
+            self.helper.layout = Layout(
+        
+                Fieldset( 
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos de Estancia </font>',
+                    Field('Nombre', placeholder="Nombre"),
+                    Field('CUIT', placeholder="CUIT  XX-XXXXXXXX-X"),
+                    Field('Provincia'),
+                    Field('Zona'),
+                    Field('Representante'),
+                    Field('Productor'),
+                ),
+                HTML('<p>(*)Campos obligatorios.</p>'),
+            )    
+
+        def setup(self, *args, **kwarg):
+            self.helper.add_input(Submit('submit', *args, **kwarg))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+
+    return EstanciaForm
 
 
 #LOTES&FARDOS
@@ -239,92 +249,115 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
 
 # ********************************* Formularios de Productor *********************************
 
-class ProductorForm(forms.ModelForm):
-    DNI = ARDNIField(label="DNI (*)")
-    CUIL = ARCUITField(label="CUIL (*)")
-    Nombre = forms.CharField(label="Nombre (*)")
-    Apellido = forms.CharField(label="Apellido (*)" )
+def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
-    class Meta:
-        model = Productor
-        exclude = ['Baja']
+    class ProductorForm(forms.ModelForm):
+        
+        Nombre = forms.CharField(label="Nombre (*)")
+        Apellido = forms.CharField(label="Apellido (*)" )
 
-    Telefono = forms.CharField(label = "Telefono", required = False)
-    Email = forms.CharField(label = "Email", required = False)
+        class Meta:
+            model = Productor
+            exclude = ['Baja']
 
-    def __init__(self, *args, **kwargs):
-        super(ProductorForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-8'
-        self.helper.layout = Layout(
+        Telefono = forms.CharField(label = "Telefono", required = False)
+        Email = forms.CharField(label = "Email", required = False)
 
-            Fieldset( 
-                '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
-                Field('Nombre', css_class= ".col-lg-3",placeholder='Nombre'),
-                Field('Apellido', placeholder="Apellido"),
-                Field('DNI', placeholder="DNI"),
-                Field('CUIL', placeholder="CUIL XX-XXXXXXXX-X"),
-            ),
-            Fieldset(
-                '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
-                Field('Telefono', placeholder="Telefono"),
-                Field('Email', placeholder="Email"),
-            ),
-        )
+
+        if edit:
+            DNI = ARDNIField(label="DNI (*)")
+            CUIL = ARCUITField(label="CUIL (*)")
+        else:
+            DNI = ARDNIField(label="DNI (*)",widget=forms.HiddenInput())
+            CUIL = ARCUITField(label="CUIL (*)",widget=forms.HiddenInput())
+
+
+        def __init__(self, *args, **kwargs):
+            super(ProductorForm, self).__init__(*args, **kwargs)
+            self.helper = FormHelper()
+            self.helper.form_class = 'form-horizontal'
+            self.helper.label_class = 'col-lg-2'
+            self.helper.field_class = 'col-lg-8'
+            self.helper.layout = Layout(
+
+                Fieldset( 
+                    '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
+                    Field('Nombre', css_class= ".col-lg-3",placeholder='Nombre'),
+                    Field('Apellido', placeholder="Apellido"),
+                    Field('DNI', placeholder="DNI"),
+                    Field('CUIL', placeholder="CUIL XX-XXXXXXXX-X"),
+                ),
+                Fieldset(
+                    '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
+                    Field('Telefono', placeholder="Telefono"),
+                    Field('Email', placeholder="Email"),
+                ),
+            )
 
     #def clean_CUIL(self):
     #    return int(self.cleaned_data['CUIL'].replace('-', ''))        
 
-    def setup(self, *args, **kwarg):
-        self.helper.add_input(Submit('submibl', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+        def setup(self, *args, **kwarg):
+            self.helper.add_input(Submit('submibl', *args, **kwarg))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
+    return ProductorForm
 
 # ********************************* Formularios de Representante *********************************
 
-class RepresentanteForm(forms.ModelForm):
-    DNI = ARDNIField(label="DNI (*)")
-    NroLegajo = forms.IntegerField(label ="Nro.Legajo (*)")
-    Nombre = forms.CharField(label="Nombre (*)")
-    Apellido = forms.CharField(label="Apellido (*)")
+def RepresentanteFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
+
+    class RepresentanteForm(forms.ModelForm):
+        
+        Nombre = forms.CharField(label="Nombre (*)")
+        Apellido = forms.CharField(label="Apellido (*)")
     
-    class Meta:
-        exclude = ['Baja']
-        model = Representante
-        widgets = {
-            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
-        }
+        class Meta:
+            exclude = ['Baja']
+            model = Representante
+            widgets = {
+           'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
+            }
 
-    Telefono = forms.CharField(label = "Telefono", required = False)
-    Email = forms.CharField(label = "Email", required = False)
+            Telefono = forms.CharField(label = "Telefono", required = False)
+            Email = forms.CharField(label = "Email", required = False)
+
+
+        if not edit:
+            NroLegajo = forms.IntegerField(label ="Nro.Legajo (*)")
+            DNI = ARDNIField(label="DNI (*)")
+        else:
+            NroLegajo = forms.IntegerField(label ="Nro.Legajo (*)", widget=forms.HiddenInput())
+            DNI = ARDNIField(label="DNI (*)",  widget=forms.HiddenInput())
  
-    def __init__(self, *args, **kwargs):
-        super(RepresentanteForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-8'
-        self.helper.layout = Layout(
+        def __init__(self, *args, **kwargs):
+            super(RepresentanteForm, self).__init__(*args, **kwargs)
+            self.helper = FormHelper()
+            self.helper.form_class = 'form-horizontal'
+            self.helper.label_class = 'col-lg-2'
+            self.helper.field_class = 'col-lg-8'
+            self.helper.layout = Layout(
 
-            Fieldset( 
-                '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
-                Field('Nombre', css_class= ".col-lg-3",placeholder='Nombre'),
-                Field('Apellido', placeholder="Apellido"),
-                Field('DNI', placeholder="DNI"),
-                Field('NroLegajo', placeholder="Nro de Legajo"),
-            ),
-            Fieldset(
-                '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
-                Field('Telefono', placeholder="Telefono"),
-                Field('Email', placeholder="Email"),
-                Field('Zona', placeholder="Zona"),
-            ),)
+                Fieldset( 
+                    '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
+                    Field('Nombre', css_class= ".col-lg-3",placeholder='Nombre'),
+                    Field('Apellido', placeholder="Apellido"),
+                    Field('DNI', placeholder="DNI"),
+                    Field('NroLegajo', placeholder="Nro de Legajo"),
+                ),
+                Fieldset(
+                    '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
+                    Field('Telefono', placeholder="Telefono"),
+                    Field('Email', placeholder="Email"),
+                    Field('Zona', placeholder="Zona"),
+                ),
+            )
 
-    def setup(self, *args, **kwarg):
-        self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+        def setup(self, *args, **kwarg):
+            self.helper.add_input(Submit('submit', *args, **kwarg))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+
+    return RepresentanteForm
 
 
 
