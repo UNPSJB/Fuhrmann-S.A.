@@ -12,7 +12,7 @@
                             <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('Ayuda listado representantes', 'El <strong>listado de representantes</strong> muestra el Nro.de legajo, nombre, apellido, DNI, telefono, mail y zona del productor.</br><br>Ingrese en<strong> buscar </strong>el campo (nombre, apellido o  DNI) por el cual desea filtrar los representantes.</br><br>Presione el boton <strong>agregar</strong> para agregar un nuevo representante.</br><br>Presione el boton <strong>modificar</strong> para cambiar datos de un representante.</br><br>Presione el boton <strong>eliminar</strong> para eliminar un representante.</br><br>Presione el boton <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
                         <span class="input-group-btn">
-                            <a class="btn btn-default" type="button" title="Buscar Ej: Nombre, Apellido, DNI" onClick="javascript: errorBuscar('/buscarRepresentante/', $('#buscar').val());"><span class="glyphicon glyphicon-search"></span></a>
+                            <a class="btn btn-default" type="button" title="Buscar: Nombre, Apellido, DNI" onClick="javascript: errorBuscar('/buscarRepresentante/', $('#buscar').val());"><span class="glyphicon glyphicon-search"></span></a>
                         </span>
                         <input type="text" id = "buscar" class="form-control" placeholder="Buscar"></input>
                     </div> 
@@ -41,8 +41,8 @@
                             <td style="text-align:center;" width="10%">{{dato.Telefono}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Email}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Zona}}</td>
-                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarRepresentante/{{dato.NroLegajo}}"><span class="glyphicon glyphicon-edit"  title = "Modificar Representante" ></span></a></td> 
-                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarRepresentante/{{dato.NroLegajo}}', 'Eliminar Representante', '¿Está seguro que quiere eliminar este representante?')"  title = "Eliminar Representante" ><span class="glyphicon glyphicon-remove"></span></a></td>
+                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarRepresentante/{{dato.NroLegajo}}"><span class="glyphicon glyphicon-edit"  title = "Modificar" ></span></a></td> 
+                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarRepresentante/{{dato.NroLegajo}}', 'Eliminar Representante', '¿Está seguro que quiere eliminar este representante?')"  title = "Eliminar" ><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
                         {% empty %}
                             <li> No existen representantes regitrados</li>
