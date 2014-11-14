@@ -121,12 +121,12 @@ def listadoEstancias(request):
 
 def registrarEstancia(request):
     if request.method == 'POST':
-        formulario = EstanciaForm(request.POST)
+        formulario = EstanciaFormFactory(False)(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoEstancias')
     else:
-        formulario = EstanciaForm()
+        formulario = EstanciaFormFactory(False)()
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
@@ -138,12 +138,12 @@ def modificarEstancia(request, pk=None):
         estancia = get_object_or_404(Estancia, pk=pk) 
     
     if request.method == 'POST':
-        formulario = EstanciaForm(request.POST, instance = estancia)
+        formulario = EstanciaFormFactory(estancia is not None)(request.POST, instance = estancia)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoEstancias')
     else:
-        formulario = EstanciaForm(instance = estancia)
+        formulario = EstanciaFormFactory(estancia is not None)(instance = estancia)
     
     formulario.setup('Modificar', css_class="btn btn-success")
     return render_to_response('modificarEstancia.html', {'formulario':formulario}, context_instance=RequestContext(request))
@@ -235,26 +235,26 @@ def listadoProductores(request):
 
 def registrarProductor(request):
     if request.method == 'POST':
-        formulario = ProductorForm(request.POST)
+        formulario = ProductorFormFactory(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoProductores')
     else:
-        formulario = ProductorForm()
+        formulario = ProductorFormFactory()
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def modificarProductor(request, pk=None):
     productor = None
     if pk is not None:
-        productor = get_object_or_404(Productor, pk=pk) 
+        productor = get_object_or_404(productor, pk=pk) 
     if request.method == 'POST':
-        formulario = ProductorForm(request.POST, instance=productor)
+        formulario = ProductorFormFactory(productor is not None)(request.POST, instance=productor)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoProductores')
     else:
-        formulario = ProductorForm(instance = productor)
+        formulario = ProductorFormFactory(productor is not None)(instance = productor)
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
@@ -273,12 +273,12 @@ def listadoRepresentante(request):
 
 def registrarRepresentante(request):
     if request.method == 'POST':
-        formulario = RepresentanteForm(request.POST)
+        formulario = RepresentanteFormFactory(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoRepresentante')
     else:
-        formulario = RepresentanteForm()
+        formulario = RepresentanteFormFactory()
         formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('RepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
@@ -287,12 +287,12 @@ def modificarRepresentante(request, pk=None):
     if pk is not None:
         representante = get_object_or_404(Representante, pk=pk) 
     if request.method == 'POST':
-        formulario = RepresentanteForm(request.POST, instance=representante)
+        formulario = RepresentanteFormFactory(representante is not None)(request.POST, instance=representante)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoRepresentante')
     else:
-        formulario = RepresentanteForm(instance = representante)
+        formulario = RepresentanteFormFactory(representante is not None)(instance = representante)
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('RepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
