@@ -78,7 +78,7 @@ class Lote(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.NroLote
-
+  
 class Fardo(models.Model):
     NroFardo = models.AutoField(primary_key = True)
     Lote = models.ForeignKey('Lote')

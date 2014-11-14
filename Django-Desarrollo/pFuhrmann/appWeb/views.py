@@ -171,12 +171,6 @@ def registrarLote(request, pk=None):
 
         formulario = LoteFormFactory(lote is not None)(request.POST, instance = lote)
         if formulario.is_valid():
-            estancia = formulario.cleaned_data['Compra'].Estancia
-           
-            formulario.cleaned_data['Estancia'] = estancia
-            print formulario.cleaned_data['Estancia']
-            print formulario.cleaned_data['Estancia']
-
             formulario.save()
             return HttpResponseRedirect('/listadoLotes')
     else:
@@ -342,6 +336,15 @@ def verOrdenProduccion(request, pk):
     fardosL = []
     cantidades = []
     prueba = []
+    totales = []
+
+    total_cantidad = 0
+    total_peso = 0
+    total_finura = 0 
+    total_hm = 0
+    total_cvh = 0 
+    total_rinde = 0  
+    total_romana = 0
 
     for detalle in detalles.all():                      # Recorro los detalles
         fardo = detalle.fardo_set.first()               # Obtengo el primer fardo
@@ -349,9 +352,20 @@ def verOrdenProduccion(request, pk):
         fardosL.append(fardo)                           # agrego los fardos a la lista, como 1 detalle tiene los fardos iguales,
                                                         # obtengo el primero y lo muestro en el html
         peso = detalle.fardo_set.count() * fardo.Peso
+
+        total_cantidad = total_cantidad + detalle.fardo_set.count()
+        total_peso = total_peso + fardo.Peso
+        total_finura = total_finura + fardo.Finura
+        total_hm = total_hm + fardo.AlturaMedia
+        total_cvh = total_cvh + fardo.CV
+        total_rinde = total_rinde + fardo.Rinde
+        total_romana = total_romana + fardo.Romana
+
         prueba.append({'nroDetalle':detalle.NroDetalle,'estancia':fardo.Lote.Compra.Estancia.Nombre,'cantidad':detalle.fardo_set.count(),'peso':peso, 'Finura':fardo.Finura, 'HM':fardo.AlturaMedia, 'CVH':fardo.CV, 'Rinde':fardo.Rinde, 'Romana':fardo.Romana})
 
-    return render_to_response('datosOrden.html', {'orden':orden, 'detalles':prueba}, context_instance=RequestContext(request))
+    totales.append({'total_cantidad':total_cantidad , 'total_peso':total_peso , 'total_finura':total_finura , 'total_hm':total_hm , 'total_cvh':total_cvh , 'total_rinde':total_rinde , 'total_romana':total_romana })
+    
+    return render_to_response('datosOrden.html', {'orden':orden, 'detalles':prueba, 'totales':totales}, context_instance=RequestContext(request))
 
 
 def mostrarEstancia (request, pk):
@@ -360,8 +374,8 @@ def mostrarEstancia (request, pk):
 
 def mostrarLotes (request, pk):
     estancia = Estancia.objects.get( CUIT = pk )
-    lotes_set = estancia.lote_set
-    lotes = lotes_set.all().filter(Baja = True)
+    lotes = Lote.eliminados.filter(Compra__Estancia = estancia)
+    
     data = serializers.serialize('json', lotes)
     return HttpResponse(data, content_type='json')
     
@@ -379,12 +393,13 @@ def agregarDetalle (request, campos = None, orden = None):
     detalle.OrdenProduccion = OrdenProduccion.objects.get(NroOrden = orden)
     detalle.save()
 
+    campos = campos.split(",")
+
     for campo in campos:
         if campo != ',':
             fardo = Fardo.objects.get(NroFardo = int(campo))
             fardo.DetalleOrden = detalle
             fardo.save()
-        
     return HttpResponseRedirect('/listadoOrden')   
 
 
@@ -471,15 +486,17 @@ def buscarEstancia(request, pkb):
 def buscarLote(request, pkb):
     results = []
 
-    compra = CompraLote.objects.all().filter(NroCompra = pkb)
+    if pkb.isdigit():
+        compra = CompraLote.objects.all().filter(NroCompra = pkb)
+        results1 = Lote.objects.all().filter(Compra = compra)
+        print results1
+        results2 = Lote.objects.all().filter(NroLote = pkb)
+        print results2
+        for obj in results1:
+            results.append(obj)
+        for obj in results2:
+            results.append(obj) 
 
-    results1 = Lote.objects.all().filter(Compra = compra)
-    results2 = Lote.objects.all().filter(NroLote = pkb)
-
-    for obj in results1:
-        results.append(obj)
-    for obj in results2:
-        results.append(obj) 
 
     return render_to_response("listadoLotes.html", { "lista": results }, context_instance=RequestContext(request))
 
@@ -535,10 +552,11 @@ def buscarRepresentante(request, pkb):
 def buscarOrden(request, pkb):
     results = []
 
-    results1 = OrdenProduccion.objects.all().filter(NroOrden = pkb)
+    if pkb.isdigit():
+        results1 = OrdenProduccion.objects.all().filter(NroOrden = pkb)
 
-    for obj in results1:
-        results.append(obj)
+        for obj in results1:
+            results.append(obj)
  
     return render_to_response("listadoOrden.html", { "lista": results }, context_instance=RequestContext(request))
 

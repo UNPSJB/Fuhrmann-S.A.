@@ -78,7 +78,6 @@
     
     <script type="text/javascript">
 
-
         function showModal1(id){
             BootstrapDialog.show({
                 title: ('Agregar Detalle a Orden Produccion - Nro: '+id),
@@ -97,7 +96,7 @@
 
         function showModal(id) {
 
-                var dialog1 = new BootstrapDialog.show({
+                window.dialog1 = new BootstrapDialog.show({
                 title: ('Datos de Orden Produccion - Nro. Orden: '+id),
                 cssClass: 'show-dialog',
                 closable: false,

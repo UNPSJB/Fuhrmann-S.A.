@@ -114,15 +114,17 @@
                                     {% endfor %}
                                 {% endfor %}
                                 <tr>
-                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS"></font></th>
-                                    <th style="text-align:center;" width="40%"><font size=3 face="Comic Sans MS"></font></th>
-                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Fardos</font></th>
-                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Neto</font></th>
-                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Finura</font></th>
-                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">HM</font></th>
-                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">CVH</font></th>
-                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Rinde</font></th>
-                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Romana</font></th>
+                                    {% for total in totales %} 
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS"></font></th>
+                                        <th style="text-align:center;" width="40%"><font size=3 face="Comic Sans MS"></font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_cantidad }}</font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_peso }}</font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_finura }}</font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_hm }}</font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_cvh }}</font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_rinde }}</font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_romana }}</font></th>
+                                    {% endfor %}
                                 </tr>
                             </ul>
                         </thead>

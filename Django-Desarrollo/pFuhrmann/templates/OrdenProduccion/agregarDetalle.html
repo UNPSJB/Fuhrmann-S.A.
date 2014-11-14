@@ -71,9 +71,11 @@ function submit(orden){
             dataType: 'html',
             url: '/agregaDetalleOrden/'+ campos + '/' + orden,
         });
+
+        dialog1.setMessage($('<div></div>').load('/verOrdenProduccion/' + orden));
         BootstrapDialog.show({
             title: 'Aviso',
-            cssClass: 'error-dialog',
+            cssClass: 'aviso-dialog',
             message: 'Detalle Agregado a Orden!',
             type: BootstrapDialog.TYPE_WARNING, 
             buttons: [
@@ -87,7 +89,6 @@ function submit(orden){
         $("#FardosCombo").hide();
     }
 }
-
 
 $( document ).ready(function() {
 
