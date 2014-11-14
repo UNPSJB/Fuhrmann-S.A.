@@ -81,5 +81,5 @@ urlpatterns = patterns('',
     url(r'^eliminarMaquinaria/(\d+)/$', 'appWeb.views.eliminarMaquinaria'),
     url(r'^buscarMaquinaria/(.*)/$', 'appWeb.views.buscarMaquinaria'),
 
-
+   
 )
