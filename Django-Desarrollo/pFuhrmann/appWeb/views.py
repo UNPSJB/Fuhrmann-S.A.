@@ -1,9 +1,11 @@
 import urlparse
-from django.shortcuts import render, render_to_response, redirect, get_object_or_404
+from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from appWeb.models import *
 from appWeb.forms import *
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -14,6 +16,8 @@ from django.contrib.auth import (REDIRECT_FIELD_NAME, login, logout, authenticat
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import FormView
 from django.http import *
+from django.shortcuts import render_to_response,redirect
+from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -123,12 +127,12 @@ def listadoEstancias(request):
 
 def registrarEstancia(request):
     if request.method == 'POST':
-        formulario = EstanciaForm(request.POST)
+        formulario = EstanciaFormFactory(False)(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoEstancias')
     else:
-        formulario = EstanciaForm()
+        formulario = EstanciaFormFactory(False)()
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
@@ -140,12 +144,12 @@ def modificarEstancia(request, pk=None):
         estancia = get_object_or_404(Estancia, pk=pk) 
     
     if request.method == 'POST':
-        formulario = EstanciaForm(request.POST, instance = estancia)
+        formulario = EstanciaFormFactory(estancia is not None)(request.POST, instance = estancia)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoEstancias')
     else:
-        formulario = EstanciaForm(instance = estancia)
+        formulario = EstanciaFormFactory(estancia is not None)(instance = estancia)
     
     formulario.setup('Modificar', css_class="btn btn-success")
     return render_to_response('modificarEstancia.html', {'formulario':formulario}, context_instance=RequestContext(request))
@@ -237,12 +241,12 @@ def listadoProductores(request):
 
 def registrarProductor(request):
     if request.method == 'POST':
-        formulario = ProductorForm(request.POST)
+        formulario = ProductorFormFactory(productor is not None)(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoProductores')
     else:
-        formulario = ProductorForm()
+        formulario = ProductorFormFactory()
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
@@ -251,12 +255,12 @@ def modificarProductor(request, pk=None):
     if pk is not None:
         productor = get_object_or_404(Productor, pk=pk) 
     if request.method == 'POST':
-        formulario = ProductorForm(request.POST, instance=productor)
+        formulario = ProductorFormFactory(productor is not None)(request.POST, instance=productor)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoProductores')
     else:
-        formulario = ProductorForm(instance = productor)
+        formulario = ProductorFormFactory(productor is not None)(instance = productor)
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
@@ -275,12 +279,12 @@ def listadoRepresentante(request):
 
 def registrarRepresentante(request):
     if request.method == 'POST':
-        formulario = RepresentanteForm(request.POST)
+        formulario = RepresentanteFormFactory(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoRepresentante')
     else:
-        formulario = RepresentanteForm()
+        formulario = RepresentanteFormFactory()
         formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('RepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
@@ -289,12 +293,12 @@ def modificarRepresentante(request, pk=None):
     if pk is not None:
         representante = get_object_or_404(Representante, pk=pk) 
     if request.method == 'POST':
-        formulario = RepresentanteForm(request.POST, instance=representante)
+        formulario = RepresentanteFormFactory(representante is not None)(request.POST, instance=representante)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoRepresentante')
     else:
-        formulario = RepresentanteForm(instance = representante)
+        formulario = RepresentanteFormFactory(representante is not None)(instance = representante)
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('RepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
@@ -485,9 +489,15 @@ def eliminarMaquinaria(request,pk):
 
 def buscarCompra(request, pkb):
     results = []
-
-    results1 = CompraLote.objects.all().filter(NroCompra = pkb)
-
+    
+    representante = Representante.objects.all().filter(Nombre = pkb)
+    representante2 = Representante.objects.all().filter(Apellido = pkb)
+    results1 = CompraLote.objects.all().filter(Representante = representante)
+    results2 = CompraLote.objects.all().filter(Representante = representante2)
+    
+    estancia = Estancia.objects.all().filter(Nombre = pkb)
+    results3 = CompraLote.objects.all().filter(Estancia = estancia)
+    
     for obj in results1:
         results.append(obj)
  
@@ -509,6 +519,7 @@ def buscarEstancia(request, pkb):
     results = []
 
     results1 = Estancia.objects.all().filter(CUIT = pkb)
+    results2 = Estancia.objects.all().filter(Nombre = pkb)
 
     for obj in results1:
         results.append(obj)
@@ -519,16 +530,9 @@ def buscarEstancia(request, pkb):
 def buscarLote(request, pkb):
     results = []
 
-    if pkb.isdigit():
-        compra = CompraLote.objects.all().filter(NroCompra = pkb)
-        results1 = Lote.objects.all().filter(Compra = compra)
-        print results1
-        results2 = Lote.objects.all().filter(NroLote = pkb)
-        print results2
-        for obj in results1:
-            results.append(obj)
-        for obj in results2:
-            results.append(obj) 
+    results2 = Lote.objects.all().filter(NroLote = pkb)
+    for obj in results2:
+        results.append(obj)
 
 
     return render_to_response("listadoLotes.html", { "lista": results }, context_instance=RequestContext(request))
@@ -611,13 +615,3 @@ def buscarMaquinaria(request, pkb):
 
 
 
-
-
-
-
-class MyPDF(PDFTemplateView):
-    filename = 'my_pdf.pdf'
-    template_name = 'PDF/listadoOrden.html'
-    cmd_options = {
-        'margin-top': 3,
-    }

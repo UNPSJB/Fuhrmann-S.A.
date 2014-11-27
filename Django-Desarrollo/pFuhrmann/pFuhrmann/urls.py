@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from appWeb import views
-from wkhtmltopdf.views import PDFTemplateView
 
 admin.autodiscover()
 
