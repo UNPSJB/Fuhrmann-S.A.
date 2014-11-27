@@ -71,7 +71,7 @@ function submit(orden){
             dataType: 'html',
             url: '/agregaDetalleOrden/'+ campos + '/' + orden,
         });
-
+        campos =[] /* Vacio el buffer */
         dialog1.setMessage($('<div></div>').load('/verOrdenProduccion/' + orden));
         BootstrapDialog.show({
             title: 'Aviso',

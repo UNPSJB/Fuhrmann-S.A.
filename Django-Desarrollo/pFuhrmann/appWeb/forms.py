@@ -337,13 +337,14 @@ class OrdenProduccionForm(forms.ModelForm):
     
     class Meta:
         model = OrdenProduccion
-        exclude = ['EnProduccion', 'Finalizada', 'MaquinaActual', 'FechaFinProduccion', 'FechaInicioProduccion']
+        exclude = ['Finalizada',]
 
     CantRequerida = forms.IntegerField(label = "Cantidad Requerida (*)", min_value = 0)
     CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
     AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
     Finura = forms.FloatField(label ="Finura (*)", min_value = 0)        # Unidad de Medida Micrones
     Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
+    Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
     Servicio = forms.ModelMultipleChoiceField(Servicio.objects.all(), label ="Servicios a Realizar (*)")
 
     def __init__(self, *args, **kwargs):
@@ -365,15 +366,41 @@ class OrdenProduccionForm(forms.ModelForm):
                 Field('AlturaMedia', placeholder="Altura Media requerida"),
                 Field('Finura', placeholder="Micronaje requerido"),
                 Field('Romana', placeholder="Romana requerida"),
+                Field('Rinde', placeholder="Rinde requerido")
             ),
             HTML('<p>(*)Campos obligatorios.</p>'),
         )
 
+    def clean_Servicio(self):
+        needPeinar = False
+
+        for servicio in self.cleaned_data['Servicio']:
+            if servicio.ServicioPrevio != None:
+                if not servicio.ServicioPrevio in self.cleaned_data['Servicio']:
+                    raise ValidationError("Servicio previo requerido para %s" % servicio)
+
+                if servicio.Nombre == 'Cardado':
+                    needPeinar = True
+        
+                if servicio.Nombre == 'Peinado':
+                    needPeinar = False
+        
+        if needPeinar == True:
+            raise ValidationError("Servicio posterior requerido para Cardado")
+
+        return self.cleaned_data['Servicio']
+      
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-
+    def save(self, *args, **kwarg):
+        orden = super(OrdenProduccionForm, self).save(commit=False)
+        orden.save()
+        for servicio in self.cleaned_data['Servicio']:
+            p = Produccion.objects.create(Orden=orden, Servicio = servicio)
+            p.save()
+        return orden
 
 class enviarFaseProduccionForm(forms.ModelForm):
     class Meta:

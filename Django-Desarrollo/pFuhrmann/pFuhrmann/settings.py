@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'appWeb',
     'crispy_forms',
+    'wkhtmltopdf',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,6 +55,12 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'pFuhrmann.urls'
+
+WKHTMLTOPDF_CMD = '/path/to/my/wkhtmltopdf'
+WKHTMLTOPDF_CMD_OPTIONS = {
+    'quiet': True,
+}
+
 
 WSGI_APPLICATION = 'pFuhrmann.wsgi.application'
 

@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from appWeb import views
+from wkhtmltopdf.views import PDFTemplateView
 
 admin.autodiscover()
 
@@ -80,6 +81,10 @@ urlpatterns = patterns('',
     url(r'^registrarMaquinaria/$', 'appWeb.views.registrarMaquinaria'),
     url(r'^eliminarMaquinaria/(\d+)/$', 'appWeb.views.eliminarMaquinaria'),
     url(r'^buscarMaquinaria/(.*)/$', 'appWeb.views.buscarMaquinaria'),
+
+
+
+  #  url(r'^pdf/$', 'appWeb/MyPDF.as_view()'),
 
 
 )

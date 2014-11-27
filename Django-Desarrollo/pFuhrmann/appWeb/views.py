@@ -1,11 +1,9 @@
 import urlparse
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from appWeb.models import *
 from appWeb.forms import *
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -16,15 +14,19 @@ from django.contrib.auth import (REDIRECT_FIELD_NAME, login, logout, authenticat
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import FormView
 from django.http import *
-from django.shortcuts import render_to_response,redirect
-from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
+from django.template.loader import render_to_string
+
+
+from wkhtmltopdf.views import PDFTemplateView
+
 
 from django.core import serializers
 import ast
+
 
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
@@ -309,17 +311,48 @@ def eliminarRepresentante(request,pk):
 
 def listadoOrden(request):
     op = OrdenProduccion.objects.all()
-    return render_to_response('listadoOrden.html', {'lista':op}, context_instance=RequestContext(request))
+    dato = []
+    maquinaActual = 'No Maquina'
+
+    for orden in op:
+        print(orden.is_finalizada())
+        pro_set = orden.produccion_set
+
+        Finalizada = True
+        EnProduccion = False
+
+        for produccion in pro_set.all():
+            if produccion.FechaInicio != None:
+                EnProduccion = True
+            if produccion.FechaInicio and not produccion.FechaFin:
+                maquinaActual = produccion.Maquinaria
+            if produccion.FechaFin == None:
+                Finalizada = False
+
+
+        dato = [{'FechaEmision': orden.FechaEmision,
+                'FechaInicioProduccion': '',
+                'FechaFinProduccion': '',
+                'MaquinaActual': maquinaActual,
+                'EnProduccion': '',
+                'Finalizada': Finalizada, 
+                'Cancelada': orden.Cancelada}]
+
+    return render_to_response('listadoOrden.html', {'lista':dato}, context_instance=RequestContext(request))
+
+# Podria saber los q me necesitan, pero lavado lo necesita cardado.
 
 def registrarOrdenProduccion(request, pk=None):
     orden = None
+    serv = []       # Arreglo de servicios para almacenar los que ingreso.
+
     if pk is not None:
         orden = get_object_or_404(OrdenProduccion, pk=pk)
 
     if request.method == 'POST':
         formulario = OrdenProduccionForm(request.POST, instance = orden)
         if formulario.is_valid():
-            formulario.save()
+            orden = formulario.save()
             return HttpResponseRedirect('/listadoOrden')
     else:
         formulario = OrdenProduccionForm(instance = orden)
@@ -578,3 +611,13 @@ def buscarMaquinaria(request, pkb):
 
 
 
+
+
+
+
+class MyPDF(PDFTemplateView):
+    filename = 'my_pdf.pdf'
+    template_name = 'PDF/listadoOrden.html'
+    cmd_options = {
+        'margin-top': 3,
+    }
