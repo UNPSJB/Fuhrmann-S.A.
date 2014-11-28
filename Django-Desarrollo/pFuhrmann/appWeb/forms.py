@@ -20,8 +20,8 @@ class LoginForm(forms.Form):
 # ********************************* Formulario de Compras *********************************
 class CompraForm(forms.ModelForm):    
     FechaLlegada = forms.DateField(label = "Fecha de Llegada (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
-    Estancia = forms.ModelChoiceField(Estancia.objects.all(),label= "Estancia (*)")
-    Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)")
+    Estancia = forms.ModelChoiceField(Estancia.objects.filter(Baja = False),label= "Estancia (*)")
+    Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)")
     class Meta:
         model = CompraLote
     
@@ -99,12 +99,12 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
 
         if not edit:
             CUIT = ARCUITField(label="CUIT (*)")
-            Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)")
-            Productor= forms.ModelChoiceField(Productor.objects.all(),label="Productor (*)")
+            Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)")
+            Productor = forms.ModelChoiceField(Productor.objects.all().filter(Baja = False, estancia = None),label="Productor (*)")
         else:
             CUIT = ARCUITField(label="CUIT (*)", widget=forms.HiddenInput())
-            Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)",widget=forms.HiddenInput())
-            Productor= forms.ModelChoiceField(Productor.objects.all(),label="Productor (*)",widget=forms.HiddenInput())
+            Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)",widget=forms.HiddenInput())
+            Productor= forms.ModelChoiceField(Productor.objects.filter(estancia = None),label="Productor (*)",widget=forms.HiddenInput())
 
 
 

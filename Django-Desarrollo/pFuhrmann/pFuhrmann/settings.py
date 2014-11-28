@@ -42,7 +42,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'appWeb',
     'crispy_forms',
-    'wkhtmltopdf',
+  #  'wkhtmltopdf',
 )
 
 MIDDLEWARE_CLASSES = (
