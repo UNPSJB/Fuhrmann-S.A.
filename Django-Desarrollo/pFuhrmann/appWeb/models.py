@@ -163,7 +163,7 @@ class Maquinaria(models.Model):
     Baja = models.BooleanField(default=False)
  
     def __unicode__(self):
-        return u"%s - %s" % (self.NroSerie, self.TipoMaquinaria)
+        return u"%s - %s" % (self.NroSerie, self.Servicio)
 
 
 

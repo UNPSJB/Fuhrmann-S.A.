@@ -78,6 +78,7 @@ urlpatterns = patterns('',
     ## ------ Adm. Maquinaria
     url(r'^listadoMaquinaria/$', 'appWeb.views.listadoMaquinaria'),
     url(r'^registrarMaquinaria/$', 'appWeb.views.registrarMaquinaria'),
+    url(r'^modificarMaquinaria/$', 'appWeb.views.modificarMaquinaria'),
     url(r'^eliminarMaquinaria/(\d+)/$', 'appWeb.views.eliminarMaquinaria'),
     url(r'^buscarMaquinaria/(.*)/$', 'appWeb.views.buscarMaquinaria'),
 

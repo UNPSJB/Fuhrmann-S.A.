@@ -459,31 +459,43 @@ def finalizarFaseProduccion(request):
 # ********************************* Administracion de Maquinarias *********************************
 
 def listadoMaquinaria(request):
-    maquinaria = Maquinaria.objects.all()
+    maquinaria = Maquinaria.objects.filter(Baja = False)
     return render_to_response('listadoMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
 
 def registrarMaquinaria(request):
     if request.method == 'POST':
-        formulario = MaquinariaForm(request.POST)
+        formulario = MaquinariaFormFactory(False)(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoMaquinaria')
     else:
-        formulario = MaquinariaForm()
-    
+        formulario = MaquinariaFormFactory(False)() 
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('MaquinariaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+
+def modificarMaquinaria(request, pk=None):
+    maquinaria = None
+    if pk is not None:
+        maquinaria = get_object_or_404(Maquinaria, pk=pk) 
+    
+    if request.method == 'POST':
+        formulario = MaquinariaFormFactory(maquinaria is not None)(request.POST, instance = maquinaria)
+        if formulario.is_valid():
+            formulario.save()
+            return HttpResponseRedirect('/listadoMaquinaria')
+    else:
+        formulario = MaquinariaFormFactory(maquinaria is not None)(instance = maquinaria)
+    
+    formulario.setup('Modificar', css_class="btn btn-success")
+    return render_to_response('modificarMaquinaria.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarMaquinaria(request,pk):
     maquinaria = Maquinaria.objects.get(pk=pk)    
     maquinaria.Baja = True
     maquinaria.save()
-    maquinaria = Maquinaria.objects.all()
+    maquinaria = Maquinaria.objects.filter(Baja = False)
     return render_to_response('listadoMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
-
-
-
-
 
 # ********************************* Busquedas por Criterio *********************************
 
