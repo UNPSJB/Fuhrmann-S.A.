@@ -1,6 +1,8 @@
 from django.db import models
 
 class CompraLote(models.Model):
+    class Meta:
+        ordering = ['NroCompra']
     NroCompra = models.AutoField(primary_key = True)
     Representante = models.ForeignKey('Representante')
     Estancia = models.ForeignKey('Estancia')
@@ -10,6 +12,8 @@ class CompraLote(models.Model):
         return "%s" % (str(self.Estancia) + " - " + str(self.FechaLlegada))
 
 class Venta(models.Model):
+    class Meta:
+        ordering = ['NroVenta']
     NroVenta = models.AutoField(primary_key = True)
     LoteVenta = models.OneToOneField('LoteVenta')
     Cliente = models.CharField(max_length=50)
@@ -19,6 +23,8 @@ class Venta(models.Model):
         return "%s" % (str(self.Cliente) + " - " + str(self.LoteVenta) + " - " + str(self.FechaVenta))
 
 class Persona(models.Model):
+    class Meta:
+        ordering = ['Apellido']
     Nombre = models.CharField(max_length=50)
     Apellido = models.CharField(max_length=50)
     DNI = models.CharField(max_length=10, primary_key = True)
@@ -43,6 +49,9 @@ class Representante(Persona):
         return "%s" % str(str(self.Nombre) + " " + str(self.Apellido) + " - DNI: " + str(self.DNI))
 
 class Estancia(models.Model):
+    class Meta:
+        ordering = ['Nombre']
+    
     Nombre = models.CharField(max_length=50)
     CUIT = models.CharField(max_length=13, primary_key = True)
     Provincia = models.CharField(max_length=50)
@@ -65,6 +74,8 @@ class BajaLogicaManager(models.Manager):
         return super(BajaLogicaManager, self).get_queryset().filter(**self.kwargs)
 
 class Lote(models.Model):
+    class Meta:
+        ordering = ['NroLote']    
     NroLote = models.AutoField(primary_key = True)
     TipoFardo = models.ForeignKey('TipoFardo')
     CantFardos = models.PositiveIntegerField(max_length=50)
@@ -82,6 +93,8 @@ class Lote(models.Model):
         return u"%s" % self.NroLote
   
 class Fardo(models.Model):
+    class Meta:
+        ordering = ['NroFardo']
     NroFardo = models.AutoField(primary_key = True)
     Lote = models.ForeignKey('Lote')
     Peso = models.FloatField()
@@ -98,16 +111,19 @@ class Fardo(models.Model):
 class TipoFardo(models.Model):
     Nombre = models.CharField(max_length=50, primary_key = True)
     Descripcion = models.CharField(max_length=50)
-
+    Baja = models.BooleanField(default = False)
+    
     def __unicode__(self):
         return "%s" % (str(self.Nombre))
 
-
-
-# ************************ Orden de Produccion ***************************** #
+    
+    
+    # ************************ Orden de Produccion ***************************** #)
 
 
 class OrdenProduccion(models.Model):
+    class Meta:
+        ordering = ['NroOrden']
     NroOrden = models.AutoField(primary_key = True)
     FechaEmision = models.DateField(auto_now_add = True)
     CantRequerida = models.PositiveIntegerField(max_length=50)
@@ -123,11 +139,50 @@ class OrdenProduccion(models.Model):
     def __unicode__(self):
         return u"%s " % self.NroOrden
 
-    def is_finalizada(self):
+    def isFinalizada(self):
         return all(map(lambda p: p.FechaFin != None, self.produccion_set.all()))
+   
+    def fechaFin(self):
+        p = self.produccion_set.last()
+        
+        if p.FechaFin != None:
+            return p.FechaFin
+        
+        return 'No Fecha'
+
+    def fechaInicio(self):
+        for p in self.produccion_set.all():
+            if p.FechaInicio != None:
+                return p.FechaInicio
+        return 'No Fecha'
+
+    def maquinaActual(self):
+        maquinaActual = 'No Maquina'  
+        for p in self.produccion_set.all():
+            if p.FechaInicio != None  and  p.FechaFin == None:
+                maquinaActual = p.Maquinaria.NroSerie
+        return maquinaActual
+
+    def isProduccion(self):
+        isPro = False
+
+        for p in self.produccion_set.all():
+            print p.FechaFin
+            if (p.FechaInicio != None) and (p.FechaFin != None):
+                isPro = False
+            elif (p.FechaInicio == None) and (p.FechaFin == None)::
+                isPro = False
+        return isPro
+
+
+
+
+
 
 
 class DetalleOrden(models.Model):
+    class Meta:
+        ordering = ['NroDetalle']
     NroDetalle = models.AutoField(primary_key = True)
     OrdenProduccion = models.ForeignKey('OrdenProduccion')
     
@@ -139,12 +194,16 @@ class Servicio(models.Model):
     Nombre = models.CharField(max_length=50, primary_key = True)
     Descripcion = models.CharField(max_length=50)
     ServicioPrevio = models.ForeignKey('Servicio', blank = True, null = True)
+    Transitorio = models.BooleanField(default = False)
+    Baja = models.BooleanField(default = False)
 
     def __unicode__(self):
         return u"%s" % self.Nombre
 
 
 class Produccion(models.Model):
+    class Meta:
+        ordering = ['NroProduccion']
     NroProduccion = models.AutoField(primary_key = True)
     Orden = models.ForeignKey('OrdenProduccion')
     Servicio = models.ForeignKey('Servicio')
@@ -157,13 +216,15 @@ class Produccion(models.Model):
 
 
 class Maquinaria(models.Model):
+    class Meta:
+        ordering = ['NroSerie']
     NroSerie = models.PositiveIntegerField(max_length=50, primary_key = True)
     Servicio = models.ForeignKey('Servicio')
     Descripcion = models.CharField(max_length=50, null = True, blank = True)
     Baja = models.BooleanField(default=False)
  
     def __unicode__(self):
-        return u"%s - %s" % (self.NroSerie, self.TipoMaquinaria)
+        return u"%s " % (self.NroSerie)
 
 
 
@@ -173,6 +234,8 @@ class Maquinaria(models.Model):
 
 
 class LoteVenta(models.Model):
+    class Meta:
+        ordering = ['NroPartida']
     NroPartida = models.AutoField(primary_key = True)
     Cantidad = models.PositiveIntegerField(max_length=50)
     Cuadricula = models.CharField(max_length=50)

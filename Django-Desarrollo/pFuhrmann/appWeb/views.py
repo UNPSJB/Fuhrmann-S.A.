@@ -315,34 +315,7 @@ def eliminarRepresentante(request,pk):
 
 def listadoOrden(request):
     op = OrdenProduccion.objects.all()
-    dato = []
-    maquinaActual = 'No Maquina'
-
-    for orden in op:
-        print(orden.is_finalizada())
-        pro_set = orden.produccion_set
-
-        Finalizada = True
-        EnProduccion = False
-
-        for produccion in pro_set.all():
-            if produccion.FechaInicio != None:
-                EnProduccion = True
-            if produccion.FechaInicio and not produccion.FechaFin:
-                maquinaActual = produccion.Maquinaria
-            if produccion.FechaFin == None:
-                Finalizada = False
-
-
-        dato = [{'FechaEmision': orden.FechaEmision,
-                'FechaInicioProduccion': '',
-                'FechaFinProduccion': '',
-                'MaquinaActual': maquinaActual,
-                'EnProduccion': '',
-                'Finalizada': Finalizada, 
-                'Cancelada': orden.Cancelada}]
-
-    return render_to_response('listadoOrden.html', {'lista':dato}, context_instance=RequestContext(request))
+    return render_to_response('listadoOrden.html', {'lista':op}, context_instance=RequestContext(request))
 
 # Podria saber los q me necesitan, pero lavado lo necesita cardado.
 
@@ -354,12 +327,12 @@ def registrarOrdenProduccion(request, pk=None):
         orden = get_object_or_404(OrdenProduccion, pk=pk)
 
     if request.method == 'POST':
-        formulario = OrdenProduccionForm(request.POST, instance = orden)
+        formulario = OrdenProduccionFormFactory(orden is not None)(request.POST, instance = orden)
         if formulario.is_valid():
             orden = formulario.save()
             return HttpResponseRedirect('/listadoOrden')
     else:
-        formulario = OrdenProduccionForm(instance = orden)
+        formulario = OrdenProduccionFormFactory(orden is not None)(instance = orden)
         
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('OrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))

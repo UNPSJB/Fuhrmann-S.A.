@@ -97,7 +97,8 @@
 
                                 </tr>
       
-                            {% regroup detalles by nroDetalle as datos %}<ul>
+                            {% regroup detalles by nroDetalle as datos %}
+                            <ul>
                                 {% for nroDetalle in datos %}       
                                     {% for item in nroDetalle.list %}
                                          <tr>

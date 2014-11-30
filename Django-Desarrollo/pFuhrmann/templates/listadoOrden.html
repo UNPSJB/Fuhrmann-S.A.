@@ -23,41 +23,45 @@
                 <thead>
                     <tr>
                         <th style="text-align:center;" width="15%">Fecha de Emisión</th>
-                        <th style="text-align:center;" width="15%">Inicio Produccion</th>
-                        <th style="text-align:center;" width="15%">Fin Produccion</th>
-                        <th style="text-align:center;" width="12%">Maquina</th>
-                        <th style="text-align:center;" width="5%">Proceso</th>
-                        <th style="text-align:center;" width="5%">Finalizada</th>
-                        <th style="text-align:center;" width="5%">Cancelada</th>
+                        <th style="text-align:center;" width="14%">Inicio Produccion</th>
+                        <th style="text-align:center;" width="14%">Fin Produccion</th>
+                        <th style="text-align:center;" width="10%">Maquina Act.</th>
+                        <th style="text-align:center;" width="10%">En Proceso</th>
+                        <th style="text-align:center;" width="7%">Finalizada</th>
+                        <th style="text-align:center;" width="7%">Cancelada</th>
                         <th style="text-align:center;" width="40%">Acciones</th>
                     </tr>
-                    {% for dato in lista %}
-                    <tr>
-                        <td style="text-align:center;" width="10%">{{dato.FechaEmision}}</td>
-                        <td style="text-align:center;" width="10%">{{dato.FechaInicioProduccion}}</td>
-                        <td style="text-align:center;" width="10%">{{dato.FechaFinProduccion}}</td>
-                        <td style="text-align:center;" width="12%">{{dato.MaquinaActual}}</td>
-                        <td style="text-align:center;" width="5%">{{dato.EnProduccion}}</td>
-                        <td style="text-align:center;" width="5%">{{dato.Finalizada}}</td>
-                        <td style="text-align:center;" width="5%">{{dato.Cancelada}}</td>
-                        
-                        <td style="text-align:center;" width="40%">
+                    {% regroup lista by NroOrden as lista %}<ul>
+                        {% for orden in lista %}
+                            {% for dato in orden.list %}
                             
-                            <a class="btn btn-default" onClick="showModal('{{dato.NroOrden}}')" title="Ver Detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <tr>
+                                <td style="text-align:center;" width="10%">{{dato.FechaEmision}}</td>
+                                <td style="text-align:center;" width="10%">{{dato.fechaInicio}}</td>
+                                <td style="text-align:center;" width="10%">{{dato.fechaFin}}</td>
+                                <td style="text-align:center;" width="12%">{{dato.maquinaActual}}</td>
+                                <td style="text-align:center;" width="5%">{{dato.isProduccion}}</td>
+                                <td style="text-align:center;" width="5%">{{dato.isFinalizada}}</td>
+                                <td style="text-align:center;" width="5%">{{dato.Cancelada}}</td>
+                                
+                                <td style="text-align:center;" width="40%">
+                                    
+                                    <a class="btn btn-default" onClick="showModal('{{dato.NroOrden}}')" title="Ver Detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
 
-                            <a class="btn btn-default" onClick="comprobar('/modificarOrdenProduccion/{{dato.NroOrden}}', '{{dato.EnProduccion}}', '{{dato.Cancelada}}', '{{dato.Finalizada}}', 'Orden en Produccion o Cancelada!')" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
-                            
-                            <a class="btn btn-default" onClick="cancelar('{{dato.NroOrden}}', '{{dato.EnProduccion}}', '{{dato.Cancelada}}', '{{dato.Finalizada}}', 'Orden en Produccion o Cancelada!')" title="Cancelar" ><span class="glyphicon glyphicon-remove"></span></a>
-                            
-                            <a class="btn btn-default" href="#" title="Enviar a Produccion"><span class="glyphicon glyphicon-share-alt"></span></a>
-                            
-                            <a class="btn btn-default" href="#" title="Finalizar Produccion"><span class="glyphicon glyphicon-warning-sign"></span></a>
-                            </td>
-                    </tr>
+                                    <a class="btn btn-default" onClick="comprobar('/modificarOrdenProduccion/{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden en Produccion - Finalizada - Cancelada!')" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
+                                    
+                                    <a class="btn btn-default" onClick="cancelar('{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden en Produccion - Finalizada - Cancelada!')" title="Cancelar" ><span class="glyphicon glyphicon-remove"></span></a>
+                                    
+                                    <a class="btn btn-default" href="#" title="Enviar a Produccion"><span class="glyphicon glyphicon-share-alt"></span></a>
+                                    
+                                    <a class="btn btn-default" href="#" title="Finalizar Produccion"><span class="glyphicon glyphicon-warning-sign"></span></a>
+                                    </td>
+                            </tr>
 
-                    {% empty %}
-                        <li> No existen ordenes de producción registradas </li>
-                    {% endfor %}        
+                            {% empty %}
+                                <li> No existen ordenes de producción registradas </li>
+                            {% endfor %}      
+                        {% endfor %}</ul> 
                 </thead>
             </table>
             

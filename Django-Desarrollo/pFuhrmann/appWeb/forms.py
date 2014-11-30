@@ -369,74 +369,95 @@ def RepresentanteFormFactory(edit=False):  # Crear una funcion para crear una cl
 # ********************************* Formularios de Orden de Produccion *********************************
 
 
-class OrdenProduccionForm(forms.ModelForm):
-    
-    class Meta:
-        model = OrdenProduccion
-        exclude = ['Finalizada',]
+def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
-    CantRequerida = forms.IntegerField(label = "Cantidad Requerida (*)", min_value = 0)
-    CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
-    AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
-    Finura = forms.FloatField(label ="Finura (*)", min_value = 0)        # Unidad de Medida Micrones
-    Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
-    Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
-    Servicio = forms.ModelMultipleChoiceField(Servicio.objects.all(), label ="Servicios a Realizar (*)")
-
-    def __init__(self, *args, **kwargs):
-        super(OrdenProduccionForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-8'
-        self.helper.layout = Layout(
-
-            Fieldset( 
-                '<font color = "Black" size=3 face="Comic Sans MS">Datos Primarios de Orden de Produccion </font>',
-                Field('CantRequerida', placeholder="Cantidad en Kilos requeridos"),
-                Field('Servicio', placeholder="Servicios a Realizar"),
-            ),
-            Fieldset(
-                '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones de Orden de Produccion</font>',
-                Field('CV', placeholder="Coeficiente de Variacion requerido"),
-                Field('AlturaMedia', placeholder="Altura Media requerida"),
-                Field('Finura', placeholder="Micronaje requerido"),
-                Field('Romana', placeholder="Romana requerida"),
-                Field('Rinde', placeholder="Rinde requerido")
-            ),
-            HTML('<p>(*)Campos obligatorios.</p>'),
-        )
-
-    def clean_Servicio(self):
-        needPeinar = False
-
-        for servicio in self.cleaned_data['Servicio']:
-            if servicio.ServicioPrevio != None:
-                if not servicio.ServicioPrevio in self.cleaned_data['Servicio']:
-                    raise ValidationError("Servicio previo requerido para %s" % servicio)
-
-                if servicio.Nombre == 'Cardado':
-                    needPeinar = True
+    class OrdenProduccionForm(forms.ModelForm):
         
-                if servicio.Nombre == 'Peinado':
-                    needPeinar = False
-        
-        if needPeinar == True:
-            raise ValidationError("Servicio posterior requerido para Cardado")
+        e = edit
 
-        return self.cleaned_data['Servicio']
-      
-    def setup(self, *args, **kwarg):
-        self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+        class Meta:
+            model = OrdenProduccion
+            exclude = ['Finalizada',]
 
-    def save(self, *args, **kwarg):
-        orden = super(OrdenProduccionForm, self).save(commit=False)
-        orden.save()
-        for servicio in self.cleaned_data['Servicio']:
-            p = Produccion.objects.create(Orden=orden, Servicio = servicio)
-            p.save()
-        return orden
+        if not e:
+            CantRequerida = forms.IntegerField(label = "Cantidad Requerida (*)", min_value = 0)
+            CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
+            AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
+            Finura = forms.FloatField(label ="Finura (*)", min_value = 0)        # Unidad de Medida Micrones
+            Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
+            Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
+        else: 
+            CantRequerida = forms.IntegerField(label = "Cantidad Requerida (*)", min_value = 0, widget=forms.HiddenInput())
+            CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0, widget=forms.HiddenInput())
+            AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0, widget=forms.HiddenInput())
+            Finura = forms.FloatField(label ="Finura (*)", min_value = 0, widget=forms.HiddenInput())        # Unidad de Medida Micrones
+            Romana = forms.FloatField(label ="Romana (*)", min_value = 0, widget=forms.HiddenInput())
+            Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0, widget=forms.HiddenInput())
+
+        Servicio = forms.ModelChoiceField(Servicio.objects.filter(Transitorio = False), label ="Servicios a Realizar (*)")
+
+
+        def __init__(self, *args, **kwargs):
+            super(OrdenProduccionForm, self).__init__(*args, **kwargs)
+            self.helper = FormHelper()
+            self.helper.form_class = 'form-horizontal'
+            self.helper.label_class = 'col-lg-2'
+            self.helper.field_class = 'col-lg-8'
+            if not self.e:
+                self.helper.layout = Layout(
+
+                    Fieldset( 
+                        '<font color = "Black" size=3 face="Comic Sans MS">Datos Primarios de Orden de Produccion </font>',
+                        Field('CantRequerida', placeholder="Cantidad en Kilos requeridos"),
+                        Field('Servicio', placeholder="Servicios a Realizar"),
+                    ),
+                    Fieldset(
+                        '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones de Orden de Produccion</font>',
+                        Field('CV', placeholder="Coeficiente de Variacion requerido"),
+                        Field('AlturaMedia', placeholder="Altura Media requerida"),
+                        Field('Finura', placeholder="Micronaje requerido"),
+                        Field('Romana', placeholder="Romana requerida"),
+                        Field('Rinde', placeholder="Rinde requerido")
+                    ),
+                    HTML('<p>(*)Campos obligatorios.</p>'),
+                )
+            else:
+                self.helper.layout = Layout(
+
+                    Fieldset( 
+                            '<font color = "Black" size=3 face="Comic Sans MS">Seleccione nuevo Servicio </font>',
+                            Field('Servicio', placeholder="Servicios a Realizar"),
+
+
+                            Field('CantRequerida', placeholder="Cantidad en Kilos requeridos"),
+                            Field('CV', placeholder="Coeficiente de Variacion requerido"),
+                            Field('AlturaMedia', placeholder="Altura Media requerida"),
+                            Field('Finura', placeholder="Micronaje requerido"),
+                            Field('Romana', placeholder="Romana requerida"),
+                            Field('Rinde', placeholder="Rinde requerido")
+                        ),
+                        HTML('<p>(*)Campos obligatorios.</p>'),
+                )
+          
+        def setup(self, *args, **kwarg):
+            self.helper.add_input(Submit('submit', *args, **kwarg))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+
+        def save(self, *args, **kwarg):           
+            orden = super(OrdenProduccionForm, self).save(commit=False)
+            orden.save()
+            
+            for p in orden.produccion_set.all():
+                p.delete()
+
+            servicio = self.cleaned_data['Servicio']
+            while servicio != None:
+                p = Produccion.objects.create(Orden=orden, Servicio = servicio)
+                p.save()
+                servicio = servicio.ServicioPrevio
+
+    return OrdenProduccionForm
+
 
 class enviarFaseProduccionForm(forms.ModelForm):
     class Meta:
