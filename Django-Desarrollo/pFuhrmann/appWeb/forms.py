@@ -472,12 +472,7 @@ def MaquinariaFormFactory(edit=False):  # Crear una funcion para crear una clase
             model = Maquinaria
             exclude = ['Baja']
 
-        if not edit:
-            NroSerie = forms.IntegerField(label = "Nro. Serie (*)")
-            Descripcion = forms.CharField(required = False)
-            Servicio = forms.ModelChoiceField(Servicio.filter(Baja = False), label = "Servicio (*)")
-            
-        else:
+        if edit:
             NroSerie = forms.IntegerField(label = "Nro. Serie (*)", widget=forms.HiddenInput())
             Descripcion = forms.CharField(required = False)
             Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)",widget=forms.HiddenInput())
