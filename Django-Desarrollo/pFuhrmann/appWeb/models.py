@@ -170,7 +170,7 @@ class OrdenProduccion(models.Model):
             print p.FechaFin
             if (p.FechaInicio != None) and (p.FechaFin != None):
                 isPro = False
-            elif (p.FechaInicio == None) and (p.FechaFin == None)::
+            elif (p.FechaInicio == None) and (p.FechaFin == None):
                 isPro = False
         return isPro
 
