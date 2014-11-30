@@ -86,8 +86,7 @@ class Lote(models.Model):
     Cuadricula = models.CharField(max_length=50)
 
     objects = BajaLogicaManager()                                   # Mostrar todos los objetos
-    noEliminados = eliminados = BajaLogicaManager(Baja = False)     # Mostrar objetos con baja = false
-    eliminados = BajaLogicaManager(Baja = True)                     # Mostrar objetos con baja = true
+    disponibles = BajaLogicaManager(fardo=None)                 # Mostrar objetos con baja = true
 
     def __unicode__(self):
         return u"%s" % self.NroLote
@@ -164,15 +163,7 @@ class OrdenProduccion(models.Model):
         return maquinaActual
 
     def isProduccion(self):
-        isPro = False
-
-        for p in self.produccion_set.all():
-            print p.FechaFin
-            if (p.FechaInicio != None) and (p.FechaFin != None):
-                isPro = False
-            elif (p.FechaInicio == None) and (p.FechaFin == None)::
-                isPro = False
-        return isPro
+        return any(map(lambda p: p.FechaInicio != None, self.produccion_set.all())) and any(map(lambda p: p.FechaFin == None, self.produccion_set.all())) 
 
 
 

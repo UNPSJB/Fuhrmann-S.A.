@@ -165,7 +165,7 @@ def eliminarEstancia(request, pk):
 # ********************************* Administracion de Lotes *********************************
 
 def listadoLotes(request):
-    lote = Lote.noEliminados.all()
+    lote = Lote.objects.all()
     return render_to_response('listadoLotes.html', {'lista':lote}, context_instance=RequestContext(request))
 
 def registrarLote(request, pk=None):
@@ -215,15 +215,9 @@ def registrarFardo(request, pk=None):
                 for x in xrange(formulario.cleaned_data['Lote'].CantFardos): # Segun la cantidad de fardos en lote, son las instancia que creo
                     formulario.save()
                     formulario = FardoFormFactory(fardo is not None)(request.POST)
-                
-                lote.Baja = True                            # Seteo la baja de lote para que no se pueda volver a cargar los fardos de ese lote
-                lote.save()
             else:
-                f_set = lote.fardo_set                      # obtener todos los fardos asociados al lote obtenido antes
-                                
-                for f in f_set.all():                       # Coleccion de fardos
-                    formulario = FardoFormFactory(fardo is not None)(request.POST, instance = f)  # Modifico todos los fardos del mismo lote al modificar uno
-                    formulario.save()
+                formulario = FardoFormFactory(fardo is not None)(request.POST, instance = fardo)  # Modifico todos los fardos del mismo lote al modificar uno
+                formulario.save()
 
             return HttpResponseRedirect('/listadoFardos')
     else:

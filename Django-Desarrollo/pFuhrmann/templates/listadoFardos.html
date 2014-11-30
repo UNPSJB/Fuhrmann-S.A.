@@ -36,14 +36,15 @@
                         {% for dato in lista %}
                         <tr>
                             <td style="text-align:center;" width="7%">{{dato.NroFardo}}</td>
-                            <td style="text-align:center;"  width="8%">{{dato.TipoFardo}}</td>
+                            <td style="text-align:center;"  width="8%">{{dato.Lote.TipoFardo}}</td>
                             <td style="text-align:center;"  width="6%">{{dato.Peso}}</td>
                             <td style="text-align:center;" width="6%">{{dato.Rinde}}</td>
                             <td style="text-align:center;" width="6%">{{dato.Finura}}</td>
                             <td style="text-align:center;" width="6%">{{dato.CV}}</td>
                             <td style="text-align:center;" width="6%">{{dato.AlturaMedia}}</td>
                             <td style="text-align:center;" width="6%">{{dato.Romana}}</td>
-                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href="/modificarFardo/{{dato.NroFardo}}" ><span class="glyphicon glyphicon-edit"></span></a></td>
+                            <td style="text-align:center;" width="3%"><a class="btn btn-default" onClick = "comprobar('/modificarFardo/{{dato.NroFardo}}', '{{dato.DetalleOrden}}', 'El Fardo esta en Produccion')"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        
                         </tr>
 
                         {% empty %}
@@ -60,4 +61,33 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type ="text/javascript"> 
+
+        function comprobar(url, detalle, msg) { 
+
+            if (detalle != 'None'){
+                BootstrapDialog.show({
+                    title: 'Error',
+                    cssClass: 'error-dialog',
+                    message: msg,
+                    type: BootstrapDialog.TYPE_DANGER, 
+                    buttons: [
+                        {
+                            label: 'Aceptar',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+            else{
+                window.location=url;
+            }
+        }
+
+    </script>
+
 {% endblock %}

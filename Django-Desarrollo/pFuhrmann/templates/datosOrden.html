@@ -15,13 +15,26 @@
                 <div class="jumbotron">
                     <div class="form-group">
                         <div class="controls col-md-6">
-                            <font size=3 face="Comic Sans MS"><label>Servicios:</label></font>
+                            <font size=3 face="Comic Sans MS"><label>Servicios de Produccion:</label></font>
                         </div>
 
                         <div class="controls col-md-6">
-                            {% for servicio in orden.Servicio.all %}
-                                <label><font size=3 face="Comic Sans MS">{{servicio.Nombre}} - </font></label>
-                            {% endfor %}
+                            <table  class="table table-striped table-bordered table-condensed" id="tableLote">
+                                <thead>
+                           
+                                    <tr>
+                                        <th style="text-align:center;" width="20%"><font size=3 face="Comic Sans MS">Nombre</font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Descripcion</font></th>
+                                    </tr>
+                                    
+                                    {% for servicio in orden.Servicio.all %}
+                                        <tr>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{servicio.Nombre}}</font></td>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{servicio.Descripcion}}</font></td>
+                                        </tr>
+                                    {% endfor %}
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>

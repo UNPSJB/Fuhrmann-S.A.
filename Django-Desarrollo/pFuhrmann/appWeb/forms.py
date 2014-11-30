@@ -139,6 +139,17 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
 
 # ********************************* Formularios de Lotes *********************************
 
+
+    NroLote = models.AutoField(primary_key = True)
+    TipoFardo = models.ForeignKey('TipoFardo')
+    CantFardos = models.PositiveIntegerField(max_length=50)
+    Peso = models.PositiveIntegerField(max_length=50)
+    Baja = models.BooleanField(default=False)
+    Compra = models.OneToOneField('CompraLote')
+    Estancia = models.ForeignKey('Estancia')
+    Cuadricula = models.CharField(max_length=50)
+
+
 def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
     class LoteForm(forms.ModelForm):    
@@ -146,13 +157,16 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
         class Meta:
             model = Lote
             exclude = ("Baja", "Estancia")
-  
+        
         CantFardos = forms.IntegerField(label ="Cantidad de Fardos (*)", min_value = 0)
         Peso = forms.IntegerField(label ="Peso del Lote (*)", min_value = 0)
-        
+        Cuadricula = forms.CharField(max_length = 50)
+
         if not edit:
+            TipoFardo = forms.ModelChoiceField(TipoFardo.objects.filter(Baja = False), label = "Tipo de Fardos (*)")
             Compra = forms.ModelChoiceField(CompraLote.objects.all().filter(lote = None), label ="Compra del Lote (*)")
         else:
+            TipoFardo = forms.ModelChoiceField(TipoFardo.objects.filter(Baja = False), label = "Tipo de Fardos (*)", widget=forms.HiddenInput())
             Compra = forms.ModelChoiceField(CompraLote.objects.all(), label ="Compra del Lote (*)", widget=forms.HiddenInput())
 
         def __init__(self, *args, **kwargs):
@@ -164,10 +178,18 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
             self.helper.layout = Layout(
             
                 Fieldset( 
-                    '<font color = "Black" size=3 face="Comic Sans MS">Datos Principales </font>',
-                    Field('CantFardos', placeholder="Cantidad de fardos"),
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos Del Lote </font>',
                     Field('Peso', placeholder="Peso del lote"),
                     Field('Compra'),
+                ),
+                Fieldset( 
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos De los Fardos </font>',
+                    Field('CantFardos', placeholder="Cantidad de fardos"),
+                    Field('TipoFardo', placeholder = "Tipo de fardos"),
+                ),
+                Fieldset( 
+                    '<font color = "Black" size=3 face="Comic Sans MS">Ubicacion </font>',
+                    Field('Cuadricula', placeholder="Ubicacion del Lote")
                 ),
                 HTML('<p>(*)Campos obligatorios.</p>'),
             )
@@ -184,6 +206,13 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
                 raise ValidationError("El Peso debe ser 280-300kg por Fardo")
             return peso
     
+        def save(self, *args, **kwarg):           
+            lote = super(LoteForm, self).save(commit=False)
+            c = self.cleaned_data['Compra']
+            lote.Estancia = c.Estancia
+            lote.save()
+            
+
     return LoteForm
 
 
@@ -195,14 +224,12 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
             model = Fardo
             exclude = ['Baja', 'DetalleOrden']
 
-        if edit:
-            Lote = forms.ModelChoiceField(Lote.eliminados.all(), label ="Lote de Fardos (*)", widget=forms.HiddenInput())
-            Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula ", required = False, widget=forms.HiddenInput())
+        e = edit
+        if e:
+            Lote = forms.ModelChoiceField(Lote.objects.all(), label ="Lote de Fardos (*)", widget=forms.HiddenInput())
         else:
-            Lote = forms.ModelChoiceField(Lote.noEliminados.all(), label ="Lote de Fardos (*)")
-            Cuadricula = forms.ModelChoiceField(Cuadricula.objects.all(), label ="Cuadricula ", required = False)
+            Lote = forms.ModelChoiceField(Lote.disponibles.all(), label ="Lote de Fardos (*)")
 
-        TipoFardo = forms.ModelChoiceField(TipoFardo.objects.all(), label ="Tipo de Fardo (*)")
         CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
         AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
         Peso = forms.FloatField(label ="Peso (*)", min_value = 0)
@@ -216,29 +243,40 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
             self.helper.form_class = 'form-horizontal'
             self.helper.label_class = 'col-lg-2'
             self.helper.field_class = 'col-lg-8'
-            self.helper.layout = Layout(
+            if not self.e:
+                self.helper.layout = Layout(
+                    Fieldset( 
+                        '<font color = "Black" size=3 face="Comic Sans MS">Datos Principales </font>',
+                        Field('Lote', css_class= ".col-lg-3",placeholder='asd'),
+                    ),
+                    Fieldset(
+                        '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones</font>',
+                        Field('Peso', placeholder="Peso"),
+                        Field('Rinde', placeholder="Rinde"),
+                        Field('Finura', placeholder="Finura"),
+                        Field('CV', placeholder="Coeficiente de Variacion"),
+                        Field('AlturaMedia', placeholder="Altura Media"),
+                        Field('Romana', placeholder="Romana"),
+                    ),
 
-                Fieldset( 
-                    '<font color = "Black" size=3 face="Comic Sans MS">Datos Principales </font>',
-                    Field('Lote', css_class= ".col-lg-3",placeholder='asd'),
-                    Field('TipoFardo', placeholder="Tipo de Fardos"),
-                ),
-                Fieldset(
-                    '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones</font>',
-                    Field('Peso', placeholder="Peso"),
-                    Field('Rinde', placeholder="Rinde"),
-                    Field('Finura', placeholder="Finura"),
-                    Field('CV', placeholder="Coeficiente de Variacion"),
-                    Field('AlturaMedia', placeholder="Altura Media"),
-                    Field('Romana', placeholder="Romana"),
-                ),
-                Fieldset(
-                    '<font color = "Black" size=3 face="Comic Sans MS">Ubicacion</font>',
-                    Field('Cuadricula', placeholder="Ubicacion en Cuadricula"),
-                ),
-                
-                HTML('<p>(*)Campos obligatorios.</p>'),
-            )
+                    HTML('<p>(*)Campos obligatorios.</p>'),
+                )
+            else:                
+                self.helper.layout = Layout(
+                    Fieldset(
+                        '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones a Modificar</font>',
+                        Field('Peso', placeholder="Peso"),
+                        Field('Rinde', placeholder="Rinde"),
+                        Field('Finura', placeholder="Finura"),
+                        Field('CV', placeholder="Coeficiente de Variacion"),
+                        Field('AlturaMedia', placeholder="Altura Media"),
+                        Field('Romana', placeholder="Romana"),
+                        Field('Lote', css_class= ".col-lg-3",placeholder='asd'),
+                    ),
+
+                    HTML('<p>(*)Campos obligatorios.</p>'),
+                )
+
 
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submit', *args, **kwarg))
@@ -296,9 +334,6 @@ def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase 
                     Field('Email', placeholder="Email"),
                 ),
             )
-
-    #def clean_CUIL(self):
-    #    return int(self.cleaned_data['CUIL'].replace('-', ''))        
 
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submibl', *args, **kwarg))

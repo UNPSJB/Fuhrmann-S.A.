@@ -19,22 +19,31 @@
                     </div> 
                 </div>
             </div>
+
             <div class="panel-body">
                 <table  class="table table-striped table-bordered table-condensed" id="tableLote">
                     <thead>
                         <tr>
-                            <th style="text-align:center;" width="6%">Número de Lote</th>
+                            <th style="text-align:center;" width="6%">Nro. Lote</th>
+                            <th style="text-align:center;" width="10%">Estancia</th>
                             <th style="text-align:center;" width="10%">Peso (Kg)</th>
                             <th style="text-align:center;" width="10%">Cantidad de Fardos</th>
+                            <th style="text-align:center;" width="10%">Tipo de Fardo</th>
+                            <th style="text-align:center;" width="10%">Cuadricula</th>
                             <th style="text-align:center;" width="3%">Modificar</th>
                         </tr>
                         {% for dato in lista %}
                         <tr>
                             <td style="text-align:center;" width="6%" id="nroLote">{{dato.NroLote}}</td>
+                            <td style="text-align:center;" width="10%">{{dato.Estancia.Nombre}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Peso}}</td>
-                            <td style="text-align:center;" width="10%">{{dato.CantFardos}}</td>
                             
-                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarLote/{{dato.NroLote}}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            <td style="text-align:center;" width="10%">{{dato.CantFardos}}</td>
+                            <td style="text-align:center;" width="10%">{{dato.TipoFardo.Nombre}}</td>
+                            <td style="text-align:center;" width="10%">{{dato.Cuadricula}}</td>
+                            <td style="text-align:center;" width="3%">
+                                <a class="btn btn-default" onClick = "comprobar('/modificarLote/{{dato.NroLote}}', '{{dato.fardo_set.all}}', 'El Lote posee fardos en el Sistema')"><span class="glyphicon glyphicon-edit"></span></a>
+                            </td>
                         </tr>
 
                         {% empty %}
@@ -45,15 +54,40 @@
 
                 <div class="pull-right">
                     <a class="btn btn-default btn-gr" type= "button" href="/registrarLote" title = "Agregar Lote" >Agregar</a>
-                    <a class="btn btn-default btn-gr" type= "button" onclick="history.back()" title = "Salir" >Salir</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/index" title = "Salir" >Salir</a>
                 </div>    
             </div>
         </div>
     </div>
 </div>
 
-    {% block scripts %}
-        <script type ="text/javascript"> </script>
-    {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+    <script type ="text/javascript"> 
+
+        function comprobar(url, fardos, msg) { 
+
+            if (fardos != '[]'){
+                BootstrapDialog.show({
+                    title: 'Error',
+                    cssClass: 'error-dialog',
+                    message: msg,
+                    type: BootstrapDialog.TYPE_DANGER, 
+                    buttons: [
+                        {
+                            label: 'Aceptar',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+            else{
+                window.location=url;
+            }
+        }
+
+    </script>
 
 {% endblock %}
