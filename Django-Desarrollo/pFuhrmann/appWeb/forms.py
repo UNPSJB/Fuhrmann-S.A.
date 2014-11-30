@@ -20,8 +20,8 @@ class LoginForm(forms.Form):
 # ********************************* Formulario de Compras *********************************
 class CompraForm(forms.ModelForm):    
     FechaLlegada = forms.DateField(label = "Fecha de Llegada (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
-    Estancia = forms.ModelChoiceField(Estancia.objects.all(),label= "Estancia (*)")
-    Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)")
+    Estancia = forms.ModelChoiceField(Estancia.objects.filter(Baja = False),label= "Estancia (*)")
+    Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)")
     class Meta:
         model = CompraLote
     
@@ -99,12 +99,12 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
 
         if not edit:
             CUIT = ARCUITField(label="CUIT (*)")
-            Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)")
-            Productor= forms.ModelChoiceField(Productor.objects.all(),label="Productor (*)")
+            Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)")
+            Productor = forms.ModelChoiceField(Productor.objects.all().filter(Baja = False, estancia = None),label="Productor (*)")
         else:
             CUIT = ARCUITField(label="CUIT (*)", widget=forms.HiddenInput())
-            Representante = forms.ModelChoiceField(Representante.objects.all(), label="Representante (*)",widget=forms.HiddenInput())
-            Productor= forms.ModelChoiceField(Productor.objects.all(),label="Productor (*)",widget=forms.HiddenInput())
+            Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)",widget=forms.HiddenInput())
+            Productor= forms.ModelChoiceField(Productor.objects.filter(estancia = None),label="Productor (*)",widget=forms.HiddenInput())
 
 
 
@@ -483,31 +483,43 @@ class finalizarFaseProduccionForm(forms.ModelForm):
 
 # ********************************* Formularios de Maquinaria *********************************
 
-class MaquinariaForm(forms.ModelForm):
-    NroSerie = forms.IntegerField(label = "Nro. Serie (*)")
-    Descripcion = forms.CharField(required = False)
-    TipoMaquinaria = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)")
-    class Meta:
-        model = Maquinaria
-        exclude = ['Baja']
-    
-    def __init__(self, *args, **kwargs):
-        super(MaquinariaForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-8'
-        self.helper.layout = Layout(
-            Fieldset( 
-                '<font color = "Black" size=3 face="Comic Sans MS">Datos de Maquinaria</font>',
-                Field('NroSerie', css_class= ".col-lg-3",placeholder='Nro de Serie'),
-                Field('TipoMaquinaria'),
-                Field('Descripcion', placeholder="Descripcion"),
-            ),
-            
-            HTML('<p>(*)Campos obligatorios.</p>'),
-        )
+def MaquinariaFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
-    def setup(self, *args, **kwarg):
-        self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar',css_class="btn btn-default",onClick = "history.back()"))
+    class MaquinariaForm(forms.ModelForm):
+        NroSerie = forms.IntegerField(label = "Nro. Serie (*)")
+        Descripcion = forms.CharField(required = False)
+        Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)")
+        class Meta:
+            model = Maquinaria
+            exclude = ['Baja']
+
+        if edit:
+            NroSerie = forms.IntegerField(label = "Nro. Serie (*)", widget=forms.HiddenInput())
+            Descripcion = forms.CharField(required = False)
+            Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)",widget=forms.HiddenInput())
+            
+
+   
+        def __init__(self, *args, **kwargs):
+            super(MaquinariaForm, self).__init__(*args, **kwargs)
+            self.helper = FormHelper()
+            self.helper.form_class = 'form-horizontal'
+            self.helper.label_class = 'col-lg-2'
+            self.helper.field_class = 'col-lg-8'
+            self.helper.layout = Layout(
+                Fieldset( 
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos de Maquinaria</font>',
+                    Field('NroSerie', css_class= ".col-lg-3",placeholder='Nro de Serie'),
+                    Field('Servicio'),
+                    Field('Descripcion', placeholder="Descripcion"),
+                ),
+                
+                HTML('<p>(*)Campos obligatorios.</p>'),
+            )
+
+        def setup(self, *args, **kwarg):
+            self.helper.add_input(Submit('submit', *args, **kwarg))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+
+    return MaquinariaForm
+            

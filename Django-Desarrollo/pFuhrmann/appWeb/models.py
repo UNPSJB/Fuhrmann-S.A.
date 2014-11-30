@@ -116,9 +116,9 @@ class TipoFardo(models.Model):
     def __unicode__(self):
         return "%s" % (str(self.Nombre))
 
-    
-    
-    # ************************ Orden de Produccion ***************************** #)
+
+
+# ************************ Orden de Produccion ***************************** #
 
 
 class OrdenProduccion(models.Model):

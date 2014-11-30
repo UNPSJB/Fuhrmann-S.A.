@@ -25,7 +25,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.template.loader import render_to_string
 
 
-from wkhtmltopdf.views import PDFTemplateView
+#from wkhtmltopdf.views import PDFTemplateView
 
 
 from django.core import serializers
@@ -122,7 +122,7 @@ def registrarVenta(request):
 # ********************************* Administracion de Estancias *********************************
 
 def listadoEstancias(request):
-    estancia = Estancia.objects.all()
+    estancia = Estancia.objects.filter(Baja = False)
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))
 
 def registrarEstancia(request):
@@ -158,7 +158,7 @@ def eliminarEstancia(request, pk):
     estancia = Estancia.objects.get(pk=pk)
     estancia.Baja = True
     estancia.save()
-    estancia = Estancia.objects.all()
+    estancia = Estancia.objects.filter(Baja = False)
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))    
 
 
@@ -236,7 +236,7 @@ def registrarFardo(request, pk=None):
 # ********************************* Administracion de Productor *********************************
     
 def listadoProductores(request):
-    productor = Productor.objects.all()
+    productor = Productor.objects.filter(Baja = False)
     return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
 
 def registrarProductor(request):
@@ -266,15 +266,16 @@ def modificarProductor(request, pk=None):
 
 def eliminarProductor(request,pk):
     productor = Productor.objects.get(pk=pk)
-    productor.delete()
-    productor = Productor.objects.all()
+    productor.Baja = True
+    productor.save()
+    productor = Productor.objects.filter(Baja = False)
     return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
 
 
 # ********************************* Administracion de Representante *********************************
 
 def listadoRepresentante(request):
-    representante = Representante.objects.all()
+    representante = Representante.objects.filter(Baja = False)
     return render_to_response('listadoRepresentante.html', {'lista':representante}, context_instance=RequestContext(request))
 
 def registrarRepresentante(request):
@@ -306,9 +307,8 @@ def eliminarRepresentante(request,pk):
     representante = Representante.objects.get(pk=pk)
     representante.Baja = True
     representante.save()
-    representante = Representante.objects.all()
+    representante = Representante.objects.filter(Baja = False)
     return render_to_response('listadoRepresentante.html', {'lista':representante}, context_instance=RequestContext(request))
-
 
 
 # ********************************* Administracion de Produccion *********************************
@@ -432,31 +432,43 @@ def finalizarFaseProduccion(request):
 # ********************************* Administracion de Maquinarias *********************************
 
 def listadoMaquinaria(request):
-    maquinaria = Maquinaria.objects.all()
+    maquinaria = Maquinaria.objects.filter(Baja = False)
     return render_to_response('listadoMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
 
 def registrarMaquinaria(request):
     if request.method == 'POST':
-        formulario = MaquinariaForm(request.POST)
+        formulario = MaquinariaFormFactory(False)(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoMaquinaria')
     else:
-        formulario = MaquinariaForm()
-    
+        formulario = MaquinariaFormFactory(False)() 
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('MaquinariaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+
+def modificarMaquinaria(request, pk=None):
+    maquinaria = None
+    if pk is not None:
+        maquinaria = get_object_or_404(Maquinaria, pk=pk) 
+    
+    if request.method == 'POST':
+        formulario = MaquinariaFormFactory(maquinaria is not None)(request.POST, instance = maquinaria)
+        if formulario.is_valid():
+            formulario.save()
+            return HttpResponseRedirect('/listadoMaquinaria')
+    else:
+        formulario = MaquinariaFormFactory(maquinaria is not None)(instance = maquinaria)
+    
+    formulario.setup('Modificar', css_class="btn btn-success")
+    return render_to_response('modificarMaquinaria.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarMaquinaria(request,pk):
     maquinaria = Maquinaria.objects.get(pk=pk)    
     maquinaria.Baja = True
     maquinaria.save()
-    maquinaria = Maquinaria.objects.all()
+    maquinaria = Maquinaria.objects.filter(Baja = False)
     return render_to_response('listadoMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
-
-
-
-
 
 # ********************************* Busquedas por Criterio *********************************
 
