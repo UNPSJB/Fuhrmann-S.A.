@@ -23,12 +23,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.loader import render_to_string
-
-
-#from wkhtmltopdf.views import PDFTemplateView
-
-
 from django.core import serializers
+
 import ast
 
 
@@ -74,8 +70,6 @@ def privado(request):
     usuario = request.user
     return render_to_response('privado.html',{'usuario':usuario},context_instance=RequestContext(request))
 
-
-
 # ********************************* Administracion de Compra *********************************
 
 def listadoCompra(request):
@@ -92,9 +86,6 @@ def registrarCompra(request):
         formulario = CompraForm()
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('compraForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
-
-
 
 # ********************************* Administracion de Venta *********************************
 
@@ -117,8 +108,6 @@ def registrarVenta(request):
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ventaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-
-
 # ********************************* Administracion de Estancias *********************************
 
 def listadoEstancias(request):
@@ -135,8 +124,6 @@ def registrarEstancia(request):
         formulario = EstanciaFormFactory(False)()
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
-
 
 def modificarEstancia(request, pk=None):
     estancia = None
@@ -160,7 +147,6 @@ def eliminarEstancia(request, pk):
     estancia.save()
     estancia = Estancia.objects.filter(Baja = False)
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))    
-
 
 # ********************************* Administracion de Lotes *********************************
 

@@ -87,8 +87,6 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
 
     class EstanciaForm(forms.ModelForm):
 
-        Nombre = forms.CharField(label="Nombre (*)")
-
         class Meta:
             model = Estancia
             exclude = ['Baja']
@@ -98,16 +96,14 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
                 'Provincia': forms.Select(choices=[('Chubut', 'Chubut'), ('Santa Cruz', 'Santa Cruz'), ('Buenos Aires', 'Buenos Aires')])
             }
 
-        if not edit:
-            CUIT = ARCUITField(label="CUIT (*)")
-            Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)")
-            Productor = forms.ModelChoiceField(Productor.objects.all().filter(Baja = False, estancia = None),label="Productor (*)")
-        else:
-            CUIT = ARCUITField(label="CUIT (*)", widget=forms.HiddenInput())
-            Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)",widget=forms.HiddenInput())
-            Productor= forms.ModelChoiceField(Productor.objects.filter(estancia = None),label="Productor (*)",widget=forms.HiddenInput())
-
-
+            if not edit:
+                CUIT = ARCUITField(label="CUIT (*)")
+                Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)")
+                Productor = forms.ModelChoiceField(Productor.objects.all().filter(Baja = False, estancia = None),label="Productor (*)")
+            else:
+                CUIT = ARCUITField(label="CUIT (*)", widget=forms.HiddenInput())
+                Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)",widget=forms.HiddenInput())
+                Productor= forms.ModelChoiceField(Productor.objects.filter(estancia = None),label="Productor (*)",widget=forms.HiddenInput())
 
         def __init__(self, *args, **kwargs):
             super(EstanciaForm, self).__init__(*args, **kwargs)
@@ -139,16 +135,6 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
 #LOTES&FARDOS
 
 # ********************************* Formularios de Lotes *********************************
-
-
-    NroLote = models.AutoField(primary_key = True)
-    TipoFardo = models.ForeignKey('TipoFardo')
-    CantFardos = models.PositiveIntegerField(max_length=50)
-    Peso = models.PositiveIntegerField(max_length=50)
-    Baja = models.BooleanField(default=False)
-    Compra = models.OneToOneField('CompraLote')
-    Estancia = models.ForeignKey('Estancia')
-    Cuadricula = models.CharField(max_length=50)
 
 
 def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
