@@ -25,12 +25,27 @@
                                     <tr>
                                         <th style="text-align:center;" width="20%"><font size=3 face="Comic Sans MS">Nombre</font></th>
                                         <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Descripcion</font></th>
+                                         <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Estado</font></th>
                                     </tr>
                                     
                                     {% for servicio in orden.Servicio.all %}
                                         <tr>
                                             <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{servicio.Nombre}}</font></td>
                                             <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{servicio.Descripcion}}</font></td>
+                                            
+                                          
+                                            {% if servicio.Nombre == 'Cardado' %}  
+                                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS" color="green">{{orden.isCardado}}</font></td>                                            
+                                            {% endif %}
+
+                                            {% if servicio.Nombre == 'Lavado' %}
+                                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS" color="green">{{orden.isLavado}}</font></td>                                            
+                                            {% endif %}
+
+                                            {% if servicio.Nombre == 'Peinado' %}
+                                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS" color="green">{{orden.isPeinado}}</font></td>                                            
+                                            {% endif %}
+
                                         </tr>
                                     {% endfor %}
                                 </thead>
@@ -83,6 +98,12 @@
                             <tr>
                                 <td style="text-align:rigth;" width="40%"><font size=3 face="Comic Sans MS">Romana</font></td>
                                 <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{orden.Romana}}</font></td>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">%</font></td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:rigth;" width="40%"><font size=3 face="Comic Sans MS">Rinde</font></td>
+                                <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{orden.Rinde}}</font></td>
                                 <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">%</font></td>
                             </tr>
                         </thead>

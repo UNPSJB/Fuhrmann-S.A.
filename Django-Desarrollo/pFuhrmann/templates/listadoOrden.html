@@ -46,7 +46,7 @@
                                 
                                 <td style="text-align:center;" width="40%">
                                     
-                                    <a class="btn btn-default" onClick="showModal('{{dato.NroOrden}}')" title="Ver Detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                    <a class="btn btn-default" onClick="showModal('{{dato.NroOrden}}', '{{dato.hayFardos}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', '{{dato.loteventa}}')" title="Ver Detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
 
                                     <a class="btn btn-default" onClick="comprobar('/modificarOrdenProduccion/{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden en Produccion - Finalizada - Cancelada!')" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
                                     
@@ -82,10 +82,10 @@
     
     <script type="text/javascript">
 
-        function showModal1(id){
+        function showModal2(id){
             BootstrapDialog.show({
-                title: ('Agregar Detalle a Orden Produccion - Nro: '+id),
-                message: $('<div id="diss"></div>').load('/agregarDetalle/'+id),
+                title: ('Agregar Lote de Venta de Orden Produccion - Nro: '+id),
+                message: $('<div></div>').load('/agregarLoteVenta/'+id),
                 closable: false,
                 cssClass: 'showfardo-dialog',
                 onshown: function(dialog) {
@@ -98,35 +98,121 @@
             });
         }
 
-        function showModal(id) {
 
-                window.dialog1 = new BootstrapDialog.show({
-                title: ('Datos de Orden Produccion - Nro. Orden: '+id),
-                cssClass: 'show-dialog',
-                closable: false,
-                message: $('<div></div>').load('/verOrdenProduccion/'+id),
-                onshown: function(dialog) {
-                    var tier = $('.bootstrap-dialog').length - 1;
-                    dialog.$modal.prev(".modal-backdrop")
-                        .css("z-index", 1030 + tier * 30);
-                    dialog.$modal
-                        .css("z-index", 1040 + tier * 30);
-                },
-                buttons: [
-                {
-                    label: 'Agregar Detalle',
-                    action: function(dialog){
-                        showModal1(id);
+        function showModal1(id, hayFardos){
+            if (hayFardos == 'True') {  /* Orden nos dice si hay fardos disponibles para poder entrar en produccion */
+                BootstrapDialog.show({
+                    title: ('Agregar Detalle a Orden Produccion - Nro: '+id),
+                    message: $('<div id="diss"></div>').load('/agregarDetalle/'+id),
+                    closable: false,
+                    cssClass: 'showfardo-dialog',
+                    onshown: function(dialog) {
+                        var tier = $('.bootstrap-dialog').length - 1;
+                        dialog.$modal.prev(".modal-backdrop")
+                            .css("z-index", 1030 + tier * 30);
+                        dialog.$modal
+                            .css("z-index", 1040 + tier * 30);
                     },
-                },
-                {
-                    label: 'Cancel',
-                    action: function(dialogRef){
-                        dialogRef.close();
-                    }
-                }]
-            });
-        };
+                });
+            }
+            else{
+                BootstrapDialog.show({
+                    title: 'Error',
+                    cssClass: 'error-dialog',
+                    message: "No hay suficiente Kg. de Lana. Compre Lana",
+                    type: BootstrapDialog.TYPE_DANGER, 
+                    buttons: [
+                        {
+                            label: 'Aceptar',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+        }
+
+        function showModal(id, hayFardos, prod, cancel, finali, isLoteVentas) {
+
+            if (prod == 'False' & cancel == 'False' & finali == 'False'){
+                window.dialog1 = new BootstrapDialog.show({
+                    title: ('Datos de Orden Produccion - Nro. Orden: '+id),
+                    cssClass: 'show-dialog',
+                    closable: false,
+                    message: $('<div></div>').load('/verOrdenProduccion/'+id),
+                    onshown: function(dialog) {
+                        var tier = $('.bootstrap-dialog').length - 1;
+                        dialog.$modal.prev(".modal-backdrop")
+                            .css("z-index", 1030 + tier * 30);
+                        dialog.$modal
+                            .css("z-index", 1040 + tier * 30);
+                    },
+                    buttons: [
+                    {
+                        label: 'Agregar Detalle',
+                        action: function(dialog){
+                            showModal1(id, hayFardos);
+                        }
+                    },
+                    {
+                        label: 'Cancel',
+                        action: function(dialogRef){
+                            dialogRef.close();
+                        }
+                    }]
+                });
+            }
+            else if (finali == 'True' & isLoteVentas == ''){
+                window.dialog1 = new BootstrapDialog.show({
+                    title: ('Datos de Orden Produccion - Nro. Orden: '+id),
+                    cssClass: 'show-dialog',
+                    closable: false,
+                    message: $('<div></div>').load('/verOrdenProduccion/'+id),
+                    onshown: function(dialog) {
+                        var tier = $('.bootstrap-dialog').length - 1;
+                        dialog.$modal.prev(".modal-backdrop")
+                            .css("z-index", 1030 + tier * 30);
+                        dialog.$modal
+                            .css("z-index", 1040 + tier * 30);
+                    },
+                    buttons: [
+                    {
+                        label: 'Generar Lote de Venta',
+                        action: function(dialog){
+                            showModal2(id);
+                        }
+                    },
+                    {
+                        label: 'Cancel',
+                        action: function(dialogRef){
+                            dialogRef.close();
+                        }
+                    }]
+                });
+            }
+            else{
+                window.dialog1 = new BootstrapDialog.show({
+                    title: ('Datos de Orden Produccion - Nro. Orden: '+id),
+                    cssClass: 'show-dialog',
+                    closable: false,
+                    message: $('<div></div>').load('/verOrdenProduccion/'+id),
+                    onshown: function(dialog) {
+                        var tier = $('.bootstrap-dialog').length - 1;
+                        dialog.$modal.prev(".modal-backdrop")
+                            .css("z-index", 1030 + tier * 30);
+                        dialog.$modal
+                            .css("z-index", 1040 + tier * 30);
+                    },
+                    buttons: [
+                    {
+                        label: 'Cancel',
+                        action: function(dialogRef){
+                            dialogRef.close();
+                        }
+                    }]
+                });
+            }
+        }
 
         function comprobar(url, proceso, cancel, finalizada, msg) { /* Funcion para confirmar operaciones, 
                                             recibe como parametros la url en caso 

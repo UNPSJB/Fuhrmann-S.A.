@@ -208,13 +208,14 @@ def registrarFardo(request, pk=None):
     if request.method == 'POST':
         formulario = FardoFormFactory(fardo is not None)(request.POST, instance = fardo) 
         if formulario.is_valid():
-            pk1 = formulario.cleaned_data['Lote'].NroLote   # Obtengo el pk del lote registrado
-            lote = Lote.objects.get(NroLote = pk1)          # Obtengo el lote del que pertenecen los fardos
-
             if pk is None:
                 for x in xrange(formulario.cleaned_data['Lote'].CantFardos): # Segun la cantidad de fardos en lote, son las instancia que creo
-                    formulario.save()
-                    formulario = FardoFormFactory(fardo is not None)(request.POST)
+                    Fardo.objects.create(Lote = formulario.cleaned_data['Lote'], Peso = (formulario.cleaned_data['Lote'].Peso / formulario.cleaned_data['Lote'].CantFardos),
+                                        Rinde = formulario.cleaned_data['Rinde'], Finura = formulario.cleaned_data['Finura'],
+                                        CV = formulario.cleaned_data['CV'], AlturaMedia = formulario.cleaned_data['AlturaMedia'],
+                                        Romana = formulario.cleaned_data['Romana'])
+
+
             else:
                 formulario = FardoFormFactory(fardo is not None)(request.POST, instance = fardo)  # Modifico todos los fardos del mismo lote al modificar uno
                 formulario.save()
@@ -305,13 +306,16 @@ def eliminarRepresentante(request,pk):
     return render_to_response('listadoRepresentante.html', {'lista':representante}, context_instance=RequestContext(request))
 
 
+
+
+
+
 # ********************************* Administracion de Produccion *********************************
 
 def listadoOrden(request):
     op = OrdenProduccion.objects.all()
     return render_to_response('listadoOrden.html', {'lista':op}, context_instance=RequestContext(request))
 
-# Podria saber los q me necesitan, pero lavado lo necesita cardado.
 
 def registrarOrdenProduccion(request, pk=None):
     orden = None
@@ -421,6 +425,25 @@ def finalizarFaseProduccion(request):
     orden = OrdenProduccion.objects.all()
     return render_to_response('finalizarFaseProduccionForm.html', {'lista':orden}, context_instance=RequestContext(request))   
 
+
+
+
+# ********************************* Administracion de Lote de Ventas *********************************
+
+def commitLoteVenta(request, cuadricula = None, orden = None):
+    o = OrdenProduccion.objects.get(NroOrden = orden)
+    v = LoteVenta()
+    v.OrdenProduccion = o
+    v.Cantidad = o.CantRequerida
+    v.Cuadricula = cuadricula
+    v.save()
+        
+    return HttpResponseRedirect('/listadoOrden') 
+
+
+def agregarLoteVenta(request, pk):
+    o = OrdenProduccion.objects.get(NroOrden = pk)
+    return render_to_response('LoteVentaForm.html', {'orden':o}, context_instance=RequestContext(request))
 
 
 # ********************************* Administracion de Maquinarias *********************************

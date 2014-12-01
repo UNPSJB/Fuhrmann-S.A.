@@ -165,11 +165,43 @@ class OrdenProduccion(models.Model):
     def isProduccion(self):
         return any(map(lambda p: p.FechaInicio != None, self.produccion_set.all())) and any(map(lambda p: p.FechaFin == None, self.produccion_set.all())) 
 
+    def hayFardos(self):
+        fardos = Fardo.objects.filter(CV = self.CV, AlturaMedia = self.AlturaMedia, Finura = self.Finura, Romana = self.Romana, Rinde = self.Rinde)
+        kg = 0
+        for f in fardos:
+            kg = kg + f.Peso
+        if kg < self.CantRequerida:
+            return False
+        return True
 
-
-
-
-
+    def isLavado(self):
+        p = self.produccion_set.get(Servicio = 'Lavado')
+        if p.FechaInicio == None:
+            return 'No'
+        if p.FechaInicio != None and p.FechaFin != None:
+            return 'Ok'
+        if p.FechaInicio != None and p.FechaFin == None:
+            return 'In Process'
+    def isPeinado(self):
+        p = self.produccion_set.get(Servicio = 'Peinado')
+        if p.FechaInicio == None:
+            return 'No'
+        if p.FechaInicio != None and p.FechaFin != None:
+            return 'Ok'
+        if p.FechaInicio != None and p.FechaFin == None:
+            return 'In Process'
+    def isCardado(self):
+        p = self.produccion_set.get(Servicio = 'Cardado')
+        if p.FechaInicio == None:
+            return 'No'
+        if p.FechaInicio != None and p.FechaFin != None:
+            return 'Ok'
+        if p.FechaInicio != None and p.FechaFin == None:
+            return 'In Process'
+    def isLoteVenta(self):
+        if self.loteventa == '':
+            return True
+        return False
 
 class DetalleOrden(models.Model):
     class Meta:

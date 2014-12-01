@@ -79,8 +79,9 @@ class VentaForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', *args, **kwarg))
         self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
 
-# ********************************* Formularios de Estancia *********************************
 
+
+# ********************************* Formularios de Estancia *********************************
 
 def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
@@ -222,7 +223,7 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
     class FardoForm(ModelForm):
         class Meta:
             model = Fardo
-            exclude = ['Baja', 'DetalleOrden']
+            exclude = ['Baja', 'DetalleOrden', 'Peso']
 
         e = edit
         if e:
@@ -232,7 +233,6 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
 
         CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
         AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
-        Peso = forms.FloatField(label ="Peso (*)", min_value = 0)
         Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
         Finura = forms.FloatField(label ="Finura (*)", min_value = 0)
         Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
@@ -251,7 +251,6 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
                     ),
                     Fieldset(
                         '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones</font>',
-                        Field('Peso', placeholder="Peso"),
                         Field('Rinde', placeholder="Rinde"),
                         Field('Finura', placeholder="Finura"),
                         Field('CV', placeholder="Coeficiente de Variacion"),
@@ -276,11 +275,11 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
 
                     HTML('<p>(*)Campos obligatorios.</p>'),
                 )
-
-
+      
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submit', *args, **kwarg))
             self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+    
     return FardoForm
 
 #PERSONAL
@@ -531,7 +530,7 @@ def MaquinariaFormFactory(edit=False):  # Crear una funcion para crear una clase
         if edit:
             NroSerie = forms.IntegerField(label = "Nro. Serie (*)", widget=forms.HiddenInput())
             Descripcion = forms.CharField(required = False)
-            Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)",widget=forms.HiddenInput())
+            Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)", widget=forms.HiddenInput())
             
 
    

@@ -38,6 +38,13 @@ urlpatterns = patterns('',
     url(r'^agregaDetalleOrden/(?P<campos>.*)/(?P<orden>\d+)/$', 'appWeb.views.agregarDetalle'),
     url(r'^buscarOrden/(.*)/$', 'appWeb.views.buscarOrden'),
 
+    
+
+    url(r'^commitLoteVenta/(?P<cuadricula>.*)/(?P<orden>\d+)/$', 'appWeb.views.commitLoteVenta'),
+    url(r'^agregarLoteVenta/(\d+)/$', 'appWeb.views.agregarLoteVenta'),
+
+
+
 
 
     #Lotes y Fardos
