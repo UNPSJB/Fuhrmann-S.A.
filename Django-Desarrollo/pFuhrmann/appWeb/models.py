@@ -41,12 +41,22 @@ class Productor (Persona):
     def __unicode__(self):
         return "%s" % str(str(self.Nombre) + " " + str(self.Apellido) + " - CUIL: " + str(self.CUIL))
 
+    def tieneEstancia(self):
+        if self.estancia:
+            return True
+        return False
+
 class Representante(Persona): 
     NroLegajo = models.PositiveIntegerField(max_length=50, primary_key = True)
     Zona = models.CharField(max_length=50)
                 
     def __unicode__(self):
         return "%s" % str(str(self.Nombre) + " " + str(self.Apellido) + " - DNI: " + str(self.DNI))
+
+    def tieneEstancia(self):
+        if self.estancia_set.all():
+            return True
+        return False
 
 class Estancia(models.Model):
     class Meta:
