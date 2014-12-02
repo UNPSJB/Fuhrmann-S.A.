@@ -20,8 +20,9 @@ class LoginForm(forms.Form):
 # ********************************* Formulario de Compras *********************************
 class CompraForm(forms.ModelForm):    
     FechaLlegada = forms.DateField(label = "Fecha de llegada (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
-    Estancia = forms.ModelChoiceField(Estancia.objects.filter(Baja = False),label= "Estancia (*)")
     Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)")
+    Estancia = forms.ModelChoiceField(Estancia.objects.filter(Baja = False),label= "Estancia (*)")
+
     class Meta:
         model = CompraLote
     
@@ -42,6 +43,13 @@ class CompraForm(forms.ModelForm):
             
             HTML('<p>(*)Campos obligatorios.</p>'),
         )
+    def clean_Estancia(self):
+        representante = self.cleaned_data['Representante']
+        estancia = self.cleaned_data['Estancia']
+            
+        if (representante != estancia.Representante):
+            raise ValidationError("Esta estancia no corresponde con el representante.")
+        return estancia
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
