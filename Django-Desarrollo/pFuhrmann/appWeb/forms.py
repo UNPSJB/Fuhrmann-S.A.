@@ -97,6 +97,7 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
             }
 
         if not edit:
+            Nombre = forms.CharField(label="Nombre (*)")
             CUIT = ARCUITField(label="CUIT (*)")
             Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)")
             Productor = forms.ModelChoiceField(Productor.objects.all().filter(Baja = False, estancia = None),label="Productor (*)")
@@ -114,7 +115,7 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
             self.helper.layout = Layout(
         
                 Fieldset( 
-                    '<font color = "Black" size=3 face="Comic Sans MS">Datos de Estancia </font>',
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos de estancia </font>',
                     Field('Nombre', placeholder="Nombre"),
                     Field('CUIT', placeholder="CUIT  XX-XXXXXXXX-X"),
                     Field('Provincia'),
@@ -147,7 +148,7 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
         
         CantFardos = forms.IntegerField(label ="Cantidad de Fardos (*)", min_value = 0)
         Peso = forms.IntegerField(label ="Peso del Lote (*)", min_value = 0)
-        Cuadricula = forms.CharField(max_length = 50)
+        Cuadricula = forms.CharField(label = "Cuadricula (*) ", max_length = 50)
 
         if not edit:
             TipoFardo = forms.ModelChoiceField(TipoFardo.objects.filter(Baja = False), label = "Tipo de Fardos (*)")
@@ -165,18 +166,18 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
             self.helper.layout = Layout(
             
                 Fieldset( 
-                    '<font color = "Black" size=3 face="Comic Sans MS">Datos Del Lote </font>',
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos de lote </font>',
                     Field('Peso', placeholder="Peso del lote"),
                     Field('Compra'),
                 ),
                 Fieldset( 
-                    '<font color = "Black" size=3 face="Comic Sans MS">Datos De los Fardos </font>',
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos de fardos </font>',
                     Field('CantFardos', placeholder="Cantidad de fardos"),
                     Field('TipoFardo', placeholder = "Tipo de fardos"),
                 ),
                 Fieldset( 
-                    '<font color = "Black" size=3 face="Comic Sans MS">Ubicacion </font>',
-                    Field('Cuadricula', placeholder="Ubicacion del Lote")
+                    '<font color = "Black" size=3 face="Comic Sans MS">Ubicación </font>',
+                    Field('Cuadrícula', placeholder="Ubicación del Lote")
                 ),
                 HTML('<p>(*)Campos obligatorios.</p>'),
             )
@@ -190,7 +191,7 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
             cantidad =  self.cleaned_data['CantFardos']
             
             if ( ( peso / cantidad ) < 280 ) or ( ( peso / cantidad ) > 300 ):
-                raise ValidationError("El Peso debe ser 280-300kg por Fardo")
+                raise ValidationError("El peso debe ser 280-300kg por fardo")
             return peso
     
         def save(self, *args, **kwarg):           
@@ -213,12 +214,12 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
 
         e = edit
         if e:
-            Lote = forms.ModelChoiceField(Lote.objects.all(), label ="Lote de Fardos (*)", widget=forms.HiddenInput())
+            Lote = forms.ModelChoiceField(Lote.objects.all(), label ="Lote de fardos (*)", widget=forms.HiddenInput())
         else:
-            Lote = forms.ModelChoiceField(Lote.disponibles.all(), label ="Lote de Fardos (*)")
+            Lote = forms.ModelChoiceField(Lote.disponibles.all(), label ="Lote de fardos (*)")
 
-        CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
-        AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
+        CV = forms.FloatField(label ="Coeficiente de variación (*)", min_value = 0)
+        AlturaMedia = forms.FloatField(label ="Altura media (*)", min_value = 0)
         Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
         Finura = forms.FloatField(label ="Finura (*)", min_value = 0)
         Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
@@ -232,15 +233,15 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
             if not self.e:
                 self.helper.layout = Layout(
                     Fieldset( 
-                        '<font color = "Black" size=3 face="Comic Sans MS">Datos Principales </font>',
+                        '<font color = "Black" size=3 face="Comic Sans MS">Datos principales </font>',
                         Field('Lote', css_class= ".col-lg-3",placeholder='asd'),
                     ),
                     Fieldset(
                         '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones</font>',
                         Field('Rinde', placeholder="Rinde"),
                         Field('Finura', placeholder="Finura"),
-                        Field('CV', placeholder="Coeficiente de Variacion"),
-                        Field('AlturaMedia', placeholder="Altura Media"),
+                        Field('CV', placeholder="Coeficiente de variación"),
+                        Field('AlturaMedia', placeholder="Altura media"),
                         Field('Romana', placeholder="Romana"),
                     ),
 
@@ -249,12 +250,12 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
             else:                
                 self.helper.layout = Layout(
                     Fieldset(
-                        '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones a Modificar</font>',
+                        '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones a modificar</font>',
                         Field('Peso', placeholder="Peso"),
                         Field('Rinde', placeholder="Rinde"),
                         Field('Finura', placeholder="Finura"),
-                        Field('CV', placeholder="Coeficiente de Variacion"),
-                        Field('AlturaMedia', placeholder="Altura Media"),
+                        Field('CV', placeholder="Coeficiente de variación"),
+                        Field('AlturaMedia', placeholder="Altura media"),
                         Field('Romana', placeholder="Romana"),
                         Field('Lote', css_class= ".col-lg-3",placeholder='asd'),
                     ),
@@ -285,8 +286,8 @@ def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase 
             model = Productor
             exclude = ['Baja']
 
-            Telefono = forms.CharField(label = "Telefono", required = False)
-            Email = forms.CharField(label = "Email", required = False)
+            Telefono = forms.CharField(label = "Teléfono", required = False)
+            Email = forms.CharField(label = "E-mail", required = False)
 
         if not edit:
             DNI = ARDNIField(label="DNI (*)")
@@ -307,17 +308,17 @@ def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase 
             self.helper.layout = Layout(
 
                 Fieldset( 
-                    '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
+                    '<font color = "Black" size=3 face="Arial">Datos de productor </font>',
                     Field('Nombre', css_class= ".col-lg-3",placeholder='Nombre'),
                     Field('Apellido', placeholder="Apellido"),
                     Field('DNI', placeholder="DNI"),
                     Field('CUIL', placeholder="CUIL XX-XXXXXXXX-X"),
                 ),
                 Fieldset(
-                    '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
-                    Field('Telefono', placeholder="Telefono"),
-                    Field('Email', placeholder="Email"),
+                    Field('Telefono', placeholder="Teléfono"),
+                    Field('Email', placeholder="E-mail"),
                 ),
+                HTML('<p>(*)Campos obligatorios.</p>'),
             )
 
         def setup(self, *args, **kwarg):
@@ -342,15 +343,15 @@ def RepresentanteFormFactory(edit=False):  # Crear una funcion para crear una cl
            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
             }
 
-            Telefono = forms.CharField(label = "Telefono", required = False)
-            Email = forms.CharField(label = "Email", required = False)
+            Telefono = forms.CharField(label = "Teléfono", required = False)
+            Email = forms.CharField(label = "E-mail", required = False)
 
 
         if not edit:
-            NroLegajo = forms.IntegerField(label ="Nro.Legajo (*)")
+            NroLegajo = forms.IntegerField(label ="Nro. Legajo (*)")
             DNI = ARDNIField(label="DNI (*)")
         else:
-            NroLegajo = forms.IntegerField(label ="Nro.Legajo (*)", widget=forms.HiddenInput())
+            NroLegajo = forms.IntegerField(label ="Nro. Legajo (*)", widget=forms.HiddenInput())
             DNI = ARDNIField(label="DNI (*)",  widget=forms.HiddenInput())
  
         def __init__(self, *args, **kwargs):
@@ -362,18 +363,18 @@ def RepresentanteFormFactory(edit=False):  # Crear una funcion para crear una cl
             self.helper.layout = Layout(
 
                 Fieldset( 
-                    '<font color = "Black" size=3 face="Arial">Datos Obligatorios </font>',
+                    '<font color = "Black" size=3 face="Arial">Datos de representante </font>',
                     Field('Nombre', css_class= ".col-lg-3",placeholder='Nombre'),
                     Field('Apellido', placeholder="Apellido"),
                     Field('DNI', placeholder="DNI"),
-                    Field('NroLegajo', placeholder="Nro de Legajo"),
+                    Field('NroLegajo', placeholder="Nro. Legajo"),
                 ),
                 Fieldset(
-                    '<font color = "Black" size=3 face="Arial">Datos Opcionales</font>',
-                    Field('Telefono', placeholder="Telefono"),
-                    Field('Email', placeholder="Email"),
+                    Field('Telefono', placeholder="Teléfono"),
+                    Field('Email', placeholder="E-mail"),
                     Field('Zona', placeholder="Zona"),
                 ),
+                HTML('<p>(*)Campos obligatorios.</p>'),
             )
 
         def setup(self, *args, **kwarg):
@@ -400,16 +401,16 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
             exclude = ['Finalizada',]
 
         if not e:
-            CantRequerida = forms.IntegerField(label = "Cantidad Requerida (*)", min_value = 0)
-            CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0)
-            AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0)
+            CantRequerida = forms.IntegerField(label = "Cantidad requerida (*)", min_value = 0)
+            CV = forms.FloatField(label ="Coeficiente de variación (*)", min_value = 0)
+            AlturaMedia = forms.FloatField(label ="Altura media (*)", min_value = 0)
             Finura = forms.FloatField(label ="Finura (*)", min_value = 0)        # Unidad de Medida Micrones
             Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
             Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
         else: 
-            CantRequerida = forms.IntegerField(label = "Cantidad Requerida (*)", min_value = 0, widget=forms.HiddenInput())
-            CV = forms.FloatField(label ="C. Variacion (*)", min_value = 0, widget=forms.HiddenInput())
-            AlturaMedia = forms.FloatField(label ="Altura Media (*)", min_value = 0, widget=forms.HiddenInput())
+            CantRequerida = forms.IntegerField(label = "Cantidad requerida (*)", min_value = 0, widget=forms.HiddenInput())
+            CV = forms.FloatField(label ="Coeficiente de variación (*)", min_value = 0, widget=forms.HiddenInput())
+            AlturaMedia = forms.FloatField(label ="Altura media (*)", min_value = 0, widget=forms.HiddenInput())
             Finura = forms.FloatField(label ="Finura (*)", min_value = 0, widget=forms.HiddenInput())        # Unidad de Medida Micrones
             Romana = forms.FloatField(label ="Romana (*)", min_value = 0, widget=forms.HiddenInput())
             Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0, widget=forms.HiddenInput())
@@ -427,17 +428,17 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
                 self.helper.layout = Layout(
 
                     Fieldset( 
-                        '<font color = "Black" size=3 face="Comic Sans MS">Datos Primarios de Orden de Produccion </font>',
-                        Field('CantRequerida', placeholder="Cantidad en Kilos requeridos"),
-                        Field('Servicio', placeholder="Servicios a Realizar"),
+                        '<font color = "Black" size=3 face="Comic Sans MS">Datos primarios orden de producción </font>',
+                        Field('CantRequerida', placeholder="Cantidad en kilos requerida"),
+                        Field('Servicio', placeholder="Servicio a realizar"),
                     ),
                     Fieldset(
-                        '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones de Orden de Produccion</font>',
-                        Field('CV', placeholder="Coeficiente de Variacion requerido"),
-                        Field('AlturaMedia', placeholder="Altura Media requerida"),
-                        Field('Finura', placeholder="Micronaje requerido"),
-                        Field('Romana', placeholder="Romana requerida"),
-                        Field('Rinde', placeholder="Rinde requerido")
+                        '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones orden de producción</font>',
+                        Field('CV', placeholder="Coeficiente de variación"),
+                        Field('AlturaMedia', placeholder="Altura media"),
+                        Field('Finura', placeholder="Micronaje"),
+                        Field('Romana', placeholder="Romana"),
+                        Field('Rinde', placeholder="Rinde")
                     ),
                     HTML('<p>(*)Campos obligatorios.</p>'),
                 )
@@ -445,16 +446,16 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
                 self.helper.layout = Layout(
 
                     Fieldset( 
-                            '<font color = "Black" size=3 face="Comic Sans MS">Seleccione nuevo Servicio </font>',
-                            Field('Servicio', placeholder="Servicios a Realizar"),
+                            '<font color = "Black" size=3 face="Comic Sans MS">Seleccione nuevo servicio </font>',
+                            Field('Servicio', placeholder="Servicios a realizar"),
 
 
-                            Field('CantRequerida', placeholder="Cantidad en Kilos requeridos"),
-                            Field('CV', placeholder="Coeficiente de Variacion requerido"),
-                            Field('AlturaMedia', placeholder="Altura Media requerida"),
-                            Field('Finura', placeholder="Micronaje requerido"),
-                            Field('Romana', placeholder="Romana requerida"),
-                            Field('Rinde', placeholder="Rinde requerido")
+                            Field('CantRequerida', placeholder="Cantidad en kilos requeridos"),
+                            Field('CV', placeholder="Coeficiente de variación"),
+                            Field('AlturaMedia', placeholder="Altura media"),
+                            Field('Finura', placeholder="Micronaje"),
+                            Field('Romana', placeholder="Romana"),
+                            Field('Rinde', placeholder="Rinde")
                         ),
                         HTML('<p>(*)Campos obligatorios.</p>'),
                 )
