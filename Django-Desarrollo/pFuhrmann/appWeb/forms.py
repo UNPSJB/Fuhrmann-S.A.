@@ -280,14 +280,14 @@ def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase 
         
         Nombre = forms.CharField(label="Nombre (*)")
         Apellido = forms.CharField(label="Apellido (*)" )
+        Email = forms.CharField(label = "E-mail", required = False)
+        Telefono = forms.CharField(label = "Teléfono", required = False)
+
        
 
         class Meta:
             model = Productor
             exclude = ['Baja']
-
-            Telefono = forms.CharField(label = "Teléfono", required = False)
-            Email = forms.CharField(label = "E-mail", required = False)
 
         if not edit:
             DNI = ARDNIField(label="DNI (*)")
@@ -313,10 +313,8 @@ def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase 
                     Field('Apellido', placeholder="Apellido"),
                     Field('DNI', placeholder="DNI"),
                     Field('CUIL', placeholder="CUIL XX-XXXXXXXX-X"),
-                ),
-                Fieldset(
-                    Field('Telefono', placeholder="Teléfono"),
-                    Field('Email', placeholder="E-mail"),
+                    Field('Email', placeholder = "E-mail"),
+                    Field('Telefono', placeholder = "Teléfono"),
                 ),
                 HTML('<p>(*)Campos obligatorios.</p>'),
             )
@@ -335,17 +333,15 @@ def RepresentanteFormFactory(edit=False):  # Crear una funcion para crear una cl
         
         Nombre = forms.CharField(label="Nombre (*)")
         Apellido = forms.CharField(label="Apellido (*)")
-    
+        Telefono = forms.CharField(label = "Teléfono", required = False)
+        Email = forms.CharField(label = "E-mail", required = False)
+
         class Meta:
             exclude = ['Baja']
             model = Representante
             widgets = {
            'Zona': forms.Select(choices=[('Sur', 'Sur'), ('Norte', 'Norte')])
             }
-
-            Telefono = forms.CharField(label = "Teléfono", required = False)
-            Email = forms.CharField(label = "Email", required = False)
-
 
         if not edit:
             NroLegajo = forms.IntegerField(label ="Nro. Legajo (*)")
@@ -367,11 +363,9 @@ def RepresentanteFormFactory(edit=False):  # Crear una funcion para crear una cl
                     Field('Nombre', css_class= ".col-lg-3",placeholder='Nombre'),
                     Field('Apellido', placeholder="Apellido"),
                     Field('DNI', placeholder="DNI"),
-                    Field('NroLegajo', placeholder="Nro. Legajo"),
-                ),
-                Fieldset(
-                    Field('Telefono', placeholder="Teléfono"),
-                    Field('E-mail', placeholder="E-mail"),
+                    Field('NroLegajo', placeholder="Nro. Legajo"), 
+                    Field('Email', placeholder = "E-mail"),
+                    Field('Telefono', placeholder = "Teléfono"),
                     Field('Zona', placeholder="Zona"),
                 ),
                 HTML('<p>(*)Campos obligatorios.</p>'),
@@ -436,7 +430,7 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
                         '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones orden de produccion</font>',
                         Field('CV', placeholder="Coeficiente de variación"),
                         Field('AlturaMedia', placeholder="Altura media"),
-                        Field('Finura', placeholder="Micronaje"),
+                        Field('Finura', placeholder="Finura"),
                         Field('Romana', placeholder="Romana"),
                         Field('Rinde', placeholder="Rinde")
                     ),
@@ -453,7 +447,7 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
                             Field('CantRequerida', placeholder="Cantidad en kilos requeridos"),
                             Field('CV', placeholder="Coeficiente de variación"),
                             Field('AlturaMedia', placeholder="Altura media"),
-                            Field('Finura', placeholder="Micronaje"),
+                            Field('Finura', placeholder="Finura"),
                             Field('Romana', placeholder="Romana"),
                             Field('Rinde', placeholder="Rinde")
                         ),
@@ -508,7 +502,7 @@ def MaquinariaFormFactory(edit=False):  # Crear una funcion para crear una clase
 
     class MaquinariaForm(forms.ModelForm):
         NroSerie = forms.IntegerField(label = "Nro. Serie (*)")
-        Descripcion = forms.CharField(required = False)
+        Descripcion = forms.CharField(label= "Descripción",required = False)
         Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)")
         class Meta:
             model = Maquinaria
@@ -516,7 +510,7 @@ def MaquinariaFormFactory(edit=False):  # Crear una funcion para crear una clase
 
         if edit:
             NroSerie = forms.IntegerField(label = "Nro. Serie (*)", widget=forms.HiddenInput())
-            Descripcion = forms.CharField(required = False)
+            Descripcion = forms.CharField(label = "Descripción",required = False)
             Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)", widget=forms.HiddenInput())
             
 
@@ -532,7 +526,7 @@ def MaquinariaFormFactory(edit=False):  # Crear una funcion para crear una clase
                     '<font color = "Black" size=3 face="Comic Sans MS">Datos de maquinaria</font>',
                     Field('NroSerie', css_class= ".col-lg-3",placeholder='Nro de serie'),
                     Field('Servicio'),
-                    Field('Descripcion', placeholder="Descripcion"),
+                    Field('Descripcion', placeholder="Descripción"),
                 ),
                 
                 HTML('<p>(*)Campos obligatorios.</p>'),
