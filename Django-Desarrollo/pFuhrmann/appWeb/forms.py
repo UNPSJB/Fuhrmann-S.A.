@@ -19,7 +19,7 @@ class LoginForm(forms.Form):
 
 # ********************************* Formulario de Compras *********************************
 class CompraForm(forms.ModelForm):    
-    FechaLlegada = forms.DateField(label = "Fecha de Llegada (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
+    FechaLlegada = forms.DateField(label = "Fecha de llegada (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
     Estancia = forms.ModelChoiceField(Estancia.objects.filter(Baja = False),label= "Estancia (*)")
     Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)")
     class Meta:
@@ -49,9 +49,9 @@ class CompraForm(forms.ModelForm):
 
 # ********************************* Formulario de Ventas *********************************
 class VentaForm(forms.ModelForm):
-    LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(),label = "Lote Venta (*)")
+    LoteVenta = forms.ModelChoiceField(LoteVenta.objects.all(),label = "Lote venta (*)")
     Cliente = forms.CharField(label= "Cliente (*)")
-    FechaVenta = forms.DateField(label = "Fecha Venta (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
+    FechaVenta = forms.DateField(label = "Fecha de venta (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
 
     class Meta:
         model = Venta
@@ -65,7 +65,7 @@ class VentaForm(forms.ModelForm):
         self.helper.layout = Layout(
 
             Fieldset( 
-                '<font color = "Black" size=3 face="Comic Sans MS">Datos de Venta</font>',
+                '<font color = "Black" size=3 face="Comic Sans MS">Datos de venta</font>',
                 Field('LoteVenta', css_class= ".col-lg-3",placeholder='Lote de venta'),
                 Field('Cliente', placeholder="Cliente"),
                 Field('FechaVenta', placeholder="Fecha de venta"),
@@ -528,8 +528,8 @@ def MaquinariaFormFactory(edit=False):  # Crear una funcion para crear una clase
             self.helper.field_class = 'col-lg-8'
             self.helper.layout = Layout(
                 Fieldset( 
-                    '<font color = "Black" size=3 face="Comic Sans MS">Datos de Maquinaria</font>',
-                    Field('NroSerie', css_class= ".col-lg-3",placeholder='Nro de Serie'),
+                    '<font color = "Black" size=3 face="Comic Sans MS">Datos de maquinaria</font>',
+                    Field('NroSerie', css_class= ".col-lg-3",placeholder='Nro de serie'),
                     Field('Servicio'),
                     Field('Descripcion', placeholder="Descripcion"),
                 ),
