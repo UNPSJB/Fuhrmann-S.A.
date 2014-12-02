@@ -49,8 +49,8 @@ class Representante(Persona):
         return "%s" % str(str(self.Nombre) + " " + str(self.Apellido) + " - DNI: " + str(self.DNI))
 
 class Estancia(models.Model):
-    #class Meta:
-    #    ordering = ['Nombre']
+    class Meta:
+        ordering = ['Nombre']
     
     Nombre = models.CharField(max_length=50)
     CUIT = models.CharField(max_length=13, primary_key = True)

@@ -96,14 +96,14 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
                 'Provincia': forms.Select(choices=[('Chubut', 'Chubut'), ('Santa Cruz', 'Santa Cruz'), ('Buenos Aires', 'Buenos Aires')])
             }
 
-            if not edit:
-                CUIT = ARCUITField(label="CUIT (*)")
-                Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)")
-                Productor = forms.ModelChoiceField(Productor.objects.all().filter(Baja = False, estancia = None),label="Productor (*)")
-            else:
-                CUIT = ARCUITField(label="CUIT (*)", widget=forms.HiddenInput())
-                Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)",widget=forms.HiddenInput())
-                Productor= forms.ModelChoiceField(Productor.objects.filter(estancia = None),label="Productor (*)",widget=forms.HiddenInput())
+        if not edit:
+            CUIT = ARCUITField(label="CUIT (*)")
+            Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)")
+            Productor = forms.ModelChoiceField(Productor.objects.all().filter(Baja = False, estancia = None),label="Productor (*)")
+        else:
+            CUIT = ARCUITField(label="CUIT (*)", widget=forms.HiddenInput())
+            Representante = forms.ModelChoiceField(Representante.objects.filter(Baja = False), label="Representante (*)",widget=forms.HiddenInput())
+            Productor= forms.ModelChoiceField(Productor.objects.filter(estancia = None),label="Productor (*)",widget=forms.HiddenInput())
 
         def __init__(self, *args, **kwargs):
             super(EstanciaForm, self).__init__(*args, **kwargs)

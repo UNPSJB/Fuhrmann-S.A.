@@ -24,7 +24,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.loader import render_to_string
 from django.core import serializers
-
 import ast
 
 
@@ -243,7 +242,7 @@ def modificarProductor(request, pk=None):
     else:
         formulario = ProductorFormFactory(productor is not None)(instance = productor)
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
-    return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    return render_to_response('modificarProductor.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarProductor(request,pk):
     productor = Productor.objects.get(pk=pk)
@@ -282,7 +281,7 @@ def modificarRepresentante(request, pk=None):
     else:
         formulario = RepresentanteFormFactory(representante is not None)(instance = representante)
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
-    return render_to_response('RepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    return render_to_response('modificarRepresentante.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarRepresentante(request,pk):
     representante = Representante.objects.get(pk=pk)
