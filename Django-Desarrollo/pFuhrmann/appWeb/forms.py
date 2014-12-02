@@ -291,8 +291,6 @@ def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase 
         Email = forms.CharField(label = "E-mail", required = False)
         Telefono = forms.CharField(label = "Teléfono", required = False)
 
-       
-
         class Meta:
             model = Productor
             exclude = ['Baja']
@@ -509,18 +507,19 @@ class finalizarFaseProduccionForm(forms.ModelForm):
 def MaquinariaFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
     class MaquinariaForm(forms.ModelForm):
-        NroSerie = forms.IntegerField(label = "Nro. Serie (*)")
-        Descripcion = forms.CharField(label= "Descripción",required = False)
-        Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)")
         class Meta:
             model = Maquinaria
             exclude = ['Baja']
 
         if edit:
             NroSerie = forms.IntegerField(label = "Nro. Serie (*)", widget=forms.HiddenInput())
-            Descripcion = forms.CharField(label = "Descripción",required = False)
+            Descripcion = forms.CharField(label = "Descripción")
             Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)", widget=forms.HiddenInput())
-            
+        else:
+            NroSerie = forms.IntegerField(label = "Nro. Serie (*)")
+            Descripcion = forms.CharField(label= "Descripción")
+            Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)")
+                
 
    
         def __init__(self, *args, **kwargs):
