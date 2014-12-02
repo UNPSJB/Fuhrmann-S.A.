@@ -68,7 +68,7 @@ urlpatterns = patterns('',
     
     # ------ Adm. Productor
     url(r'^listadoProductores/$', 'appWeb.views.listadoProductores'),
-    url(r'^modificarProductor/$', 'appWeb.views.modificarProductor'),
+    url(r'^registrarProductor/$', 'appWeb.views.registrarProductor'),
     url(r'^modificarProductor/([\d-]+)/$', 'appWeb.views.modificarProductor'),
     url(r'^eliminarProductor/([\d-]+)/$', 'appWeb.views.eliminarProductor'),
     url(r'^buscarProductor/(.*)/$', 'appWeb.views.buscarProductor'),
@@ -76,9 +76,9 @@ urlpatterns = patterns('',
 
     # ------ Adm. Representante
     url(r'^listadoRepresentante/$', 'appWeb.views.listadoRepresentante'),
-    url(r'^registrarRepresentante/$', 'appWeb.views.modificarRepresentante'),
-    url(r'^modificarRepresentante/(\d+)$', 'appWeb.views.modificarRepresentante'),
-    url(r'^eliminarRepresentante/(\d+)/$', 'appWeb.views.eliminarRepresentante'),
+    url(r'^registrarRepresentante/$', 'appWeb.views.registrarRepresentante'),
+    url(r'^modificarRepresentante/([\d-]+)/$', 'appWeb.views.modificarRepresentante'),
+    url(r'^eliminarRepresentante/([\d-]+)/$', 'appWeb.views.eliminarRepresentante'),
     url(r'^buscarRepresentante/(.*)/$', 'appWeb.views.buscarRepresentante'),
     
 
