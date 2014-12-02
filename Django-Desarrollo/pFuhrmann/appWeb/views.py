@@ -514,6 +514,8 @@ def buscarEstancia(request, pkb):
 
     for obj in results1:
         results.append(obj)
+    for obj in results2:
+        results.append(obj)    
  
     return render_to_response("listadoEstancias.html", { "lista": results }, context_instance=RequestContext(request))
 
