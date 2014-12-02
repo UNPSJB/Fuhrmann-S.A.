@@ -42,7 +42,7 @@
                             <td style="text-align:center;" width="10%">{{dato.Email}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Zona}}</td>
                             <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarRepresentante/{{dato.NroLegajo}}"><span class="glyphicon glyphicon-edit"  title = "Modificar" ></span></a></td> 
-                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarRepresentante/{{dato.NroLegajo}}', 'Eliminar Representante', '¿Está seguro que quiere eliminar este representante?')"  title = "Eliminar" ><span class="glyphicon glyphicon-remove"></span></a></td>
+                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminarR('/eliminarRepresentante/{{dato.NroLegajo}}', 'Eliminar Representante', '¿Está seguro que quiere eliminar este representante?', '{{dato.tieneEstancia}}')"  title = "Eliminar" ><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
                         {% empty %}
                             <li> No existen representantes regitrados</li>
@@ -58,4 +58,50 @@
         </div>
     
 </div>
+{% endblock %}
+
+{% block scripts %}
+
+    
+    <script>
+    function eliminarR(url, title, message, siEstancia) {
+        if (siEstancia == 'True') {
+            BootstrapDialog.show({
+                title: 'Error',
+                cssClass: 'error-dialog',
+                message: "No se puede eliminar representante, está asociado a una estancia",
+                type: BootstrapDialog.TYPE_DANGER, 
+                buttons: [
+                    {
+                        label: 'Aceptar',
+                        action: function(dialogRef){
+                            dialogRef.close();
+                        }
+                    }]
+            });
+        }
+        else{
+            BootstrapDialog.show({
+                title: title,
+                cssClass: 'error-dialog',
+                message: message,
+                type: BootstrapDialog.TYPE_WARNING, 
+                buttons: [
+                    {
+                        label: 'Si',
+                        action: function(dialogRef){
+                            window.location=url
+                            dialogRef.close();
+                        }
+                    },
+                    {
+                        label: 'No',
+                        action: function(dialogRef){
+                            dialogRef.close();
+                        }
+                    }]
+            });
+        }
+    };
+    </script>
 {% endblock %}
