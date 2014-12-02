@@ -280,7 +280,7 @@ def modificarRepresentante(request, pk=None):
             return HttpResponseRedirect('/listadoRepresentante')
     else:
         formulario = RepresentanteFormFactory(representante is not None)(instance = representante)
-    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
+    formulario.setup('Modificar', css_class="btn btn-success")
     return render_to_response('modificarRepresentante.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarRepresentante(request,pk):

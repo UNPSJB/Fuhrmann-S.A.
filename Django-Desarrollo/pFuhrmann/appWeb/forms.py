@@ -148,7 +148,7 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
         
         CantFardos = forms.IntegerField(label ="Cantidad de Fardos (*)", min_value = 0)
         Peso = forms.IntegerField(label ="Peso del Lote (*)", min_value = 0)
-        Cuadricula = forms.CharField(label = "Cuadricula (*) ", max_length = 50)
+        Cuadricula = forms.CharField(label = "Cuadrícula (*) ", max_length = 100)
 
         if not edit:
             TipoFardo = forms.ModelChoiceField(TipoFardo.objects.filter(Baja = False), label = "Tipo de Fardos (*)")
@@ -176,8 +176,8 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
                     Field('TipoFardo', placeholder = "Tipo de fardos"),
                 ),
                 Fieldset( 
-                    '<font color = "Black" size=3 face="Comic Sans MS">Ubicación </font>',
-                    Field('Cuadrícula', placeholder="Ubicación del Lote")
+                    '<font color = "Black" size=3 face="Comic Sans MS">Ubicacion </font>',
+                    Field('Cuadricula', placeholder="Ubicación del Lote")
                 ),
                 HTML('<p>(*)Campos obligatorios.</p>'),
             )
@@ -344,7 +344,7 @@ def RepresentanteFormFactory(edit=False):  # Crear una funcion para crear una cl
             }
 
             Telefono = forms.CharField(label = "Teléfono", required = False)
-            Email = forms.CharField(label = "E-mail", required = False)
+            Email = forms.CharField(label = "Email", required = False)
 
 
         if not edit:
@@ -371,7 +371,7 @@ def RepresentanteFormFactory(edit=False):  # Crear una funcion para crear una cl
                 ),
                 Fieldset(
                     Field('Telefono', placeholder="Teléfono"),
-                    Field('Email', placeholder="E-mail"),
+                    Field('E-mail', placeholder="E-mail"),
                     Field('Zona', placeholder="Zona"),
                 ),
                 HTML('<p>(*)Campos obligatorios.</p>'),
@@ -428,12 +428,12 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
                 self.helper.layout = Layout(
 
                     Fieldset( 
-                        '<font color = "Black" size=3 face="Comic Sans MS">Datos primarios orden de producción </font>',
+                        '<font color = "Black" size=3 face="Comic Sans MS">Datos primarios orden de produccion </font>',
                         Field('CantRequerida', placeholder="Cantidad en kilos requerida"),
                         Field('Servicio', placeholder="Servicio a realizar"),
                     ),
                     Fieldset(
-                        '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones orden de producción</font>',
+                        '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones orden de produccion</font>',
                         Field('CV', placeholder="Coeficiente de variación"),
                         Field('AlturaMedia', placeholder="Altura media"),
                         Field('Finura', placeholder="Micronaje"),
