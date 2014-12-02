@@ -491,6 +491,8 @@ def buscarCompra(request, pkb):
     
     for obj in results1:
         results.append(obj)
+    for obj in results3:
+        results.append(obj)
  
     return render_to_response("listadoCompra.html", { "lista": results }, context_instance=RequestContext(request))
 
