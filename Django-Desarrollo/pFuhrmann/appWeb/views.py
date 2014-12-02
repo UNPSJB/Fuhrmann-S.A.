@@ -244,7 +244,7 @@ def modificarProductor(request, pk=None):
         formulario = ProductorFormFactory(productor is not None)(instance = productor)
     
     formulario.setup('Modificar', css_class="btn btn-success")
-    return render_to_response('modificarEstancia.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    return render_to_response('modificarProductor.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarProductor(request,pk):
     productor = Productor.objects.get(pk=pk)
