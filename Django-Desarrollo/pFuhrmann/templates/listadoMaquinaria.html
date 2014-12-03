@@ -36,9 +36,10 @@
                             <td style="text-align:center;" width="3%"><a class="btn btn-default" title = "Modificar" href ="/modificarMaquinaria/{{dato.NroSerie}}"><span class="glyphicon glyphicon-edit"></span></a></td>  
                             <td style="text-align:center;" width="3%"> <a class="btn btn-default" title = "Eliminar" onClick="eliminar('/eliminarMaquinaria/{{dato.NroSerie}}', 'Eliminar Maquinaria', '¿Está seguro que quiere eliminar esta maquinaria?')" title="Eliminar"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
-
+    
                         {% empty %}
-                            <li> No existen maquinarias registradas </li>
+                            <li> No existen maquinarias registradas 
+                                //PARA ELIMINAR LA MAQUINARIA!!!!La maquinaria no está asociada a una orden de producción en proceso.</li>
                         {% endfor %}        
                     </thead>
                 </table>

@@ -73,7 +73,7 @@ class Estancia(models.Model):
     def __unicode__(self):
         return "%s" % str(str(self.Nombre) + " " + str(self.Provincia) + " " + str(self.CUIT) )
 
-
+    
 # First, define the Manager subclass.
 class BajaLogicaManager(models.Manager):
     def __init__(self, **kwargs):
