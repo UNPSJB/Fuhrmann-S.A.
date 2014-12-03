@@ -294,17 +294,11 @@ def eliminarRepresentante(request,pk):
     representante = Representante.objects.filter(Baja = False)
     return render_to_response('listadoRepresentante.html', {'lista':representante}, context_instance=RequestContext(request))
 
-
-
-
-
-
 # ********************************* Administracion de Produccion *********************************
 
 def listadoOrden(request):
     op = OrdenProduccion.objects.all()
     return render_to_response('listadoOrden.html', {'lista':op}, context_instance=RequestContext(request))
-
 
 def registrarOrdenProduccion(request, pk=None):
     orden = None
