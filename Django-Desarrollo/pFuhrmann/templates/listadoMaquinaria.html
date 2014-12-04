@@ -34,12 +34,11 @@
                             <td style="text-align:center;" width="10%">{{dato.Servicio}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Descripcion}}</td>
                             <td style="text-align:center;" width="3%"><a class="btn btn-default" title = "Modificar" href ="/modificarMaquinaria/{{dato.NroSerie}}"><span class="glyphicon glyphicon-edit"></span></a></td>  
-                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" title = "Eliminar" onClick="eliminar('/eliminarMaquinaria/{{dato.NroSerie}}', 'Eliminar Maquinaria', '¿Está seguro que quiere eliminar esta maquinaria?')" title="Eliminar"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" title = "Eliminar" onClick="eliminarM('{{dato.isLibre}}', '{{dato.NroSerie}}')" title="Eliminar"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
     
                         {% empty %}
                             <li> No existen maquinarias registradas 
-                                //PARA ELIMINAR LA MAQUINARIA!!!!La maquinaria no está asociada a una orden de producción en proceso.</li>
                         {% endfor %}        
                     </thead>
                 </table>
@@ -52,4 +51,53 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    
+    <script type="text/javascript">
+
+
+        function eliminarM(isLibre, nroSerie){
+            if (isLibre == 'False'){
+                BootstrapDialog.show({
+                    title: 'Error',
+                    cssClass: 'error-dialog',
+                    message: 'Maquinaria siendo usada en Produccion',
+                    type: BootstrapDialog.TYPE_DANGER, 
+                    buttons: [
+                        {
+                            label: 'Aceptar',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+            else{
+                BootstrapDialog.show({
+                    title: 'Eliminar Maquinaria',
+                    cssClass: 'error-dialog',
+                    message:  '¿Está seguro que quiere eliminar esta maquinaria?',
+                    type: BootstrapDialog.TYPE_WARNING, 
+                    buttons: [
+                    {
+                        label: 'Si',
+                        action: function(dialogRef){
+                            window.location = '/eliminarMaquinaria/' + nroSerie
+                            dialogRef.close();
+                        }
+                    },
+                    {
+                        label: 'No',
+                        action: function(dialogRef){
+                            dialogRef.close();
+                        }
+                    }]
+                });
+            };
+        }
+
+    </script>
+
 {% endblock %}

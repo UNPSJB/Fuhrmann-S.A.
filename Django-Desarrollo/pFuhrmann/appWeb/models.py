@@ -75,6 +75,21 @@ class Estancia(models.Model):
     def __unicode__(self):
         return "%s" % str(str(self.Nombre) + " " + str(self.Provincia) + " " + str(self.CUIT) )
 
+    def hasFardos(self):
+        for l in self.lote_set.all():
+            for f in l.fardo_set.all():
+                if f.DetalleOrden == None:
+                    return True 
+        for l in self.lote_set.all():
+            for f in l.fardo_set.all():
+                d = f.DetalleOrden
+                o = d.OrdenProduccion
+                for p in o.produccion_set.all():
+                    if p.FechaFin == None:
+                        return True
+
+        return False
+
     
 # First, define the Manager subclass.
 class BajaLogicaManager(models.Manager):

@@ -41,8 +41,7 @@
                             <td style="text-align:center;" width="10%">{{dato.Productor}}</td>
                             <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarEstancia/{{dato.CUIT}}" title="Modificar" ><span class="glyphicon glyphicon-edit"></span></td>
         
-                            --para eliminar una estancia.. La estancia no debe tener fardos en producción y fardos disponibles para producción.
-                           <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminar('/eliminarEstancia/{{dato.CUIT}}', 'Eliminar    Estancia', '¿Está seguro que quiere eliminar esta estancia?')"  title = "Eliminar" ><span class="glyphicon glyphicon-remove"></span></a></td>
+                           <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminarE('{{dato.hasFardos}}', '{{dato.CUIT}}')"  title = "Eliminar" ><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
 
                         {% empty %}
@@ -59,4 +58,53 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    
+    <script type="text/javascript">
+
+
+        function eliminarE(hasFardos, cuit){
+            if (hasFardos == 'True'){
+                BootstrapDialog.show({
+                    title: 'Error',
+                    cssClass: 'error-dialog',
+                    message: 'Estancia posee fardos disponibles para Produccion',
+                    type: BootstrapDialog.TYPE_DANGER, 
+                    buttons: [
+                        {
+                            label: 'Aceptar',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+            else{
+                BootstrapDialog.show({
+                    title: 'Eliminar Estancia',
+                    cssClass: 'error-dialog',
+                    message:  '¿Está seguro que quiere eliminar esta Estancia?',
+                    type: BootstrapDialog.TYPE_WARNING, 
+                    buttons: [
+                    {
+                        label: 'Si',
+                        action: function(dialogRef){
+                            window.location = '/eliminarEstancia/' + cuit
+                            dialogRef.close();
+                        }
+                    },
+                    {
+                        label: 'No',
+                        action: function(dialogRef){
+                            dialogRef.close();
+                        }
+                    }]
+                });
+            };
+        }
+
+    </script>
+
 {% endblock %}

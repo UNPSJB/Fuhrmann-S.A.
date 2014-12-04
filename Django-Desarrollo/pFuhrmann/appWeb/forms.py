@@ -284,13 +284,12 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
 
 def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
-
     class ProductorForm(forms.ModelForm):
         
         Nombre = forms.CharField(label="Nombre (*)")
         Apellido = forms.CharField(label="Apellido (*)" )
-        Email = forms.CharField(label = "E-mail", required = False)
-        Telefono = forms.CharField(label = "Teléfono", required = False)
+        Email = forms.CharField(label = "E-mail")
+        Telefono = forms.CharField(label = "Teléfono")
 
         class Meta:
             model = Productor
@@ -300,9 +299,9 @@ def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase 
             DNI = ARDNIField(label="DNI (*)")
             CUIL = ARCUITField(label="CUIL (*)")
 
-        else:
-            DNI = ARDNIField(label="DNI (*)",widget=forms.HiddenInput())
-            CUIL = ARCUITField(label="CUIL (*)",widget=forms.HiddenInput())
+        else:   
+            DNI = ARDNIField(label="DNI (*)", widget=forms.HiddenInput())
+            CUIL = ARCUITField(label="CUIL (*)", widget=forms.HiddenInput())
 
 
 
@@ -340,8 +339,8 @@ def RepresentanteFormFactory(edit=False):  # Crear una funcion para crear una cl
         
         Nombre = forms.CharField(label="Nombre (*)")
         Apellido = forms.CharField(label="Apellido (*)")
-        Telefono = forms.CharField(label = "Teléfono", required = False)
-        Email = forms.CharField(label = "E-mail", required = False)
+        Telefono = forms.CharField(label = "Teléfono")
+        Email = forms.CharField(label = "E-mail")
 
         class Meta:
             exclude = ['Baja']
@@ -484,7 +483,6 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
             for ser in s:
                 p = Produccion.objects.create(Orden=orden, Servicio = ser)
                 p.save()
-                servicio = servicio.ServicioPrevio
 
     return OrdenProduccionForm
 
@@ -516,7 +514,7 @@ class finalizarFaseProduccionForm(forms.ModelForm):
 def MaquinariaFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
     class MaquinariaForm(forms.ModelForm):
-          class Meta:
+        class Meta:
             model = Maquinaria
             exclude = ['Baja']
 
