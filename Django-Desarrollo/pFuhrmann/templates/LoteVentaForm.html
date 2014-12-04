@@ -1,0 +1,56 @@
+
+<fieldset>
+    <legend>                      
+       <font color = "Black" size=2 face="Comic Sans MS"><h4>Ubicacion Lote de Venta</h4></font>
+    </legend>
+    <div class="jumbotron">
+            <div class="controls col-md-6">
+                <font size=3 face="Comic Sans MS"><label>Cuadricula: </label></font>
+            </div>
+            <div class="controls col-md-6">
+                <input type="text" width = '20px' id = "cuadricula"></input>
+            </div>
+    </div>
+</fieldset>
+<h4>Los Datos seran obtenidos de la Orden de Produccion.</h4>
+
+<div class="modal-footer">
+    <div class="bootstrap-dialog-footer">
+        <div class="bootstrap-dialog-footer-buttons">
+            <button class="btn btn-default" onClick="submit({{orden.NroOrden}})" type="Submit" id="agregar">Registrar</button>
+            <button class="btn btn-default" data-dismiss='modal' >Salir</button>
+        </div>
+    </div>  
+</div>
+
+
+
+<script type="text/javascript">
+
+function submit(orden){
+    var cuadri = document.getElementById('cuadricula');
+
+    $.ajax({
+        type: 'get',
+        dataType: 'html',
+        url: '/commitLoteVenta/'+ cuadri.value + '/' + orden,
+    });
+    $("#agregar").hide();
+
+
+    BootstrapDialog.show({
+        title: 'Aviso',
+        cssClass: 'error-dialog',
+        message: 'Lote de venta Registrado!',
+        type: BootstrapDialog.TYPE_WARNING, 
+        buttons: [
+            {
+                label: 'Aceptar',
+                action: function(dialogRef){
+                    window.location='/listadoOrden';
+                    dialogRef.close();
+                }
+            }]
+    });
+}
+</script>
