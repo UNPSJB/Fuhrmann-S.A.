@@ -26,7 +26,6 @@ from django.template.loader import render_to_string
 from datetime import date
 import json
 
-#from wkhtmltopdf.views import PDFTemplateView
 
 
 from django.core import serializers
@@ -251,14 +250,15 @@ def modificarProductor(request, pk=None):
     if pk is not None:
         productor = get_object_or_404(Productor, pk=pk) 
     if request.method == 'POST':
-        formulario = ProductorFormFactory(productor is not None)(request.POST, instance=productor)
+        formulario = ProductorFormFactory(productor is not None)(request.POST, instance = productor)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoProductores')
     else:
         formulario = ProductorFormFactory(productor is not None)(instance = productor)
-    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
-    return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    
+    formulario.setup('Modificar', css_class="btn btn-success")
+    return render_to_response('modificarProductor.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarProductor(request,pk):
     productor = Productor.objects.get(pk=pk)
@@ -276,13 +276,13 @@ def listadoRepresentante(request):
 
 def registrarRepresentante(request):
     if request.method == 'POST':
-        formulario = RepresentanteFormFactory(request.POST)
+        formulario = RepresentanteFormFactory(representante is not None)(request.POST)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoRepresentante')
     else:
-        formulario = RepresentanteFormFactory()
-        formulario.setup('Registrar', css_class="btn btn-success")
+        formulario = RepresentanteFormFactory(representante is not None)()
+    formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('RepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def modificarRepresentante(request, pk=None):
@@ -290,14 +290,15 @@ def modificarRepresentante(request, pk=None):
     if pk is not None:
         representante = get_object_or_404(Representante, pk=pk) 
     if request.method == 'POST':
-        formulario = RepresentanteFormFactory(representante is not None)(request.POST, instance=representante)
+        formulario = RepresentanteFormFactory(representante is not None)(request.POST, instance = representante)
         if formulario.is_valid():
             formulario.save()
             return HttpResponseRedirect('/listadoRepresentante')
     else:
         formulario = RepresentanteFormFactory(representante is not None)(instance = representante)
-    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
-    return render_to_response('RepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    
+    formulario.setup('Modificar', css_class="btn btn-success")
+    return render_to_response('modificarRepresentante.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def eliminarRepresentante(request,pk):
     representante = Representante.objects.get(pk=pk)
@@ -467,7 +468,6 @@ def cancelarOrdenProduccion(request, pk):
 
     orden.save()
     return HttpResponseRedirect('/listadoOrden')    
-
     
 def enviarFaseProduccion(request, pk):
     maq = []
@@ -585,6 +585,8 @@ def buscarCompra(request, pkb):
     
     for obj in results1:
         results.append(obj)
+    for obj in results3:
+        results.append(obj)
  
     return render_to_response("listadoCompra.html", { "lista": results }, context_instance=RequestContext(request))
 
@@ -608,6 +610,8 @@ def buscarEstancia(request, pkb):
 
     for obj in results1:
         results.append(obj)
+    for obj in results2:
+        results.append(obj)    
  
     return render_to_response("listadoEstancias.html", { "lista": results }, context_instance=RequestContext(request))
 

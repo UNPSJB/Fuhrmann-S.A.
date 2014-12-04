@@ -5,11 +5,11 @@
 <div class="container">
         <div class="panel panel-yellow">
             <div class="panel-heading clearfix">
-                <h4 class="panel-title pull-left" style="padding-top: 7.5px;"><strong>Listado de Productores</strong></h4>
+                <h4 class="panel-title pull-left" style="padding-top: 10.5px;"> <font size = "5"color = "000000">Listado de productores</font></h4>
                 <div class="btn-group pull-right">
                     <div class="input-group">
                         <div class="btn-group pull-right">
-                            <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('Ayuda listado productores', 'El <strong>listado de productores</strong> muestra el CUIL, nombre, apellido, DNI, telefono y mail del productor.</br><br>Ingrese en<strong> buscar </strong>el campo (nombre, apellido o DNI) por el cual desea filtrar los productores.</br><br>Presione el boton <strong>agregar</strong> para agregar un nuevo productor.</br><br>Presione el boton <strong>modificar</strong> para cambiar datos de un productor.</br><br>Presione el boton <strong>eliminar</strong> para eliminar un productor.</br><br>Presione el boton <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('<strong>Ayuda listado productores</strong>', 'El <strong>listado de productores</strong> muestra el CUIL, nombre, apellido, DNI, teléfono y e-mail del productor.</br><br>Ingrese en<strong> buscar </strong>el campo (nombre, apellido o DNI) por el cual desea filtrar los productores.</br><br>Presione el botón <strong>agregar</strong> para agregar un nuevo productor.</br><br>Presione el botón <strong>modificar</strong> para cambiar datos de un productor.</br><br>Presione el botón <strong>eliminar</strong> para eliminar un productor.</br><br>Presione el botón <strong>salir</strong> para volver al menú principal.</br>')"><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
                         <span class="input-group-btn">
                             <a class="btn btn-default" type="button" onClick="javascript: errorBuscar('/buscarProductor/', $('#buscar').val());"  title="Buscar: Nombre,Apellido,DNI " ><span class="glyphicon glyphicon-search"></span></a>
@@ -27,8 +27,8 @@
                             <th style="text-align:center;" width="10%">Nombre</th>
                             <th style="text-align:center;" width="10%">Apellido</th>
                             <th style="text-align:center;" width="10%">DNI</th>
-                            <th style="text-align:center;" width="10%">Telefono</th>
-                            <th style="text-align:center;" width="10%">Email</th>
+                            <th style="text-align:center;" width="10%">Teléfono</th>
+                            <th style="text-align:center;" width="10%">E-mail</th>
                             <th style="text-align:center;" width="3%">Modificar</th>
                             <th style="text-align:center;" width="3%">Eliminar</th>
                         </tr>
@@ -41,7 +41,7 @@
                             <td style="text-align:center;" width="10%">{{dato.Telefono}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Email}}</td>                          
                             <td style="text-align:center;" width="3%"><a class="btn btn-default" title = "Modificar" href ="/modificarProductor/{{dato.CUIL}}"><span class="glyphicon glyphicon-edit"></span></a></td>  
-                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" title = "Eliminar" onClick="eliminar('/eliminarProductor/{{dato.CUIL}}', 'Eliminar Productor', '¿Está seguro que quiere eliminar este productor?')" title="Eliminar"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" title = "Eliminar" onClick="eliminarP('/eliminarProductor/{{dato.CUIL}}', 'Eliminar Productor', '¿Está seguro que quiere eliminar este representante?', '{{dato.tieneEstancia}}')" title="Eliminar"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
 
                         {% empty %}
@@ -51,11 +51,57 @@
                 </table>
                 <script type ="text/javascript"> </script>
                 <div class="pull-right">
-                    <a class="btn btn-default btn-gr" type= "button" href="/modificarProductor" title = "Agregar Productor" >Agregar</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/registrarProductor" title = "Agregar Productor" >Agregar</a>
                     <a class="btn btn-default btn-gr" type= "button" href="/index"  title = "Salir" >Salir</a>
                 </div>    
             </div>
         </div>
     
 </div>
+{% endblock %}
+
+{% block scripts %}
+
+    
+    <script>
+    function eliminarP(url, title, message, siEstancia) {
+        if (siEstancia == 'True') {
+            BootstrapDialog.show({
+                title: 'Error',
+                cssClass: 'error-dialog',
+                message: "No se puede eliminar productor, está asociado a una estancia",
+                type: BootstrapDialog.TYPE_DANGER, 
+                buttons: [
+                    {
+                        label: 'Aceptar',
+                        action: function(dialogRef){
+                            dialogRef.close();
+                        }
+                    }]
+            });
+        }
+        else{
+            BootstrapDialog.show({
+                title: title,
+                cssClass: 'error-dialog',
+                message: message,
+                type: BootstrapDialog.TYPE_WARNING, 
+                buttons: [
+                    {
+                        label: 'Si',
+                        action: function(dialogRef){
+                            window.location=url
+                            dialogRef.close();
+                        }
+                    },
+                    {
+                        label: 'No',
+                        action: function(dialogRef){
+                            dialogRef.close();
+                        }
+                    }]
+            });
+        }
+    };
+    </script>
 {% endblock %}
