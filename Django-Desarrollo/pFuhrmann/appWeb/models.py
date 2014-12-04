@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import date
+
 
 class CompraLote(models.Model):
     class Meta:
@@ -143,7 +145,7 @@ class OrdenProduccion(models.Model):
    
     def fechaFin(self):
         p = self.produccion_set.last()
-        
+        print p
         if p.FechaFin != None:
             return p.FechaFin
         
@@ -166,13 +168,32 @@ class OrdenProduccion(models.Model):
         return any(map(lambda p: p.FechaInicio != None, self.produccion_set.all())) and any(map(lambda p: p.FechaFin == None, self.produccion_set.all())) 
 
     def hayFardos(self):
-        fardos = Fardo.objects.filter(CV = self.CV, AlturaMedia = self.AlturaMedia, Finura = self.Finura, Romana = self.Romana, Rinde = self.Rinde)
+        fardos = Fardo.objects.filter(CV__range = (self.CV -4, self.CV +4), AlturaMedia__range =(self.AlturaMedia -4, self.AlturaMedia +4), Finura__range = (self.Finura -4, self.Finura +4), Romana__range = (self.Romana -4, self.Romana +4), Rinde__range = (self.Rinde -4, self.Rinde +4), DetalleOrden = None)
         kg = 0
+        kgInOrden = 0
+
         for f in fardos:
             kg = kg + f.Peso
-        if kg < self.CantRequerida:
+
+        for d in self.detalleorden_set.all():
+            for f in d.fardo_set.all():
+                kgInOrden = f.Peso + kgInOrden
+
+        if kg < (self.CantRequerida - kgInOrden):
             return False
         return True
+
+    def needFardos(self):
+        kgInOrden = 0
+
+        for d in self.detalleorden_set.all():
+            for f in d.fardo_set.all():
+                kgInOrden = f.Peso + kgInOrden
+
+        if self.CantRequerida > kgInOrden:
+            return True
+        return False
+
 
     def isLavado(self):
         p = self.produccion_set.get(Servicio = 'Lavado')
@@ -202,6 +223,26 @@ class OrdenProduccion(models.Model):
         if self.loteventa == '':
             return True
         return False
+
+    def isEnviarFase(self):    # Si se puede Iniviar algun fase
+        if any(map(lambda p: p.FechaInicio != None and p.FechaFin == None, self.produccion_set.all())):
+            return False
+        if all(map(lambda p: p.FechaInicio != None and p.FechaFin != None, self.produccion_set.all())):
+            return False
+        
+        return True
+
+    def isFinFase(self):        # Si se puede finnalizar alguna fase
+        for p in self.produccion_set.all():
+            if p.FechaInicio != None and p.FechaFin == None:
+                return True
+        return False
+
+    def getEtapa(self):
+        for p in self.produccion_set.all():
+            if p.FechaInicio != None and p.FechaFin == None:
+                return p.Servicio.Nombre
+        return 'Sin Etapa'
 
 class DetalleOrden(models.Model):
     class Meta:
@@ -249,7 +290,12 @@ class Maquinaria(models.Model):
     def __unicode__(self):
         return u"%s " % (self.NroSerie)
 
-
+    def isLibre(self):
+        prod = []
+        for p in self.produccion_set.all():
+            if p.FechaInicio != None:
+                prod.append(p)
+        return  all(map(lambda p: p.FechaFin != None, prod)) and all(map(lambda p: p.FechaFin <= date.today(), self.produccion_set.all()))
 
 
 

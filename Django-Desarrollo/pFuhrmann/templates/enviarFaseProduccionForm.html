@@ -1,45 +1,77 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
-
-{% block contenido %}
-<div class="container">
-        <div class="panel panel-red">
-            <div class="panel-heading clearfix">
-                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Enviar a Fase de Producción</h4>
-                <div class="btn-group pull-right">
-                    <a class="btn btn-default" type="button" href="#" title="Ayuda"><span class="glyphicon glyphicon-question-sign"></span></a>
-                    <a class="btn btn-default btn-gr" type="button" href="/listadoOrden" title="Listado"><span class="glyphicon glyphicon-list-alt"></span></a>
+<div class="panel-body">
+    <form class="form-horizontal"> 
+        <div class = 'row'> 
+            <fieldset>
+                <legend>
+                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Asignar Maquinaria a Fase de Produccion</h4></font>
+                </legend>
+                <div class="col-md-2"><label>Maquinaria: </label></div>
+                <div class="col-xs-6 col-sm-4">
+                    <select id="estanciaCombo"> 
+                        <option value='0'>   ---  Seleccionar  ---   </option>
+                        {% for maquina in maquinaria %}
+                            <option value='{{maquina.NroSerie}}'>{{maquina.NroSerie}} - {{maquina.Descripcion}}</option>
+                        {% endfor %}
+                    
+                    </select> 
                 </div>
-            </div>
-            <div class="panel-body">
-                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tableOrden" width="100%">
-                    <thead>
-                        <tr>
-                            <th width="10%">Nro. Orden</th>
-                            <th width="10%">Fecha Emision</th>
-                            <th width="10%">Kg</th>
-                            <th width="10%">Servicio</th>
-                        </tr>
-                        {% for dato in lista %}
-                        <tr onclick = "this.style.backgroundColor = '#F2F2F2' ">
-                            <td width="10%">{{dato.NroOrden}}</td>
-                            <td width="10%">{{dato.FechaEmision}}</td>
-                            <td width="10%">{{dato.CantRequerida}}</td>
-                            <td width="10%">{{dato.Servicio}}</td>
-                        </tr>
-
-                        {% empty %}
-                            <li> No existen ordenes de producción registradas </li>
-                        {% endfor %}        
-                    </thead>
-                </table>
-
-                <a class="btn btn-default btn-gr" type= "button" title= "Enviar a Produccion"  href="#">Enviar</a>
-                
-                <a class="btn btn-default btn-gr" type= "button" title= "Cancelar"  href="/index">Cancelar</a>
-                <script type ="text/javascript"> </script>
-            </div>
+            </fieldset>
         </div>
-    </div>
+    </form>
+</div>    
+
+<div class="modal-footer">
+    <div class="bootstrap-dialog-footer">
+        <div class="bootstrap-dialog-footer-buttons">
+            <button class="btn btn-default" onClick="submit({{orden.NroOrden}})" type="Submit" id="agregar">Iniciar Proceso</button>
+            <button class="btn btn-default" data-dismiss='modal' >Salir</button>
+        </div>
+    </div>  
 </div>
-{% endblock %}
+
+
+
+<script type="text/javascript">
+
+function submit(orden){
+    var idEstancia = $('#estanciaCombo').val();
+
+    if (idEstancia != 0) {
+        $.ajax({
+            type: 'get',
+            dataType: 'html',
+            url: '/commitIniciarFase/'+ orden + '/' + idEstancia,
+        });
+
+        BootstrapDialog.show({
+            title: 'Aviso',
+            cssClass: 'error-dialog',
+            message: 'Fase de Produccion Iniciada!',
+            type: BootstrapDialog.TYPE_WARNING, 
+            buttons: [
+                {
+                    label: 'Aceptar',
+                    action: function(dialogRef){
+                        window.location='/listadoOrden';
+                        dialogRef.close();
+                    }
+                }]
+          });
+    }
+    else {
+        BootstrapDialog.show({
+            title: 'Error',
+            cssClass: 'error-dialog',
+            message: 'Debe Seleccionar una Maquinaria!',
+            type: BootstrapDialog.TYPE_DANGER, 
+            buttons: [
+            {
+                label: 'Aceptar',
+                action: function(dialogRef){
+                    dialogRef.close();
+                }
+             }]
+         });
+    }
+}
+</script>

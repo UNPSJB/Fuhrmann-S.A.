@@ -1,6 +1,5 @@
 <div class="panel-body">
         <form class="form-horizontal"> 
-            
             <div class = 'row'> 
                 <fieldset>
                     <legend>
@@ -37,7 +36,7 @@
 <div class="modal-footer">
     <div class="bootstrap-dialog-footer">
         <div class="bootstrap-dialog-footer-buttons">
-            <button class="btn btn-default" onClick="submit({{NroOrden}})" type="Submit" id="agregar">Agregar</button>
+            <button class="btn btn-default" onClick="submit('{{orden.NroOrden}}', '{{orden.needFardos}}')" type="Submit" id="agregar">Agregar</button>
             <button class="btn btn-default" data-dismiss='modal' >Salir</button>
         </div>
     </div>  
@@ -49,7 +48,7 @@
 
 var campos=[]      /* Variable global para poner los selected */
 
-function submit(orden){
+function submit(orden, needFardos){
     if (campos == "") {
         BootstrapDialog.show({
             title: 'Error',
@@ -65,29 +64,48 @@ function submit(orden){
                 }]
         });
     }
-    else{
-        $.ajax({
-            type: 'get',
-            dataType: 'html',
-            url: '/agregaDetalleOrden/'+ campos + '/' + orden,
-        });
-        campos =[] /* Vacio el buffer */
-        dialog1.setMessage($('<div></div>').load('/verOrdenProduccion/' + orden));
+    else if (needFardos == 'False'){
         BootstrapDialog.show({
-            title: 'Aviso',
-            cssClass: 'aviso-dialog',
-            message: 'Detalle Agregado a Orden!',
-            type: BootstrapDialog.TYPE_WARNING, 
+            title: 'Error',
+            cssClass: 'error-dialog',
+            message: 'Orden de Produccion ya cumple con la Cantidad Requerida!',
+            closable: false,
+            type: BootstrapDialog.TYPE_DANGER, 
             buttons: [
                 {
                     label: 'Aceptar',
                     action: function(dialogRef){
+                        window.location="/listadoOrden";
                         dialogRef.close();
                     }
                 }]
         });
-        $("#FardosCombo").hide();
     }
+    else{
+        $.get('/agregaDetalleOrden/'+ campos + '/' + orden, function(json) {
+            
+            kg = json.kg
+
+            campos =[] /* Vacio el buffer */        
+            BootstrapDialog.show({
+                title: 'Aviso',
+                cssClass: 'aviso-dialog',
+                message: 'Se Agregaron ' + kg + 'Kg. a la Orden',
+                closable: false,
+                type: BootstrapDialog.TYPE_WARNING, 
+                buttons: [
+                    {
+                        label: 'Aceptar',
+                        action: function(dialogRef){
+                            dialog2.setMessage($('<div></div>').load('/agregarDetalle/' + orden));
+                            dialog1.setMessage($('<div></div>').load('/verOrdenProduccion/' + orden));
+                            dialogRef.close();
+                        }
+                    }]
+            });
+            $("#FardosCombo").hide();
+        });
+    }            
 }
 
 $( document ).ready(function() {
@@ -109,7 +127,7 @@ $( document ).ready(function() {
         $.ajax({
             type: 'get',
             dataType: 'html',
-            url: '/loteEstancia/'+idEstancia,
+            url: '/loteEstancia/'+idEstancia + '/'+ {{orden.NroOrden}},
             success: function(json){
                 lista = JSON.parse(json);
                 

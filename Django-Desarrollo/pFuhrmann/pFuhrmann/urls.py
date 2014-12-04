@@ -23,6 +23,8 @@ urlpatterns = patterns('',
     url(r'^listadoVenta/$', 'appWeb.views.listadoVenta'),
     url(r'^buscarVenta/(.*)/$', 'appWeb.views.buscarVenta'),
 
+
+
     #Orden de produccion
     url(r'^registrarOrdenProduccion/$', 'appWeb.views.registrarOrdenProduccion'),
     url(r'^modificarOrdenProduccion/(\d+)/$', 'appWeb.views.registrarOrdenProduccion'),
@@ -33,7 +35,8 @@ urlpatterns = patterns('',
     url(r'^listadoOrden/$', 'appWeb.views.listadoOrden'),
     url(r'^agregarDetalle/(\d+)/$', 'appWeb.views.mostrarEstancia'),
 
-    url(r'^loteEstancia/([\d-]+)/$', 'appWeb.views.mostrarLotes'),
+    url(r'^loteEstancia/(?P<estancia>.*)/(?P<orden>\d+)/$', 'appWeb.views.mostrarLotes'),
+
     url(r'^fardosLote/(\d+)/$', 'appWeb.views.mostrarFardos'),
     url(r'^agregaDetalleOrden/(?P<campos>.*)/(?P<orden>\d+)/$', 'appWeb.views.agregarDetalle'),
     url(r'^buscarOrden/(.*)/$', 'appWeb.views.buscarOrden'),
@@ -43,6 +46,11 @@ urlpatterns = patterns('',
     url(r'^commitLoteVenta/(?P<cuadricula>.*)/(?P<orden>\d+)/$', 'appWeb.views.commitLoteVenta'),
     url(r'^agregarLoteVenta/(\d+)/$', 'appWeb.views.agregarLoteVenta'),
 
+
+
+    url(r'^commitIniciarFase/(?P<orden>\d+)/(?P<nroSerie>\d+)/$', 'appWeb.views.commitIniciarFase'),
+    url(r'^enviarFaseProduccion/(\d+)/$', 'appWeb.views.enviarFaseProduccion'),
+    url(r'^finalizarFaseProduccion/(\d+)/$', 'appWeb.views.finalizarFaseProduccion'),
 
 
 

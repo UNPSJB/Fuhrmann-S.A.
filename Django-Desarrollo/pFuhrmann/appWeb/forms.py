@@ -87,7 +87,7 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
 
     class EstanciaForm(forms.ModelForm):
 
-        Nombre = forms.CharField(label="Nombre (*)")
+       # Nombre = forms.CharField(label="Nombre (*)")
 
         class Meta:
             model = Estancia
@@ -139,17 +139,6 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
 #LOTES&FARDOS
 
 # ********************************* Formularios de Lotes *********************************
-
-
-    NroLote = models.AutoField(primary_key = True)
-    TipoFardo = models.ForeignKey('TipoFardo')
-    CantFardos = models.PositiveIntegerField(max_length=50)
-    Peso = models.PositiveIntegerField(max_length=50)
-    Baja = models.BooleanField(default=False)
-    Compra = models.OneToOneField('CompraLote')
-    Estancia = models.ForeignKey('Estancia')
-    Cuadricula = models.CharField(max_length=50)
-
 
 def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pasarle parametros
 
@@ -213,7 +202,6 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
             lote.Estancia = c.Estancia
             lote.save()
             
-
     return LoteForm
 
 
@@ -309,7 +297,6 @@ def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase 
         else:
             DNI = ARDNIField(label="DNI (*)",widget=forms.HiddenInput())
             CUIL = ARCUITField(label="CUIL (*)",widget=forms.HiddenInput())
-
 
 
         def __init__(self, *args, **kwargs):
@@ -485,10 +472,16 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
                 p.delete()
 
             servicio = self.cleaned_data['Servicio']
+            s = []
             while servicio != None:
-                p = Produccion.objects.create(Orden=orden, Servicio = servicio)
-                p.save()
+                s.append(servicio)
                 servicio = servicio.ServicioPrevio
+
+            s.reverse()
+            
+            for ser in s:
+                p = Produccion.objects.create(Orden=orden, Servicio = ser)
+                p.save()
 
     return OrdenProduccionForm
 

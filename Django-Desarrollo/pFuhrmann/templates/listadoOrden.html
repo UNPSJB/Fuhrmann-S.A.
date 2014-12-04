@@ -46,15 +46,15 @@
                                 
                                 <td style="text-align:center;" width="40%">
                                     
-                                    <a class="btn btn-default" onClick="showModal('{{dato.NroOrden}}', '{{dato.hayFardos}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', '{{dato.loteventa}}')" title="Ver Detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                    <a class="btn btn-default" onClick="showModal('{{dato.NroOrden}}', '{{dato.hayFardos}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', '{{dato.loteventa}}', '{{dato.needFardos}}')" title="Ver Detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
 
                                     <a class="btn btn-default" onClick="comprobar('/modificarOrdenProduccion/{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden en Produccion - Finalizada - Cancelada!')" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
                                     
                                     <a class="btn btn-default" onClick="cancelar('{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden en Produccion - Finalizada - Cancelada!')" title="Cancelar" ><span class="glyphicon glyphicon-remove"></span></a>
                                     
-                                    <a class="btn btn-default" href="#" title="Enviar a Produccion"><span class="glyphicon glyphicon-share-alt"></span></a>
+                                    <a class="btn btn-default" onClick="enviarFase('{{dato.NroOrden}}', '{{dato.isEnviarFase}}', '{{dato.Cancelada}}', '{{dato.needFardos}}')" title="Enviar a Fase de Produccion"><span class="glyphicon glyphicon-share-alt"></span></a>
                                     
-                                    <a class="btn btn-default" href="#" title="Finalizar Produccion"><span class="glyphicon glyphicon-warning-sign"></span></a>
+                                    <a class="btn btn-default" onClick="finalizarFase('{{dato.NroOrden}}','{{dato.isFinFase}}', '{{dato.Cancelada}}', '{{dato.getEtapa}}')"title="Finalizar Fase de Produccion"><span class="glyphicon glyphicon-warning-sign"></span></a>
                                     </td>
                             </tr>
 
@@ -82,6 +82,115 @@
     
     <script type="text/javascript">
 
+
+        function enviarFase(orden, enviar, cancelar, needFardos){
+            if (enviar == 'False' || cancelar == 'True'){
+                BootstrapDialog.show({
+                    title: 'Error',
+                    cssClass: 'error-dialog',
+                    message: 'Imposible enviar a Fases de Produccion',
+                    type: BootstrapDialog.TYPE_DANGER, 
+                    buttons: [
+                        {
+                            label: 'Aceptar',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+            else if (needFardos == 'True'){
+                BootstrapDialog.show({
+                    title: 'Error',
+                    cssClass: 'error-dialog',
+                    message: 'Se necesita agregar Fardos de Produccion',
+                    type: BootstrapDialog.TYPE_DANGER, 
+                    buttons: [
+                        {
+                            label: 'Aceptar',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+            else{
+                BootstrapDialog.show({
+                    title: ('Enviar a Fase de Produccion de Orden Produccion - Nro: '+orden),
+                    message: $('<div></div>').load('/enviarFaseProduccion/'+orden),
+                    closable: false,
+                    cssClass: 'showfardo-dialog',
+                    onshown: function(dialog) {
+                        var tier = $('.bootstrap-dialog').length - 1;
+                        dialog.$modal.prev(".modal-backdrop")
+                            .css("z-index", 1030 + tier * 30);
+                        dialog.$modal
+                            .css("z-index", 1040 + tier * 30);
+                    },
+                });
+            }
+        }
+
+        function finalizarFase(orden, fin, cancelar, etapa){
+            if (fin == 'False'|| cancelar == 'True'){
+                BootstrapDialog.show({
+                    title: 'Error',
+                    cssClass: 'error-dialog',
+                    message: 'Imposible finalizar Fases de Produccion',
+                    type: BootstrapDialog.TYPE_DANGER, 
+                    buttons: [
+                        {
+                            label: 'Aceptar',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+            else{
+                BootstrapDialog.show({
+                    title: 'Finalizar Fase de Produccion',
+                    cssClass: 'error-dialog',
+                    message: '¿Está seguro que quiere finalizar Fase de Produccion: ' + etapa + '?',
+                    type: BootstrapDialog.TYPE_WARNING, 
+                    buttons: [
+                        {
+                            label: 'Si',
+                            action: function(dialogRef){
+                                BootstrapDialog.show({
+                                    title: 'Informacion',
+                                    cssClass: 'aviso-dialog',
+                                    message: "Fase de Produccion: " + etapa + " Finalizo Correctamente Date: " + new Date,
+                                    type: BootstrapDialog.TYPE_INFO, 
+                                    closable: false,
+                                    buttons: [
+                                        {
+                                            label: 'Aceptar',
+                                            action: function(dialogRef){
+                                                window.location='/finalizarFaseProduccion/'+orden
+                                            }
+                                        }]
+                                });
+                            }
+                        },
+                        {
+                            label: 'No',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+
+            }
+        }
+
+
+
+
+
+
+
+
         function showModal2(id){
             BootstrapDialog.show({
                 title: ('Agregar Lote de Venta de Orden Produccion - Nro: '+id),
@@ -99,11 +208,11 @@
         }
 
 
-        function showModal1(id, hayFardos){
-            if (hayFardos == 'True') {  /* Orden nos dice si hay fardos disponibles para poder entrar en produccion */
-                BootstrapDialog.show({
+        function showModal1(id, hayFardos, needFardos){
+            if (hayFardos == 'True' & needFardos == 'True') {  /* Orden nos dice si hay fardos disponibles para poder entrar en produccion */
+                window,dialog2 = new BootstrapDialog.show({
                     title: ('Agregar Detalle a Orden Produccion - Nro: '+id),
-                    message: $('<div id="diss"></div>').load('/agregarDetalle/'+id),
+                    message: $('<div></div>').load('/agregarDetalle/'+id),
                     closable: false,
                     cssClass: 'showfardo-dialog',
                     onshown: function(dialog) {
@@ -132,9 +241,9 @@
             }
         }
 
-        function showModal(id, hayFardos, prod, cancel, finali, isLoteVentas) {
+        function showModal(id, hayFardos, prod, cancel, finali, isLoteVentas, needFardos) {
 
-            if (prod == 'False' & cancel == 'False' & finali == 'False'){
+            if (prod == 'False' & cancel == 'False' & finali == 'False' & needFardos == 'True'){
                 window.dialog1 = new BootstrapDialog.show({
                     title: ('Datos de Orden Produccion - Nro. Orden: '+id),
                     cssClass: 'show-dialog',
@@ -151,19 +260,20 @@
                     {
                         label: 'Agregar Detalle',
                         action: function(dialog){
-                            showModal1(id, hayFardos);
+                            showModal1(id, hayFardos, needFardos);
                         }
                     },
                     {
                         label: 'Cancel',
                         action: function(dialogRef){
+                            window.location = "/listadoOrden"
                             dialogRef.close();
                         }
                     }]
                 });
             }
             else if (finali == 'True' & isLoteVentas == ''){
-                window.dialog1 = new BootstrapDialog.show({
+                window.dialog = new BootstrapDialog.show({
                     title: ('Datos de Orden Produccion - Nro. Orden: '+id),
                     cssClass: 'show-dialog',
                     closable: false,
@@ -185,13 +295,14 @@
                     {
                         label: 'Cancel',
                         action: function(dialogRef){
+                            window.location = "/listadoOrden"
                             dialogRef.close();
                         }
                     }]
                 });
             }
             else{
-                window.dialog1 = new BootstrapDialog.show({
+                window.dialog = new BootstrapDialog.show({
                     title: ('Datos de Orden Produccion - Nro. Orden: '+id),
                     cssClass: 'show-dialog',
                     closable: false,
@@ -207,6 +318,7 @@
                     {
                         label: 'Cancel',
                         action: function(dialogRef){
+                            window.location = "/listadoOrden"
                             dialogRef.close();
                         }
                     }]

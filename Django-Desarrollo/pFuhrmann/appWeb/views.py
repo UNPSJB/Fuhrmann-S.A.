@@ -23,7 +23,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.loader import render_to_string
-
+from datetime import date
+import json
 
 #from wkhtmltopdf.views import PDFTemplateView
 
@@ -362,7 +363,7 @@ def verOrdenProduccion(request, pk):
         peso = detalle.fardo_set.count() * fardo.Peso
 
         total_cantidad = total_cantidad + detalle.fardo_set.count()
-        total_peso = total_peso + fardo.Peso
+        total_peso = total_peso + (fardo.Peso*detalle.fardo_set.count())
         total_finura = total_finura + fardo.Finura
         total_hm = total_hm + fardo.AlturaMedia
         total_cvh = total_cvh + fardo.CV
@@ -371,59 +372,141 @@ def verOrdenProduccion(request, pk):
 
         prueba.append({'nroDetalle':detalle.NroDetalle,'estancia':fardo.Lote.Compra.Estancia.Nombre,'cantidad':detalle.fardo_set.count(),'peso':peso, 'Finura':fardo.Finura, 'HM':fardo.AlturaMedia, 'CVH':fardo.CV, 'Rinde':fardo.Rinde, 'Romana':fardo.Romana})
 
+    if detalles.count() > 0:
+        total_finura = float("%0.2f" % (total_finura / detalles.count()))
+        total_hm = float("%0.2f" % (total_hm / detalles.count()))
+        total_cvh = float("%0.2f" % (total_cvh / detalles.count()))
+        total_rinde = float("%0.2f" % (total_rinde / detalles.count()))
+        total_romana = float("%0.2f" % (total_romana / detalles.count()))
+
+
     totales.append({'total_cantidad':total_cantidad , 'total_peso':total_peso , 'total_finura':total_finura , 'total_hm':total_hm , 'total_cvh':total_cvh , 'total_rinde':total_rinde , 'total_romana':total_romana })
     
     return render_to_response('datosOrden.html', {'orden':orden, 'detalles':prueba, 'totales':totales}, context_instance=RequestContext(request))
 
 
 def mostrarEstancia (request, pk):
-    estancias = Estancia.objects.all()
-    return render_to_response('OrdenProduccion/agregarDetalle.html', {'estancias':estancias, 'NroOrden':pk}, context_instance=RequestContext(request))
+    orden = OrdenProduccion.objects.get(NroOrden = pk)
+    est = [] # Estancia que tiene fardos con especificaciones requeridas
 
-def mostrarLotes (request, pk):
-    estancia = Estancia.objects.get( CUIT = pk )
-    lotes = Lote.eliminados.filter(Compra__Estancia = estancia)
+    for estancia in Estancia.objects.all():
+        lotes = estancia.lote_set.all()
+        for lote in lotes:
+            if lote.fardo_set.filter(CV__range = (orden.CV -4, orden.CV +4), AlturaMedia__range = (orden.AlturaMedia -4, orden.AlturaMedia +4), Finura__range = (orden.Finura -4, orden.Finura +4), Romana__range = (orden.Romana -4, orden.Romana +4), Rinde__range = (orden.Rinde -4, orden.Rinde +4), DetalleOrden = None):
+                est.append(estancia)
+                break
+
+    return render_to_response('OrdenProduccion/agregarDetalle.html', {'estancias':est, 'orden':orden}, context_instance=RequestContext(request))
+
+def mostrarLotes (request, estancia, orden):
     
+    orden = OrdenProduccion.objects.get(NroOrden = orden)
+    estancia = Estancia.objects.get( CUIT = estancia )
+
+    lotes = [] # Lotes que tienen fardos con especificaciones requeridas
+
+    for lote in estancia.lote_set.all():
+        if lote.fardo_set.filter(CV__range = (orden.CV -4, orden.CV +4), AlturaMedia__range = (orden.AlturaMedia -4, orden.AlturaMedia +4), Finura__range = (orden.Finura -4, orden.Finura +4), Romana__range = (orden.Romana -4, orden.Romana +4), Rinde__range = (orden.Rinde -4, orden.Rinde +4), DetalleOrden = None):
+            lotes.append(lote)
+            continue
+
     data = serializers.serialize('json', lotes)
     return HttpResponse(data, content_type='json')
     
 def mostrarFardos (request, pk):
     lote = Lote.objects.get( NroLote = pk )
+    
     fardos_set = lote.fardo_set
     fardos = fardos_set.all().filter(DetalleOrden = None)
     data = serializers.serialize('json', fardos)
     return HttpResponse(data, content_type='json')
     
 
-def agregarDetalle (request, campos = None, orden = None):
-   
+def agregarDetalle (request, campos = None, orden = None): # En caso de que todos los fardos que eligio se pasen de
+                                                           # la cantidad requerida solo tomara los fardos que aproximen
+                                                           # ese valor
+    kgInOrden = 0               # Guardo los kilos que voy llenando en la orden
+    kgAgregados = 0
     detalle = DetalleOrden()
-    detalle.OrdenProduccion = OrdenProduccion.objects.get(NroOrden = orden)
+    ordenKg = OrdenProduccion.objects.get(NroOrden = orden)
+    detalle.OrdenProduccion = ordenKg
     detalle.save()
 
     campos = campos.split(",")
 
     for campo in campos:
+        ordenKg = OrdenProduccion.objects.get(NroOrden = orden)
+        for d in ordenKg.detalleorden_set.all():    # Obtengo todo el peso de la orden por los detalles
+            for f in d.fardo_set.all():
+                kgInOrden = f.Peso + kgInOrden
+
         if campo != ',':
             fardo = Fardo.objects.get(NroFardo = int(campo))
-            fardo.DetalleOrden = detalle
-            fardo.save()
-    return HttpResponseRedirect('/listadoOrden')   
+            if ordenKg.CantRequerida > kgInOrden:      # Si necesito mas fardo lo agrego
+                fardo.DetalleOrden = detalle
+                fardo.save()
+                kgAgregados = kgAgregados + fardo.Peso
+            else: 
+                break
+
+        kgInOrden = 0    
+    
+
+    return HttpResponse(json.dumps({'kg': kgAgregados}), content_type="application/json")   
 
 
 def cancelarOrdenProduccion(request, pk):
     orden = OrdenProduccion.objects.get( NroOrden=pk )
     orden.Cancelada = True
+    
+    for detalle in orden.detalleorden_set.all():
+        for fardo in detalle.fardo_set.all():
+            fardo.DetalleOrden = None
+            fardo.save()
+        detalle.delete()
+
     orden.save()
     return HttpResponseRedirect('/listadoOrden')    
+
     
-def enviarFaseProduccion(request):
-    orden = OrdenProduccion.objects.all()
-    return render_to_response('enviarFaseProduccionForm.html', {'lista':orden}, context_instance=RequestContext(request))
+def enviarFaseProduccion(request, pk):
+    maq = []
+    orden = OrdenProduccion.objects.get(NroOrden = pk)
+    for p in orden.produccion_set.all():
+        if p.FechaInicio == None:
+            maquinaria = Maquinaria.objects.filter(Servicio = p.Servicio)
+            break
+    for m in maquinaria:
+        if m.isLibre():
+            maq.append(m)
+
+    return render_to_response('enviarFaseProduccionForm.html', {'orden':orden, 'maquinaria':maq}, context_instance=RequestContext(request))
     
-def finalizarFaseProduccion(request):
-    orden = OrdenProduccion.objects.all()
-    return render_to_response('finalizarFaseProduccionForm.html', {'lista':orden}, context_instance=RequestContext(request))   
+def commitIniciarFase(request, orden, nroSerie):
+    o = OrdenProduccion.objects.get(NroOrden = orden)
+    m = Maquinaria.objects.get(NroSerie = nroSerie)
+
+    for p in o.produccion_set.all():
+        if p.FechaInicio == None:
+            p.FechaInicio = date.today()
+            p.Maquinaria = m
+            p.save()
+            break
+
+    return HttpResponseRedirect('/listadoOrden')    
+
+
+
+def finalizarFaseProduccion(request, pk):
+    orden = OrdenProduccion.objects.get(NroOrden = pk)
+    for p in orden.produccion_set.all():
+        if p.FechaInicio != None and p.FechaFin == None:
+            p.FechaFin = date.today()
+            p.Maquinaria = None
+            p.save()
+            break
+
+    return HttpResponseRedirect('/listadoOrden')    
 
 
 
