@@ -116,7 +116,7 @@ class Lote(models.Model):
     disponibles = BajaLogicaManager(fardo=None)                 # Mostrar objetos con baja = true
 
     def __unicode__(self):
-        return u"%s" % self.NroLote
+        return "%s" % str(str(self.NroLote) + " - " + str(self.TipoFardo.Nombre) + " - " + str(self.Estancia.Nombre))  
   
 class Fardo(models.Model):
     class Meta:
@@ -340,5 +340,5 @@ class LoteVenta(models.Model):
     eliminados = BajaLogicaManager(Baja = True)     # Mostrar objetos con baja = true
 
     def __unicode__(self):
-        return "%s" % (str(self.NroPartida))
+        return "%s" % str(str(self.NroPartida) +  " - " + str(self.Cuadricula) + " - " + str(self.OrdenProduccion.FechaEmision))
 

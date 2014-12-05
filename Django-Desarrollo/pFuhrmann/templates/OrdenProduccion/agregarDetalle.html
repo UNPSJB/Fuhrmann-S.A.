@@ -5,19 +5,19 @@
                     <legend>
                         <font color = "Black" size=3 face="Comic Sans MS"><h4>Seleccione Estancia - Lote</h4></font>
                     </legend>
-                    <div class="col-md-2"><label>Estancia: </label></div>
-                    <div class="col-xs-6 col-sm-4">
+                    <div class="col-md-3"><label>Estancia: </label></div>
+                    <div class="col-md-9">
                         <select id="estanciaCombo"> 
                             <option value='0'>   ---  Seleccionar  ---   </option>
                             {% for estancia in estancias %}
-                                <option value='{{estancia.CUIT}}'>{{estancia.Nombre}}</option>
+                                <option value='{{estancia.CUIT}}'>{{estancia.CUIT}} - {{estancia.Nombre}}</option>
                             {% endfor %}
                         
                         </select> 
                     </div>
 
-                    <div class="col-md-1"><label>Lote: </label></div>
-                    <div class="col-xs-6 col-sm-3">
+                    <div class="col-md-3"><label>Lote: </label></div>
+                    <div class="col-md-9">
                         <select id="lotesCombo">
                             <option value='0'>   ---  Seleccionar  ---   </option>
                         </select> 
@@ -124,18 +124,19 @@ $( document ).ready(function() {
 
         /* Serializacion en Django: {"pk": ,"model":, "fields": { "nombre": "valor",} } */
 
-        $.ajax({
-            type: 'get',
-            dataType: 'html',
-            url: '/loteEstancia/'+idEstancia + '/'+ {{orden.NroOrden}},
-            success: function(json){
-                lista = JSON.parse(json);
-                
+        $.get('/loteEstancia/'+idEstancia + '/'+ {{orden.NroOrden}}, function(json){
+                console.log(arguments);
+                lista = JSON.parse(json.lotes);
+                lista1 = JSON.parse(json.fardos);
+
                 for(var i in lista){
-                    cbLotes.append("<option value="+lista[i].pk+">Lote: " + lista[i].pk +' - Peso: '+ lista[i].fields.Peso +"</option>");
+                    for (var j in lista1) {
+                        cbLotes.append("<option value="+lista[i].pk+">Lote: " + lista[i].pk +' - Peso: '+ lista[i].fields.Peso +  '- CV: ' + lista1[i].fields.CV + '- Romana: ' + lista1[i].fields.Romana + '- Rinde: ' + lista1[i].fields.Rinde+ '- HM: '+lista1[i].fields.AlturaMedia+ '- Finura: ' + lista1[i].fields.Finura + "</option>");
+                        break;
+                    }
                 }
             }
-        });
+        );
     });
 
     $("#lotesCombo").change(function() 

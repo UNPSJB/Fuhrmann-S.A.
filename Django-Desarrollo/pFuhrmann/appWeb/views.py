@@ -406,15 +406,22 @@ def mostrarLotes (request, estancia, orden):
     estancia = Estancia.objects.get( CUIT = estancia )
 
     lotes = [] # Lotes que tienen fardos con especificaciones requeridas
-
+    fardos = [] # datos de fardo
     for lote in estancia.lote_set.all():
         if lote.fardo_set.filter(CV__range = (orden.CV -4, orden.CV +4), AlturaMedia__range = (orden.AlturaMedia -4, orden.AlturaMedia +4), Finura__range = (orden.Finura -4, orden.Finura +4), Romana__range = (orden.Romana -4, orden.Romana +4), Rinde__range = (orden.Rinde -4, orden.Rinde +4), DetalleOrden = None):
             lotes.append(lote)
+            fardos.append(lote.fardo_set.first())
             continue
 
+    data1 =serializers.serialize('json', fardos) 
     data = serializers.serialize('json', lotes)
-    return HttpResponse(data, content_type='json')
     
+    return HttpResponse(json.dumps({'lotes':data, 'fardos':data1}), content_type='json')
+    
+#return HttpResponse(data, content_type='json')
+    
+
+
 def mostrarFardos (request, pk):
     lote = Lote.objects.get( NroLote = pk )
     
