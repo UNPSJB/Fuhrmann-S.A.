@@ -288,8 +288,8 @@ def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase 
         
         Nombre = forms.CharField(label="Nombre (*)")
         Apellido = forms.CharField(label="Apellido (*)" )
-        Email = forms.CharField(label = "E-mail")
-        Telefono = forms.CharField(label = "Teléfono")
+        Email = forms.CharField(label = "E-mail", required = False)
+        Telefono = forms.CharField(label = "Teléfono", required = False)
 
         class Meta:
             model = Productor
@@ -339,8 +339,8 @@ def RepresentanteFormFactory(edit=False):  # Crear una funcion para crear una cl
         
         Nombre = forms.CharField(label="Nombre (*)")
         Apellido = forms.CharField(label="Apellido (*)")
-        Telefono = forms.CharField(label = "Teléfono")
-        Email = forms.CharField(label = "E-mail")
+        Telefono = forms.CharField(label = "Teléfono", required=False)
+        Email = forms.CharField(label = "E-mail", required=False)
 
         class Meta:
             exclude = ['Baja']
