@@ -24,7 +24,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.loader import render_to_string
-from datetime import date
+from datetime import *
 import json
 import reportlab
 import StringIO
@@ -533,7 +533,7 @@ def commitIniciarFase(request, orden, nroSerie):
 
     for p in o.produccion_set.all():
         if p.FechaInicio == None:
-            p.FechaInicio = datetime.now()
+            p.FechaInicio = datetime.now()-timedelta(hours= +3)
             print p.FechaInicio
             p.Maquinaria = m
             p.save()
@@ -547,7 +547,7 @@ def finalizarFaseProduccion(request, pk):
     orden = OrdenProduccion.objects.get(NroOrden = pk)
     for p in orden.produccion_set.all():
         if p.FechaInicio != None and p.FechaFin == None:
-            p.FechaFin = datetime.now()
+            p.FechaFin = datetime.now()-timedelta(hours= +3)
             p.Maquinaria = None
             p.save()
             break
