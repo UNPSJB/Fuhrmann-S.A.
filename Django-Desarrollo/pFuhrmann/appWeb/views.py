@@ -24,9 +24,7 @@ import ast
 import os
 from django.http import HttpResponse
 from datetime import datetime
-
 from forms import SignUpForm
- 
  
 def signup(request):
     if request.method == 'POST':  # If the form has been submitted...
@@ -59,10 +57,10 @@ def signup(request):
     }
     return render_to_response('signup.html', data, context_instance=RequestContext(request))
 
- 
 @login_required()
 def home(request):
     return render_to_response('home.html', {'user': request.user}, context_instance=RequestContext(request))
+
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
  
@@ -110,9 +108,6 @@ def registrarCompra(request):
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('compraForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-
-
-
 # ********************************* Administracion de Venta *********************************
 
 def listadoVenta(request):
@@ -134,8 +129,6 @@ def registrarVenta(request):
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ventaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-
-
 # ********************************* Administracion de Estancias *********************************
 
 def listadoEstancias(request):
@@ -152,8 +145,6 @@ def registrarEstancia(request):
         formulario = EstanciaFormFactory(False)()
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
-
 
 def modificarEstancia(request, pk=None):
     estancia = None
@@ -177,7 +168,6 @@ def eliminarEstancia(request, pk):
     estancia.save()
     estancia = Estancia.objects.filter(Baja = False)
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))    
-
 
 # ********************************* Administracion de Lotes *********************************
 
@@ -209,8 +199,6 @@ def eliminarLoteId(request, pk):
     lote = Lote.noEliminados.all()
     return render_to_response('listadoLotes.html', {'lista':lote}, context_instance=RequestContext(request))    
 
-
-
 # ********************************* Administracion de Fardos *********************************
 
 def listadoFardos(request):
@@ -231,8 +219,6 @@ def registrarFardo(request, pk=None):
                                         Rinde = formulario.cleaned_data['Rinde'], Finura = formulario.cleaned_data['Finura'],
                                         CV = formulario.cleaned_data['CV'], AlturaMedia = formulario.cleaned_data['AlturaMedia'],
                                         Romana = formulario.cleaned_data['Romana'])
-
-
             else:
                 formulario = FardoFormFactory(fardo is not None)(request.POST, instance = fardo)  # Modifico todos los fardos del mismo lote al modificar uno
                 formulario.save()
@@ -243,7 +229,6 @@ def registrarFardo(request, pk=None):
 
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('registrarFardoForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
 
 # ********************************* Administracion de Productor *********************************
     
@@ -285,7 +270,6 @@ def eliminarProductor(request,pk):
     productor = Productor.objects.filter(Baja = False)
     return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
 
-
 # ********************************* Administracion de Representante *********************************
 
 def listadoRepresentante(request):
@@ -324,11 +308,6 @@ def eliminarRepresentante(request,pk):
     representante.save()
     representante = Representante.objects.filter(Baja = False)
     return render_to_response('listadoRepresentante.html', {'lista':representante}, context_instance=RequestContext(request))
-
-
-
-
-
 
 # ********************************* Administracion de Produccion *********************************
 
@@ -577,8 +556,6 @@ def eliminarMaquinaria(request,pk):
     maquinaria.save()
     maquinaria = Maquinaria.objects.filter(Baja = False)
     return render_to_response('listadoMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
-
-
 
 # ********************************* Busquedas por Criterio *********************************
 
