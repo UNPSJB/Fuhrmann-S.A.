@@ -11,15 +11,6 @@ from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, F
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions, InlineField
 
 
-# ********************************* Login *********************************
-class SignUpForm(ModelForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password', 'email', 'first_name', 'last_name']
-        widgets = {
-            'password': forms.PasswordInput(),
-        }    
-
 # ********************************* Formulario de Compras *********************************
 class CompraForm(forms.ModelForm):    
     FechaLlegada = forms.DateField(label = "Fecha de Llegada (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker

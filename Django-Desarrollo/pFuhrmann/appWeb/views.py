@@ -1,20 +1,29 @@
 import urlparse
-from appWeb.models import *
-from appWeb.forms import *
-from django.http import *
 from django.utils.timezone import localtime, now
 from django.shortcuts import render, render_to_response
-from django.template import RequestContext,Context
-from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.template import RequestContext
+from appWeb.models import *
+from appWeb.forms import *
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import *
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.contrib.auth import (REDIRECT_FIELD_NAME, login, logout, authenticate)
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import FormView
+from django.http import *
+from django.shortcuts import render_to_response,redirect
+from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from django.template.loader import render_to_string, get_template
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.template.loader import render_to_string
 from datetime import *
 import json
 import reportlab
@@ -22,50 +31,20 @@ import StringIO
 from django.core import serializers
 import ast
 import os
+from django.conf import settings
 from django.http import HttpResponse
+from django.template import Context
+from django.template.loader import get_template
 from datetime import datetime
-from forms import SignUpForm
- 
-def signup(request):
-    if request.method == 'POST':  # If the form has been submitted...
-        form = SignUpForm(request.POST)  # A form bound to the POST data
-        if form.is_valid():  # All validation rules pass
- 
-            # Process the data in form.cleaned_data
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            email = form.cleaned_data["email"]
-            first_name = form.cleaned_data["first_name"]
-            last_name = form.cleaned_data["last_name"]
- 
-            # At this point, user is a User object that has already been saved
-            # to the database. You can continue to change its attributes
-            # if you want to change other fields.
-            user = User.objects.create_user(username, email, password)
-            user.first_name = first_name
-            user.last_name = last_name
- 
-            # Save new user attributes
-            user.save()
- 
-            return HttpResponseRedirect(reverse('main'))  # Redirect after POST
-    else:
-        form = SignUpForm()
- 
-    data = {
-        'form': form,
-    }
-    return render_to_response('signup.html', data, context_instance=RequestContext(request))
-
-@login_required()
-def home(request):
-    return render_to_response('home.html', {'user': request.user}, context_instance=RequestContext(request))
+import ho.pisa as pisa
+import xhtml2pdf.pisa as pisa
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render_to_response
+from django.template.context import RequestContext
 
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
  
-def main(request):
-    return render_to_response('main.html', {}, context_instance=RequestContext(request))
 # ********************************* PDF *********************************
 
 def render_to_pdf(template_src, context_dict):
