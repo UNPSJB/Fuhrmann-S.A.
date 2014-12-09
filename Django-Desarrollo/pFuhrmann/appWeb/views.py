@@ -1,4 +1,5 @@
 import urlparse
+from django.utils.timezone import localtime, now
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from appWeb.models import *
@@ -35,14 +36,59 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.template import Context
 from django.template.loader import get_template
-import datetime
+from datetime import datetime
 import ho.pisa as pisa
 import xhtml2pdf.pisa as pisa
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render_to_response
+ 
+from django.template.context import RequestContext
+ 
+from forms import SignUpForm
+ 
+ 
+def signup(request):
+    if request.method == 'POST':  # If the form has been submitted...
+        form = SignUpForm(request.POST)  # A form bound to the POST data
+        if form.is_valid():  # All validation rules pass
+ 
+            # Process the data in form.cleaned_data
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            email = form.cleaned_data["email"]
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+ 
+            # At this point, user is a User object that has already been saved
+            # to the database. You can continue to change its attributes
+            # if you want to change other fields.
+            user = User.objects.create_user(username, email, password)
+            user.first_name = first_name
+            user.last_name = last_name
+ 
+            # Save new user attributes
+            user.save()
+ 
+            return HttpResponseRedirect(reverse('main'))  # Redirect after POST
+    else:
+        form = SignUpForm()
+ 
+    data = {
+        'form': form,
+    }
+    return render_to_response('signup.html', data, context_instance=RequestContext(request))
+
+ 
+@login_required()
+def home(request):
+    return render_to_response('home.html', {'user': request.user}, context_instance=RequestContext(request))
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
-
-# ********************************* Administracion de Usuario *********************************
+ 
+def main(request):
+    return render_to_response('main.html', {}, context_instance=RequestContext(request))
+# ********************************* PDF *********************************
 
 def render_to_pdf(template_src, context_dict):
     template = get_template(template_src)
@@ -66,45 +112,6 @@ def myview(request):
                 'lista': estancias,
             }
         )
-
-def nuevo_usuario(request):
-    if request.method =='POST':
-        formulario = UserCreationForm(request.POST)
-        if formulario.is_valid:
-            formulario.save()
-            return HttpResponseRedirect('/')
-    else:
-        formulario = UserCreationForm()
-    
-    return render_to_response('nuevousuario.html', {'formulario':formulario}, context_instance= RequestContext(request))
-
-def ingresar(request):
-    if not request.user.is_anonymous():
-            return HttpResponseRedirect('/privado')
-    if request.method =='POST':
-        formulario = AuthenticationForm(request.POST)
-        if formulario.is_valid:
-            usuario = request.POST ['username']
-            clave = request.POST ['password']
-            acceso = authenticate(username=usuario, password=clave)
-            if acceso is not None:
-                if acceso.is_active:
-                    login(request,acceso)
-                    return HttpResponseRedirect('/privado')
-                else:
-                    return render_to_response('noactivo.html',context_instance=RequestContext(request))
-            else:
-                return render_to_response('nousuario.html',context_instance=RequestContext(request))
-    else:
-        formulario = AuthenticationForm()
-    return render_to_response('ingresar.html',{'formulario':formulario}, context_instance=RequestContext(request))
-
-@login_required(login_url='/ingresar')
-def privado(request):
-    usuario = request.user
-    return render_to_response('privado.html',{'usuario':usuario},context_instance=RequestContext(request))
-
-
 
 # ********************************* Administracion de Compra *********************************
 
@@ -526,7 +533,8 @@ def commitIniciarFase(request, orden, nroSerie):
 
     for p in o.produccion_set.all():
         if p.FechaInicio == None:
-            p.FechaInicio = date.today()
+            p.FechaInicio = datetime.now()
+            print p.FechaInicio
             p.Maquinaria = m
             p.save()
             break
@@ -539,7 +547,7 @@ def finalizarFaseProduccion(request, pk):
     orden = OrdenProduccion.objects.get(NroOrden = pk)
     for p in orden.produccion_set.all():
         if p.FechaInicio != None and p.FechaFin == None:
-            p.FechaFin = date.today()
+            p.FechaFin = datetime.now()
             p.Maquinaria = None
             p.save()
             break

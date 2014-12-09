@@ -12,10 +12,13 @@ from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions, Inl
 
 
 # ********************************* Login *********************************
-class LoginForm(forms.Form):
-    username = forms.CharField(label = "Usuario")
-    password = forms.CharField(widget=forms.PasswordInput, label = "Contraseña") 
-    
+class SignUpForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'email', 'first_name', 'last_name']
+        widgets = {
+            'password': forms.PasswordInput(),
+        }    
 
 # ********************************* Formulario de Compras *********************************
 class CompraForm(forms.ModelForm):    
