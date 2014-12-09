@@ -151,7 +151,7 @@ class OrdenProduccion(models.Model):
     class Meta:
         ordering = ['NroOrden']
     NroOrden = models.AutoField(primary_key = True)
-    FechaEmision = models.DateField(auto_now_add = True)
+    FechaEmision = models.DateTimeField(auto_now_add = True)
     CantRequerida = models.PositiveIntegerField(max_length=50)
     Servicio = models.ManyToManyField('Servicio', through='Produccion', null = True, blank = True)
     CV = models.FloatField()
@@ -296,8 +296,8 @@ class Produccion(models.Model):
     NroProduccion = models.AutoField(primary_key = True)
     Orden = models.ForeignKey('OrdenProduccion')
     Servicio = models.ForeignKey('Servicio')
-    FechaInicio = models.DateField(null = True, blank = True)
-    FechaFin = models.DateField(null = True, blank = True)
+    FechaInicio = models.DateTimeField(null = True)
+    FechaFin = models.DateTimeField(null = True)
     Maquinaria = models.ForeignKey('Maquinaria', null = True, blank = True)
 
     def __unicode__(self):
@@ -320,7 +320,7 @@ class Maquinaria(models.Model):
         for p in self.produccion_set.all():
             if p.FechaInicio != None:
                 prod.append(p)
-        return  all(map(lambda p: p.FechaFin != None, prod)) and all(map(lambda p: p.FechaFin <= date.today(), self.produccion_set.all()))
+        return  all(map(lambda p: p.FechaFin != None, prod)) and all(map(lambda p: p.FechaFin <= datetime.today(), self.produccion_set.all()))
 
 
 

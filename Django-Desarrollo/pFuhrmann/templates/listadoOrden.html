@@ -22,14 +22,14 @@
             <table  class="table table-striped table-bordered table-condensed" id="tableLote">
                 <thead>
                     <tr>
-                        <th style="text-align:center;" width="15%">Fecha de emisión</th>
+                        <th style="text-align:center;" width="14%">Fecha de emisión</th>
                         <th style="text-align:center;" width="14%">Inicio producción</th>
                         <th style="text-align:center;" width="14%">Fin producción</th>
                         <th style="text-align:center;" width="10%">Maquina actual</th>
                         <th style="text-align:center;" width="10%">En proceso</th>
                         <th style="text-align:center;" width="7%">Finalizada</th>
                         <th style="text-align:center;" width="7%">Cancelada</th>
-                        <th style="text-align:center;" width="40%">Acciones</th>
+                        <th style="text-align:center;" width="42%">Acciones</th>
                     </tr>
                     {% regroup lista by NroOrden as lista %}<ul>
                         {% for orden in lista %}
@@ -70,7 +70,7 @@
             <script type ="text/javascript"> </script>
             <div class="pull-right">
                 <a class="btn btn-default btn-gr" type= "button" href="/registrarOrdenProduccion"  title = "Agregar Orden" >Nueva</a>
-                <a class="btn btn-default btn-gr" type= "button"  id = 'button'  title = "Salir" >Salir</a>
+                <a class="btn btn-default btn-gr" type= "button" href="/index"  title = "Salir" >Salir</a>
             </div>            
         </div>
     </div>
