@@ -1,50 +1,31 @@
 import urlparse
-from django.utils.timezone import localtime, now
-from django.shortcuts import render, render_to_response
-from django.template import RequestContext
-from appWeb.models import *
-from appWeb.forms import *
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required
-from django.conf import settings
-from django.contrib.auth import (REDIRECT_FIELD_NAME, login, logout, authenticate)
-from django.core.urlresolvers import reverse
-from django.views.generic.edit import FormView
-from django.http import *
-from django.shortcuts import render_to_response,redirect
-from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
-from django.template.loader import render_to_string
-from datetime import *
-import json
-import reportlab
-import StringIO
-from django.core import serializers
-import ast
-
-import os
-from django.conf import settings
-from django.http import HttpResponse
-from django.template import Context
-from django.template.loader import get_template
-from datetime import datetime
 import ho.pisa as pisa
 import xhtml2pdf.pisa as pisa
+import ast
+import os
+import json
+import reportlab
+import StringIOfrom appWeb.models import *
 
+from appWeb.forms import *
+from django.http import *
+from django.utils.timezone import localtime, now
+from django.shortcuts import render, render_to_response
+from django.template import RequestContext,Context
+from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import *
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response
- 
-from django.template.context import RequestContext
- 
+from django.conf import settings
+from django.core.urlresolvers import reverse
+from django.views.generic.edit import FormView
+from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string, get_template
+from datetime import *
+from django.core import serializers
+from django.http import HttpResponse
+from datetime import datetime
 from forms import SignUpForm
  
  
@@ -83,6 +64,7 @@ def signup(request):
 @login_required()
 def home(request):
     return render_to_response('home.html', {'user': request.user}, context_instance=RequestContext(request))
+
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
  
@@ -130,9 +112,6 @@ def registrarCompra(request):
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('compraForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-
-
-
 # ********************************* Administracion de Venta *********************************
 
 def listadoVenta(request):
@@ -154,8 +133,6 @@ def registrarVenta(request):
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ventaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
-
-
 # ********************************* Administracion de Estancias *********************************
 
 def listadoEstancias(request):
@@ -172,8 +149,6 @@ def registrarEstancia(request):
         formulario = EstanciaFormFactory(False)()
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
-
 
 def modificarEstancia(request, pk=None):
     estancia = None
@@ -197,7 +172,6 @@ def eliminarEstancia(request, pk):
     estancia.save()
     estancia = Estancia.objects.filter(Baja = False)
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))    
-
 
 # ********************************* Administracion de Lotes *********************************
 
@@ -229,8 +203,6 @@ def eliminarLoteId(request, pk):
     lote = Lote.noEliminados.all()
     return render_to_response('listadoLotes.html', {'lista':lote}, context_instance=RequestContext(request))    
 
-
-
 # ********************************* Administracion de Fardos *********************************
 
 def listadoFardos(request):
@@ -251,8 +223,6 @@ def registrarFardo(request, pk=None):
                                         Rinde = formulario.cleaned_data['Rinde'], Finura = formulario.cleaned_data['Finura'],
                                         CV = formulario.cleaned_data['CV'], AlturaMedia = formulario.cleaned_data['AlturaMedia'],
                                         Romana = formulario.cleaned_data['Romana'])
-
-
             else:
                 formulario = FardoFormFactory(fardo is not None)(request.POST, instance = fardo)  # Modifico todos los fardos del mismo lote al modificar uno
                 formulario.save()
@@ -263,7 +233,6 @@ def registrarFardo(request, pk=None):
 
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('registrarFardoForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
 
 # ********************************* Administracion de Productor *********************************
     
@@ -305,7 +274,6 @@ def eliminarProductor(request,pk):
     productor = Productor.objects.filter(Baja = False)
     return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
 
-
 # ********************************* Administracion de Representante *********************************
 
 def listadoRepresentante(request):
@@ -345,17 +313,11 @@ def eliminarRepresentante(request,pk):
     representante = Representante.objects.filter(Baja = False)
     return render_to_response('listadoRepresentante.html', {'lista':representante}, context_instance=RequestContext(request))
 
-
-
-
-
-
 # ********************************* Administracion de Produccion *********************************
 
 def listadoOrden(request):
     op = OrdenProduccion.objects.all()
     return render_to_response('listadoOrden.html', {'lista':op}, context_instance=RequestContext(request))
-
 
 def registrarOrdenProduccion(request, pk=None):
     orden = None
@@ -374,8 +336,6 @@ def registrarOrdenProduccion(request, pk=None):
         
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('OrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
-
 
 def verOrdenProduccion(request, pk):
     orden = OrdenProduccion.objects.get(NroOrden = pk)
@@ -423,7 +383,6 @@ def verOrdenProduccion(request, pk):
     
     return render_to_response('datosOrden.html', {'orden':orden, 'detalles':prueba, 'totales':totales}, context_instance=RequestContext(request))
 
-
 def mostrarEstancia (request, pk):
     orden = OrdenProduccion.objects.get(NroOrden = pk)
     est = [] # Estancia que tiene fardos con especificaciones requeridas
@@ -455,18 +414,13 @@ def mostrarLotes (request, estancia, orden):
     
     return HttpResponse(json.dumps({'lotes':data, 'fardos':data1}), content_type='json')
     
-#return HttpResponse(data, content_type='json')
-    
-
-
 def mostrarFardos (request, pk):
     lote = Lote.objects.get( NroLote = pk )
     
     fardos_set = lote.fardo_set
     fardos = fardos_set.all().filter(DetalleOrden = None)
     data = serializers.serialize('json', fardos)
-    return HttpResponse(data, content_type='json')
-    
+    return HttpResponse(data, content_type='json')    
 
 def agregarDetalle (request, campos = None, orden = None): # En caso de que todos los fardos que eligio se pasen de
                                                            # la cantidad requerida solo tomara los fardos que aproximen
@@ -499,7 +453,6 @@ def agregarDetalle (request, campos = None, orden = None): # En caso de que todo
     
 
     return HttpResponse(json.dumps({'kg': kgAgregados}), content_type="application/json")   
-
 
 def cancelarOrdenProduccion(request, pk):
     orden = OrdenProduccion.objects.get( NroOrden=pk )
@@ -541,8 +494,6 @@ def commitIniciarFase(request, orden, nroSerie):
 
     return HttpResponseRedirect('/listadoOrden')    
 
-
-
 def finalizarFaseProduccion(request, pk):
     orden = OrdenProduccion.objects.get(NroOrden = pk)
     for p in orden.produccion_set.all():
@@ -553,9 +504,6 @@ def finalizarFaseProduccion(request, pk):
             break
 
     return HttpResponseRedirect('/listadoOrden')    
-
-
-
 
 # ********************************* Administracion de Lote de Ventas *********************************
 
@@ -569,11 +517,9 @@ def commitLoteVenta(request, cuadricula = None, orden = None):
         
     return HttpResponseRedirect('/listadoOrden') 
 
-
 def agregarLoteVenta(request, pk):
     o = OrdenProduccion.objects.get(NroOrden = pk)
     return render_to_response('LoteVentaForm.html', {'orden':o}, context_instance=RequestContext(request))
-
 
 # ********************************* Administracion de Maquinarias *********************************
 
@@ -591,7 +537,6 @@ def registrarMaquinaria(request):
         formulario = MaquinariaFormFactory(False)() 
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('MaquinariaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
 
 def modificarMaquinaria(request, pk=None):
     maquinaria = None
@@ -615,6 +560,8 @@ def eliminarMaquinaria(request,pk):
     maquinaria.save()
     maquinaria = Maquinaria.objects.filter(Baja = False)
     return render_to_response('listadoMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
+
+
 
 # ********************************* Busquedas por Criterio *********************************
 
@@ -661,7 +608,6 @@ def buscarEstancia(request, pkb):
  
     return render_to_response("listadoEstancias.html", { "lista": results }, context_instance=RequestContext(request))
 
-
 def buscarLote(request, pkb):
     results = []
 
@@ -669,9 +615,7 @@ def buscarLote(request, pkb):
     for obj in results2:
         results.append(obj)
 
-
     return render_to_response("listadoLotes.html", { "lista": results }, context_instance=RequestContext(request))
-
 
 def buscarFardo(request, pkb):
     results = []
@@ -683,8 +627,6 @@ def buscarFardo(request, pkb):
         results.append(obj)
  
     return render_to_response("listadoFardos.html", { "lista": results }, context_instance=RequestContext(request))
-
-
 
 def buscarProductor(request, pkb):
     results = []
@@ -702,7 +644,6 @@ def buscarProductor(request, pkb):
 
     return render_to_response("listadoProductores.html", { "lista": results }, context_instance=RequestContext(request))
 
-
 def buscarRepresentante(request, pkb):
     results = []
 
@@ -717,9 +658,7 @@ def buscarRepresentante(request, pkb):
     for obj in results3:
         results.append(obj)
 
-
     return render_to_response("listadoRepresentante.html", { "lista": results }, context_instance=RequestContext(request))
-
 
 def buscarOrden(request, pkb):
     results = []
@@ -732,21 +671,11 @@ def buscarOrden(request, pkb):
  
     return render_to_response("listadoOrden.html", { "lista": results }, context_instance=RequestContext(request))
 
-
-
 def buscarMaquinaria(request, pkb):
     results = []
-
     results1 = Maquinaria.objects.all().filter(TipoMaquinaria = pkb)
     
-
     for obj in results1:
         results.append(obj)
     
-
     return render_to_response("listadoMaquinaria.html", { "lista": results }, context_instance=RequestContext(request))
-
-
-
-
-
