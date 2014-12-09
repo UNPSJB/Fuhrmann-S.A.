@@ -43,7 +43,7 @@
         
                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminarE('{{dato.hasFardos}}', '{{dato.CUIT}}')"  title = "Eliminar" ><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
-
+                        
                         {% empty %}
                             <li> No existen estancias registradas </li>
                         {% endfor %}        
@@ -53,9 +53,11 @@
                 <div class="pull-right">
                     <a class="btn btn-default btn-gr" type= "button" href="/registrarEstancia" title = "Agregar Estancia" >Agregar</a>
                     <a class="btn btn-default btn-gr" type= "button" href="/index" title = "Salir" >Salir</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/myview" title = "Imprimir" >Imprimir</a>
                 </div>    
             </div>
         </div>
+    </div>
     </div>
 </div>
 {% endblock %}

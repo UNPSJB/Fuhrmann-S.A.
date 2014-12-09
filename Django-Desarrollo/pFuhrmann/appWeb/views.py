@@ -25,17 +25,47 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.template.loader import render_to_string
 from datetime import date
 import json
-
-
-
+import reportlab
+import StringIO
 from django.core import serializers
 import ast
 
+import os
+from django.conf import settings
+from django.http import HttpResponse
+from django.template import Context
+from django.template.loader import get_template
+import datetime
+import ho.pisa as pisa
+import xhtml2pdf.pisa as pisa
 
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
 
 # ********************************* Administracion de Usuario *********************************
+
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    context = Context(context_dict)
+    html  = template.render(context)
+    result = StringIO.StringIO()
+
+    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type="application/pdf")
+    return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
+
+def myview(request):
+    #Retrieve data or whatever you need
+    estancias = Estancia.objects.all().filter(Baja = False)
+     
+    return render_to_pdf(
+            'prueba.html',
+            {   
+                'pagesize':'A4',
+                'lista': estancias,
+            }
+        )
 
 def nuevo_usuario(request):
     if request.method =='POST':
