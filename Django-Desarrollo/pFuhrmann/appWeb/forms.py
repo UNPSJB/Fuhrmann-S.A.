@@ -265,11 +265,11 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
 
                     HTML('<p>(*)Campos obligatorios.</p>'),
                 )
-      
+        
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submit', *args, **kwarg))
             self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-    
+
     return FardoForm
 
 #PERSONAL
