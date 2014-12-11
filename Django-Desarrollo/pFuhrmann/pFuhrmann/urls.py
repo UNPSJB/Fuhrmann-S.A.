@@ -8,9 +8,12 @@ urlpatterns = patterns('',
 
     url(r'^index/','appWeb.views.index'),
     url(r'^$','appWeb.views.index'),
-    #url(r'^usuario/$','appWeb.views.nuevo_usuario'),
-    #url(r'^ingresar/$','appWeb.views.ingresar'),
-    #url(r'^privado/$','appWeb.views.privado'),
+    url(r'^usuario/$', 'appWeb.views.nuevoUsuario'),
+
+    url(r'^ingresar/$','appWeb.views.ingresar'),
+    url(r'^privado/$','appWeb.views.privado'),
+    url(r'^cerrar/$', 'appWeb.views.cerrar'),
+
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
@@ -18,13 +21,11 @@ urlpatterns = patterns('',
     url(r'^registrarCompra/$', 'appWeb.views.registrarCompra'),
     url(r'^listadoCompra/$', 'appWeb.views.listadoCompra'),
     url(r'^buscarCompra/(.*)/$', 'appWeb.views.buscarCompra'),
-    url(r'^myview/$', 'appWeb.views.myview'),
+    #url(r'^myview/$', 'appWeb.views.myview'),
 
     url(r'^registrarVenta/$', 'appWeb.views.registrarVenta'),
     url(r'^listadoVenta/$', 'appWeb.views.listadoVenta'),
     url(r'^buscarVenta/(.*)/$', 'appWeb.views.buscarVenta'),
-
-
 
     #Orden de produccion
     url(r'^registrarOrdenProduccion/$', 'appWeb.views.registrarOrdenProduccion'),
