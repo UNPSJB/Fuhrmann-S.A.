@@ -2,6 +2,7 @@ from django.db import models
 from datetime import date
 
 
+
 class CompraLote(models.Model):
     class Meta:
         ordering = ['NroCompra']
@@ -341,4 +342,13 @@ class LoteVenta(models.Model):
 
     def __unicode__(self):
         return "%s" % str(str(self.NroPartida) +  " - " + str(self.Cuadricula) + " - " + str(self.OrdenProduccion.FechaEmision))
+
+
+
+ 
+
+
+
+
+   
 

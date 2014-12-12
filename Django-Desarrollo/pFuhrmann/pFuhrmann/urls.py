@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
+    url(r'^acercaDe/', 'appWeb.views.acercaDe'),
     url(r'^index/','appWeb.views.index'),
     url(r'^$','appWeb.views.index'),
     url(r'^usuario/$','appWeb.views.nuevo_usuario'),
@@ -18,7 +19,7 @@ urlpatterns = patterns('',
     url(r'^registrarCompra/$', 'appWeb.views.registrarCompra'),
     url(r'^listadoCompra/$', 'appWeb.views.listadoCompra'),
     url(r'^buscarCompra/(.*)/$', 'appWeb.views.buscarCompra'),
-    url(r'^myview/$', 'appWeb.views.myview'),
+    #url(r'^myview/$', 'appWeb.views.myview'),
 
     url(r'^registrarVenta/$', 'appWeb.views.registrarVenta'),
     url(r'^listadoVenta/$', 'appWeb.views.listadoVenta'),

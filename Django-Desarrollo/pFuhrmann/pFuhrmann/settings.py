@@ -39,6 +39,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.flatpages',
+    'django.contrib.sites',
+
     'django_extensions',
     'appWeb',
     'crispy_forms',
@@ -52,6 +55,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
+
 )
 
 ROOT_URLCONF = 'pFuhrmann.urls'
@@ -70,6 +75,8 @@ WSGI_APPLICATION = 'pFuhrmann.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
+
+SITE_ID = 1
 
 LANGUAGE_CODE = 'es-AR'
 

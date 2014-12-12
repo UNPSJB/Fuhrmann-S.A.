@@ -36,11 +36,15 @@ from django.http import HttpResponse
 from django.template import Context
 from django.template.loader import get_template
 import datetime
-import ho.pisa as pisa
-import xhtml2pdf.pisa as pisa
+#import ho.pisa as pisa
+#import xhtml2pdf.pisa as pisa
 
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
+
+def acercaDe (request):
+    return render_to_response('acercaDe.html', context_instance=RequestContext(request))
+
 
 # ********************************* Administracion de Usuario *********************************
 
