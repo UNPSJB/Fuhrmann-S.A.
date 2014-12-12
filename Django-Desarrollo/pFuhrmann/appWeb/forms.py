@@ -11,12 +11,6 @@ from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, F
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions, InlineField
 
 
-# ********************************* Login *********************************
-class LoginForm(forms.Form):
-    username = forms.CharField(label = "Usuario")
-    password = forms.CharField(widget=forms.PasswordInput, label = "Contraseña") 
-    
-
 # ********************************* Formulario de Compras *********************************
 class CompraForm(forms.ModelForm):    
     FechaLlegada = forms.DateField(label = "Fecha de Llegada (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker
@@ -271,11 +265,22 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
 
                     HTML('<p>(*)Campos obligatorios.</p>'),
                 )
-      
+        
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submit', *args, **kwarg))
             self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
-    
+
+    def clean(esp, r1, r2):
+        def _clean(self):
+            value = self.cleaned_data[esp]
+            if not (r1 <= value <= r2):
+                raise ValidationError("El %s debe ser entre %s y %s" % (esp, r1, r2))
+            return value
+        return _clean
+
+    for esp, r1, r2 in [ ('Rinde', 40, 60), ('Finura', 16, 25), 
+        ('CV', 40, 50), ('AlturaMedia', 60, 80), ('Romana', 10, 30) ]:
+        setattr(FardoForm, "clean_%s" % esp, clean(esp, r1, r2))
     return FardoForm
 
 #PERSONAL
@@ -483,6 +488,18 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
             for ser in s:
                 p = Produccion.objects.create(Orden=orden, Servicio = ser)
                 p.save()
+
+    def clean(esp, r1, r2):
+        def _clean(self):
+            value = self.cleaned_data[esp]
+            if not (r1 <= value <= r2):
+                raise ValidationError("El %s debe ser entre %s y %s" % (esp, r1, r2))
+            return value
+        return _clean
+
+    for esp, r1, r2 in [ ('Rinde', 40, 60), ('Finura', 16, 25), 
+        ('CV', 40, 50), ('AlturaMedia', 60, 80), ('Romana', 10, 30) ]:
+        setattr(OrdenProduccionForm, "clean_%s" % esp, clean(esp, r1, r2))
 
     return OrdenProduccionForm
 

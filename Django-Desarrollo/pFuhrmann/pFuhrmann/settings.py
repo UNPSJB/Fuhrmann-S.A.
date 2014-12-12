@@ -80,7 +80,7 @@ SITE_ID = 1
 
 LANGUAGE_CODE = 'es-AR'
 
-TIME_ZONE = 'UTC'
+#TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
