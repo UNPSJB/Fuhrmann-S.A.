@@ -35,10 +35,13 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.template import Context
 from django.template.loader import get_template
-
 import datetime
-#import ho.pisa as pisa
 import xhtml2pdf.pisa as pisa
+from django.contrib.auth import logout
+
+def desloguearse(request):
+    logout(request)
+    return HttpResponseRedirect("/")
 
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
@@ -61,7 +64,6 @@ def index (request):
  
 # ********************************* PDF *********************************
 
-
 def render_to_pdf(template_src, context_dict):
     template = get_template(template_src)
     context = Context(context_dict)
@@ -73,7 +75,7 @@ def render_to_pdf(template_src, context_dict):
         return HttpResponse(result.getvalue(), content_type="application/pdf")
     return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
 
-def myview(request):
+def imprimirListadoEstancias(request):
     #Retrieve data or whatever you need
     estancias = Estancia.objects.all().filter(Baja = False)
      
@@ -83,6 +85,62 @@ def myview(request):
                 'pagesize':'A4',
                 'lista': estancias,
             }
+        )
+
+def imprimirOrdenProduccion(request):
+    orden = OrdenProduccion.objects.get(NroOrden = 1)
+    detalles = orden.detalleorden_set   # Obtengo los detales de la orden
+
+    fardosL = []
+    cantidades = []
+    prueba = []
+    totales = []
+
+    total_cantidad = 0
+    total_peso = 0
+    total_finura = 0 
+    total_hm = 0
+    total_cvh = 0 
+    total_rinde = 0  
+    total_romana = 0
+
+    for detalle in detalles.all():                      # Recorro los detalles
+        fardo = detalle.fardo_set.first()               # Obtengo el primer fardo
+        cantidades.append(detalle.fardo_set.count())    # Cantidad de fardos de un detalle
+        fardosL.append(fardo)                           # agrego los fardos a la lista, como 1 detalle tiene los fardos iguales,
+                                                        # obtengo el primero y lo muestro en el html
+        peso = detalle.fardo_set.count() * fardo.Peso
+
+        total_cantidad = total_cantidad + detalle.fardo_set.count()
+        total_peso = total_peso + (fardo.Peso*detalle.fardo_set.count())
+        total_finura = total_finura + fardo.Finura
+        total_hm = total_hm + fardo.AlturaMedia
+        total_cvh = total_cvh + fardo.CV
+        total_rinde = total_rinde + fardo.Rinde
+        total_romana = total_romana + fardo.Romana
+
+        prueba.append({'nroDetalle':detalle.NroDetalle,'estancia':fardo.Lote.Compra.Estancia.Nombre,'cantidad':detalle.fardo_set.count(),'peso':peso, 'Finura':fardo.Finura, 'HM':fardo.AlturaMedia, 'CVH':fardo.CV, 'Rinde':fardo.Rinde, 'Romana':fardo.Romana})
+
+    if detalles.count() > 0:
+        total_finura = float("%0.2f" % (total_finura / detalles.count()))
+        total_hm = float("%0.2f" % (total_hm / detalles.count()))
+        total_cvh = float("%0.2f" % (total_cvh / detalles.count()))
+        total_rinde = float("%0.2f" % (total_rinde / detalles.count()))
+        total_romana = float("%0.2f" % (total_romana / detalles.count()))
+
+
+    totales.append({'total_cantidad':total_cantidad , 'total_peso':total_peso , 'total_finura':total_finura , 'total_hm':total_hm , 'total_cvh':total_cvh , 'total_rinde':total_rinde , 'total_romana':total_romana })
+
+
+    return render_to_pdf(
+            'datosOrden.html',
+            {   
+                'pagesize':'A4',
+                'orden': orden,
+                'detalles': prueba,
+                'totales' : totales,
+            }
+
         )
 
 # ********************************* Administracion de Compra *********************************

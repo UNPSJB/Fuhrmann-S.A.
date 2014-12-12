@@ -297,8 +297,8 @@ class Produccion(models.Model):
     NroProduccion = models.AutoField(primary_key = True)
     Orden = models.ForeignKey('OrdenProduccion')
     Servicio = models.ForeignKey('Servicio')
-    FechaInicio = models.DateTimeField(null = True)
-    FechaFin = models.DateTimeField(null = True)
+    FechaInicio = models.DateTimeField(null = True, blank=True)
+    FechaFin = models.DateTimeField(null = True, blank=True)
     Maquinaria = models.ForeignKey('Maquinaria', null = True, blank = True)
 
     def __unicode__(self):

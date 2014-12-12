@@ -8,8 +8,7 @@ urlpatterns = patterns('',
 
     url(r'^acercaDe/', 'appWeb.views.acercaDe'),
     url(r'^index/','appWeb.views.index'),
-    url(r'^$','appWeb.views.index'),
-    url(r'^usuario/$', 'appWeb.views.nuevoUsuario'),
+    url(r'^$','appWeb.views.nuevoUsuario'),
 
     url(r'^ingresar/$','appWeb.views.ingresar'),
     url(r'^privado/$','appWeb.views.privado'),
@@ -22,7 +21,11 @@ urlpatterns = patterns('',
     url(r'^registrarCompra/$', 'appWeb.views.registrarCompra'),
     url(r'^listadoCompra/$', 'appWeb.views.listadoCompra'),
     url(r'^buscarCompra/(.*)/$', 'appWeb.views.buscarCompra'),
-    url(r'^myview/$', 'appWeb.views.myview'),
+    
+    #PDF
+    url(r'^imprimirEstancias/$', 'appWeb.views.imprimirListadoEstancias'),
+    url(r'^imprimirOp/$', 'appWeb.views.imprimirOrdenProduccion'),
+
 
     url(r'^registrarVenta/$', 'appWeb.views.registrarVenta'),
     url(r'^listadoVenta/$', 'appWeb.views.listadoVenta'),

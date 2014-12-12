@@ -293,9 +293,16 @@
                         }
                     },
                     {
-                        label: 'Cancel',
+                        label: 'Salir',
                         action: function(dialogRef){
                             window.location = "/listadoOrden"
+                            dialogRef.close();
+                        }
+                    },
+                    {
+                        label: 'Imprimir',
+                        action: function(dialogRef){
+                            window.location = "/imprimirOp"
                             dialogRef.close();
                         }
                     }]
