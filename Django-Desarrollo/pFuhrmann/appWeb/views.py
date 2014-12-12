@@ -37,11 +37,12 @@ from django.template import Context
 from django.template.loader import get_template
 import datetime
 import xhtml2pdf.pisa as pisa
-from django.contrib.auth import logout
+from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render_to_response
+from django.template.context import RequestContext
 
-def desloguearse(request):
-    logout(request)
-    return HttpResponseRedirect("/")
+
 
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
@@ -49,18 +50,6 @@ def index (request):
 def acercaDe (request):
     return render_to_response('acercaDe.html', context_instance=RequestContext(request))
 
-
-# ********************************* Administracion de Usuario *********************************
-
-from datetime import datetime
-#import ho.pisa as pisa
-import xhtml2pdf.pisa as pisa
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response
-from django.template.context import RequestContext
-
-def index (request):
-    return render_to_response('index.html', context_instance=RequestContext(request))
  
 # ********************************* PDF *********************************
 

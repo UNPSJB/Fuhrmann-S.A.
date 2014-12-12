@@ -58,9 +58,6 @@ urlpatterns = patterns('',
     url(r'^enviarFaseProduccion/(\d+)/$', 'appWeb.views.enviarFaseProduccion'),
     url(r'^finalizarFaseProduccion/(\d+)/$', 'appWeb.views.finalizarFaseProduccion'),
 
-
-
-
     #Lotes y Fardos
     url(r'^registrarLote/$', 'appWeb.views.registrarLote'),
     url(r'^listadoLotes/$', 'appWeb.views.listadoLotes'),
@@ -102,10 +99,6 @@ urlpatterns = patterns('',
     url(r'^modificarMaquinaria/(\d+)$', 'appWeb.views.modificarMaquinaria'),
     url(r'^eliminarMaquinaria/(\d+)/$', 'appWeb.views.eliminarMaquinaria'),
     url(r'^buscarMaquinaria/(.*)/$', 'appWeb.views.buscarMaquinaria'),
-
-
-
-    url(r'^pdf/$', 'appWeb/MyPDF.as_view()'),
 
 
 )
