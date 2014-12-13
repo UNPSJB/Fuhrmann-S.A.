@@ -79,19 +79,21 @@ def render_to_pdf(template_src, context_dict):
 def imprimirListadoEstancias(request):
     #Retrieve data or whatever you need
     estancias = Estancia.objects.all().filter(Baja = False)
-     
+    fecha = date.today()
     return render_to_pdf(
-            'prueba.html',
+            'pdflistadoestancia.html',
             {   
                 'pagesize':'A4',
                 'lista': estancias,
+                'date': fecha,
             }
         )
 
 def imprimirOrdenProduccion(request):
     orden = OrdenProduccion.objects.get(NroOrden = 1)
     detalles = orden.detalleorden_set   # Obtengo los detales de la orden
-
+    nroOrden = orden.NroOrden
+    fecha = date.today()
     fardosL = []
     cantidades = []
     prueba = []
@@ -134,12 +136,14 @@ def imprimirOrdenProduccion(request):
 
 
     return render_to_pdf(
-            'datosOrden.html',
+            'pdfop.html',
             {   
                 'pagesize':'A4',
+                'nroOrden': nroOrden,
                 'orden': orden,
                 'detalles': prueba,
                 'totales' : totales,
+                'date': fecha,
             }
 
         )
@@ -535,7 +539,7 @@ def commitIniciarFase(request, orden, nroSerie):
 
     for p in o.produccion_set.all():
         if p.FechaInicio == None:
-            p.FechaInicio = datetime.now()-timedelta(hours= +3)
+            p.FechaInicio = datetime.now()
             print p.FechaInicio
             p.Maquinaria = m
             p.save()
@@ -547,7 +551,7 @@ def finalizarFaseProduccion(request, pk):
     orden = OrdenProduccion.objects.get(NroOrden = pk)
     for p in orden.produccion_set.all():
         if p.FechaInicio != None and p.FechaFin == None:
-            p.FechaFin = datetime.now()-timedelta(hours= +3)
+            p.FechaFin = datetime.now()
             p.Maquinaria = None
             p.save()
             break

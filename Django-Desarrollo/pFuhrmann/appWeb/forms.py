@@ -147,10 +147,13 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
         class Meta:
             model = Lote
             exclude = ("Baja", "Estancia")
+            widgets = {
+                'Cuadricula': forms.Select(choices=[('Deposito','Deposito'), ('Barraca','Barraca')]), 
+                }
         
         CantFardos = forms.IntegerField(label ="Cantidad de Fardos (*)", min_value = 0)
         Peso = forms.IntegerField(label ="Peso del Lote (*)", min_value = 0)
-        Cuadricula = forms.CharField(label = "Cuadrícula (*) ", max_length = 100)
+        
 
         if not edit:
             TipoFardo = forms.ModelChoiceField(TipoFardo.objects.filter(Baja = False), label = "Tipo de Fardos (*)")
@@ -180,6 +183,7 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
                 Fieldset( 
                     '<font color = "Black" size=3 face="Comic Sans MS">Ubicacion </font>',
                     Field('Cuadricula', placeholder="Ubicación del Lote")
+
                 ),
                 HTML('<p>(*)Campos obligatorios.</p>'),
             )
@@ -220,11 +224,11 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
         else:
             Lote = forms.ModelChoiceField(Lote.disponibles.all(), label ="Lote de fardos (*)")
 
-        CV = forms.FloatField(label ="Coeficiente de variación (*)", min_value = 0)
-        AlturaMedia = forms.FloatField(label ="Altura media (*)", min_value = 0)
-        Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
-        Finura = forms.FloatField(label ="Finura (*)", min_value = 0)
-        Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
+        CV = forms.FloatField(label ="Coeficiente de variación % (*)", min_value = 0)
+        AlturaMedia = forms.FloatField(label ="Altura media mm (*)", min_value = 0)
+        Rinde = forms.FloatField(label ="Rinde % (*)", min_value = 0)
+        Finura = forms.FloatField(label ="Finura mm (*)", min_value = 0)
+        Romana = forms.FloatField(label ="Romana % (*)", min_value = 0)
 
         def __init__(self, *args, **kwargs):
             super(FardoForm, self).__init__(*args, **kwargs)
@@ -406,19 +410,19 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
             exclude = ['Finalizada',]
 
         if not e:
-            CantRequerida = forms.IntegerField(label = "Cantidad requerida (*)", min_value = 0)
-            CV = forms.FloatField(label ="Coeficiente de variación (*)", min_value = 0)
-            AlturaMedia = forms.FloatField(label ="Altura media (*)", min_value = 0)
-            Finura = forms.FloatField(label ="Finura (*)", min_value = 0)        # Unidad de Medida Micrones
-            Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
-            Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
+            CantRequerida = forms.IntegerField(label = "Cantidad requerida Kg(*)", min_value = 0)
+            CV = forms.FloatField(label ="Coeficiente de variación % (*)", min_value = 0)
+            AlturaMedia = forms.FloatField(label ="Altura media mm (*)", min_value = 0)
+            Finura = forms.FloatField(label ="Finura mm (*)", min_value = 0)        # Unidad de Medida Micrones
+            Romana = forms.FloatField(label ="Romana % (*)", min_value = 0)
+            Rinde = forms.FloatField(label ="Rinde % (*)", min_value = 0)
         else: 
-            CantRequerida = forms.IntegerField(label = "Cantidad requerida (*)", min_value = 0, widget=forms.HiddenInput())
-            CV = forms.FloatField(label ="Coeficiente de variación (*)", min_value = 0, widget=forms.HiddenInput())
-            AlturaMedia = forms.FloatField(label ="Altura media (*)", min_value = 0, widget=forms.HiddenInput())
-            Finura = forms.FloatField(label ="Finura (*)", min_value = 0, widget=forms.HiddenInput())        # Unidad de Medida Micrones
-            Romana = forms.FloatField(label ="Romana (*)", min_value = 0, widget=forms.HiddenInput())
-            Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0, widget=forms.HiddenInput())
+            CantRequerida = forms.IntegerField(label = "Cantidad requerida Kg(*)", min_value = 0, widget=forms.HiddenInput())
+            CV = forms.FloatField(label ="Coeficiente de variación % (*)", min_value = 0, widget=forms.HiddenInput())
+            AlturaMedia = forms.FloatField(label ="Altura media mm (*)", min_value = 0, widget=forms.HiddenInput())
+            Finura = forms.FloatField(label ="Finura mm (*)", min_value = 0, widget=forms.HiddenInput())        # Unidad de Medida Micrones
+            Romana = forms.FloatField(label ="Romana % (*)", min_value = 0, widget=forms.HiddenInput())
+            Rinde = forms.FloatField(label ="Rinde % (*)", min_value = 0, widget=forms.HiddenInput())
 
         Servicio = forms.ModelChoiceField(Servicio.objects.filter(Transitorio = False), label ="Servicios a Realizar (*)")
 
