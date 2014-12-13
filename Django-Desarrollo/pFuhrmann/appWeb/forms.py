@@ -10,7 +10,6 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, Fieldset, ButtonHolder
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions, InlineField
 
-
 # ********************************* Formulario de Compras *********************************
 class CompraForm(forms.ModelForm):    
     FechaLlegada = forms.DateField(label = "Fecha de Llegada (*)",widget = forms.TextInput(attrs = {'id':'datepicker'})) #Ejemplo Datepicker

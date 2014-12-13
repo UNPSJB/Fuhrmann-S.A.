@@ -1,21 +1,27 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from appWeb import views
+from django.contrib.auth.views import login, logout
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
 
+    url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^$','appWeb.views.login'),
+    url(r'^auth/$','appWeb.views.auth_view'),
+    url(r'^logout/$','appWeb.views.logout'),
+  #  url(r'^loggedin/$','appWeb.views.loggedin'),
+    url(r'^invalid/$', 'appWeb.views.invalid_login'),
+
+
+
     url(r'^acercaDe/', 'appWeb.views.acercaDe'),
     url(r'^index/','appWeb.views.index'),
-    url(r'^$','appWeb.views.nuevoUsuario'),
-
-    url(r'^ingresar/$','appWeb.views.ingresar'),
-    url(r'^privado/$','appWeb.views.privado'),
-    url(r'^cerrar/$', 'appWeb.views.cerrar'),
 
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    
 
     #Registrar Operacion
     url(r'^registrarCompra/$', 'appWeb.views.registrarCompra'),

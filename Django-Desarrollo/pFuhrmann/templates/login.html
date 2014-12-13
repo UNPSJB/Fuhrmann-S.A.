@@ -1,0 +1,33 @@
+
+{% block content %}
+    
+	<html>
+		{% if form.errors %}
+			<p class= "error">Ups! el usuario o contraseña no es valido </p>
+		{% endif %}
+		<body>
+	        <div class="container">
+				<form class="form-signin" role="form"action="/index/" method = "post"> {%csrf_token%}
+					<link rel="shortcut icon" href="/static/img/sheep.ico" />
+					<title>Ingreso a Fuhrmann S.A.</title>
+					<h2 class="form-signin-heading">               Por favor ingrese sus datos</h2>
+
+					<label class="sr-only" for="username"> Nombre de usuario </label>
+					<input class="form-control" autofocus="" required="" placeholder="Nombre de Usuario" type="text" name="username" value="" id="username"></input>
+
+					<label for="password"> Clave</label>
+					<input class="form-control" autofocus="" required="" placeholder="clave" type="password" name="password" value="" id="password"> 
+					 <div class="checkbox">
+	                    <label>
+	                        <input type="checkbox" value="remember-me"></input>
+
+	                         Recordar mi contraseña
+	                                 
+	                    </label>
+	                </div>
+	                <button class="btn btn-lg btn-primary btn-block" type="submit" value= "login"/>                   Ingresar</button>
+				</form>	
+			</div>
+		</body>
+	</html>
+{% endblock%}

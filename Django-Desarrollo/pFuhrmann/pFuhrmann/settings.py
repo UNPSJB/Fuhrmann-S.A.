@@ -14,10 +14,11 @@ from local_settings import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-LOGIN_URL = 'mysite_login'
-LOGOUT_URL = 'mysite_logout'
-LOGIN_REDIRECT_URL = '/'# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
+# Redirect when login is correct.
+LOGIN_REDIRECT_URL = "/"
+# Redirect when login is not correct.
+LOGIN_URL = '/'
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'o#go!yw@0f-e9i7!^uy86yt%8#=an!oi$utb^ggok09odg*5ua'
@@ -106,5 +107,44 @@ STATICFILES_DIRS = (
     # os.path.join(BASE_DIR, 'static'),
     'static',
 )
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+        },
+    'handlers': {
+        'null': {
+            'level':'DEBUG',
+            'class':'django.utils.log.NullHandler',
+            },
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers':['null', 'console'],
+            'propagate': True,
+            'level':'INFO',
+            },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+            },
+    }
+}
 
 CRISPY_TEMPLATE_PACK= 'bootstrap3'

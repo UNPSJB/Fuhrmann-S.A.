@@ -1,15 +1,12 @@
 import urlparse
+from django.contrib import auth
 from django.utils.timezone import localtime, now
-from django.shortcuts import render, render_to_response
-from django.template import RequestContext
+from django.shortcuts import render, render_to_response,redirect
+from django.template import RequestContext, Context
 from appWeb.models import *
 from appWeb.forms import *
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -17,12 +14,6 @@ from django.contrib.auth import (REDIRECT_FIELD_NAME, login, logout, authenticat
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import FormView
 from django.http import *
-from django.shortcuts import render_to_response,redirect
-from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
 from django.template.loader import render_to_string
 from datetime import *
 import json
@@ -32,17 +23,38 @@ from django.core import serializers
 import ast
 import os
 from django.conf import settings
-from django.http import HttpResponse
-from django.template import Context
 from django.template.loader import get_template
 import datetime
 import xhtml2pdf.pisa as pisa
 from datetime import datetime
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response
 from django.template.context import RequestContext
+from django.core.context_processors import csrf
 
+def login(request):
+    c={}
+    c.update(csrf(request))
+    return render_to_response('login.html',c)
 
+def auth_view(request):
+    username= request.POST.get('username','')
+    password= request.POST.get('password','')
+    user= auth.authenticate(username=username, password=password)
+
+    if user is not None:
+        auth.login(request,user)
+        return HttpResponseRedirect('/loggedin')
+    else:
+        return HttpResponseRedirect('/invalid')
+
+def loggedin (request):
+    return render_to_response('loggedin.html', {'full_name': request.user.username})
+
+def invalid_login(request):
+    return render_to_response('invalid_login.html')
+
+def logout(request):
+    auth.logout(request)
+    return render_to_response('logout.html')
 
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
@@ -714,45 +726,3 @@ def buscarMaquinaria(request, pkb):
         results.append(obj)
     
     return render_to_response("listadoMaquinaria.html", { "lista": results }, context_instance=RequestContext(request))
-
-def nuevoUsuario(request):
-    if request.method=='POST':
-        formulario = UserCreationForm(request.POST)
-        if formulario.is_valid:
-            formulario.save()
-            return HttpResponseRedirect('/')
-    else:
-        formulario = UserCreationForm()
-    return render_to_response('nuevousuario.html',{'formulario':formulario}, context_instance=RequestContext(request))
-
-def ingresar(request):
-    if not request.user.is_anonymous():
-        return HttpResponseRedirect('/privado')
-    if request.method == 'POST':
-        formulario = AuthenticationForm(request.POST)
-        if formulario.is_valid:
-            usuario = request.POST['username']
-            clave = request.POST['password']
-            acceso = authenticate(username=usuario, password=clave)
-            if acceso is not None:
-                if acceso.is_active:
-                    login(request, acceso)
-                    return HttpResponseRedirect('/privado')
-                else:
-                    return render_to_response('noactivo.html', context_instance=RequestContext(request))
-            else:
-                return render_to_response('nousuario.html', context_instance=RequestContext(request))
-    else:
-        formulario = AuthenticationForm()
-    return render_to_response('ingresar.html',{'formulario':formulario}, context_instance=RequestContext(request))
-
-@login_required(login_url='/ingresar')
-def privado(request):
-    usuario = request.user
-    return render_to_response('privado.html', {'usuario':usuario}, context_instance=RequestContext(request))
-
-@login_required(login_url='/ingresar')
-def cerrar(request):
-    logout(request)
-    return HttpResponseRedirect('/')
-
