@@ -1,21 +1,24 @@
-
 {% block content %}
     
 	<html>
 		{% if form.errors %}
 			<p class= "error">Ups! el usuario o contraseña no es valido </p>
 		{% endif %}
+		<head>
+			{% load staticfiles %}
+			<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+			<link rel="stylesheet" type="text/css" href="{% static 'css/signin1.css' %}"/>
+		</head>
 		<body>
 	        <div class="container">
 				<form class="form-signin" role="form"action="/index/" method = "post"> {%csrf_token%}
 					<link rel="shortcut icon" href="/static/img/sheep.ico" />
 					<title>Ingreso a Fuhrmann S.A.</title>
-					<h2 class="form-signin-heading">               Por favor ingrese sus datos</h2>
+					<h2 class="form-signin-heading"> Ingrese sus datos</h2>
 
 					<label class="sr-only" for="username"> Nombre de usuario </label>
 					<input class="form-control" autofocus="" required="" placeholder="Nombre de Usuario" type="text" name="username" value="" id="username"></input>
 
-					<label for="password"> Clave</label>
 					<input class="form-control" autofocus="" required="" placeholder="clave" type="password" name="password" value="" id="password"> 
 					 <div class="checkbox">
 	                    <label>
