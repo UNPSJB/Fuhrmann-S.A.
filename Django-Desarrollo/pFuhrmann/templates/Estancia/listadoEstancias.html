@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block contenido %}
+
+
+        <div class="container">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading clearfix">
+                        <h4 class="panel-title pull-left" style="padding-top: 10.5px;"> <font size = "5"color = "000000">Listado de estancias</font></h4>
+                        <div class="btn-group pull-right">
+                            <div class="input-group">
+                                <div class="btn-group pull-right">
+                                    <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('<strong>Ayuda listado estancias</strong>', 'El <strong>listado de estancias</strong> muestra el CUIT, nombre, provincia, zona, representante y productor asociados a la estancia.</br><br>Ingrese en<strong> buscar </strong>el campo (CUIT o nombre de estancia) por el cual desea filtrar las estancias.</br><br>Presione el botón <strong>agregar</strong> para registrar una nueva estancia.</br><br>Presione el botón <strong>modificar</strong> para cambiar datos de una estancia.</br><br>Presione el botón <strong>eliminar</strong> para eliminar una estancia.</br><br>Presione el botón <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
+                                </div>
+                                <span class="input-group-btn">
+                                    <a class="btn btn-default" type="button" title="Buscar: CUIT, Nombre" onClick="javascript: errorBuscar('/buscarEstancia/', $('#buscar').val());"><span class="glyphicon glyphicon-search"></span></a>
+                                </span>
+                                <input type="text" id = "buscar" class="form-control" placeholder="Buscar"></input>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table  class="table table-striped table-bordered table-condensed" id="tableLote">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;" width="6%">CUIT</th>
+                                    <th style="text-align:center;" width="10%">Nombre</th>
+                                    <th style="text-align:center;" width="10%">Provincia</th>
+                                    <th style="text-align:center;" width="10%">Zona</th>
+                                    <th style="text-align:center;" width="10%">Representante</th>
+                                    <th style="text-align:center;" width="10%">Productor</th>
+                                    {% if perms.appWeb.change_estancia %}
+                                        <th style="text-align:center;" width="3%">Modificar</th>
+                                    {% endif %}
+                                    {% if perms.appWeb.delete_estancia %}
+                                        <th style="text-align:center;" width="3%">Eliminar</th>
+                                    {% endif %}
+                                </tr>
+                                {% for dato in lista %}
+                                <tr>
+                                    <td style="text-align:center;" width="6%">{{dato.CUIT}}</td>
+                                    <td style="text-align:center;" width="10%">{{dato.Nombre}}</td>
+                                    <td style="text-align:center;" width="10%">{{dato.Provincia}}</td>
+                                    <td style="text-align:center;" width="10%">{{dato.Zona}}</td>
+                                    <td style="text-align:center;" width="10%">{{dato.Representante}}</td>
+                                    <td style="text-align:center;" width="10%">{{dato.Productor}}</td>
+                                    {% if perms.appWeb.change_estancia %}
+                                        <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarEstancia/{{dato.CUIT}}" title="Modificar" ><span class="glyphicon glyphicon-edit"></span></td>
+                                    {% endif %}
+                                    {% if perms.appWeb.delete_estancia %}
+                                        <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminarE('{{dato.hasFardos}}', '{{dato.CUIT}}')"  title = "Eliminar" ><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    {% endif %}
+                                </tr>
+                                
+                                {% empty %}
+                                    <li> No existen estancias registradas </li>
+                                {% endfor %}        
+                            </thead>
+                        </table>
+                        <script type ="text/javascript"> </script>
+                        <div class="pull-right">
+                            <a class="btn btn-default btn-gr" type= "button" href="/imprimirEstancias" title = "Imprimir" >Exportar PDF</a>
+                            {% if perms.appWeb.add_estancia %}
+                                <a class="btn btn-default btn-gr" type= "button" href="/registrarEstancia" title = "Agregar Estancia" >Agregar</a>
+                            {% endif %}
+                            <a class="btn btn-default btn-gr" type= "button" href="/index" title = "Salir" >Salir</a>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+    
+    <script type="text/javascript">
+
+
+        function eliminarE(hasFardos, cuit){
+            if (hasFardos == 'True'){
+                BootstrapDialog.show({
+                    title: 'Error',
+                    cssClass: 'error-dialog',
+                    message: 'Estancia posee fardos disponibles para Produccion',
+                    type: BootstrapDialog.TYPE_DANGER, 
+                    buttons: [
+                        {
+                            label: 'Aceptar',
+                            action: function(dialogRef){
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+            else{
+                BootstrapDialog.show({
+                    title: 'Eliminar Estancia',
+                    cssClass: 'error-dialog',
+                    message:  '¿Está seguro que quiere eliminar esta Estancia?',
+                    type: BootstrapDialog.TYPE_WARNING, 
+                    buttons: [
+                    {
+                        label: 'Si',
+                        action: function(dialogRef){
+                            window.location = '/eliminarEstancia/' + cuit
+                            dialogRef.close();
+                        }
+                    },
+                    {
+                        label: 'No',
+                        action: function(dialogRef){
+                            dialogRef.close();
+                        }
+                    }]
+                });
+            };
+        }
+
+    </script>
+
+{% endblock %}

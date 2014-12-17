@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block contenido %}
+
+    <div class="container">
+
+            <div class="panel panel-green">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title pull-left" style="padding-top: 10.5px;"> <font size = "5"color = "000000">Modificar estancia</font></h4>
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('<strong>Ayuda modificar estancia</strong>','El formulario <strong>modificar estancia</strong> permite modificar la información de la estancia. Se puede modificar el nombre, provincia y zona de la estancia.</br><br>Presione el botón <strong>modificar</strong> para guardar los cambios.</br><br>Presione el botón <strong>cancelar</strong> para volver al listado de estancias.</br>')"><span class="glyphicon glyphicon-question-sign"></span></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    {% crispy formulario %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

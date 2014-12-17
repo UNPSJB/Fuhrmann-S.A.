@@ -25,16 +25,24 @@
                             <th style="text-align:center;" width="6%">Número de maquina</th>
                             <th style="text-align:center;" width="10%">Servicio</th>
                             <th style="text-align:center;" width="10%">Descripción</th>
-                            <th style="text-align:center;" width="3%">Modificar</th>
-                            <th style="text-align:center;" width="3%">Eliminar</th>
+                            {% if perms.appWeb.change_maquinaria %}
+                                <th style="text-align:center;" width="3%">Modificar</th>
+                            {% endif %}
+                            {% if perms.appWeb.delete_maquinaria %}
+                                <th style="text-align:center;" width="3%">Eliminar</th>
+                            {% endif %}
                         </tr>
                         {% for dato in lista %}
                         <tr>
                             <td style="text-align:center;" width="10%" id="nroSerie">{{dato.NroSerie}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Servicio}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Descripcion}}</td>
-                            <td style="text-align:center;" width="3%"><a class="btn btn-default" title = "Modificar" href ="/modificarMaquinaria/{{dato.NroSerie}}"><span class="glyphicon glyphicon-edit"></span></a></td>  
-                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" title = "Eliminar" onClick="eliminarM('{{dato.isLibre}}', '{{dato.NroSerie}}')" title="Eliminar"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            {% if perms.appWeb.change_maquinaria %}
+                                <td style="text-align:center;" width="3%"><a class="btn btn-default" title = "Modificar" href ="/modificarMaquinaria/{{dato.NroSerie}}"><span class="glyphicon glyphicon-edit"></span></a></td> 
+                            {% endif %}
+                            {% if perms.appWeb.delete_maquinaria %} 
+                                <td style="text-align:center;" width="3%"> <a class="btn btn-default" title = "Eliminar" onClick="eliminarM('{{dato.isLibre}}', '{{dato.NroSerie}}')" title="Eliminar"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            {% endif %}
                         </tr>
     
                         {% empty %}
@@ -44,7 +52,9 @@
                 </table>
                 <script type ="text/javascript"> </script>
                 <div class="pull-right">
-                    <a class="btn btn-default btn-gr" type= "button" href="/registrarMaquinaria" title = "Agregar Maquinaria" >Agregar</a>
+                    {% if perms.appWeb.add_maquinaria %}
+                        <a class="btn btn-default btn-gr" type= "button" href="/registrarMaquinaria" title = "Agregar Maquinaria" >Agregar</a>
+                    {% endif %}
                     <a class="btn btn-default btn-gr" type= "button" href="/index" title = "Salir" >Salir</a>
                 </div>    
             </div>

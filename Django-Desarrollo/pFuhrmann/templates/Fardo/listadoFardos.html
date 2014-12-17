@@ -30,8 +30,9 @@
                             <th style="text-align:center;" width="6%">CV</th>
                             <th style="text-align:center;" width="6%">Altura Media</th>
                             <th style="text-align:center;" width="6%">Romana</th>
-                            <th style="text-align:center;" width="3%">Modificar</th>
-
+                            {% if perms.appWeb.change_fardo %}
+                                <th style="text-align:center;" width="3%">Modificar</th>
+                            {% endif %}
                         </tr>
                         {% for dato in lista %}
                         <tr>
@@ -43,8 +44,9 @@
                             <td style="text-align:center;" width="6%">{{dato.CV}}</td>
                             <td style="text-align:center;" width="6%">{{dato.AlturaMedia}}</td>
                             <td style="text-align:center;" width="6%">{{dato.Romana}}</td>
-                            <td style="text-align:center;" width="3%"><a class="btn btn-default" onClick = "comprobar('/modificarFardo/{{dato.NroFardo}}', '{{dato.DetalleOrden}}', 'El Fardo esta en Produccion')"><span class="glyphicon glyphicon-edit"></span></a></td>
-                        
+                            {% if perms.appWeb.change_fardo %}
+                                <td style="text-align:center;" width="3%"><a class="btn btn-default" onClick = "comprobar('/modificarFardo/{{dato.NroFardo}}', '{{dato.DetalleOrden}}', 'El Fardo esta en Produccion')"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            {% endif %}
                         </tr>
 
                         {% empty %}
@@ -54,7 +56,9 @@
                 </table>
                 <script type ="text/javascript"> </script>
                 <div class="pull-right">
-                    <a class="btn btn-default btn-gr" type= "button" href="/registrarFardo" title = "Agregar Fardos" >Agregar</a>
+                    {% if perms.appWeb.add_fardo %}
+                        <a class="btn btn-default btn-gr" type= "button" href="/registrarFardo" title = "Agregar Fardos" >Agregar</a>
+                    {% endif %}
                     <a class="btn btn-default btn-gr" type= "button" href="/index" title = "Salir" >Salir</a>
                 </div>    
             </div>

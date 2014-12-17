@@ -30,7 +30,9 @@
                             <th style="text-align:center;" width="10%">Cantidad de Fardos</th>
                             <th style="text-align:center;" width="10%">Tipo de Fardo</th>
                             <th style="text-align:center;" width="10%">Cuadricula</th>
-                            <th style="text-align:center;" width="3%">Modificar</th>
+                            {% if perms.appWeb.change_lote %}
+                                <th style="text-align:center;" width="3%">Modificar</th>
+                            {% endif %}
                         </tr>
                         {% for dato in lista %}
                         <tr>
@@ -41,9 +43,11 @@
                             <td style="text-align:center;" width="10%">{{dato.CantFardos}}</td>
                             <td style="text-align:center;" width="10%">{{dato.TipoFardo.Nombre}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Cuadricula}}</td>
-                            <td style="text-align:center;" width="3%">
+                            {% if perms.appWeb.change_lote %}
+                                <td style="text-align:center;" width="3%">
                                 <a class="btn btn-default" onClick = "comprobar('/modificarLote/{{dato.NroLote}}', '{{dato.fardo_set.all}}', 'El Lote posee fardos en el Sistema')"><span class="glyphicon glyphicon-edit"></span></a>
-                            </td>
+                                </td>
+                            {% endif %}
                         </tr>
 
                         {% empty %}
@@ -53,7 +57,9 @@
                 </table>
 
                 <div class="pull-right">
-                    <a class="btn btn-default btn-gr" type= "button" href="/registrarLote" title = "Agregar Lote" >Agregar</a>
+                    {% if perms.appWeb.add_lote %}
+                        <a class="btn btn-default btn-gr" type= "button" href="/registrarLote" title = "Agregar Lote" >Agregar</a>
+                    {% endif %}
                     <a class="btn btn-default btn-gr" type= "button" href="/index" title = "Salir" >Salir</a>
                 </div>    
             </div>

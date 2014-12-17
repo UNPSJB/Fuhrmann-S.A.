@@ -29,8 +29,12 @@
                             <th style="text-align:center;" width="10%">Teléfono</th>
                             <th style="text-align:center;" width="10%">E-mail</th>
                             <th style="text-align:center;" width="10%">Zona</th>
-                            <th style="text-align:center;" width="3%">Modificar</th>
-                            <th style="text-align:center;" width="3%">Eliminar</th>
+                            {% if perms.appWeb.change_representante %}
+                                <th style="text-align:center;" width="3%">Modificar</th>
+                            {% endif %}
+                            {% if perms.appWeb.delete_representante %}
+                                <th style="text-align:center;" width="3%">Eliminar</th>
+                            {% endif %}
                         </tr>
                         {% for dato in lista %}
                         <tr>
@@ -41,8 +45,12 @@
                             <td style="text-align:center;" width="10%">{{dato.Telefono}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Email}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Zona}}</td>
-                            <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarRepresentante/{{dato.NroLegajo}}"><span class="glyphicon glyphicon-edit"  title = "Modificar" ></span></a></td> 
-                            <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminarR('/eliminarRepresentante/{{dato.NroLegajo}}', 'Eliminar Representante', '¿Está seguro que quiere eliminar este representante?', '{{dato.tieneEstancia}}')"  title = "Eliminar" ><span class="glyphicon glyphicon-remove"></span></a></td>
+                            {% if perms.appWeb.change_representante %}
+                                <td style="text-align:center;" width="3%"><a class="btn btn-default" href ="/modificarRepresentante/{{dato.NroLegajo}}"><span class="glyphicon glyphicon-edit"  title = "Modificar" ></span></a></td> 
+                            {% endif %}
+                            {% if perms.appWeb.delete_representante %}
+                                <td style="text-align:center;" width="3%"> <a class="btn btn-default" onClick="eliminarR('/eliminarRepresentante/{{dato.NroLegajo}}', 'Eliminar Representante', '¿Está seguro que quiere eliminar este representante?', '{{dato.tieneEstancia}}')"  title = "Eliminar" ><span class="glyphicon glyphicon-remove"></span></a></td>
+                            {% endif %}
                         </tr>
                         {% empty %}
                             <li> No existen representantes regitrados</li>
@@ -51,7 +59,9 @@
                 </table>
                 <script type ="text/javascript"> </script>
                 <div class="pull-right">
-                    <a class="btn btn-default btn-gr" type= "button" href="/registrarRepresentante" title = "Agregar Representante" >Agregar</a>
+                    {% if perms.appWeb.add_representante %}
+                        <a class="btn btn-default btn-gr" type= "button" href="/registrarRepresentante" title = "Agregar Representante" >Agregar</a>
+                    {% endif %}
                     <a class="btn btn-default btn-gr" type= "button" href="/index"  title = "Salir" >Salir</a>
                 </div>    
             </div>

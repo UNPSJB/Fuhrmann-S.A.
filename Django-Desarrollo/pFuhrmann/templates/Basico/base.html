@@ -41,12 +41,13 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
             <div class='row'> 
                 <div class= 'col-md-2' align="right"> <a href='/index'><font size="6" color = "grey"><strong>Fuhrmann</strong></font></a></div>
-                <div class = 'col-md-7'></div>
-                <div class = 'col-md-3'>
+                <div class = 'col-md-4'></div>
+                <div class = 'col-md-6'>
                     <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
                         <ul class="nav navbar-nav navbar-left">
-                            <li><a href="/" class ="btn" data-toggle="tooltip"title = "Iniciar Sesion" >Cerrar Sesión</a></li>
+                            <li><font color = "green">Bienvenido {{user.username}} al sistema Fuhrmann {{user.last_login}} </font></li>
                             <li><a href="/acercaDe" class ="btn" data-toggle="tooltip"  title = "Informacion de App" >Acerca De</a></li> 
+                            <li><a href="/logout" class ="btn" data-toggle="tooltip"title = "Iniciar Sesion" >Cerrar Sesión</a></li>
                         </ul>
                     </div>
                 </div>
@@ -57,43 +58,69 @@
                     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                     <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
                         <ul class="nav navbar-nav navbar-left">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title = "Registrar Compra - Venta" ><i class="fa fa-fw fa-desktop"></i> <strong>REGISTRO DE OPERACIÓN </strong><b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a class ="btn" href="/listadoCompra">Compras</a></li>
-                                    <li><a class ="btn" href="/listadoVenta">Ventas</a></li>
-                                </ul>
-                            </li>
+                            
 
-                            <li class="dropdown">
+                            {% if perms.appWeb.listado_compra or perms.appWeb.listado_venta %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title = "Registrar Compra - Venta" ><i class="fa fa-fw fa-desktop"></i> <strong>REGISTRO DE OPERACIÓN </strong><b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        {% if perms.appWeb.listado_compra %}
+                                            <li><a class ="btn" href="/listadoCompra">Compras</a></li>
+                                        {% endif %}
+                                        {% if perms.appWeb.listado_venta %}
+                                            <li><a class ="btn" href="/listadoVenta">Ventas</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                            {% endif %}
 
-                                <a href="/listadoEstancias" class="btn" data-toggle="btn"  title = "Adm. Estancias" ><i class="fa fa-fw fa-home"></i> <strong>ESTANCIAS</strong> </a>
+                            {% if perms.appWeb.listado_estancia %}
+                                <li class="dropdown">
+                                    <a href="/listadoEstancias" class="btn" data-toggle="btn"  title = "Adm. Estancias" ><i class="fa fa-fw fa-home"></i> <strong>ESTANCIAS</strong> </a>
+                                </li>
+                            {% endif %}
 
-                                
-                            </li>
+                            {% if perms.appWeb.listado_lote or perms.appWeb.listado_fardo %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title = "Adm.Lotes - Fardos" ><i class="fa fa-fw fa-edit"></i> <strong>LOTES & FARDOS</strong> <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        {% if perms.appWeb.listado_lote %}
+                                            <li><a class ="btn" href="/listadoLotes">Lotes</a></li>
+                                        {% endif %}
+                                        {% if perms.appWeb.listado_fardo %}
+                                            <li><a class ="btn" href="/listadoFardos">Fardos</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                            {% endif %}
 
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title = "Adm.Lotes - Fardos" ><i class="fa fa-fw fa-edit"></i> <strong>LOTES & FARDOS</strong> <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a class ="btn" href="/listadoLotes">Lotes</a></li>
-                                    <li><a class ="btn" href="/listadoFardos">Fardos</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"title = "Adm. Personal" ><i class="fa fa-fw fa-user"></i> <strong>PERSONAL </strong><b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a class ="btn" href="/listadoProductores">Productores</a></li>
-                                    <li><a class ="btn" href="/listadoRepresentante">Representantes</a></li>
-                                </ul>
-                            </li>  
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title = "Procesos de Produccion" ><i class="fa fa-fw fa-desktop"></i> <strong>PRODUCCIÓN</strong> <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a class ="btn" href="/listadoOrden">Orden de Producción</a></li>
-                                    <li><a class ="btn" href="/listadoMaquinaria">Maquinarias</a></li>
-                                </ul>
-                            </li>
+                            {% if perms.appWeb.listado_productor or perms.appWeb.listado_representante %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"title = "Adm. Personal" ><i class="fa fa-fw fa-user"></i> <strong>PERSONAL </strong><b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        {% if perms.appWeb.listado_productor %}                                        
+                                            <li><a class ="btn" href="/listadoProductores">Productores</a></li>
+                                        {% endif %}
+                                        {% if perms.appWeb.listado_representante %}
+                                            <li><a class ="btn" href="/listadoRepresentante">Representantes</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>  
+                            {% endif %}
 
+                            {% if perms.appWeb.listado_orden or perms.appWeb.listado_maquinaria %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" title = "Procesos de Produccion" ><i class="fa fa-fw fa-desktop"></i> <strong>PRODUCCIÓN</strong> <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        {% if perms.appWeb.listado_orden %}                                        
+                                            <li><a class ="btn" href="/listadoOrden">Orden de Producción</a></li>
+                                        {% endif %}
+                                        {% if perms.appWeb.listado_maquinaria %}                                        
+                                            <li><a class ="btn" href="/listadoMaquinaria">Maquinarias</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                            {% endif %}
                             <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"></b></a></li> 
                         </ul>
                     </div>
@@ -119,13 +146,16 @@
     .aviso-dialog .modal-dialog {
         width: 600px;
     }
+    .background {
+        color: #f9fee8;
+    }
 </style>
 
     {% block contenido %}{% endblock %}
    
    
     <div id="footer">
-        <div class = "col-md-12">
+        <div class = "col-md-12" >
             <p align=center>Fuhrmann S.A. &copy; 2014. Designed by  Santos Carla - Raies Matias - Wheeler Mariana - Carabajal Diego. Todos los derechos reservados. </p>
         </div>
         <div class = "col-md-2">

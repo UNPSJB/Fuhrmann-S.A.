@@ -3,23 +3,21 @@ from django.contrib import admin
 from appWeb import views
 from django.contrib.auth.views import login, logout
 
-admin.autodiscover()
 
+
+admin.autodiscover()
 urlpatterns = patterns('',
+
+
+    url(r'^login/$', 'appWeb.views.login_user'),
+    url(r'^logout/$', 'appWeb.views.logout'),
+
+
 
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^$','appWeb.views.login'),
-    url(r'^auth/$','appWeb.views.auth_view'),
-    url(r'^logout/$','appWeb.views.logout'),
-  #  url(r'^loggedin/$','appWeb.views.loggedin'),
-    url(r'^invalid/$', 'appWeb.views.invalid_login'),
-
-
-
     url(r'^acercaDe/', 'appWeb.views.acercaDe'),
     url(r'^index/','appWeb.views.index'),
-
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     
 

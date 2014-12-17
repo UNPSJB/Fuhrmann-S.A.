@@ -29,7 +29,9 @@
                         <th style="text-align:center;" width="10%">En proceso</th>
                         <th style="text-align:center;" width="7%">Finalizada</th>
                         <th style="text-align:center;" width="7%">Cancelada</th>
-                        <th style="text-align:center;" width="42%">Acciones</th>
+                        {% if perms.appWeb.add_ordenproduccion %}
+                            <th style="text-align:center;" width="42%">Acciones</th>
+                        {% endif %}
                     </tr>
                     {% regroup lista by NroOrden as lista %}<ul>
                         {% for orden in lista %}
@@ -43,19 +45,20 @@
                                 <td style="text-align:center;" width="5%">{{dato.isProduccion}}</td>
                                 <td style="text-align:center;" width="5%">{{dato.isFinalizada}}</td>
                                 <td style="text-align:center;" width="5%">{{dato.Cancelada}}</td>
-                                
-                                <td style="text-align:center;" width="40%">
-                                    
-                                    <a class="btn btn-default" onClick="showModal('{{dato.NroOrden}}', '{{dato.hayFardos}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', '{{dato.loteventa}}', '{{dato.needFardos}}')" title="Ver Detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                {% if perms.appWeb.add_ordenproduccion %}
+                                    <td style="text-align:center;" width="40%">
+                                        
+                                        <a class="btn btn-default" onClick="showModal('{{dato.NroOrden}}', '{{dato.hayFardos}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', '{{dato.loteventa}}', '{{dato.needFardos}}')" title="Ver Detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
 
-                                    <a class="btn btn-default" onClick="comprobar('/modificarOrdenProduccion/{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden en Produccion - Finalizada - Cancelada!')" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
-                                    
-                                    <a class="btn btn-default" onClick="cancelar('{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden en Produccion - Finalizada - Cancelada!')" title="Cancelar" ><span class="glyphicon glyphicon-remove"></span></a>
-                                    
-                                    <a class="btn btn-default" onClick="enviarFase('{{dato.NroOrden}}', '{{dato.isEnviarFase}}', '{{dato.Cancelada}}', '{{dato.needFardos}}')" title="Enviar a Fase de Produccion"><span class="glyphicon glyphicon-share-alt"></span></a>
-                                    
-                                    <a class="btn btn-default" onClick="finalizarFase('{{dato.NroOrden}}','{{dato.isFinFase}}', '{{dato.Cancelada}}', '{{dato.getEtapa}}')"title="Finalizar Fase de Produccion"><span class="glyphicon glyphicon-warning-sign"></span></a>
+                                        <a class="btn btn-default" onClick="comprobar('/modificarOrdenProduccion/{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden en Produccion - Finalizada - Cancelada!')" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
+                                        
+                                        <a class="btn btn-default" onClick="cancelar('{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden en Produccion - Finalizada - Cancelada!')" title="Cancelar" ><span class="glyphicon glyphicon-remove"></span></a>
+                                        
+                                        <a class="btn btn-default" onClick="enviarFase('{{dato.NroOrden}}', '{{dato.isEnviarFase}}', '{{dato.Cancelada}}', '{{dato.needFardos}}')" title="Enviar a Fase de Produccion"><span class="glyphicon glyphicon-share-alt"></span></a>
+                                        
+                                        <a class="btn btn-default" onClick="finalizarFase('{{dato.NroOrden}}','{{dato.isFinFase}}', '{{dato.Cancelada}}', '{{dato.getEtapa}}')"title="Finalizar Fase de Produccion"><span class="glyphicon glyphicon-warning-sign"></span></a>
                                     </td>
+                                {% endif %}
                             </tr>
 
                             {% empty %}
@@ -264,6 +267,13 @@
                         }
                     },
                     {
+                        label: 'Exportar PDF',
+                        action: function(dialogRef){
+                            window.location = "/imprimirOp"
+                            dialogRef.close();
+                        }
+                    },
+                    {
                         label: 'Cancel',
                         action: function(dialogRef){
                             window.location = "/listadoOrden"
@@ -292,17 +302,17 @@
                             showModal2(id);
                         }
                     },
-                    {
-                        label: 'Salir',
+                                        {
+                        label: 'Exportar PDF',
                         action: function(dialogRef){
-                            window.location = "/listadoOrden"
+                            window.location = "/imprimirOp"
                             dialogRef.close();
                         }
                     },
                     {
-                        label: 'Imprimir',
+                        label: 'Salir',
                         action: function(dialogRef){
-                            window.location = "/imprimirOp"
+                            window.location = "/listadoOrden"
                             dialogRef.close();
                         }
                     }]
@@ -322,6 +332,13 @@
                             .css("z-index", 1040 + tier * 30);
                     },
                     buttons: [
+                    {
+                        label: 'Exportar PDF',
+                        action: function(dialogRef){
+                            window.location = "/imprimirOp"
+                            dialogRef.close();
+                        }
+                    },
                     {
                         label: 'Cancel',
                         action: function(dialogRef){

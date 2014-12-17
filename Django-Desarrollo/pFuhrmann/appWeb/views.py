@@ -5,10 +5,6 @@ from django.shortcuts import render, render_to_response,redirect
 from django.template import RequestContext, Context
 from appWeb.models import *
 from appWeb.forms import *
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib.auth import (REDIRECT_FIELD_NAME, login, logout, authenticate)
 from django.core.urlresolvers import reverse
@@ -30,37 +26,43 @@ from datetime import datetime
 from django.template.context import RequestContext
 from django.core.context_processors import csrf
 
-def login(request):
-    c={}
-    c.update(csrf(request))
-    return render_to_response('login.html',c)
+#users
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404 
 
-def auth_view(request):
-    username= request.POST.get('username','')
-    password= request.POST.get('password','')
-    user= auth.authenticate(username=username, password=password)
 
-    if user is not None:
-        auth.login(request,user)
-        return HttpResponseRedirect('/loggedin')
-    else:
-        return HttpResponseRedirect('/invalid')
+def login_user(request):
+    logout(request)
+    username = password = ''
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
 
-def loggedin (request):
-    return render_to_response('loggedin.html', {'full_name': request.user.username})
-
-def invalid_login(request):
-    return render_to_response('invalid_login.html')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/index')
+    return render_to_response('login.html', context_instance=RequestContext(request))
 
 def logout(request):
     auth.logout(request)
-    return render_to_response('logout.html')
+    return HttpResponseRedirect("/login")
 
+@login_required(login_url="/login")
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
 
+
+@login_required(login_url="/login")
 def acercaDe (request):
     return render_to_response('acercaDe.html', context_instance=RequestContext(request))
+
+
 
  
 # ********************************* PDF *********************************
@@ -149,11 +151,11 @@ def imprimirOrdenProduccion(request):
         )
 
 # ********************************* Administracion de Compra *********************************
-
+@login_required(login_url="/login")
 def listadoCompra(request):
     compra = CompraLote.objects.all()
     return render_to_response('listadoCompra.html', {'lista':compra}, context_instance=RequestContext(request))
-
+@login_required(login_url="/login")
 def registrarCompra(request):
     if request.method == 'POST':
         formulario = CompraForm(request.POST)
@@ -166,11 +168,11 @@ def registrarCompra(request):
     return render_to_response('compraForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 # ********************************* Administracion de Venta *********************************
-
+@login_required(login_url="/login")
 def listadoVenta(request):
     venta = Venta.objects.all()
     return render_to_response('listadoVenta.html', {'lista':venta}, context_instance=RequestContext(request))
-
+@login_required(login_url="/login")
 def registrarVenta(request):
     if request.method == 'POST':
         formulario = VentaForm(request.POST)
@@ -187,11 +189,12 @@ def registrarVenta(request):
     return render_to_response('ventaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 # ********************************* Administracion de Estancias *********************************
-
+@login_required(login_url="/login")
 def listadoEstancias(request):
     estancia = Estancia.objects.filter(Baja = False)
     return render_to_response('listadoEstancias.html', {'lista':estancia}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def registrarEstancia(request):
     if request.method == 'POST':
         formulario = EstanciaFormFactory(False)(request.POST)
@@ -203,6 +206,7 @@ def registrarEstancia(request):
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('EstanciaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def modificarEstancia(request, pk=None):
     estancia = None
     if pk is not None:
@@ -219,6 +223,7 @@ def modificarEstancia(request, pk=None):
     formulario.setup('Modificar', css_class="btn btn-success")
     return render_to_response('modificarEstancia.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def eliminarEstancia(request, pk):
     estancia = Estancia.objects.get(pk=pk)
     estancia.Baja = True
@@ -228,10 +233,12 @@ def eliminarEstancia(request, pk):
 
 # ********************************* Administracion de Lotes *********************************
 
+@login_required(login_url="/login")
 def listadoLotes(request):
     lote = Lote.objects.all()
     return render_to_response('listadoLotes.html', {'lista':lote}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def registrarLote(request, pk=None):
     lote = None
     if pk is not None:
@@ -249,6 +256,7 @@ def registrarLote(request, pk=None):
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('registrarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def eliminarLoteId(request, pk):
     lote = Lote.objects.get(pk=pk)
     lote.Baja = True
@@ -258,10 +266,12 @@ def eliminarLoteId(request, pk):
 
 # ********************************* Administracion de Fardos *********************************
 
+@login_required(login_url="/login")
 def listadoFardos(request):
     fardo = Fardo.objects.all()
     return render_to_response('listadoFardos.html', {'lista':fardo}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def registrarFardo(request, pk=None):
     fardo = None
     if pk is not None:
@@ -289,10 +299,12 @@ def registrarFardo(request, pk=None):
 
 # ********************************* Administracion de Productor *********************************
     
+@login_required(login_url="/login")
 def listadoProductores(request):
     productor = Productor.objects.filter(Baja = False)
     return render_to_response('listadoProductores.html', {'lista':productor}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def registrarProductor(request):
     if request.method == 'POST':
         formulario = ProductorFormFactory(False)(request.POST)
@@ -304,6 +316,7 @@ def registrarProductor(request):
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('ProductorForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def modificarProductor(request, pk=None):
     productor = None
     if pk is not None:
@@ -320,6 +333,7 @@ def modificarProductor(request, pk=None):
     formulario.setup('Modificar', css_class="btn btn-success")
     return render_to_response('modificarProductor.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def eliminarProductor(request,pk):
     productor = Productor.objects.get(pk=pk)
     productor.Baja = True
@@ -329,10 +343,12 @@ def eliminarProductor(request,pk):
 
 # ********************************* Administracion de Representante *********************************
 
+@login_required(login_url="/login")
 def listadoRepresentante(request):
     representante = Representante.objects.filter(Baja = False)
     return render_to_response('listadoRepresentante.html', {'lista':representante}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def registrarRepresentante(request):
     if request.method == 'POST':
         formulario = RepresentanteFormFactory(False)(request.POST)
@@ -344,6 +360,7 @@ def registrarRepresentante(request):
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('RepresentanteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def modificarRepresentante(request, pk=None):
     representante = None
     if pk is not None:
@@ -359,6 +376,7 @@ def modificarRepresentante(request, pk=None):
     formulario.setup('Modificar', css_class="btn btn-success")
     return render_to_response('modificarRepresentante.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def eliminarRepresentante(request,pk):
     representante = Representante.objects.get(pk=pk)
     representante.Baja = True
@@ -368,10 +386,12 @@ def eliminarRepresentante(request,pk):
 
 # ********************************* Administracion de Produccion *********************************
 
+@login_required(login_url="/login")
 def listadoOrden(request):
     op = OrdenProduccion.objects.all()
     return render_to_response('listadoOrden.html', {'lista':op}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def registrarOrdenProduccion(request, pk=None):
     orden = None
     serv = []       # Arreglo de servicios para almacenar los que ingreso.
@@ -390,6 +410,7 @@ def registrarOrdenProduccion(request, pk=None):
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('OrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def verOrdenProduccion(request, pk):
     orden = OrdenProduccion.objects.get(NroOrden = pk)
     detalles = orden.detalleorden_set   # Obtengo los detales de la orden
@@ -436,6 +457,7 @@ def verOrdenProduccion(request, pk):
     
     return render_to_response('datosOrden.html', {'orden':orden, 'detalles':prueba, 'totales':totales}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def mostrarEstancia (request, pk):
     orden = OrdenProduccion.objects.get(NroOrden = pk)
     est = [] # Estancia que tiene fardos con especificaciones requeridas
@@ -449,6 +471,7 @@ def mostrarEstancia (request, pk):
 
     return render_to_response('OrdenProduccion/agregarDetalle.html', {'estancias':est, 'orden':orden}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def mostrarLotes (request, estancia, orden):
     
     orden = OrdenProduccion.objects.get(NroOrden = orden)
@@ -467,6 +490,7 @@ def mostrarLotes (request, estancia, orden):
     
     return HttpResponse(json.dumps({'lotes':data, 'fardos':data1}), content_type='json')
     
+@login_required(login_url="/login")
 def mostrarFardos (request, pk):
     lote = Lote.objects.get( NroLote = pk )
     
@@ -475,6 +499,7 @@ def mostrarFardos (request, pk):
     data = serializers.serialize('json', fardos)
     return HttpResponse(data, content_type='json')    
 
+@login_required(login_url="/login")
 def agregarDetalle (request, campos = None, orden = None): # En caso de que todos los fardos que eligio se pasen de
                                                            # la cantidad requerida solo tomara los fardos que aproximen
                                                            # ese valor
@@ -507,6 +532,7 @@ def agregarDetalle (request, campos = None, orden = None): # En caso de que todo
 
     return HttpResponse(json.dumps({'kg': kgAgregados}), content_type="application/json")   
 
+@login_required(login_url="/login")
 def cancelarOrdenProduccion(request, pk):
     orden = OrdenProduccion.objects.get( NroOrden=pk )
     orden.Cancelada = True
@@ -520,6 +546,7 @@ def cancelarOrdenProduccion(request, pk):
     orden.save()
     return HttpResponseRedirect('/listadoOrden')    
     
+@login_required(login_url="/login")
 def enviarFaseProduccion(request, pk):
     maq = []
     orden = OrdenProduccion.objects.get(NroOrden = pk)
@@ -533,6 +560,7 @@ def enviarFaseProduccion(request, pk):
 
     return render_to_response('enviarFaseProduccionForm.html', {'orden':orden, 'maquinaria':maq}, context_instance=RequestContext(request))
     
+@login_required(login_url="/login")
 def commitIniciarFase(request, orden, nroSerie):
     o = OrdenProduccion.objects.get(NroOrden = orden)
     m = Maquinaria.objects.get(NroSerie = nroSerie)
@@ -547,6 +575,7 @@ def commitIniciarFase(request, orden, nroSerie):
 
     return HttpResponseRedirect('/listadoOrden')    
 
+@login_required(login_url="/login")
 def finalizarFaseProduccion(request, pk):
     orden = OrdenProduccion.objects.get(NroOrden = pk)
     for p in orden.produccion_set.all():
@@ -560,6 +589,7 @@ def finalizarFaseProduccion(request, pk):
 
 # ********************************* Administracion de Lote de Ventas *********************************
 
+@login_required(login_url="/login")
 def commitLoteVenta(request, cuadricula = None, orden = None):
     o = OrdenProduccion.objects.get(NroOrden = orden)
     v = LoteVenta()
@@ -570,16 +600,19 @@ def commitLoteVenta(request, cuadricula = None, orden = None):
         
     return HttpResponseRedirect('/listadoOrden') 
 
+@login_required(login_url="/login")
 def agregarLoteVenta(request, pk):
     o = OrdenProduccion.objects.get(NroOrden = pk)
     return render_to_response('LoteVentaForm.html', {'orden':o}, context_instance=RequestContext(request))
 
 # ********************************* Administracion de Maquinarias *********************************
 
+@login_required(login_url="/login")
 def listadoMaquinaria(request):
     maquinaria = Maquinaria.objects.filter(Baja = False)
     return render_to_response('listadoMaquinaria.html', {'lista':maquinaria}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def registrarMaquinaria(request):
     if request.method == 'POST':
         formulario = MaquinariaFormFactory(False)(request.POST)
@@ -591,6 +624,7 @@ def registrarMaquinaria(request):
     formulario.setup('Registrar', css_class="btn btn-success")
     return render_to_response('MaquinariaForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def modificarMaquinaria(request, pk=None):
     maquinaria = None
     if pk is not None:
@@ -607,6 +641,7 @@ def modificarMaquinaria(request, pk=None):
     formulario.setup('Modificar', css_class="btn btn-success")
     return render_to_response('modificarMaquinaria.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def eliminarMaquinaria(request,pk):
     maquinaria = Maquinaria.objects.get(pk=pk)    
     maquinaria.Baja = True
@@ -616,6 +651,7 @@ def eliminarMaquinaria(request,pk):
 
 # ********************************* Busquedas por Criterio *********************************
 
+@login_required(login_url="/login")
 def buscarCompra(request, pkb):
     results = []
     
@@ -634,7 +670,7 @@ def buscarCompra(request, pkb):
  
     return render_to_response("listadoCompra.html", { "lista": results }, context_instance=RequestContext(request))
 
-
+@login_required(login_url="/login")
 def buscarVenta(request, pkb):
     results = []
 
@@ -646,6 +682,7 @@ def buscarVenta(request, pkb):
     return render_to_response("listadoVenta.html", { "lista": results }, context_instance=RequestContext(request))
 
 
+@login_required(login_url="/login")
 def buscarEstancia(request, pkb):
     results = []
 
@@ -659,6 +696,7 @@ def buscarEstancia(request, pkb):
  
     return render_to_response("listadoEstancias.html", { "lista": results }, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def buscarLote(request, pkb):
     results = []
 
@@ -668,6 +706,7 @@ def buscarLote(request, pkb):
 
     return render_to_response("listadoLotes.html", { "lista": results }, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def buscarFardo(request, pkb):
     results = []
 
@@ -679,6 +718,7 @@ def buscarFardo(request, pkb):
  
     return render_to_response("listadoFardos.html", { "lista": results }, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def buscarProductor(request, pkb):
     results = []
 
@@ -695,6 +735,7 @@ def buscarProductor(request, pkb):
 
     return render_to_response("listadoProductores.html", { "lista": results }, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def buscarRepresentante(request, pkb):
     results = []
 
@@ -711,6 +752,7 @@ def buscarRepresentante(request, pkb):
 
     return render_to_response("listadoRepresentante.html", { "lista": results }, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def buscarOrden(request, pkb):
     results = []
 
@@ -722,6 +764,7 @@ def buscarOrden(request, pkb):
  
     return render_to_response("listadoOrden.html", { "lista": results }, context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
 def buscarMaquinaria(request, pkb):
     results = []
     results1 = Maquinaria.objects.all().filter(TipoMaquinaria = pkb)

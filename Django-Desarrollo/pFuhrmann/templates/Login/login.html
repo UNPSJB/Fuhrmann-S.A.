@@ -1,0 +1,42 @@
+{% extends "baseLogin.html" %}
+{% block content %}
+
+<style>
+body {margin: 30; padding: 20px; text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#666666;}
+.error_page {width: 400px; padding: 50px; margin: auto;}
+.error_page h1 {margin: 20px 0 0;}
+.error_page p {margin: 10px 0; padding: 0;}     
+a {color: #9caa6d; text-decoration:none;}
+a:hover {color: #9caa6d; text-decoration:underline;}
+</style>
+
+<div class="container">
+    <div id="login">
+        <h2>Login to Fuhrmann S.A</h2>
+
+        <form class="form-horizontal" name="LoginForm" action="/login/" method="post">
+        {% csrf_token %}
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}" />
+        {% endif %}
+        <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+                <input type="text" id="username" name="username"  placeholder="Username">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" name="password" id="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn">Login</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

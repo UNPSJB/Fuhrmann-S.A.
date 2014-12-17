@@ -14,11 +14,6 @@ from local_settings import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-# Redirect when login is correct.
-LOGIN_REDIRECT_URL = "/"
-# Redirect when login is not correct.
-LOGIN_URL = '/'
-
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'o#go!yw@0f-e9i7!^uy86yt%8#=an!oi$utb^ggok09odg*5ua'
@@ -42,11 +37,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
     'django.contrib.sites',
-
     'django_extensions',
     'appWeb',
     'crispy_forms',
-  #  'wkhtmltopdf',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -56,7 +49,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 
 )
 
@@ -90,7 +83,18 @@ USE_L10N = True
 USE_TZ = True
 
 TEMPLATE_DIRS = (
-     'templates',
+    'templates',
+    'templates/Login',
+    'templates/OrdenProduccion',
+    'templates/PDF',
+    'templates/Lote',
+    'templates/Fardo',
+    'templates/Error',
+    'templates/Basico',
+    'templates/Operacion',
+    'templates/Persona',
+    'templates/Estancia',
+    'templates/Maquinaria',
 )
 
 
