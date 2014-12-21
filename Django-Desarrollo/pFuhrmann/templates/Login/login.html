@@ -1,3 +1,5 @@
+<!DOCTYPE HTML>
+
 {% extends "baseLogin.html" %}
 {% block content %}
 
@@ -27,18 +29,20 @@ em.success {
 <section class="login">
     <div class="titulo">Fuhrmann S.A</div>
 
-    <form class="form" name="LoginForm" action="/login/" method="post" id="formid">
+    <form class="form" name="LoginForm" method="post" id="formid">
         {% csrf_token %}
         {% if next %}
             <input type="hidden" name="next" value="{{ next }}" />
         {% endif %}
-            <input type="text" id="username" placeholder="Usuario" name="username" data-icon="U">
-            <input placeholder="Contraseña" type="password" name="password" id="password" data-icon="x">
+            <input type="text" id="username" placeholder="Usuario" name="username" data-icon="U" tabindex="1" required>
+            <input placeholder="Contraseña" type="password" name="password" id="password" data-icon="x" tabindex="2" required>
             
             <div class="olvido">
-               <div class="col"><a href="#" title="Recuperar Password">Error Contraseña?</a></div>
+                <div class="col">
+                    <label><input type="checkbox" tabindex="3">Keep me logged in</label>
+                </div>
             </div>
-            <a href="#" onclick="document.getElementById('formid').submit()" class="enviar">Ingresar</a>
+            <input type="submit" class="enviar" value="Ingresar" tabindex="4">
     </form>
 </section>
 
