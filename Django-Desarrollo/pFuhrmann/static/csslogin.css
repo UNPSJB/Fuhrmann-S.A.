@@ -44,8 +44,8 @@ body {
 }
 
 .login form input[type=text], .login form input[type=password] {
-    width: 200px;
-    font-size: 12px;
+    width: 240px;
+    font-size: 14px;
     padding-top: 14px;
     padding-bottom: 14px;
     padding-left: 40px;
@@ -60,7 +60,7 @@ body {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     border-top: #0b0b0b solid 1px;
-    background: #141414 url(img/user.png) 10px center no-repeat;
+    background: #141414 url(img/user.png) 7px center no-repeat;
 }
 
 .login form input[type=password] {
@@ -68,7 +68,7 @@ body {
     border-bottom-right-radius: 6px;
     border-top: #0b0b0b 1px solid;
     border-bottom: #353535 1px solid;
-    background: #141414 url(img/lock.png) 10px center no-repeat;
+    background: #141414 url(img/lock.png) 7px center no-repeat;
 }
 
 .login form .enviar {
