@@ -1,7 +1,6 @@
 #encoding:utf-8
 from django.forms import ModelForm
 from django import forms
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from appWeb.models import * 
 from localflavor.ar.forms import ARCUITField
@@ -9,6 +8,41 @@ from localflavor.ar.forms import ARDNIField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, Fieldset, ButtonHolder
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions, InlineField
+
+#users
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required, permission_required
+
+
+
+
+
+# ****************************** User *******************************
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=255, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if username is not None or password is not None:
+            user = authenticate(username=username, password=password)
+            if not user or not user.is_active:
+                raise forms.ValidationError("Lo sentimos, Usuario o Contraseña incorrecto. Por favor intente nuevamente.")
+        return self.cleaned_data
+
+    def login(self, request):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        return user
+
+
+
+
 
 # ********************************* Formulario de Compras *********************************
 class CompraForm(forms.ModelForm):    

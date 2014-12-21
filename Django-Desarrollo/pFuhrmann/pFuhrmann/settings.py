@@ -23,7 +23,9 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
+
+LOGIN_REDIRECT_URL = '/index'
 
 
 # Application definition
@@ -49,8 +51,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-
 )
 
 ROOT_URLCONF = 'pFuhrmann.urls'
@@ -102,14 +102,15 @@ TEMPLATE_DIRS = (
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 #STATIC_ROOT = '/home/matth/mysiteagencia/static/'
 STATIC_URL = '/static/'
+
 #'http://localhost:80/static/'
 
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows. 
     # Don't forget to use absolute paths, not relative paths.
-    # os.path.join(BASE_DIR, 'static'),
-    'static',
+    #os.path.join(BASE_DIR, 'static'),
+    BASE_DIR+'/static',
 )
 LOGGING = {
     'version': 1,

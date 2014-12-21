@@ -4,22 +4,19 @@ from appWeb import views
 from django.contrib.auth.views import login, logout
 
 
-
 admin.autodiscover()
 urlpatterns = patterns('',
-
 
     url(r'^login/$', 'appWeb.views.login_user'),
     url(r'^logout/$', 'appWeb.views.logout'),
 
-
-
     url(r'^admin/', include(admin.site.urls)),
-
     url(r'^acercaDe/', 'appWeb.views.acercaDe'),
+    url(r'^$','appWeb.views.index'),
     url(r'^index/','appWeb.views.index'),
+    url(r'^error_message/','appWeb.views.error_message'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    
+        
 
     #Registrar Operacion
     url(r'^registrarCompra/$', 'appWeb.views.registrarCompra'),
@@ -106,3 +103,5 @@ urlpatterns = patterns('',
 
 
 )
+
+#handler404 = views.handler404
