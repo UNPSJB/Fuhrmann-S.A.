@@ -26,6 +26,8 @@ import xhtml2pdf.pisa as pisa
 from datetime import datetime
 from django.template.context import RequestContext
 from django.core.context_processors import csrf
+from random import choice
+import string
 
 #users
 from django.contrib.auth.models import User
@@ -33,23 +35,56 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404 
+from django.core.mail import EmailMessage
 
 
 def login_user(request):
     logout(request) # Por si un usuario se encontraba logueado
+    form = LoginForm(request.POST)  
 
-    form = LoginForm(request.POST)    
-
+    try:
+        meta = request.META['QUERY_STRING'].split('=')[1][:-1]
+    except IndexError:
+        meta = None
+    
     if request.POST and form.is_valid():
         user = form.login(request)
         if user:
             login(request, user)
-            return HttpResponseRedirect(LOGIN_REDIRECT_URL)
+            if meta:
+                return HttpResponseRedirect(meta)
+            return HttpResponseRedirect('/')
     return render(request, 'login.html', {'login_form': form })
 
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect("/login")
+
+def recoveryPassword(request, user = None):
+    logout(request) # Por si un usuario se encontraba logueado
+    error = False
+    try:        
+        userB = User.objects.get(username = user)
+    except:
+        userB = None
+
+    if userB != None:
+        try:
+            cont = ''.join([choice(string.letters + string.digits) for i in range(8)])
+            userB.set_password(cont)
+            email = EmailMessage("Recovery Password", "Mail enviado para recuperar password. You password is: " + cont, to = [userB.email])
+            email.send()
+            msg = 'Recovery Password, enviado a E-Mail'
+            userB.save()
+            error = False
+        except:
+            msg = 'No se pudo recuperar password, mail incorrecto.'
+            error = True
+    else:
+        msg = 'No se pudo recuperar password, usuario no existe.'
+        error = True
+    return render_to_response('login.html', {'msg':msg, 'error':error}, context_instance=RequestContext(request))
+
 
 @login_required(login_url="/login")
 def index (request):

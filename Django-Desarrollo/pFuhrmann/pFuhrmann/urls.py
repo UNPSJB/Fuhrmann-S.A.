@@ -9,6 +9,11 @@ urlpatterns = patterns('',
 
     url(r'^login/$', 'appWeb.views.login_user'),
     url(r'^logout/$', 'appWeb.views.logout'),
+    url(r'^recoveryPassword/$', 'appWeb.views.recoveryPassword'),
+    url(r'^recoveryPassword/(.*)/$', 'appWeb.views.recoveryPassword'),
+
+
+
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^acercaDe/', 'appWeb.views.acercaDe'),

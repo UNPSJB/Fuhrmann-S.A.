@@ -25,8 +25,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
 
-LOGIN_REDIRECT_URL = '/index'
-
 
 # Application definition
 
@@ -59,7 +57,6 @@ WKHTMLTOPDF_CMD = '/path/to/my/wkhtmltopdf'
 WKHTMLTOPDF_CMD_OPTIONS = {
     'quiet': True,
 }
-
 
 WSGI_APPLICATION = 'pFuhrmann.wsgi.application'
 
@@ -95,6 +92,7 @@ TEMPLATE_DIRS = (
     'templates/Persona',
     'templates/Estancia',
     'templates/Maquinaria',
+    'templates/Registration',
 )
 
 

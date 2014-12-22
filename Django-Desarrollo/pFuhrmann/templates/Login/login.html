@@ -29,20 +29,18 @@ em.success {
 <section class="login">
     <div class="titulo">Fuhrmann S.A</div>
 
-    <form class="form" name="LoginForm" method="post" id="formid">
-        {% csrf_token %}
-        {% if next %}
-            <input type="hidden" name="next" value="{{ next }}" />
-        {% endif %}
+    <form class="form" name="LoginForm" action="/login/" method="post" id="formid">
             <input type="text" id="username" placeholder="Usuario" name="username" data-icon="U" tabindex="1" required>
             <input placeholder="Contraseña" type="password" name="password" id="password" data-icon="x" tabindex="2" required>
             
             <div class="olvido">
                 <div class="col">
-                    <label><input type="checkbox" tabindex="3">Keep me logged in</label>
+                    <label><a href="javascript:recovery()">Fotgot Password?</a></label>
                 </div>
             </div>
             <input type="submit" class="enviar" value="Ingresar" tabindex="4">
+            {% csrf_token %}
+                <input type="hidden" value="{{next}}" name="next" >
     </form>
 </section>
 
@@ -51,10 +49,18 @@ em.success {
         {% if login_form.non_field_errors %}
             <ul class='form-errors'>
                 {% for error in login_form.non_field_errors %}
-                    <h1 align = "center"><li><font color = "#FE2E2E" size = "3">{{ error }}</font></li><h1>
+                    <h1 align = "center"><font color = "#FE2E2E" size = "3">{{ error }}</font><h1>
                 {% endfor %}
             </ul>
         {% endif %}
+
+        {% if msg %}
+            {% if error %}
+                <h1 align = "center"><font color = "#FE2E2E" size = "3">{{ msg }}</font><h1>
+            {% else %}
+                <h1 align = "center"><font color = "green" size = "3">{{ msg }}</font><h1>
+            {% endif%}
+        {% endif%}
     </div>
 </div>
 {% endblock %}
@@ -66,6 +72,12 @@ em.success {
     <!-- jQuery Version 1.11.0 -->
     <script src="{{STATIC_URL}}js/jquery-1.11.0.js"></script>
     <script type="text/javascript">
+
+    function recovery(){
+        var cuadri = document.getElementById('username');
+        window.location = "/recoveryPassword/" + cuadri.value;
+    }
+
 
     function actualizaReloj(){
         marcacion = new Date()
