@@ -30,7 +30,7 @@ class ConfigTable(models.Model):
     def getMedRinde(self):
         return int(medRinde)
         
-# *****************************************************
+# ****************************************************
 
 
 
