@@ -1,6 +1,5 @@
 from django.db import models
 from datetime import date
-from appWeb.constants import * 
 
 # ************* Configuracion ****************
 DEFAULT_CONFIGS = {
@@ -49,6 +48,9 @@ class Config(models.Model):
     objects = ConfigManager()
 
 # *****************************************************
+
+
+
 class CompraLote(models.Model):
     class Meta:
         ordering = ['NroCompra']
