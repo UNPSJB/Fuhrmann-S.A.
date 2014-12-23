@@ -42,7 +42,7 @@ def login_user(request):
     logout(request) # Por si un usuario se encontraba logueado
     form = LoginForm(request.POST)  
 
-    print Config.objects.get_valor('RINDE_MIN')
+    print Config.objects.get_int('FINURA_MIN')
 
     try:
         meta = request.META['QUERY_STRING'].split('=')[1][:-1]

@@ -4,6 +4,7 @@ from appWeb.models import *
 class RepresentanteAdmin(admin.ModelAdmin):
 	search_fields = ( 'DNI', 'Nombre', 'Apellido')
 
+admin.site.register(Config)
 admin.site.register(Productor)
 admin.site.register(Representante, RepresentanteAdmin)
 admin.site.register(Estancia)

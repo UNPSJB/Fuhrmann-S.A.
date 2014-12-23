@@ -1,59 +1,6 @@
 from django.db import models
 from datetime import date
 
-# ************* Configuracion ****************
-DEFAULT_CONFIGS = {
-    'RINDE_MIN': 40,
-    'RINDE_MAX': 60,
-    'FINURA_MIN': 16,
-    'FINURA_MAX': 25, 
-    'CV_MIN': 40, 
-    'CV_MAX': 50, 
-    'ALTURAMEDIA_MIN': 60,
-    'ALTURAMEDIA_MAX': 80, 
-    'ROMANA_MIN': 10,
-    'ROMANA_MAX': 30,
-    # ---------- Algunos ejemplos del potencial ;)
-    'EMPRESA': "Fuhrmann",
-    'DIRECCION': "Avenida Siempre Viva 742",
-    'CUIT': "20280266028",
-    'THEME': "bootstrap"
-}
-
-class ConfigManager(models.Manager):
-    def get_valor(self, clave):
-        try:
-            return super(ConfigManager, self).get(clave).valor
-        except:
-            return DEFAULT_CONFIGS.get(clave)
-            
-    def get_int(self, clave):
-        try:
-            return int(self.get_valor(clave))
-        except:
-            return DEFAULT_CONFIGS.get(clave)
-
-    def get_float(self, clave):
-        try:
-            return float(self.get_valor(clave))
-        except:
-            return DEFAULT_CONFIGS.get(clave)
-            
-    def get_bool(self, clave):
-        try:
-            return bool(self.get_valor(clave))
-        except:
-            return DEFAULT_CONFIGS.get(clave)
-
-class Config(models.Model):
-    clave = models.CharField(max_length=50, primary_key = True)
-    valor = models.CharField(max_length=50)
-    objects = ConfigManager()
-
-# *****************************************************
-
-
-
 class CompraLote(models.Model):
     class Meta:
         ordering = ['NroCompra']
@@ -396,8 +343,57 @@ class LoteVenta(models.Model):
 
 
 
- 
+# ************* Configuracion ****************
 
+DEFAULT_CONFIGS = {
+    'RINDE_MIN': 40,
+    'RINDE_MAX': 60,
+    'FINURA_MIN': 16,
+    'FINURA_MAX': 25, 
+    'CV_MIN': 40, 
+    'CV_MAX': 50, 
+    'ALTURAMEDIA_MIN': 60,
+    'ALTURAMEDIA_MAX': 80, 
+    'ROMANA_MIN': 10,
+    'ROMANA_MAX': 30,
+    # ---------- Algunos ejemplos del potencial ;)
+    'EMPRESA': "Fuhrmann",
+    'DIRECCION': "Avenida Siempre Viva 742",
+    'CUIT': "20280266028",
+    'THEME': "bootstrap"
+}
+
+class ConfigManager(models.Manager):
+    def get_valor(self, clave):
+        try:
+            return super(ConfigManager, self).get(clave = clave).valor
+        except:
+            return DEFAULT_CONFIGS.get(clave)
+            
+    def get_int(self, clave):
+        try:
+            return int(self.get_valor(clave))
+        except:
+            return DEFAULT_CONFIGS.get(clave)
+
+    def get_float(self, clave):
+        try:
+            return float(self.get_valor(clave))
+        except:
+            return DEFAULT_CONFIGS.get(clave)
+            
+    def get_bool(self, clave):
+        try:
+            return bool(self.get_valor(clave))
+        except:
+            return DEFAULT_CONFIGS.get(clave)
+
+class Config(models.Model):
+    clave = models.CharField(max_length=50, primary_key = True)
+    valor = models.CharField(max_length=50)
+    objects = ConfigManager()
+
+# *****************************************************
 
 
 
