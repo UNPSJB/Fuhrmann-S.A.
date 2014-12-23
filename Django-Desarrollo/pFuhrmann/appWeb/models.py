@@ -1,5 +1,37 @@
 from django.db import models
 from datetime import date
+from appWeb.constants import * 
+
+
+# ************* Clase de configuracion ****************
+class ConfigTable(models.Model):
+    idTable = models.AutoField(primary_key = True)
+    medHM = models.CharField(max_length=50)
+    medCV = models.CharField(max_length=50)
+    medFinura = models.CharField(max_length=50)
+    medRomana = models.CharField(max_length=50)
+    medRinde = models.CharField(max_length=50)
+    
+    def __init__(self):
+        medHM = HM_MED
+        medCV = CV_MED
+        medFinura = FINURA_MED
+        medRomana = ROMANA_MED
+        medRinde = RINDE_MED
+
+    def getMedHM(self):
+        return int(medHM)
+    def getMedCV(self):
+        return int(medCV)
+    def getMedFinura(self):
+        return int(medFinura)
+    def getMedRomana(self):
+        return int(medRomana)
+    def getMedRinde(self):
+        return int(medRinde)
+        
+# *****************************************************
+
 
 
 
