@@ -2,39 +2,53 @@ from django.db import models
 from datetime import date
 from appWeb.constants import * 
 
+# ************* Configuracion ****************
+DEFAULT_CONFIGS = {
+    'RINDE_MIN': 40,
+    'RINDE_MAX': 60,
+    'FINURA_MIN': 16,
+    'FINURA_MAX': 25, 
+    'CV_MIN': 40, 
+    'CV_MAX': 50, 
+    'ALTURAMEDIA_MIN': 60,
+    'ALTURAMEDIA_MAX': 80, 
+    'ROMANA_MIN': 10,
+    'ROMANA_MAX': 30,
+    # ---------- Algunos ejemplos del potencial ;)
+    'EMPRESA': "Fuhrmann",
+    'DIRECCION': "Avenida Siempre Viva 742",
+    'CUIT': "20280266028",
+    'THEME': "bootstrap"
+}
 
-# ************* Clase de configuracion ****************
-class ConfigTable(models.Model):
-    idTable = models.AutoField(primary_key = True)
-    medHM = models.CharField(max_length=50)
-    medCV = models.CharField(max_length=50)
-    medFinura = models.CharField(max_length=50)
-    medRomana = models.CharField(max_length=50)
-    medRinde = models.CharField(max_length=50)
-    
-    def __init__(self):
-        medHM = HM_MED
-        medCV = CV_MED
-        medFinura = FINURA_MED
-        medRomana = ROMANA_MED
-        medRinde = RINDE_MED
+class ConfigManager(models.Manager):
+    def get_valor(self, clave):
+        try:
+            return super(ConfigManager, self).get(clave).valor
+        except:
+            return DEFAULT_CONFIGS.get(clave)
+            
+    def get_int(self, clave):
+        valor = self.get_valor(clave)
+        if valor:
+            return int(valor)
 
-    def getMedHM(self):
-        return int(medHM)
-    def getMedCV(self):
-        return int(medCV)
-    def getMedFinura(self):
-        return int(medFinura)
-    def getMedRomana(self):
-        return int(medRomana)
-    def getMedRinde(self):
-        return int(medRinde)
-        
-# ****************************************************
+    def get_float(self, clave):
+        valor = self.get_valor(clave)
+        if valor:
+            return float(valor)
+            
+    def get_bool(self, clave):
+        valor = self.get_valor(clave)
+        if valor:
+            return bool(valor)
 
+class Config(models.Model):
+    clave = models.CharField(max_length=50, primary_key = True)
+    valor = models.CharField(max_length=50)
+    objects = ConfigManager()
 
-
-
+# *****************************************************
 class CompraLote(models.Model):
     class Meta:
         ordering = ['NroCompra']
