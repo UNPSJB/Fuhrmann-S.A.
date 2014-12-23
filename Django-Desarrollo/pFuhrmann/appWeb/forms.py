@@ -17,8 +17,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 
 
-
-
 # ****************************** User *******************************
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=255, required=True)
@@ -534,8 +532,12 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
             return value
         return _clean
 
-    for esp, r1, r2 in [ ('Rinde', 40, 60), ('Finura', 16, 25), 
-        ('CV', 40, 50), ('AlturaMedia', 60, 80), ('Romana', 10, 30) ]:
+    for esp, r1, r2 in [ 
+            ('Rinde', Config.objects.get_int("RINDE_MIN"), Config.objects.get_int("RINDE_MAX")),
+            ('Finura', Config.objects.get_int("FINURA_MIN"), Config.objects.get_int("FINURA_MAX")), 
+            ('CV', Config.objects.get_int("CV_MIN"), Config.objects.get_int("CV_MAX")),
+            ('AlturaMedia', Config.objects.get_int("ALTURAMEDIA_MIN"), Config.objects.get_int("ALTURAMEDIA_MAX")),
+            ('Romana', Config.objects.get_int("ROMANA_MIN"), Config.objects.get_int("ROMANA_MAX")) ]:
         setattr(OrdenProduccionForm, "clean_%s" % esp, clean(esp, r1, r2))
 
     return OrdenProduccionForm
