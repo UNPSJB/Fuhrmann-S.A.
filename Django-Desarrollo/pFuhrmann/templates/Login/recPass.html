@@ -1,0 +1,16 @@
+{% extends "baseLogin.html" %}
+{% block content %}
+	<body onload="actualizaReloj()">
+    	<div id="Fecha_Reloj"></div>
+	</body>
+<section class="aviso">
+
+    {% if msg %}
+        {% if error %}
+            <h1 align = "center"><font color = "#FE2E2E" size = "4">{{ msg }} Presione <a href = "/login">aqui</a> para volver.</font><h1>
+        {% else %}
+            <h1 align = "center"><font color = "green" size = "4">{{ msg }} Presione <a href = "/login">aqui</a> para volver.</font><h1>
+        {% endif%}
+    {% endif%}
+</section>
+{% endblock %}

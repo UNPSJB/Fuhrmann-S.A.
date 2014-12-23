@@ -1,25 +1,5 @@
-<!DOCTYPE HTML>
-
 {% extends "baseLogin.html" %}
 {% block content %}
-
-<style>
-body {margin: 30; padding: 20px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#666666;}
-.error_page {width: 400px; padding: 50px; margin: auto;}
-.error_page h1 {margin: 20px 0 0;}
-.error_page p {margin: 10px 0; padding: 0;}     
-a {color: #9caa6d; text-decoration:none;}
-a:hover {color: #9caa6d; text-decoration:underline;}
-
-em.error {
-    padding-left: 16px;
-    color: #3D6D0D;
-}
-em.success {
-    padding-left: 16px;
-    color:#3D6D0D;
-}
-</style>
 
 
 <body onload="actualizaReloj()">
@@ -28,19 +8,21 @@ em.success {
 
 <section class="login">
     <div class="titulo">Fuhrmann S.A</div>
-
-    <form class="form" name="LoginForm" action="/login/" method="post" id="formid">
-            <input type="text" id="username" placeholder="Usuario" name="username" data-icon="U" tabindex="1" required>
-            <input placeholder="Contraseña" type="password" name="password" id="password" data-icon="x" tabindex="2" required>
-            
-            <div class="olvido">
-                <div class="col">
-                    <label><a href="javascript:recovery()">Fotgot Password?</a></label>
-                </div>
+    <form class="form" onreset = "javascript:algo()" method="post" id="formid">
+        <input type="text" id="username" placeholder="Usuario" name="username" data-icon="U" tabindex="1" required>
+        <input placeholder="Contraseña" type="password" name="password" id="password" data-icon="x" tabindex="2" required>
+        
+        <div class="olvido">
+            <div class="col">
+                <label><a href="javascript:recovery();">Fotgot Password?</a></label>
             </div>
-            <input type="submit" class="enviar" value="Ingresar" tabindex="4">
-            {% csrf_token %}
-                <input type="hidden" value="{{next}}" name="next" >
+        </div>
+        <input type="submit" class="enviar" value="Ingresar" tabindex="4">
+        {% csrf_token %}
+            {% if next %}
+                <input type="hidden" value="{{next}}" name="next" id = "nexts">
+            {% endif %}
+
     </form>
 </section>
 
@@ -53,14 +35,6 @@ em.success {
                 {% endfor %}
             </ul>
         {% endif %}
-
-        {% if msg %}
-            {% if error %}
-                <h1 align = "center"><font color = "#FE2E2E" size = "3">{{ msg }}</font><h1>
-            {% else %}
-                <h1 align = "center"><font color = "green" size = "3">{{ msg }}</font><h1>
-            {% endif%}
-        {% endif%}
     </div>
 </div>
 {% endblock %}
@@ -77,35 +51,5 @@ em.success {
         var cuadri = document.getElementById('username');
         window.location = "/recoveryPassword/" + cuadri.value;
     }
-
-
-    function actualizaReloj(){
-        marcacion = new Date()
-        Hora = marcacion.getHours()
-        Minutos = marcacion.getMinutes()
-        Segundos = marcacion.getSeconds()
-        if (Hora<=9)
-            Hora = "0" + Hora
-        if (Minutos<=9)
-            Minutos = "0" + Minutos
-        if (Segundos<=9)
-            Segundos = "0" + Segundos
-        
-        var Dia = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
-        var Mes = new Array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-        var Hoy = new Date();
-        var Anio = Hoy.getFullYear();
-        var Fecha = Dia[Hoy.getDay()] + ", " + Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las ";
-        var Inicio, Script, Final, Total
-        
-        Inicio = "<font size=3 color=#E6E6E6>"
-        Script = Fecha + Hora + ":" + Minutos + ":" + Segundos
-        Final = "</font>"
-        Total = Inicio + Script + Final
-        document.getElementById('Fecha_Reloj').innerHTML = Total
-        setTimeout("actualizaReloj()",1000)
-    }
-
     </script>
-
 {% endblock %}

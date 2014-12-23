@@ -74,7 +74,7 @@ def recoveryPassword(request, user = None):
             userB.set_password(cont)
             email = EmailMessage("Recovery Password", "Mail enviado para recuperar password. You password is: " + cont, to = [userB.email])
             email.send()
-            msg = 'Recovery Password, enviado a E-Mail'
+            msg = 'Recovery Password, enviado a E-Mail.'
             userB.save()
             error = False
         except:
@@ -83,7 +83,8 @@ def recoveryPassword(request, user = None):
     else:
         msg = 'No se pudo recuperar password, usuario no existe.'
         error = True
-    return render_to_response('login.html', {'msg':msg, 'error':error}, context_instance=RequestContext(request))
+    
+    return render_to_response('recPass.html', {'msg':msg, 'error':error}, context_instance=RequestContext(request))
 
 
 @login_required(login_url="/login")
