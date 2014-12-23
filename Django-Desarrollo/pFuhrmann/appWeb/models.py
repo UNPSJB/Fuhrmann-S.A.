@@ -28,19 +28,22 @@ class ConfigManager(models.Manager):
             return DEFAULT_CONFIGS.get(clave)
             
     def get_int(self, clave):
-        valor = self.get_valor(clave)
-        if valor:
-            return int(valor)
+        try:
+            return int(self.get_valor(clave))
+        except:
+            return DEFAULT_CONFIGS.get(clave)
 
     def get_float(self, clave):
-        valor = self.get_valor(clave)
-        if valor:
-            return float(valor)
+        try:
+            return float(self.get_valor(clave))
+        except:
+            return DEFAULT_CONFIGS.get(clave)
             
     def get_bool(self, clave):
-        valor = self.get_valor(clave)
-        if valor:
-            return bool(valor)
+        try:
+            return bool(self.get_valor(clave))
+        except:
+            return DEFAULT_CONFIGS.get(clave)
 
 class Config(models.Model):
     clave = models.CharField(max_length=50, primary_key = True)
