@@ -77,7 +77,7 @@ class CompraForm(forms.ModelForm):
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "window.location = '/listadoCompra'"))
 
 # ********************************* Formulario de Ventas *********************************
 class VentaForm(forms.ModelForm):
@@ -109,7 +109,7 @@ class VentaForm(forms.ModelForm):
 
     def setup(self, *args, **kwarg):
         self.helper.add_input(Submit('submit', *args, **kwarg))
-        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+        self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "window.location = '/listadoVenta'"))
 
 
 
@@ -162,7 +162,7 @@ def EstanciaFormFactory(edit=False):  # Crear una funcion para crear una clase y
 
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submit', *args, **kwarg))
-            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "window.location = '/listadoEstancias'"))
 
     return EstanciaForm
 
@@ -222,7 +222,7 @@ def LoteFormFactory(edit=False):  # Crear una funcion para crear una clase y pas
 
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submit', *args, **kwarg))
-            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "window.location = '/listadoLotes'"))
         
         def clean_Peso(self):
             peso = self.cleaned_data['Peso']
@@ -256,11 +256,11 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
         else:
             Lote = forms.ModelChoiceField(Lote.disponibles.all(), label ="Lote de fardos (*)")
 
-        CV = forms.FloatField(label ="Coeficiente de variación % (*)", min_value = 0)
-        AlturaMedia = forms.FloatField(label ="Altura media mm (*)", min_value = 0)
-        Rinde = forms.FloatField(label ="Rinde % (*)", min_value = 0)
-        Finura = forms.FloatField(label ="Finura mm (*)", min_value = 0)
-        Romana = forms.FloatField(label ="Romana % (*)", min_value = 0)
+        CV = forms.FloatField(label ="C.variación (*)", min_value = 0)
+        AlturaMedia = forms.FloatField(label ="Altura media (*)", min_value = 0)
+        Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
+        Finura = forms.FloatField(label ="Finura (*)", min_value = 0)
+        Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
 
         def __init__(self, *args, **kwargs):
             super(FardoForm, self).__init__(*args, **kwargs)
@@ -276,11 +276,11 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
                     ),
                     Fieldset(
                         '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones</font>',
-                        Field('Rinde', placeholder="Rinde"),
-                        Field('Finura', placeholder="Finura"),
-                        Field('CV', placeholder="Coeficiente de variación"),
-                        Field('AlturaMedia', placeholder="Altura media"),
-                        Field('Romana', placeholder="Romana"),
+                        Field('CV', placeholder="%  entre 40 .. 50"),
+                        Field('AlturaMedia', placeholder="mm  entre 60 .. 80"),
+                        Field('Finura', placeholder="mm  entre 16 .. 25"),
+                        Field('Romana', placeholder="%  entre 10 .. 30"),
+                        Field('Rinde', placeholder="%  entre 40 .. 60")
                     ),
 
                     HTML('<p>(*)Campos obligatorios.</p>'),
@@ -290,11 +290,11 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
                     Fieldset(
                         '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones a modificar</font>',
                         Field('Peso', placeholder="Peso"),
-                        Field('Rinde', placeholder="Rinde"),
-                        Field('Finura', placeholder="Finura"),
-                        Field('CV', placeholder="Coeficiente de variación"),
-                        Field('AlturaMedia', placeholder="Altura media"),
-                        Field('Romana', placeholder="Romana"),
+                        Field('CV', placeholder="%  entre 40 .. 50"),
+                        Field('AlturaMedia', placeholder="mm  entre 60 .. 80"),
+                        Field('Finura', placeholder="mm  entre 16 .. 25"),
+                        Field('Romana', placeholder="%  entre 10 .. 30"),
+                        Field('Rinde', placeholder="%  entre 40 .. 60"),
                         Field('Lote', css_class= ".col-lg-3",placeholder='asd'),
                     ),
 
@@ -303,7 +303,7 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
         
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submit', *args, **kwarg))
-            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "window.location = '/listadoFardos'"))
 
     def clean(esp, r1, r2):
         def _clean(self):
@@ -313,10 +313,15 @@ def FardoFormFactory(edit=False):  # Crear una funcion para crear una clase y pa
             return value
         return _clean
 
-    for esp, r1, r2 in [ ('Rinde', 40, 60), ('Finura', 16, 25), 
-        ('CV', 40, 50), ('AlturaMedia', 60, 80), ('Romana', 10, 30) ]:
+    for esp, r1, r2 in [ 
+            ('Rinde', Config.objects.get_int("RINDE_MIN"), Config.objects.get_int("RINDE_MAX")),
+            ('Finura', Config.objects.get_int("FINURA_MIN"), Config.objects.get_int("FINURA_MAX")), 
+            ('CV', Config.objects.get_int("CV_MIN"), Config.objects.get_int("CV_MAX")),
+            ('AlturaMedia', Config.objects.get_int("ALTURAMEDIA_MIN"), Config.objects.get_int("ALTURAMEDIA_MAX")),
+            ('Romana', Config.objects.get_int("ROMANA_MIN"), Config.objects.get_int("ROMANA_MAX")) ]:
         setattr(FardoForm, "clean_%s" % esp, clean(esp, r1, r2))
     return FardoForm
+
 
 #PERSONAL
 
@@ -367,7 +372,7 @@ def ProductorFormFactory(edit=False):  # Crear una funcion para crear una clase 
 
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submibl', *args, **kwarg))
-            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "window.location = '/listadoProductores'"))
 
     return ProductorForm        
 
@@ -420,7 +425,7 @@ def RepresentanteFormFactory(edit=False):  # Crear una funcion para crear una cl
 
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submit', *args, **kwarg))
-            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "window.location = '/listadoRepresentante'"))
 
     return RepresentanteForm
 
@@ -442,19 +447,19 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
             exclude = ['Finalizada',]
 
         if not e:
-            CantRequerida = forms.IntegerField(label = "Cantidad requerida Kg(*)", min_value = 0)
-            CV = forms.FloatField(label ="Coeficiente de variación % (*)", min_value = 0)
-            AlturaMedia = forms.FloatField(label ="Altura media mm (*)", min_value = 0)
-            Finura = forms.FloatField(label ="Finura mm (*)", min_value = 0)        # Unidad de Medida Micrones
-            Romana = forms.FloatField(label ="Romana % (*)", min_value = 0)
-            Rinde = forms.FloatField(label ="Rinde % (*)", min_value = 0)
+            CantRequerida = forms.IntegerField(label = "Cantidad requerida (*)", min_value = 0)
+            CV = forms.FloatField(label ="C. variación (*)", min_value = 0)
+            AlturaMedia = forms.FloatField(label ="Altura media (*)", min_value = 0)
+            Finura = forms.FloatField(label ="Finura (*)", min_value = 0)        # Unidad de Medida Micrones
+            Romana = forms.FloatField(label ="Romana (*)", min_value = 0)
+            Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0)
         else: 
-            CantRequerida = forms.IntegerField(label = "Cantidad requerida Kg(*)", min_value = 0, widget=forms.HiddenInput())
-            CV = forms.FloatField(label ="Coeficiente de variación % (*)", min_value = 0, widget=forms.HiddenInput())
-            AlturaMedia = forms.FloatField(label ="Altura media mm (*)", min_value = 0, widget=forms.HiddenInput())
-            Finura = forms.FloatField(label ="Finura mm (*)", min_value = 0, widget=forms.HiddenInput())        # Unidad de Medida Micrones
-            Romana = forms.FloatField(label ="Romana % (*)", min_value = 0, widget=forms.HiddenInput())
-            Rinde = forms.FloatField(label ="Rinde % (*)", min_value = 0, widget=forms.HiddenInput())
+            CantRequerida = forms.IntegerField(label = "Cantidad requerida Kg (*)", min_value = 0, widget=forms.HiddenInput())
+            CV = forms.FloatField(label ="C. variación (*)", min_value = 0, widget=forms.HiddenInput())
+            AlturaMedia = forms.FloatField(label ="Altura media (*)", min_value = 0, widget=forms.HiddenInput())
+            Finura = forms.FloatField(label ="Finura (*)", min_value = 0, widget=forms.HiddenInput())        # Unidad de Medida Micrones
+            Romana = forms.FloatField(label ="Romana (*)", min_value = 0, widget=forms.HiddenInput())
+            Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0, widget=forms.HiddenInput())
 
         Servicio = forms.ModelChoiceField(Servicio.objects.filter(Transitorio = False), label ="Servicios a Realizar (*)")
 
@@ -475,11 +480,11 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
                     ),
                     Fieldset(
                         '<font color = "Black" size=3 face="Comic Sans MS">Especificaciones orden de produccion</font>',
-                        Field('CV', placeholder="Coeficiente de variación"),
-                        Field('AlturaMedia', placeholder="Altura media"),
-                        Field('Finura', placeholder="Finura"),
-                        Field('Romana', placeholder="Romana"),
-                        Field('Rinde', placeholder="Rinde")
+                        Field('CV', placeholder="%  entre 40 .. 50"),
+                        Field('AlturaMedia', placeholder="mm  entre 60 .. 80"),
+                        Field('Finura', placeholder="mm  entre 16 .. 25"),
+                        Field('Romana', placeholder="%  entre 10 .. 30"),
+                        Field('Rinde', placeholder="%  entre 40 .. 60")
                     ),
                     HTML('<p>(*)Campos obligatorios.</p>'),
                 )
@@ -492,18 +497,18 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
 
 
                             Field('CantRequerida', placeholder="Cantidad en kilos requeridos"),
-                            Field('CV', placeholder="Coeficiente de variación"),
-                            Field('AlturaMedia', placeholder="Altura media"),
-                            Field('Finura', placeholder="Finura"),
-                            Field('Romana', placeholder="Romana"),
-                            Field('Rinde', placeholder="Rinde")
+                            Field('CV', placeholder="%  entre 40 .. 50"),
+                            Field('AlturaMedia', placeholder="mm  entre 60 .. 80"),
+                            Field('Finura', placeholder="mm  entre 16 .. 25"),
+                            Field('Romana', placeholder="%  entre 10 .. 30"),
+                            Field('Rinde', placeholder="%  entre 40 .. 60")
                         ),
-                        HTML('<p>(*)Campos obligatorios.</p>'),
+                        HTML('<p>(*) Campos obligatorios.</p>'),
                 )
           
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submit', *args, **kwarg))
-            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "window.location = '/listadoOrden'"))
 
         def save(self, *args, **kwarg):           
             orden = super(OrdenProduccionForm, self).save(commit=False)
@@ -576,11 +581,11 @@ def MaquinariaFormFactory(edit=False):  # Crear una funcion para crear una clase
 
         if edit:
             NroSerie = forms.IntegerField(label = "Nro. Serie (*)", widget=forms.HiddenInput())
-            Descripcion = forms.CharField(label = "Descripción")
+            Descripcion = forms.CharField(label = "Descripción", required=False)
             Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)", widget=forms.HiddenInput())
         else:
             NroSerie = forms.IntegerField(label = "Nro. Serie (*)")
-            Descripcion = forms.CharField(label= "Descripción")
+            Descripcion = forms.CharField(label= "Descripción", required=False)
             Servicio = forms.ModelChoiceField(Servicio.objects.all(), label = "Servicio (*)")
                 
 
@@ -604,7 +609,7 @@ def MaquinariaFormFactory(edit=False):  # Crear una funcion para crear una clase
 
         def setup(self, *args, **kwarg):
             self.helper.add_input(Submit('submit', *args, **kwarg))
-            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "history.back()"))
+            self.helper.add_input(Button('cancelar', 'Cancelar', css_class="btn btn-default",onClick = "window.location = '/listadoMaquinaria'"))
 
     return MaquinariaForm
             

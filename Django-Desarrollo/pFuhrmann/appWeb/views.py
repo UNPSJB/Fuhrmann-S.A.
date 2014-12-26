@@ -533,7 +533,13 @@ def mostrarEstancia (request, pk):
     for estancia in Estancia.objects.all():
         lotes = estancia.lote_set.all()
         for lote in lotes:
-            if lote.fardo_set.filter(CV__range = (orden.CV -4, orden.CV +4), AlturaMedia__range = (orden.AlturaMedia -4, orden.AlturaMedia +4), Finura__range = (orden.Finura -4, orden.Finura +4), Romana__range = (orden.Romana -4, orden.Romana +4), Rinde__range = (orden.Rinde -4, orden.Rinde +4), DetalleOrden = None):
+            if lote.fardo_set.filter(CV__range = (orden.CV - ((orden.CV * Config.objects.get_int('CV_%_OK')) / 100), orden.CV + ((orden.CV * Config.objects.get_int('CV_%_OK')) / 100)), 
+                                        AlturaMedia__range = (orden.AlturaMedia - ((orden.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100), orden.AlturaMedia + ((orden.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100)), 
+                                        Finura__range = (orden.Finura - ((orden.Finura * Config.objects.get_int('FINURA_%_OK')) / 100), orden.Finura + ((orden.Finura * Config.objects.get_int('FINURA_%_OK')) / 100)), 
+                                        Romana__range = (orden.Romana - ((orden.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100), orden.Romana + ((orden.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100)), 
+                                        Rinde__range = (orden.Rinde - ((orden.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100), orden.Rinde + ((orden.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100)), 
+                                        DetalleOrden = None):
+
                 est.append(estancia)
                 break
 
@@ -796,8 +802,7 @@ def buscarLote(request, pkb):
 def buscarFardo(request, pkb):
     results = []
 
-    tipoFardo = TipoFardo.objects.all().filter(Nombre = pkb)
-    results1 = Fardo.objects.all().filter(TipoFardo = tipoFardo)
+    results1 = Fardo.objects.all().filter(NroFardo = pkb)
 
     for obj in results1:
         results.append(obj)
