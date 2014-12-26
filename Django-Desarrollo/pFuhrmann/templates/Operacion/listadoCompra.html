@@ -24,6 +24,7 @@
                     <thead>
                         <tr>
                             <th style="text-align:center;" width="6%">Número de compra</th>
+                            <th style="text-align:center;" width="6%">Estado</th>
                             <th style="text-align:center;" width="10%">Representante</th>
                             <th style="text-align:center;" width="10%">Estancia</th>
                             <th style="text-align:center;" width="10%">Fecha de llegada</th>
@@ -31,6 +32,11 @@
                         {% for dato in lista %}
                         <tr>
                             <td style="text-align:center;" width="6%" id="nroCompra">{{dato.NroCompra}}</td>
+                            {% if dato.lote %}
+                                <td style="text-align:center;" width="10%">Lote en Deposito</td>
+                            {% else %}
+                                <td style="text-align:center;" width="10%">No llego a Deposito</td>
+                            {% endif %}
                             <td style="text-align:center;" width="10%">{{dato.Representante}}</td>
                             <td style="text-align:center;" width="10%">{{dato.Estancia}}</td>
                             <td style="text-align:center;" width="10%">{{dato.FechaLlegada}}</td>

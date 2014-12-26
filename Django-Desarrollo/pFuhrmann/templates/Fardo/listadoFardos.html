@@ -23,6 +23,7 @@
                     <thead>
                         <tr>
                             <th style="text-align:center;" width="7%">Nro. Fardo</th>
+                            <th style="text-align:center;" width="7%">Lote</th>
                             <th style="text-align:center;" width="8%">Tipo Fardo</th>
                             <th style="text-align:center;" width="6%">Peso (Kg)</th>
                             <th style="text-align:center;" width="6%">Rinde</th>
@@ -37,6 +38,7 @@
                         {% for dato in lista %}
                         <tr>
                             <td style="text-align:center;" width="7%">{{dato.NroFardo}}</td>
+                            <td style="text-align:center;" width="7%">{{dato.Lote}}</td>
                             <td style="text-align:center;"  width="8%">{{dato.Lote.TipoFardo}}</td>
                             <td style="text-align:center;"  width="6%">{{dato.Peso}}</td>
                             <td style="text-align:center;" width="6%">{{dato.Rinde}}</td>

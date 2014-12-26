@@ -453,7 +453,7 @@ def eliminarRepresentante(request,pk):
 @login_required(login_url="/login")
 @permission_required('appWeb.listado_orden', login_url='/error_message')
 def listadoOrden(request):
-    op = OrdenProduccion.objects.all()
+    op = OrdenProduccion.objects.filter(Cancelada = False)
     return render_to_response('listadoOrden.html', {'lista':op}, context_instance=RequestContext(request))
 
 @login_required(login_url="/login")
