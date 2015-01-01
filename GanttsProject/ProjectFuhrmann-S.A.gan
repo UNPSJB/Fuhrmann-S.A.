@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Project" company="Fuhrmann-S.A" webLink="http://github.com/UNPSJB/Fuhrmann-S.A." view-date="2014-07-21" view-index="0" gantt-divider-location="356" resource-divider-location="300" version="2.0" locale="es">
+<project name="Project" company="Fuhrmann-S.A" webLink="http://github.com/UNPSJB/Fuhrmann-S.A." view-date="2014-11-10" view-index="0" gantt-divider-location="373" resource-divider-location="300" version="2.0" locale="es">
     <description><![CDATA[Planificacion de desarrollo de software, Fuhrmann-S.A.]]></description>
     <view zooming-state="default:6" id="gantt-chart">
-        <field id="tpd3" name="Nombre" width="58" order="0"/>
-        <field id="tpd4" name="Fecha de inicio" width="15" order="1"/>
+        <field id="tpd3" name="Nombre" width="69" order="0"/>
+        <field id="tpd4" name="Fecha de inicio" width="4" order="1"/>
         <field id="tpd5" name="Fecha de fin" width="26" order="2"/>
         <option id="taskLabelUp" value="advancement"/>
         <option id="taskLabelDown" value="name"/>
@@ -11,7 +11,7 @@
     </view>
     <view id="resource-table">
         <field id="0" name="Nombre" width="50" order="0"/>
-        <field id="1" name="Función" width="49" order="1"/>
+        <field id="1" name="Función" width="50" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -61,92 +61,93 @@
             </task>
             <task id="28" name="Diseño de Interfases" color="#8cb6ce" meeting="false" start="2014-09-16" duration="10" complete="100" expand="true"/>
         </task>
-        <task id="66" name="2do Hito de Control" color="#00ff00" meeting="true" start="2014-09-26" duration="0" complete="0" expand="true"/>
-        <task id="109" name="1er Gestion Entregable" color="#000000" meeting="false" start="2014-09-26" duration="31" complete="0" expand="false">
+        <task id="66" name="2do Hito de Control" color="#00ff00" meeting="true" start="2014-09-26" duration="0" complete="100" expand="true"/>
+        <task id="109" name="1er Gestion Entregable" color="#000000" meeting="false" start="2014-09-26" duration="31" complete="100" expand="true">
             <depend id="110" type="2" difference="0" hardness="Strong"/>
-            <task id="218" name="Gestión Proceso de Produccion" color="#000000" meeting="false" start="2014-09-26" duration="5" complete="0" expand="false">
+            <task id="218" name="Gestión Proceso de Produccion" color="#000000" meeting="false" start="2014-09-26" duration="5" complete="100" expand="false">
                 <depend id="19" type="2" difference="0" hardness="Strong"/>
-                <task id="219" name="Re Diseño" meeting="false" start="2014-09-26" duration="2" complete="0" expand="true"/>
-                <task id="220" name="Implementacion" meeting="false" start="2014-09-26" duration="5" complete="0" expand="true"/>
-                <task id="221" name="Verificacion y Prueba" meeting="false" start="2014-09-27" duration="3" complete="0" expand="true"/>
-                <task id="222" name="Documentacion" meeting="false" start="2014-09-27" duration="3" complete="0" expand="true"/>
-                <task id="282" name="Entrega - Validacion" meeting="false" start="2014-09-30" duration="1" complete="0" expand="true"/>
+                <task id="219" name="Re Diseño" color="#66ffcc" meeting="false" start="2014-09-26" duration="2" complete="100" expand="true"/>
+                <task id="220" name="Implementacion" color="#66ffcc" meeting="false" start="2014-09-26" duration="5" complete="100" expand="true"/>
+                <task id="221" name="Verificacion y Prueba" color="#66ffcc" meeting="false" start="2014-09-27" duration="3" complete="100" expand="true"/>
+                <task id="222" name="Documentacion" color="#66ffcc" meeting="false" start="2014-09-27" duration="3" complete="100" expand="true"/>
+                <task id="282" name="Entrega - Validacion" color="#66ffcc" meeting="false" start="2014-09-30" duration="1" complete="100" expand="true"/>
             </task>
-            <task id="19" name="Gestión de Lotes" color="#66ffcc" meeting="false" start="2014-10-01" duration="9" complete="0" expand="false">
+            <task id="19" name="Gestión de Lotes" color="#66ffcc" meeting="false" start="2014-10-01" duration="9" complete="100" expand="false">
                 <depend id="20" type="2" difference="0" hardness="Strong"/>
-                <task id="112" name="Re Diseño" meeting="false" start="2014-10-01" duration="2" complete="0" expand="true"/>
-                <task id="113" name="Implementacion" meeting="false" start="2014-10-02" duration="5" complete="0" expand="true"/>
-                <task id="115" name="Verificacion y Prueba" meeting="false" start="2014-10-06" duration="3" complete="0" expand="true"/>
-                <task id="117" name="Documentacion" meeting="false" start="2014-10-06" duration="3" complete="0" expand="true"/>
-                <task id="283" name="Entrega - Validacion" meeting="false" start="2014-10-09" duration="1" complete="0" expand="true"/>
+                <task id="112" name="Re Diseño" color="#66ffcc" meeting="false" start="2014-10-01" duration="2" complete="100" expand="true"/>
+                <task id="113" name="Implementacion" color="#66ffcc" meeting="false" start="2014-10-02" duration="5" complete="100" expand="true"/>
+                <task id="115" name="Verificacion y Prueba" color="#66ffcc" meeting="false" start="2014-10-06" duration="3" complete="100" expand="true"/>
+                <task id="117" name="Documentacion" color="#66ffcc" meeting="false" start="2014-10-06" duration="3" complete="100" expand="true"/>
+                <task id="283" name="Entrega - Validacion" color="#66ffcc" meeting="false" start="2014-10-09" duration="1" complete="100" expand="true"/>
             </task>
-            <task id="20" name="Gestión de Fardos" color="#66ffcc" meeting="false" start="2014-10-10" duration="8" complete="0" expand="false">
+            <task id="20" name="Gestión de Fardos" color="#66ffcc" meeting="false" start="2014-10-10" duration="8" complete="100" expand="false">
                 <depend id="17" type="2" difference="0" hardness="Strong"/>
-                <task id="126" name="Re Diseño" meeting="false" start="2014-10-10" duration="2" complete="0" expand="true"/>
-                <task id="124" name="Implementacion" meeting="false" start="2014-10-10" duration="5" complete="0" expand="true"/>
-                <task id="122" name="Verificacion y Prueba" meeting="false" start="2014-10-14" duration="3" complete="0" expand="true"/>
-                <task id="120" name="Documentacion" meeting="false" start="2014-10-14" duration="3" complete="0" expand="true"/>
-                <task id="287" name="Entrega - Validacion" meeting="false" start="2014-10-17" duration="1" complete="0" expand="true"/>
+                <task id="126" name="Re Diseño" color="#66ffcc" meeting="false" start="2014-10-10" duration="2" complete="100" expand="true"/>
+                <task id="124" name="Implementacion" color="#66ffcc" meeting="false" start="2014-10-10" duration="5" complete="100" expand="true"/>
+                <task id="122" name="Verificacion y Prueba" color="#66ffcc" meeting="false" start="2014-10-14" duration="3" complete="100" expand="true"/>
+                <task id="120" name="Documentacion" color="#66ffcc" meeting="false" start="2014-10-14" duration="3" complete="100" expand="true"/>
+                <task id="287" name="Entrega - Validacion" color="#66ffcc" meeting="false" start="2014-10-17" duration="1" complete="100" expand="true"/>
             </task>
-            <task id="17" name="Gestión de Compras" color="#66ffcc" meeting="false" start="2014-10-18" duration="9" complete="0" expand="false">
-                <task id="134" name="Re Diseño" meeting="false" start="2014-10-18" duration="2" complete="0" expand="true"/>
-                <task id="132" name="Implementacion" meeting="false" start="2014-10-18" duration="5" complete="0" expand="true"/>
-                <task id="130" name="Verificacion y Prueba" meeting="false" start="2014-10-23" duration="3" complete="0" expand="true"/>
-                <task id="128" name="Documentacion" meeting="false" start="2014-10-23" duration="3" complete="0" expand="true"/>
-                <task id="288" name="Entrega - Validacion" meeting="false" start="2014-10-26" duration="1" complete="0" expand="true"/>
+            <task id="17" name="Gestión de Compras" color="#66ffcc" meeting="false" start="2014-10-18" duration="9" complete="100" expand="false">
+                <task id="134" name="Re Diseño" color="#66ffcc" meeting="false" start="2014-10-18" duration="2" complete="100" expand="true"/>
+                <task id="132" name="Implementacion" color="#66ffcc" meeting="false" start="2014-10-18" duration="5" complete="100" expand="true"/>
+                <task id="130" name="Verificacion y Prueba" color="#66ffcc" meeting="false" start="2014-10-23" duration="3" complete="100" expand="true"/>
+                <task id="128" name="Documentacion" color="#66ffcc" meeting="false" start="2014-10-23" duration="3" complete="100" expand="true"/>
+                <task id="288" name="Entrega - Validacion" color="#66ffcc" meeting="false" start="2014-10-26" duration="1" complete="100" expand="true"/>
             </task>
         </task>
-        <task id="110" name="2da Gestion Entregable" color="#000000" meeting="false" start="2014-10-27" duration="16" complete="0" expand="false">
+        <task id="110" name="2da Gestion Entregable" color="#000000" meeting="false" start="2014-10-27" duration="16" complete="100" expand="true">
             <depend id="111" type="2" difference="0" hardness="Strong"/>
-            <task id="18" name="Gestion de Maquinarias" color="#66ffcc" meeting="false" start="2014-10-27" duration="7" complete="0" expand="false">
+            <task id="18" name="Gestion de Maquinarias" color="#66ffcc" meeting="false" start="2014-10-27" duration="7" complete="100" expand="true">
                 <depend id="22" type="2" difference="0" hardness="Strong"/>
-                <task id="158" name="Re Diseño" meeting="false" start="2014-10-27" duration="2" complete="0" expand="true"/>
-                <task id="156" name="Implementacion" meeting="false" start="2014-10-27" duration="5" complete="0" expand="true"/>
-                <task id="154" name="Verificacion y Prueba" meeting="false" start="2014-10-30" duration="3" complete="0" expand="true"/>
-                <task id="152" name="Documentacion" meeting="false" start="2014-10-30" duration="3" complete="0" expand="true"/>
-                <task id="293" name="Entrega - Validacion" meeting="false" start="2014-11-02" duration="1" complete="0" expand="true"/>
+                <task id="158" name="Re Diseño" color="#66ffcc" meeting="false" start="2014-10-27" duration="2" complete="100" expand="true"/>
+                <task id="156" name="Implementacion" color="#66ffcc" meeting="false" start="2014-10-27" duration="5" complete="100" expand="true"/>
+                <task id="154" name="Verificacion y Prueba" color="#66ffcc" meeting="false" start="2014-10-30" duration="3" complete="100" expand="true"/>
+                <task id="152" name="Documentacion" color="#66ffcc" meeting="false" start="2014-10-30" duration="3" complete="100" expand="true"/>
+                <task id="293" name="Entrega - Validacion" color="#66ffcc" meeting="false" start="2014-11-02" duration="1" complete="100" expand="true"/>
             </task>
-            <task id="22" name="Gestión de Ventas" color="#66ffcc" meeting="false" start="2014-11-03" duration="9" complete="0" expand="false">
-                <task id="142" name="Re Diseño" meeting="false" start="2014-11-03" duration="2" complete="0" expand="true"/>
-                <task id="140" name="Implementacion" meeting="false" start="2014-11-04" duration="5" complete="0" expand="true"/>
-                <task id="138" name="Verificacion y Prueba" meeting="false" start="2014-11-08" duration="3" complete="0" expand="true"/>
-                <task id="136" name="Documentacion" meeting="false" start="2014-11-08" duration="3" complete="0" expand="true"/>
-                <task id="296" name="Entrega - Validacion" meeting="false" start="2014-11-11" duration="1" complete="0" expand="true"/>
+            <task id="22" name="Gestión de Ventas" color="#66ffcc" meeting="false" start="2014-11-03" duration="9" complete="100" expand="true">
+                <task id="142" name="Re Diseño" color="#66ffcc" meeting="false" start="2014-11-03" duration="2" complete="100" expand="true"/>
+                <task id="140" name="Implementacion" color="#66ffcc" meeting="false" start="2014-11-04" duration="5" complete="100" expand="true"/>
+                <task id="138" name="Verificacion y Prueba" color="#66ffcc" meeting="false" start="2014-11-08" duration="3" complete="100" expand="true"/>
+                <task id="136" name="Documentacion" color="#66ffcc" meeting="false" start="2014-11-08" duration="3" complete="100" expand="true"/>
+                <task id="296" name="Entrega - Validacion" color="#66ffcc" meeting="false" start="2014-11-11" duration="1" complete="100" expand="true"/>
             </task>
         </task>
-        <task id="111" name="3ra Gestion Entregable" color="#000000" meeting="false" start="2014-11-12" duration="21" complete="0" expand="false">
+        <task id="111" name="3ra Gestion Entregable" color="#000000" meeting="false" start="2014-11-12" duration="21" complete="100" expand="true">
             <depend id="322" type="2" difference="0" hardness="Strong"/>
             <depend id="324" type="2" difference="0" hardness="Strong"/>
             <depend id="325" type="2" difference="0" hardness="Strong"/>
-            <task id="14" name="Gestión de Estancias" color="#66ffcc" meeting="false" start="2014-11-12" duration="7" complete="0" expand="false">
+            <task id="14" name="Gestión de Estancias" color="#66ffcc" meeting="false" start="2014-11-12" duration="7" complete="100" expand="false">
                 <depend id="15" type="2" difference="0" hardness="Strong"/>
-                <depend id="71" type="2" difference="0" hardness="Strong"/>
-                <task id="174" name="Re Diseño" meeting="false" start="2014-11-12" duration="2" complete="0" expand="true"/>
-                <task id="172" name="Implementacion" meeting="false" start="2014-11-12" duration="5" complete="0" expand="true"/>
-                <task id="170" name="Verificacion y Prueba" meeting="false" start="2014-11-15" duration="3" complete="0" expand="true"/>
-                <task id="168" name="Documentacion" meeting="false" start="2014-11-15" duration="3" complete="0" expand="true"/>
-                <task id="300" name="Entrega - Validacion" meeting="false" start="2014-11-18" duration="1" complete="0" expand="true"/>
+                <task id="174" name="Re Diseño" color="#66ffcc" meeting="false" start="2014-11-12" duration="2" complete="100" expand="true"/>
+                <task id="172" name="Implementacion" color="#66ffcc" meeting="false" start="2014-11-12" duration="5" complete="100" expand="true"/>
+                <task id="170" name="Verificacion y Prueba" color="#66ffcc" meeting="false" start="2014-11-15" duration="3" complete="100" expand="true"/>
+                <task id="168" name="Documentacion" color="#66ffcc" meeting="false" start="2014-11-15" duration="3" complete="100" expand="true"/>
+                <task id="300" name="Entrega - Validacion" color="#66ffcc" meeting="false" start="2014-11-18" duration="1" complete="100" expand="true"/>
             </task>
-            <task id="15" name="Gestión de Productores" color="#66ffcc" meeting="false" start="2014-11-19" duration="7" complete="0" expand="false">
+            <task id="15" name="Gestión de Productores" color="#66ffcc" meeting="false" start="2014-11-19" duration="7" complete="100" expand="false">
                 <depend id="13" type="2" difference="0" hardness="Strong"/>
-                <task id="166" name="Re Diseño" meeting="false" start="2014-11-19" duration="2" complete="0" expand="true"/>
-                <task id="164" name="Implementacion" meeting="false" start="2014-11-20" duration="4" complete="0" expand="true"/>
-                <task id="162" name="Verificacion y Prueba" meeting="false" start="2014-11-23" duration="2" complete="0" expand="true"/>
-                <task id="160" name="Documentacion" meeting="false" start="2014-11-23" duration="2" complete="0" expand="true"/>
-                <task id="303" name="Entrega - Validacion" meeting="false" start="2014-11-25" duration="1" complete="0" expand="true"/>
+                <task id="166" name="Re Diseño" color="#66ffcc" meeting="false" start="2014-11-19" duration="2" complete="100" expand="true"/>
+                <task id="164" name="Implementacion" color="#66ffcc" meeting="false" start="2014-11-20" duration="4" complete="100" expand="true"/>
+                <task id="162" name="Verificacion y Prueba" color="#66ffcc" meeting="false" start="2014-11-23" duration="2" complete="100" expand="true"/>
+                <task id="160" name="Documentacion" color="#66ffcc" meeting="false" start="2014-11-23" duration="2" complete="100" expand="true"/>
+                <task id="303" name="Entrega - Validacion" color="#66ffcc" meeting="false" start="2014-11-25" duration="1" complete="100" expand="true"/>
             </task>
-            <task id="13" name="Gestión de Representante" color="#8cb6ce" meeting="false" start="2014-11-26" duration="7" complete="0" expand="false">
-                <task id="182" name="Re Diseño" meeting="false" start="2014-11-26" duration="2" complete="0" expand="true"/>
-                <task id="180" name="Implementacion" meeting="false" start="2014-11-26" duration="4" complete="0" expand="true"/>
-                <task id="178" name="Verificacion y Prueba" meeting="false" start="2014-11-29" duration="2" complete="0" expand="true"/>
-                <task id="176" name="Documentacion" meeting="false" start="2014-11-30" duration="2" complete="0" expand="true"/>
-                <task id="306" name="Entrega - Validacion" meeting="false" start="2014-12-02" duration="1" complete="0" expand="true"/>
+            <task id="13" name="Gestión de Representante" color="#8cb6ce" meeting="false" start="2014-11-26" duration="7" complete="100" expand="true">
+                <task id="182" name="Re Diseño" color="#66ffcc" meeting="false" start="2014-11-26" duration="2" complete="100" expand="true"/>
+                <task id="180" name="Implementacion" color="#66ffcc" meeting="false" start="2014-11-26" duration="4" complete="100" expand="true"/>
+                <task id="178" name="Verificacion y Prueba" color="#66ffcc" meeting="false" start="2014-11-29" duration="2" complete="100" expand="true"/>
+                <task id="176" name="Documentacion" color="#66ffcc" meeting="false" start="2014-11-30" duration="2" complete="100" expand="true"/>
+                <task id="306" name="Entrega - Validacion" color="#66ffcc" meeting="false" start="2014-12-02" duration="1" complete="100" expand="true"/>
             </task>
         </task>
-        <task id="322" name="Manual Usuario" color="#66ffcc" meeting="false" start="2014-12-03" duration="8" complete="0" expand="true"/>
-        <task id="324" name="Documentacion de C. Fuente" color="#66ffcc" meeting="false" start="2014-12-03" duration="8" complete="0" expand="true"/>
-        <task id="325" name="Manual de Sistema" color="#66ffcc" meeting="false" start="2014-12-03" duration="8" complete="0" expand="true"/>
-        <task id="71" name="3er Hito de Control" color="#00ff00" meeting="true" start="2014-11-19" duration="0" complete="0" expand="true"/>
+        <task id="322" name="Manual Usuario" color="#66ffcc" meeting="false" start="2014-12-03" duration="11" complete="0" expand="true"/>
+        <task id="324" name="Documentacion de C. Fuente" color="#66ffcc" meeting="false" start="2014-12-03" duration="11" complete="50" expand="true"/>
+        <task id="325" name="Manual de Sistema" color="#66ffcc" meeting="false" start="2014-12-03" duration="11" complete="0" expand="true"/>
+        <task id="330" name="Exportacion a PDF" color="#66ffcc" meeting="false" start="2014-12-06" duration="5" complete="100" expand="true"/>
+        <task id="326" name="Estadisticas" color="#66ffcc" meeting="false" start="2014-12-11" duration="5" complete="0" expand="true"/>
+        <task id="71" name="3er Hito de Control" color="#00ff00" meeting="true" start="2014-12-04" duration="0" complete="0" expand="true"/>
         <task id="205" name="Entrega de Producto" color="#ff3333" meeting="false" start="2014-12-19" duration="1" complete="0" expand="true"/>
     </tasks>
     <resources>
@@ -176,8 +177,8 @@
         <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd7" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="205" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="54" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="245" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="16" visible="true"/>
         <displaycolumn property-id="tpd5" order="2" width="93" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
