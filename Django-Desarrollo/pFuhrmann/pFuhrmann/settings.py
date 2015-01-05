@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'appWeb',
     'crispy_forms',
-    'south'
+
 )
 
 MIDDLEWARE_CLASSES = (
