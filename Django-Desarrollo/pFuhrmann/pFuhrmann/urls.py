@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^$','appWeb.views.index'),
     url(r'^index/','appWeb.views.index'),
     url(r'^error_message/','appWeb.views.error_message'),
+    url(r'^error_message_404/','appWeb.views.error_message_404'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
         
 

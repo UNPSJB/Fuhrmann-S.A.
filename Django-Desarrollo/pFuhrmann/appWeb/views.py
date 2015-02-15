@@ -102,6 +102,10 @@ def acercaDe (request):
 def error_message (request):
     return render_to_response('403.html', context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
+def error_message_404 (request):
+    return render_to_response('404.html', context_instance=RequestContext(request))
+
 # ********************************* PDF *********************************
 
 def render_to_pdf(template_src, context_dict):
@@ -120,12 +124,14 @@ def render_to_pdf(template_src, context_dict):
 def imprimirListadoEstancias(request):
     estancias = Estancia.objects.all().filter(Baja = False)
     fecha = date.today()
+    
     return render_to_pdf(
             'pdflistadoestancia.html',
             {   
                 'pagesize':'A4',
                 'lista': estancias,
                 'date': fecha,
+    
             }
         )
 @login_required(login_url="/login")
