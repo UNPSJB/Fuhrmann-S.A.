@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'appWeb',
     'crispy_forms',
     'wkhtmltopdf',
+    'admin_export',
 
 )
 

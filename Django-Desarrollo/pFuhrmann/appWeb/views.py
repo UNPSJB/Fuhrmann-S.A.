@@ -1,4 +1,5 @@
 import urlparse
+import xlwt
 import datetime
 import xhtml2pdf.pisa as pisa
 import string
@@ -41,6 +42,98 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404 
 from django.core.mail import EmailMessage
+
+# ********************************* Excel *********************************
+def excelRepresentantes(request):
+    book = xlwt.Workbook(encoding='utf8')
+    sheet = book.add_sheet('Listado Representantes')
+    default_style = xlwt.Style.default_style
+    datetime_style = xlwt.easyxf(num_format_str='dd/mm/yyyy hh:mm')
+    date_style = xlwt.easyxf(num_format_str='dd/mm/yyyy')
+    header = ['Nro Legajo', 'Nombre', 'Apellido', 'DNI', 'Telefono', 'E-mail', 'Zona']
+    for hcol, hcol_data in enumerate(header): # [(0,'Header 1'), (1, 'Header 2'), (2,'Header 3'), (3,'Header 4')]
+            sheet.write(0, hcol, hcol_data, style=xlwt.Style.default_style)
+    for representante in Representante.objects.all():
+        lista.append( [representante.NroLegajo,representante.Nombre, representante.Apellido,representante.DNI, representante.Telefono, representante.Email, representante.Zona] )
+    print(len(lista))
+    for i in range(0,len(lista)):
+        for j in range(0,len(lista[i])):
+            print 'i %s, j %s' %(i,j)
+            print lista[i][j]
+            sheet.write(i+1,j,lista[i][j],style=xlwt.Style.default_style)
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=Representantes.xls'
+    book.save(response)
+    return response
+
+def excelProductores(request):
+    book = xlwt.Workbook(encoding='utf8')
+    sheet = book.add_sheet('Listado Productores')
+    default_style = xlwt.Style.default_style
+    datetime_style = xlwt.easyxf(num_format_str='dd/mm/yyyy hh:mm')
+    date_style = xlwt.easyxf(num_format_str='dd/mm/yyyy')
+    header = ['CUIL', 'Nombre', 'Apellido', 'DNI', 'Telefono', 'E-mail']
+    for hcol, hcol_data in enumerate(header): # [(0,'Header 1'), (1, 'Header 2'), (2,'Header 3'), (3,'Header 4')]
+            sheet.write(0, hcol, hcol_data, style=xlwt.Style.default_style)
+    lista =[]
+    for p in Productor.objects.all():
+        lista.append( [p.CUIL,p.Nombre, p.Apellido,p.DNI, p.Telefono, p.Email] )
+    print(len(lista))
+    for i in range(0,len(lista)):
+        for j in range(0,len(lista[i])):
+            print 'i %s, j %s' %(i,j)
+            print lista[i][j]
+            sheet.write(i+1,j,lista[i][j],style=xlwt.Style.default_style)
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=Productores.xls'
+    book.save(response)
+    return response
+
+def excelLotes(request):
+    book = xlwt.Workbook(encoding='utf8')
+    sheet = book.add_sheet('Listado Lotes')
+    default_style = xlwt.Style.default_style
+    datetime_style = xlwt.easyxf(num_format_str='dd/mm/yyyy hh:mm')
+    date_style = xlwt.easyxf(num_format_str='dd/mm/yyyy')
+    header = ['Nro Lote', 'Tipo Fardo', 'Cantidad Fardos', 'Peso', 'Estancia', 'Cuadricula']
+    for hcol, hcol_data in enumerate(header): # [(0,'Header 1'), (1, 'Header 2'), (2,'Header 3'), (3,'Header 4')]
+            sheet.write(0, hcol, hcol_data, style=xlwt.Style.default_style)
+    lista =[]
+    for p in Lote.objects.all():
+        lista.append( [p.NroLote,p.TipoFardo.Nombre, p.CantFardos,p.Peso, p.Estancia.Nombre, p.Cuadricula] )
+    print(len(lista))
+    for i in range(0,len(lista)):
+        for j in range(0,len(lista[i])):
+            print 'i %s, j %s' %(i,j)
+            print lista[i][j]
+            sheet.write(i+1,j,lista[i][j],style=xlwt.Style.default_style)
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=Lotes.xls'
+    book.save(response)
+    return response
+
+def excelFardos(request):
+    book = xlwt.Workbook(encoding='utf8')
+    sheet = book.add_sheet('Listado Fardos')
+    default_style = xlwt.Style.default_style
+    datetime_style = xlwt.easyxf(num_format_str='dd/mm/yyyy hh:mm')
+    date_style = xlwt.easyxf(num_format_str='dd/mm/yyyy')
+    header = ['Nro Fardo', 'Nro Lote', 'Peso', 'Rinde', 'Finura', 'CV', 'Altura Media', 'Romana']
+    for hcol, hcol_data in enumerate(header): # [(0,'Header 1'), (1, 'Header 2'), (2,'Header 3'), (3,'Header 4')]
+            sheet.write(0, hcol, hcol_data, style=xlwt.Style.default_style)
+    lista =[]
+    for p in Fardo.objects.all():
+        lista.append( [p.NroFardo,p.Lote.NroLote, p.Peso, p.Rinde, p.Finura, p.CV,p.AlturaMedia, p.Romana] )
+    print(len(lista))
+    for i in range(0,len(lista)):
+        for j in range(0,len(lista[i])):
+            print 'i %s, j %s' %(i,j)
+            print lista[i][j]
+            sheet.write(i+1,j,lista[i][j],style=xlwt.Style.default_style)
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=Fardos.xls'
+    book.save(response)
+    return response
 
 # ********************************* LOGIN *********************************
 def login_user(request):
@@ -105,6 +198,7 @@ def error_message_404 (request):
     return render_to_response('404.html', context_instance=RequestContext(request))
 
 # ********************************* PDF *********************************
+                
 def render_to_pdf(template_src, context_dict):
     template = get_template(template_src)
     context = Context(context_dict)
@@ -123,6 +217,7 @@ def pdfEstancias(request):
     
     return render_to_pdf(
             'pdflistadoestancia.html',
+
             {   
                 'pagesize':'A4',
                 'lista': estancias,
@@ -246,36 +341,6 @@ def pdfOp(request):
                 'date': fecha,
             }
         )
-
-def exportar_excel(request):
-    representantes = xlwt.Workbook(encoding='utf8')
-    sheet = representantes.add_sheet('untitled')
-    default_style = xlwt.Style.default_style
-    datetime_style = xlwt.easyxf(num_format_str='dd/mm/yyyy hh:mm')
-    date_style = xlwt.easyxf(num_format_str='dd/mm/yyyy')
-    alignment = xlwt.Alignment()
-    alignment.horz = xlwt.Alignment.HORZ_LEFT
-    alignment.vert = xlwt.Alignment.VERT_TOP
-    style = xlwt.XFStyle() # Create Style
-    style.alignment = alignment # Add Alignment to Style
-    # write the header
-    header = ['Nro Legajo', 'Nombre', 'Apellido', 'DNI','Telefono','E-mail', 'Zona']
-    for hcol, hcol_data in enumerate(header): # [(0,'Header 1'), (1, 'Header 2'), (2,'Header 3'), (3,'Header 4')]
-        sheet.write(0, hcol, hcol_data, style=xlwt.Style.default_style)
-    lista =[]
-    for representantes in Representante.objects.all():
-        lista.append( [representantes.NroLegajo,representantes.Nombre, representantes.Apellido,representantes.DNI, representantes.Telefono, representantes.Email,representantes.Zona] )
-    print(len(lista))
-    for i in range(0,len(lista)):
-        for j in range(0,len(lista[i])):
-            print 'i %s, j %s' %(i,j)
-            print lista[i][j]
-            sheet.write(i+1,j,lista[i][j],style=xlwt.Style.default_style)
-
-    response = HttpResponse(content_type='appWeb/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=representantes.xls'
-    #representantes.save(response)
-    return response
 
 # ********************************* Administracion de Compra *********************************
 @login_required(login_url="/login")

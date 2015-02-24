@@ -7,6 +7,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     
     # ------ Adm. Login
+
+    
     url(r'^login/$', 'appWeb.views.login_user'),
     url(r'^logout/$', 'appWeb.views.logout'),
     url(r'^recoveryPassword/$', 'appWeb.views.recoveryPassword'),
@@ -21,7 +23,10 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # ------ Adm. Excel
-    url(r'^excel/$', 'appWeb.views.exportar_excel'),        
+    url(r'^excelRepresentantes/$', 'appWeb.views.excelRepresentantes'),        
+    url(r'^excelProductores/$', 'appWeb.views.excelProductores'),        
+    url(r'^excelLotes/$', 'appWeb.views.excelLotes'),        
+    url(r'^excelFardos/$', 'appWeb.views.excelFardos'),        
 
     # ------ Adm. Compra
     url(r'^registrarCompra/$', 'appWeb.views.registrarCompra'),
