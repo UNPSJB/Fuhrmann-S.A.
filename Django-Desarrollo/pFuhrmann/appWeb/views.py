@@ -1,4 +1,14 @@
 import urlparse
+import datetime
+import xhtml2pdf.pisa as pisa
+import string
+import xlwt
+import json
+import reportlab
+import StringIO
+import ast
+import os
+
 from django.contrib import auth
 from django.utils.timezone import localtime, now
 from django.shortcuts import render, render_to_response,redirect
@@ -7,27 +17,22 @@ from appWeb.models import *
 from appWeb.forms import *
 from pFuhrmann.settings import *
 from django.conf import settings
-from django.contrib.auth import (REDIRECT_FIELD_NAME, login, logout, authenticate)
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import FormView
 from django.http import *
 from django.template.loader import render_to_string
+from django.views.generic.base import TemplateView
 from datetime import *
-import json
-import reportlab
-import StringIO
 from django.core import serializers
-import ast
-import os
 from django.conf import settings
 from django.template.loader import get_template
-import datetime
-import xhtml2pdf.pisa as pisa
 from datetime import datetime
 from django.template.context import RequestContext
 from django.core.context_processors import csrf
 from random import choice
-import string
+from xlwt import *
+from wkhtmltopdf import *
+from django.template.response import TemplateResponse
 
 #users
 from django.contrib.auth.models import User
@@ -37,18 +42,15 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404 
 from django.core.mail import EmailMessage
 
-
+# ********************************* LOGIN *********************************
 def login_user(request):
     logout(request) # Por si un usuario se encontraba logueado
     form = LoginForm(request.POST)  
-
     print Config.objects.get_int('FINURA_MIN')
-
     try:
         meta = request.META['QUERY_STRING'].split('=')[1][:-1]
     except IndexError:
         meta = None
-    
     if request.POST and form.is_valid():
         user = form.login(request)
         if user:
@@ -69,7 +71,6 @@ def recoveryPassword(request, user = None):
         userB = User.objects.get(username = user)
     except:
         userB = None
-
     if userB != None:
         try:
             cont = ''.join([choice(string.letters + string.digits) for i in range(8)])
@@ -85,14 +86,11 @@ def recoveryPassword(request, user = None):
     else:
         msg = 'No se pudo recuperar password, usuario no existe.'
         error = True
-    
-    return render_to_response('recPass.html', {'msg':msg, 'error':error}, context_instance=RequestContext(request))
-
+        return render_to_response('recPass.html', {'msg':msg, 'error':error}, context_instance=RequestContext(request))
 
 @login_required(login_url="/login")
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
-
 
 @login_required(login_url="/login")
 def acercaDe (request):
@@ -107,13 +105,11 @@ def error_message_404 (request):
     return render_to_response('404.html', context_instance=RequestContext(request))
 
 # ********************************* PDF *********************************
-
 def render_to_pdf(template_src, context_dict):
     template = get_template(template_src)
     context = Context(context_dict)
     html  = template.render(context)
     result = StringIO.StringIO()
-
     pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type="application/pdf")
@@ -121,7 +117,7 @@ def render_to_pdf(template_src, context_dict):
 
 @login_required(login_url="/login")
 @permission_required('appWeb.listado_estancia', login_url='/error_message')
-def imprimirListadoEstancias(request):
+def pdfEstancias(request):
     estancias = Estancia.objects.all().filter(Baja = False)
     fecha = date.today()
     
@@ -130,13 +126,75 @@ def imprimirListadoEstancias(request):
             {   
                 'pagesize':'A4',
                 'lista': estancias,
-                'date': fecha,
+                'date': fecha,    
     
             }
         )
+
+
+@login_required(login_url="/login")
+@permission_required('appWeb.listado_compra', login_url='/error_message')
+def pdfCompras(request):
+    compras = CompraLote.objects.all()
+    fecha = date.today()
+    return render_to_pdf(
+            'pdflistadocompras.html',
+            {   
+                'pagesize':'A4',
+                'lista': compras,
+                'date': fecha,    
+            }
+        )
+
+@login_required(login_url="/login")
+@permission_required('appWeb.listado_productor', login_url='/error_message')
+def pdfProductores(request):
+    prod = Productor.objects.all().filter(Baja = False)
+    fecha = date.today()
+    return render_to_pdf(
+            'pdflistadoproductores.html',
+            {   
+                'pagesize':'A4',
+                'lista': prod,
+                'date': fecha,    
+            }
+        )
+
+
+@login_required(login_url="/login")
+@permission_required('appWeb.listado_representante', login_url='/error_message')
+def pdfRepresentantes(request):
+    rep = Representante.objects.all().filter(Baja = False)
+    fecha = date.today()
+    
+    return render_to_pdf(
+            'pdflistadorepresentantes.html',
+            {   
+                'pagesize':'A4',
+                'lista': rep,
+                'date': fecha,    
+            }
+        )
+
+
+@login_required(login_url="/login")
+@permission_required('appWeb.listado_venta', login_url='/error_message')
+def pdfVentas(request):
+    venta = Venta.objects.all()
+    fecha = date.today()
+    
+    return render_to_pdf(
+            'pdflistadoventas.html',
+            {   
+                'pagesize':'A4',
+                'lista': venta,
+                'date': fecha,    
+            }
+        )
+
 @login_required(login_url="/login")
 @permission_required('appWeb.add_ordenproduccion', login_url='/error_message')
-def imprimirOrdenProduccion(request):
+def pdfOp(request):
     orden = OrdenProduccion.objects.get(NroOrden = 1)
     detalles = orden.detalleorden_set   # Obtengo los detales de la orden
     nroOrden = orden.NroOrden
@@ -168,9 +226,7 @@ def imprimirOrdenProduccion(request):
         total_cvh = total_cvh + fardo.CV
         total_rinde = total_rinde + fardo.Rinde
         total_romana = total_romana + fardo.Romana
-
         prueba.append({'nroDetalle':detalle.NroDetalle,'estancia':fardo.Lote.Compra.Estancia.Nombre,'cantidad':detalle.fardo_set.count(),'peso':peso, 'Finura':fardo.Finura, 'HM':fardo.AlturaMedia, 'CVH':fardo.CV, 'Rinde':fardo.Rinde, 'Romana':fardo.Romana})
-
     if detalles.count() > 0:
         total_finura = float("%0.2f" % (total_finura / detalles.count()))
         total_hm = float("%0.2f" % (total_hm / detalles.count()))
@@ -178,10 +234,7 @@ def imprimirOrdenProduccion(request):
         total_rinde = float("%0.2f" % (total_rinde / detalles.count()))
         total_romana = float("%0.2f" % (total_romana / detalles.count()))
 
-
     totales.append({'total_cantidad':total_cantidad , 'total_peso':total_peso , 'total_finura':total_finura , 'total_hm':total_hm , 'total_cvh':total_cvh , 'total_rinde':total_rinde , 'total_romana':total_romana })
-
-
     return render_to_pdf(
             'pdfop.html',
             {   
@@ -192,8 +245,37 @@ def imprimirOrdenProduccion(request):
                 'totales' : totales,
                 'date': fecha,
             }
-
         )
+
+def exportar_excel(request):
+    representantes = xlwt.Workbook(encoding='utf8')
+    sheet = representantes.add_sheet('untitled')
+    default_style = xlwt.Style.default_style
+    datetime_style = xlwt.easyxf(num_format_str='dd/mm/yyyy hh:mm')
+    date_style = xlwt.easyxf(num_format_str='dd/mm/yyyy')
+    alignment = xlwt.Alignment()
+    alignment.horz = xlwt.Alignment.HORZ_LEFT
+    alignment.vert = xlwt.Alignment.VERT_TOP
+    style = xlwt.XFStyle() # Create Style
+    style.alignment = alignment # Add Alignment to Style
+    # write the header
+    header = ['Nro Legajo', 'Nombre', 'Apellido', 'DNI','Telefono','E-mail', 'Zona']
+    for hcol, hcol_data in enumerate(header): # [(0,'Header 1'), (1, 'Header 2'), (2,'Header 3'), (3,'Header 4')]
+        sheet.write(0, hcol, hcol_data, style=xlwt.Style.default_style)
+    lista =[]
+    for representantes in Representante.objects.all():
+        lista.append( [representantes.NroLegajo,representantes.Nombre, representantes.Apellido,representantes.DNI, representantes.Telefono, representantes.Email,representantes.Zona] )
+    print(len(lista))
+    for i in range(0,len(lista)):
+        for j in range(0,len(lista[i])):
+            print 'i %s, j %s' %(i,j)
+            print lista[i][j]
+            sheet.write(i+1,j,lista[i][j],style=xlwt.Style.default_style)
+
+    response = HttpResponse(content_type='appWeb/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=representantes.xls'
+    #representantes.save(response)
+    return response
 
 # ********************************* Administracion de Compra *********************************
 @login_required(login_url="/login")
@@ -645,6 +727,7 @@ def enviarFaseProduccion(request, pk):
 
     return render_to_response('enviarFaseProduccionForm.html', {'orden':orden, 'maquinaria':maq}, context_instance=RequestContext(request))
     
+
 @login_required(login_url="/login")
 @permission_required('appWeb.add_ordenproduccion', login_url='/error_message')
 def commitIniciarFase(request, orden, nroSerie):

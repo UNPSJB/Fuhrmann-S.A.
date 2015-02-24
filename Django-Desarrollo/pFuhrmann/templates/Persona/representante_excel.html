@@ -1,0 +1,50 @@
+    <div class="well">
+        <div class="panel panel-primary " id="panel-interno">
+            <div class="panel-heading">
+                <h6 class="titulo panel-title"><strong> Listado representantes </strong></h6>
+            </div>
+
+            <div class="panel-body">
+                <div>
+                    <form action="#" method="get">
+                        <div class="input-group">
+                            <input class="form-control" id="system-search" name="q" placeholder="Buscar" required>
+                        </div>
+                    </form>
+                </div>
+                {% load crispy_forms_tags %}
+                <table class="table table-hover tablesorter table-list-search" id="rowspan" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th colspan="0">Nro legajo</th>
+                            <th colspan="0">Nombre</th>
+                            <th colspan="0">Apellido</th>
+                            <th colspan="0">DNI</th>
+                            <th colspan="0">Telefono</th>
+                            <th colspan="0">Email</th>
+                            <th colspan="0">Zona</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {%for dato in lista%}
+                            <form action="" method="post">
+                                {% load crispy_forms_tags %}
+                                <tr>
+                                    <td>{{dato.NroLegajo}}</td>
+                                    <td>{{dato.Nombre}}</td>
+                                    <td>{{dato.Apellido}}</td>
+                                    <td>{{dato.DNI}}</td>
+                                    <td>{{dato.Telefono}}</td>
+                                    <td>{{dato.Email}}</td>
+                                    <td>{{dato.Zona}}</td>
+                                </tr>
+                            </form>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>    
+
+

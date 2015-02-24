@@ -29,7 +29,7 @@ class LoginForm(forms.Form):
         if username is not None or password is not None:
             user = authenticate(username=username, password=password)
             if not user or not user.is_active:
-                raise forms.ValidationError("Lo sentimos, Usuario o Contraseña incorrecto. Por favor intente nuevamente.")
+                raise forms.ValidationError("Lo sentimos, usuario o contraseña incorrecto. Por favor intente nuevamente.")
         return self.cleaned_data
 
     def login(self, request):
