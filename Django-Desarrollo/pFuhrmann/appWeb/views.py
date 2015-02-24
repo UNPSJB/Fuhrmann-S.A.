@@ -3,7 +3,7 @@ import xlwt
 import datetime
 import xhtml2pdf.pisa as pisa
 import string
-import xlwt
+#import xlwt
 import json
 import reportlab
 import StringIO
@@ -31,7 +31,7 @@ from datetime import datetime
 from django.template.context import RequestContext
 from django.core.context_processors import csrf
 from random import choice
-from xlwt import *
+#from xlwt import *
 from wkhtmltopdf import *
 from django.template.response import TemplateResponse
 
@@ -628,6 +628,29 @@ def registrarOrdenProduccion(request, pk=None):
         
     formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('OrdenProduccionForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+
+@login_required(login_url="/login")
+@permission_required('appWeb.change_ordenproduccion', login_url='/error_message')
+def modificarOrdenProduccion(request, pk=None):
+    orden = None
+    serv = []       # Arreglo de servicios para almacenar los que ingreso.
+
+    if pk is not None:
+        orden = get_object_or_404(OrdenProduccion, pk=pk)
+
+    if request.method == 'POST':
+        formulario = OrdenProduccionFormFactory(orden is not None)(request.POST, instance = orden)
+        if formulario.is_valid():
+            orden = formulario.save()
+            return HttpResponseRedirect('/listadoOrden')
+    else:
+        formulario = OrdenProduccionFormFactory(orden is not None)(instance = orden)
+        
+    formulario.setup('Modificar', css_class="btn btn-success")
+    return render_to_response('modificarOrdenProduccion.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+
 
 @login_required(login_url="/login")
 @permission_required('appWeb.add_ordenproduccion', login_url='/error_message')
