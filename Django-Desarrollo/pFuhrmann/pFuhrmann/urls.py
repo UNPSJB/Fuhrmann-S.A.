@@ -43,7 +43,7 @@ urlpatterns = patterns('',
 
     # ------ Adm. Orden de produccion
     url(r'^registrarOrdenProduccion/$', 'appWeb.views.registrarOrdenProduccion'),
-    url(r'^modificarOrdenProduccion/(\d+)/$', 'appWeb.views.registrarOrdenProduccion'),
+    url(r'^modificarOrdenProduccion/(\d+)/$', 'appWeb.views.modificarOrdenProduccion'),
     url(r'^cancelarOrdenProduccion/(\d+)/$', 'appWeb.views.cancelarOrdenProduccion'),
     url(r'^enviarFaseProduccion/$', 'appWeb.views.enviarFaseProduccion'),
     url(r'^verOrdenProduccion/(\d+)/$', 'appWeb.views.verOrdenProduccion'),
