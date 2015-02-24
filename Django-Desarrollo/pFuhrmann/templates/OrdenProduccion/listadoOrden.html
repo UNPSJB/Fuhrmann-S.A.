@@ -5,11 +5,11 @@
 <div class="container">
     <div class="panel panel-yellow">
         <div class="panel-heading clearfix">
-            <h4 class="panel-title pull-left" style="padding-top: 10.5px;"> <font size = "5"color = "000000">Listado de órdenes de producción</font></h4>
+            <h4 class="panel-title pull-left" style="padding-top: 10.5px;"> <font size = "5"color = "000000">Listado de ordenes de producción</font></h4>
             <div class="btn-group pull-right">
                 <div class="input-group">
                     <div class="btn-group pull-right">
-                            <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('<strong>Ayuda listado órdenes</strong>', 'El <strong>listado de ordenes de producción</strong> muestra la fecha de emisión, fecha de inicio de producción, fecha de fin de producción, maquina asociada y si la orden se encuentra en proceso, finalizada o cancelada.</br><br>Ingrese en<strong> buscar </strong>el campo (Nro. de orden) por el cual desea filtrar las ordenes.</br><br>Presione el botón <strong>nueva</strong> para registrar una nueva orden.</br><br>Presione el botón <strong>ver detalle</strong> para ver la información de la orden.</br><br>Presione el botón <strong>modificar</strong> para cambiar datos de una orden.</br><br>Presione el botón <strong>cancelar</strong> para cancelar una orden.</br><br>Presione el botón <strong>enviar a producción</strong> para notificar el envío de una orden a producción.</br><br>Presione el botón <strong>finalizar producción</strong> para notificar la finalización del proceso de una orden.</br><br>Presione el botón <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('<strong>Ayuda listado ordenes</strong>', 'El <strong>listado de ordenes de producción</strong> muestra la fecha de emisión, fecha de inicio de producción, fecha de fin de producción, maquina asociada y si la orden se encuentra en proceso, finalizada o cancelada.</br><br>Ingrese en<strong> buscar </strong>el campo (Nro. de orden) por el cual desea filtrar las ordenes.</br><br>Presione el botón <strong>nueva</strong> para registrar una nueva orden.</br><br>Presione el botón <strong>ver detalle</strong> para ver la información de la orden.</br><br>Presione el botón <strong>modificar</strong> para cambiar datos de una orden.</br><br>Presione el botón <strong>cancelar</strong> para cancelar una orden.</br><br>Presione el botón <strong>enviar a producción</strong> para notificar el envío de una orden a producción.</br><br>Presione el botón <strong>finalizar producción</strong> para notificar la finalización del proceso de una orden.</br><br>Presione el botón <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
                     <span class="input-group-btn">
                         <a class="btn btn-default" type="button" title="Buscar Ej: Nro. Orden" onClick="javascript: errorBuscar('/buscarOrden/', $('#buscar').val());"><span class="glyphicon glyphicon-search"></span></a>
@@ -59,15 +59,15 @@
                                 {% if perms.appWeb.add_ordenproduccion %}
                                     <td style="text-align:center;" width="40%">
                                         
-                                        <a class="btn btn-default" onClick="showModal('{{dato.NroOrden}}', '{{dato.hayFardos}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', '{{dato.loteventa}}', '{{dato.needFardos}}')" title="Ver Detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                        <a class="btn btn-default" onClick="showModal('{{dato.NroOrden}}', '{{dato.hayFardos}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', '{{dato.loteventa}}', '{{dato.needFardos}}')" title="Ver detalle"><span class="glyphicon glyphicon-eye-open"></span></a>
 
-                                        <a class="btn btn-default" onClick="comprobar('/modificarOrdenProduccion/{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden en Produccion - Finalizada - Cancelada!')" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a class="btn btn-default" onClick="comprobar('/modificarOrdenProduccion/{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden de producción finalizada o cancelada')" title="Modificar"><span class="glyphicon glyphicon-edit"></span></a>
                                         
-                                        <a class="btn btn-default" onClick="cancelar('{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden en Produccion - Finalizada - Cancelada!')" title="Cancelar" ><span class="glyphicon glyphicon-remove"></span></a>
+                                        <a class="btn btn-default" onClick="cancelar('{{dato.NroOrden}}', '{{dato.isProduccion}}', '{{dato.Cancelada}}', '{{dato.isFinalizada}}', 'Orden de  producción finalizada o cancelada')" title="Cancelar" ><span class="glyphicon glyphicon-remove"></span></a>
                                         
-                                        <a class="btn btn-default" onClick="enviarFase('{{dato.NroOrden}}', '{{dato.isEnviarFase}}', '{{dato.Cancelada}}', '{{dato.needFardos}}')" title="Enviar a Fase de Produccion"><span class="glyphicon glyphicon-share-alt"></span></a>
+                                        <a class="btn btn-default" onClick="enviarFase('{{dato.NroOrden}}', '{{dato.isEnviarFase}}', '{{dato.Cancelada}}', '{{dato.needFardos}}')" title="Enviar a fase de producción"><span class="glyphicon glyphicon-share-alt"></span></a>
                                         
-                                        <a class="btn btn-default" onClick="finalizarFase('{{dato.NroOrden}}','{{dato.isFinFase}}', '{{dato.Cancelada}}', '{{dato.getEtapa}}')"title="Finalizar Fase de Produccion"><span class="glyphicon glyphicon-warning-sign"></span></a>
+                                        <a class="btn btn-default" onClick="finalizarFase('{{dato.NroOrden}}','{{dato.isFinFase}}', '{{dato.Cancelada}}', '{{dato.getEtapa}}')"title="Finalizar fase de producción"><span class="glyphicon glyphicon-warning-sign"></span></a>
                                     </td>
                                 {% endif %}
                             </tr>
@@ -83,7 +83,7 @@
 
             <script type ="text/javascript"> </script>
             <div class="pull-right">
-                <a class="btn btn-default btn-gr" type= "button" href="/registrarOrdenProduccion"  title = "Agregar Orden" >Nueva</a>
+                <a class="btn btn-default btn-gr" type= "button" href="/registrarOrdenProduccion"  title = "Generar Orden" >Nueva</a>
                 <a class="btn btn-default btn-gr" type= "button" href="/index"  title = "Salir" >Salir</a>
             </div>            
         </div>
@@ -102,7 +102,7 @@
                 BootstrapDialog.show({
                     title: 'Error',
                     cssClass: 'error-dialog',
-                    message: 'Imposible enviar a Fases de Produccion',
+                    message: 'No se puede enviar a fase de producción',
                     type: BootstrapDialog.TYPE_DANGER, 
                     buttons: [
                         {
@@ -117,7 +117,7 @@
                 BootstrapDialog.show({
                     title: 'Error',
                     cssClass: 'error-dialog',
-                    message: 'Se necesita agregar Fardos de Produccion',
+                    message: 'Se deben agregar fardos para la producción',
                     type: BootstrapDialog.TYPE_DANGER, 
                     buttons: [
                         {
@@ -130,7 +130,7 @@
             }
             else{
                 BootstrapDialog.show({
-                    title: ('Enviar a Fase de Produccion de Orden Produccion - Nro: '+orden),
+                    title: ('Enviar a fase de producción de Orden Producción - Nro: '+orden),
                     message: $('<div></div>').load('/enviarFaseProduccion/'+orden),
                     closable: false,
                     cssClass: 'showfardo-dialog',
@@ -150,7 +150,7 @@
                 BootstrapDialog.show({
                     title: 'Error',
                     cssClass: 'error-dialog',
-                    message: 'Imposible finalizar Fases de Produccion',
+                    message: 'No se puede finalizar fase de producción',
                     type: BootstrapDialog.TYPE_DANGER, 
                     buttons: [
                         {
@@ -163,18 +163,18 @@
             }
             else{
                 BootstrapDialog.show({
-                    title: 'Finalizar Fase de Produccion',
+                    title: 'Finalizar Fase de Producción',
                     cssClass: 'error-dialog',
-                    message: '¿Está seguro que quiere finalizar Fase de Produccion: ' + etapa + '?',
+                    message: '¿Seguro desea finalizar fase de producción ' + etapa + '?',
                     type: BootstrapDialog.TYPE_WARNING, 
                     buttons: [
                         {
                             label: 'Si',
                             action: function(dialogRef){
                                 BootstrapDialog.show({
-                                    title: 'Informacion',
+                                    title: 'Información',
                                     cssClass: 'aviso-dialog',
-                                    message: "Fase de Produccion: " + etapa + " Finalizo Correctamente Date: " + new Date,
+                                    message: "Fase de producción " + etapa + " , finalizó correctamente. Fecha : " + new Date,
                                     type: BootstrapDialog.TYPE_INFO, 
                                     closable: false,
                                     buttons: [
@@ -207,7 +207,7 @@
 
         function showModal2(id){
             BootstrapDialog.show({
-                title: ('Agregar Lote de Venta de Orden Produccion - Nro: '+id),
+                title: ('Agregar lote de venta de Orden Producción - Nro: '+id),
                 message: $('<div></div>').load('/agregarLoteVenta/'+id),
                 closable: false,
                 cssClass: 'showfardo-dialog',
@@ -225,7 +225,7 @@
         function showModal1(id, hayFardos, needFardos){
             if (hayFardos == 'True' & needFardos == 'True') {  /* Orden nos dice si hay fardos disponibles para poder entrar en produccion */
                 window,dialog2 = new BootstrapDialog.show({
-                    title: ('Agregar Detalle a Orden Produccion - Nro: '+id),
+                    title: ('Agregar detalle a Orden de Producción - Nro: '+id),
                     message: $('<div></div>').load('/agregarDetalle/'+id),
                     closable: false,
                     cssClass: 'showfardo-dialog',
@@ -242,7 +242,7 @@
                 BootstrapDialog.show({
                     title: 'Error',
                     cssClass: 'error-dialog',
-                    message: "No hay suficiente Kg. de Lana. Compre Lana",
+                    message: "No hay suficientes kg. de lana. Realizar compra",
                     type: BootstrapDialog.TYPE_DANGER, 
                     buttons: [
                         {
@@ -259,7 +259,7 @@
 
             if (prod == 'False' & cancel == 'False' & finali == 'False' & needFardos == 'True'){
                 window.dialog1 = new BootstrapDialog.show({
-                    title: ('Datos de Orden Produccion - Nro. Orden: '+id),
+                    title: ('Datos de Orden Producción - Nro. Orden: '+id),
                     cssClass: 'show-dialog',
                     closable: false,
                     message: $('<div></div>').load('/verOrdenProduccion/'+id),
@@ -285,7 +285,7 @@
                         }
                     },
                     {
-                        label: 'Cancel',
+                        label: 'Cancelar',
                         action: function(dialogRef){
                             window.location = "/listadoOrden"
                             dialogRef.close();
@@ -295,7 +295,7 @@
             }
             else if (finali == 'True' & isLoteVentas == ''){
                 window.dialog = new BootstrapDialog.show({
-                    title: ('Datos de Orden Produccion - Nro. Orden: '+id),
+                    title: ('Datos de Orden de Producción - Nro. Orden: '+id),
                     cssClass: 'show-dialog',
                     closable: false,
                     message: $('<div></div>').load('/verOrdenProduccion/'+id),
@@ -331,7 +331,7 @@
             }
             else{
                 window.dialog = new BootstrapDialog.show({
-                    title: ('Datos de Orden Produccion - Nro. Orden: '+id),
+                    title: ('Datos de Orden Producción - Nro. Orden: '+id),
                     cssClass: 'show-dialog',
                     closable: false,
                     message: $('<div></div>').load('/verOrdenProduccion/'+id),
@@ -351,7 +351,7 @@
                         }
                     },
                     {
-                        label: 'Cancel',
+                        label: 'Cancelar',
                         action: function(dialogRef){
                             window.location = "/listadoOrden"
                             dialogRef.close();
@@ -402,7 +402,7 @@
                 });
             }
             else{
-                eliminar('/cancelarOrdenProduccion/'+orden, 'Cancelar O. Produccion', '¿Está seguro que quiere cancelar la Orden?');
+                eliminar('/cancelarOrdenProduccion/'+orden, 'Cancelar orden de producción', '¿Desea cancelar la orden de producción?');
             }
         }
 
