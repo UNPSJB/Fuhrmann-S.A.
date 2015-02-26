@@ -59,6 +59,11 @@ class Representante(Persona):
             return True
         return False
 
+    def tieneCompra(self):
+        if self.compra_set.all():
+            return True
+        return False
+
 class Estancia(models.Model):
     class Meta:
         ordering = ['Nombre']

@@ -920,6 +920,7 @@ def eliminarMaquinaria(request,pk):
 @login_required(login_url="/login")
 @permission_required('appWeb.listado_compra', login_url='/error_message')
 def buscarCompra(request, pkb):
+    total = 0
     results = []
     
     representante = Representante.objects.all().filter(Nombre = pkb)
@@ -932,8 +933,11 @@ def buscarCompra(request, pkb):
     
     for obj in results1:
         results.append(obj)
+        total = total + 1
+    print total    
     for obj in results3:
         results.append(obj)
+
  
     return render_to_response("listadoCompra.html", { "lista": results }, context_instance=RequestContext(request))
 
