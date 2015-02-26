@@ -53,6 +53,8 @@ def excelRepresentantes(request):
     header = ['Nro Legajo', 'Nombre', 'Apellido', 'DNI', 'Telefono', 'E-mail', 'Zona']
     for hcol, hcol_data in enumerate(header): # [(0,'Header 1'), (1, 'Header 2'), (2,'Header 3'), (3,'Header 4')]
             sheet.write(0, hcol, hcol_data, style=xlwt.Style.default_style)
+
+    lista =[]
     for representante in Representante.objects.all():
         lista.append( [representante.NroLegajo,representante.Nombre, representante.Apellido,representante.DNI, representante.Telefono, representante.Email, representante.Zona] )
     print(len(lista))
