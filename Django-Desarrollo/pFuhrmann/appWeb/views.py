@@ -1,15 +1,15 @@
 import urlparse
+
 import xlwt
 import datetime
 import xhtml2pdf.pisa as pisa
 import string
-#import xlwt
+
 import json
 import reportlab
 import StringIO
 import ast
 import os
-
 from django.contrib import auth
 from django.utils.timezone import localtime, now
 from django.shortcuts import render, render_to_response,redirect
@@ -31,10 +31,8 @@ from datetime import datetime
 from django.template.context import RequestContext
 from django.core.context_processors import csrf
 from random import choice
-#from xlwt import *
 from wkhtmltopdf import *
 from django.template.response import TemplateResponse
-
 #users
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -42,6 +40,47 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404 
 from django.core.mail import EmailMessage
+
+def estadisticasRepresentantes(request):   
+    cantC = []
+    for r in Representante.objects.all():
+        cantC.append(CompraLote.objects.all().filter(Representante = r))
+    for a in contC:
+        print a.count()
+
+def estadisticasMaquinarias(request, FI, FF):
+    listaHs = []
+    lista= []
+    listaProd = []
+    totalHs = 0
+    
+    FI = FI + " 00:00:00 GMT"
+    FF = FF + " 00:00:00 GMT"
+    FIs = datetime.strptime(FI, '%d %m %Y %H:%M:%S %Z')
+    FFs = datetime.strptime(FF, '%d %m %Y %H:%M:%S %Z')
+    for m in Maquinaria.objects.all():
+        listaProd.append(m.produccion_set.all())
+    
+    for prod in listaProd:
+        if prod is None:
+            listaHs.append(0)
+
+        for p in prod:
+            pFI=datetime.combine(p.FechaInicio, datetime.min.time())            
+            if p.FechaFin != None:   
+                pFF=datetime.combine(p.FechaFin, datetime.min.time())
+            else:
+                pFF= datetime.now()
+            print pFI
+            print FIs
+            print pFF
+            print FFs  
+
+            if pFI >= FIs:
+                if pFF >= FFs:
+                    lista.append(p)   
+                    print lista
+
 
 # ********************************* Excel *********************************
 def excelRepresentantes(request):

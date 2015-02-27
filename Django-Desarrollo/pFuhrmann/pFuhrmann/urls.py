@@ -6,9 +6,10 @@ from django.contrib.auth.views import login, logout
 admin.autodiscover()
 urlpatterns = patterns('',
     
-    # ------ Adm. Login
-
-    
+    # ------ Estadisticas  
+    url(r'^estadisticas/$', 'appWeb.views.estadisticasRepresentantes'),
+    url(r'^esta/(?P<FI>.*)/(?P<FF>.*)/$', 'appWeb.views.estadisticasMaquinarias'),
+    # ------ Adm. Login  
     url(r'^login/$', 'appWeb.views.login_user'),
     url(r'^logout/$', 'appWeb.views.logout'),
     url(r'^recoveryPassword/$', 'appWeb.views.recoveryPassword'),
