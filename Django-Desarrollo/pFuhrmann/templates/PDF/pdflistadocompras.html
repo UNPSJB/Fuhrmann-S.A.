@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC>
+<html>
+    <head>
+        <title>Listado de compras</title>
+        <style type="text/css">
+            @page {
+                size: {{ pagesize }};
+                margin: 2cm;
+                @frame footer {
+                    -pdf-frame-content: footerContent;
+                    bottom: 0cm;
+                    margin-left: 9cm;
+                    margin-right: 9cm;
+                    height: 1cm;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h4 style="text-align:middle;"> <font size = "6"color = "#0101DF">Fuhrmann SA</font></h4>
+            <h4 style="text-align:right;"> <font size = "4" color = "000000"> Fecha:</font> {{date}}</h4>
+   
+            <h4 class="panel-title pull-left" style="padding-top: 10.5px;"> <font size = "6"color = "#424242">Listado de compras</font></h4>
+            </div>
+
+            <div class="panel-body">
+                <table  class="table table-striped table-bordered table-condensed" cellpadding="5px" cellspacing="5px" border="1" id="tableLote">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;" width="22%">Número de compra</th>
+                            <th style="text-align:center;" width="30%">Representante</th>
+                            <th style="text-align:center;" width="30%">Estancia</th>
+                            <th style="text-align:center;" width="20%">Fecha de llegada</th>
+                        </tr>
+                        {% for dato in lista %}
+                        <tr>
+                            <td style="text-align:center;" width="22%" id="nroCompra">{{dato.NroCompra}}</td>
+                            <td style="text-align:center;" width="30%">{{dato.Representante}}</td>
+                            <td style="text-align:center;" width="30%">{{dato.Estancia}}</td>
+                            <td style="text-align:center;" width="20%">{{dato.FechaLlegada}}</td>
+                        </tr>    
+                        {% endfor %}
+                    </thead>
+        </div>
+        
+        <div id="footerContent">
+            {%block page_foot%}
+                Página <pdf:pagenumber>
+            {%endblock%}
+        </div>
+    </body>
+</html>

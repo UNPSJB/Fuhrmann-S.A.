@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 
 <div class="panel-body">
@@ -28,7 +29,7 @@
             </div>
             <fieldset>
                 <legend>
-                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Seleccione Fardos</h4></font>
+                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Seleccione fardos</h4></font>
                 </legend>
                 <select id="FardosCombo" multiple="True"></select> 
             </fieldset>
@@ -55,7 +56,7 @@ function submit(orden, needFardos){
         BootstrapDialog.show({
             title: 'Error',
             cssClass: 'error-dialog',
-            message: 'Debe Seleccionar al menos 1 Fardo!',
+            message: 'Se debe seleccionar al menos 1 fardo',
             type: BootstrapDialog.TYPE_DANGER, 
             buttons: [
                 {
@@ -70,7 +71,7 @@ function submit(orden, needFardos){
         BootstrapDialog.show({
             title: 'Error',
             cssClass: 'error-dialog',
-            message: 'Orden de Produccion ya cumple con la Cantidad Requerida!',
+            message: 'La orden de producción ya posee la cantidad requerida',
             closable: false,
             type: BootstrapDialog.TYPE_DANGER, 
             buttons: [
@@ -92,7 +93,7 @@ function submit(orden, needFardos){
             BootstrapDialog.show({
                 title: 'Aviso',
                 cssClass: 'aviso-dialog',
-                message: 'Se Agregaron ' + kg + 'Kg. a la Orden',
+                message: 'Se agregaron ' + kg + 'Kg. a la Orden',
                 closable: false,
                 type: BootstrapDialog.TYPE_WARNING, 
                 buttons: [

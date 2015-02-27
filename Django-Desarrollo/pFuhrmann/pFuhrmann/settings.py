@@ -40,7 +40,13 @@ INSTALLED_APPS = (
     'django_extensions',
     'appWeb',
     'crispy_forms',
+<<<<<<< HEAD
 #    'south'
+=======
+    'wkhtmltopdf',
+    
+
+>>>>>>> 7bf381bb2c693bf2f484b5971ceecfb216014cce
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,7 +60,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'pFuhrmann.urls'
 
-WKHTMLTOPDF_CMD = '/path/to/my/wkhtmltopdf'
+
 WKHTMLTOPDF_CMD_OPTIONS = {
     'quiet': True,
 }
@@ -72,7 +78,7 @@ SITE_ID = 1
 
 LANGUAGE_CODE = 'es-AR'
 
-#TIME_ZONE = 'Chile'
+TIME_ZONE = 'America/Argentina/Buenos_Aires'
 
 USE_I18N = True
 

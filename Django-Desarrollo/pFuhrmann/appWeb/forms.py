@@ -29,7 +29,7 @@ class LoginForm(forms.Form):
         if username is not None or password is not None:
             user = authenticate(username=username, password=password)
             if not user or not user.is_active:
-                raise forms.ValidationError("Lo sentimos, Usuario o Contraseña incorrecto. Por favor intente nuevamente.")
+                raise forms.ValidationError("Lo sentimos, usuario o contraseña incorrecto. Por favor intente nuevamente.")
         return self.cleaned_data
 
     def login(self, request):
@@ -461,7 +461,7 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
             Romana = forms.FloatField(label ="Romana (*)", min_value = 0, widget=forms.HiddenInput())
             Rinde = forms.FloatField(label ="Rinde (*)", min_value = 0, widget=forms.HiddenInput())
 
-        Servicio = forms.ModelChoiceField(Servicio.objects.filter(Transitorio = False), label ="Servicios a Realizar (*)")
+        Servicio = forms.ModelChoiceField(Servicio.objects.filter(Transitorio = False), label ="Servicios a realizar (*)")
 
 
         def __init__(self, *args, **kwargs):
@@ -496,7 +496,7 @@ def OrdenProduccionFormFactory(edit=False):  # Crear una funcion para crear una 
                             Field('Servicio', placeholder="Servicios a realizar"),
 
 
-                            Field('CantRequerida', placeholder="Cantidad en kilos requeridos"),
+                            Field('CantRequerida', placeholder="Cantidad en kilos requerida"),
                             Field('CV', placeholder="%  entre 40 .. 50"),
                             Field('AlturaMedia', placeholder="mm  entre 60 .. 80"),
                             Field('Finura', placeholder="mm  entre 16 .. 25"),

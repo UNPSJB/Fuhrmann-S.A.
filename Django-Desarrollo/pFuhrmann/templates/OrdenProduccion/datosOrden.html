@@ -11,13 +11,13 @@
             <fieldset>
                 <legend>                      
                     <div class="form-group">
-                        <div><font color = "Black" size=2 face="Comic Sans MS"><h4>Datos de Servicios a Realizar de la Orden</h4></font></div>
+                        <div><font color = "Black" size=2 face="Comic Sans MS"><h4>Datos de servicios a realizar de la Orden</h4></font></div>
                     </div>
                 </legend>
                 <div class="jumbotron">
                     <div class="form-group">
                         <div class="controls col-md-6">
-                            <font size=3 face="Comic Sans MS"><label>Servicios de Produccion:</label></font>
+                            <font size=3 face="Comic Sans MS"><label>Servicios de producción:</label></font>
                         </div>
 
                         <div class="controls col-md-6">
@@ -26,7 +26,7 @@
                            
                                     <tr>
                                         <th style="text-align:center;" width="20%"><font size=3 face="Comic Sans MS">Nombre</font></th>
-                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Descripcion</font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Descripción</font></th>
                                         <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Estado</font></th>
                                     </tr>
                                     
@@ -60,7 +60,7 @@
         
             <fieldset>
                 <legend>
-                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Especificaciones Tecnicas</h4></font>
+                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Especificaciones técnicas</h4></font>
                 </legend>
                 <div class="jumbotron">
 
@@ -69,8 +69,8 @@
                    
                             <tr>
                                 <th style="text-align:center;" width="30%"><font size=3 face="Comic Sans MS">Especificaciones</font></th>
-                                <th style="text-align:center;" width="20%"><font size=3 face="Comic Sans MS">Valores</font></th>
-                                <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">UnidadMedida</font></th>
+                                <th style="text-align:center;" width="20%"><font size=3 face="Comic Sans MS">Valor</font></th>
+                                <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Unidad de medida</font></th>
                             </tr>
 
                             <tr>
@@ -80,7 +80,7 @@
                             </tr>
                             
                             <tr>
-                                <td style="text-align:rigth;" width="40%"><font size=3 face="Comic Sans MS">C. Variacion</font></td>
+                                <td style="text-align:rigth;" width="40%"><font size=3 face="Comic Sans MS">C. Variación</font></td>
                                 <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{orden.CV}}</font></td>
                                 <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">%</font></td>
                             </tr>
@@ -115,7 +115,7 @@
                
             <fieldset>
                 <legend>
-                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Especificaciones de Lana a Procesar</h4></font>
+                    <font color = "Black" size=3 face="Comic Sans MS"><h4>Especificaciones de lana a procesar</h4></font>
                 </legend>
                 <div class="jumbotron"> 
                     <table  class="table table-striped table-bordered table-condensed" id="tableLote">
@@ -125,11 +125,11 @@
                                     <th style="text-align:center;" width="40%"><font size=3 face="Comic Sans MS">Estancia</font></th>
                                     <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Fardos</font></th>
                                     <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Neto</font></th>
-                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Finura</font></th>
-                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">HM</font></th>
                                     <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">CV</font></th>
-                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Rinde</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">HM</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Finura</font></th>
                                     <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Romana</font></th>
+                                    <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">Rinde</font></th>
 
                                 </tr>
       
@@ -142,11 +142,12 @@
                                             <td style="text-align:center;" width="40%"><font size=3 face="Comic Sans MS">{{item.estancia}}</font></td>
                                             <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.cantidad}}</font></td>
                                             <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.peso}}</font></td>
-                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.Finura}}</font></td>
-                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.HM}}</font></td>
                                             <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.CVH}}</font></td>
-                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.Rinde}}</font></td>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.HM}}</font></td>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.Finura}}</font></td>
                                             <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.Romana}}</font></td>
+                                            <td style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{item.Rinde}}</font></td>
+                                           
                                         </tr>
                                     {% endfor %}
                                 {% endfor %}
@@ -156,11 +157,12 @@
                                         <th style="text-align:center;" width="40%"><font size=3 face="Comic Sans MS"></font></th>
                                         <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_cantidad }}</font></th>
                                         <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_peso }}</font></th>
-                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_finura }}</font></th>
-                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_hm }}</font></th>
                                         <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_cvh }}</font></th>
-                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_rinde }}</font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_hm }}</font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_finura }}</font></th>
                                         <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_romana }}</font></th>
+                                        <th style="text-align:center;" width="10%"><font size=3 face="Comic Sans MS">{{ total.total_rinde }}</font></th>
+                                       
                                     {% endfor %}
                                 </tr>
                             </ul>
