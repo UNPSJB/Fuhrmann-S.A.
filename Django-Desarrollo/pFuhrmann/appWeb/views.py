@@ -40,13 +40,55 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404 
 from django.core.mail import EmailMessage
-
-def estadisticasRepresentantes(request):   
+import cairo
+import pycha.bar
+import matplotlib.pyplot as plt
+import numpy as np
+    
+def estadisticasRepresentantes(request):
     cantC = []
+    
     for r in Representante.objects.all():
         cantC.append(CompraLote.objects.all().filter(Representante = r))
-    for a in contC:
+
+    for a in cantC:
         print a.count()
+        print a
+    
+
+    
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32,550, 310)
+    data = [('golas',1),('golas',15),('golas',0.1)]    
+    dataSet = (
+        ('Puntos', [(i, l[1]) for i, l in enumerate(data)]),
+        )
+    options = {
+        'legend': {'hide': True},
+        'axis': {
+            'x': {
+                'ticks': [dict(v=i, label=l[0]) for i, l in enumerate(data)],
+    
+            },
+            'y': {
+                'tickCount': 5,
+    
+            }
+        },
+        'background': {
+            'chartColor': '#f3f9fb',
+            'lineColor': '#d1e5ec'
+        },
+        'colorScheme': {
+            'name': 'gradient',
+            'args': {
+                'initialColor': 'blue',
+            },
+        },
+    }
+    chart = pycha.bar.VerticalBarChart(surface, options)
+    chart.addDataset(dataSet)
+    chart.render()
+    surface.write_to_png('chart.png')
 
 def estadisticasMaquinarias(request, FI, FF):
     listaHs = []
@@ -80,6 +122,7 @@ def estadisticasMaquinarias(request, FI, FF):
                 if pFF >= FFs:
                     lista.append(p)   
                     print lista
+                    print pFF-pFI
 
 
 # ********************************* Excel *********************************
