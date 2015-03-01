@@ -38,13 +38,13 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404 
 from django.core.mail import EmailMessage
-import cairo
-import pycha.bar
-import pycha.pie
-import matplotlib.pyplot as plt
+#import cairo
+#import pycha.bar
+#import pycha.pie
+#import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
-import pycha.line
+#import pycha.line
 
 
 
