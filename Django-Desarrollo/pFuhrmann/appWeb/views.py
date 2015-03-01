@@ -40,11 +40,68 @@ from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMessage
 import cairo
 import pycha.bar
+import pycha.pie
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
+import pycha.line
 
-    
+
+
+# ********************************* Estadisticas *********************************
+def line(request):
+    cantC = [] #obtengo las commpras de cada representante
+    rNro = [] #obtengo los id de representantes
+    compras = [] #obtengo cantidad de compras
+    for r in Representante.objects.all():
+        rNro.append([r.NroLegajo])
+        cantC.append(CompraLote.objects.all().filter(Representante = r))
+    for c in cantC:
+        compras.append([c.count()]) 
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 800, 400)
+
+    dataSet = (
+        
+        ('C', [(j, m[0]) for j, m in enumerate(compras)]),
+        )
+
+    options = {
+        'axis': {
+            'x': {
+                # en label tengo los nros de representantes sobre x
+                # en val tengo la cantidad de compras de cada represebtabte
+                'ticks': [dict(v=j, label=rNro[0+j]) for j, m in enumerate(compras)],
+                'label': 'NroLegajo Representantes',
+              
+            },  
+            'y': {                
+                'ticksCount': [dict(v=j, label=m[0]) for j, m in enumerate(compras)],
+                'label': 'Cantidad Compras',
+              
+            },    
+         
+        },
+        'background': {
+            'chartColor': '#ffeeff',
+            'baseColor': '#ffffff',
+            'lineColor': '#444444'
+        },
+        'colorScheme': {
+            'name': 'gradient',
+            'args': {
+                'initialColor': 'green',
+            },
+        },
+        'legend': {
+            'hide': True,
+        },
+    }
+    chart = pycha.line.LineChart(surface, options)
+    chart.addDataset(dataSet)
+    chart.render()
+    surface.write_to_png("line.png")
+    return render_to_response('Estadisticas/estadisticasRepresentantes2.html', context_instance=RequestContext(request))
+
 def estadisticasRepresentantes(request):
     cantC = [] #obtengo las commpras de cada representante
     rNro = [] #obtengo los id de representantes
@@ -52,14 +109,8 @@ def estadisticasRepresentantes(request):
     for r in Representante.objects.all():
         rNro.append([r.NroLegajo])
         cantC.append(CompraLote.objects.all().filter(Representante = r))
-       
     for c in cantC:
         compras.append([c.count()]) 
-
-    
-    print compras
-    print rNro
-
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32,650, 650)
     dataSet = (
         
@@ -72,15 +123,19 @@ def estadisticasRepresentantes(request):
                 # en label tengo los nros de representantes sobre x
                 # en val tengo la cantidad de compras de cada represebtabte
                 'ticks': [dict(v=j, label=rNro[0+j]) for j, m in enumerate(compras)],
+                'label': 'NroLegajo Representantes',
+                'rotate': 25
             },  
             'y': {                
-                
                 'ticksCount': [dict(v=j, label=m[0]) for j, m in enumerate(compras)],
+                'label': 'Cantidad Compras',
+                'rotate': 25
             },    
         },
         'background': {
-            'chartColor': '#f3f9fb',
-            'lineColor': '#d1e5ec'
+            'chartColor': '#ffeeff',
+            'baseColor': '#ffffff',
+            'lineColor': '#444444'
         },
         'colorScheme': {
             'name': 'gradient',
@@ -88,13 +143,18 @@ def estadisticasRepresentantes(request):
                 'initialColor': 'blue',
             },
         },
+        'padding': {
+            'left': 1,
+            'bottom': 1,
+            'top': 2,
+            'right': 1,
+        },
+        'title': 'Compras - Representantes'
     }
     chart = pycha.bar.VerticalBarChart(surface, options)
     chart.addDataset(dataSet)   
     chart.render()
     surface.write_to_png('estadisticasRe.png')
-    
-    
     return render_to_response('Estadisticas/estadisticasRepresentantes.html', context_instance=RequestContext(request))
 
 def estadisticasMaquinarias(request, FI, FF):
@@ -113,7 +173,6 @@ def estadisticasMaquinarias(request, FI, FF):
     for prod in listaProd:
         if prod is None:
             listaHs.append(0)
-
         for p in prod:
             pFI=datetime.combine(p.FechaInicio, datetime.min.time())            
             if p.FechaFin != None:   
