@@ -38,15 +38,13 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404 
 from django.core.mail import EmailMessage
-#import cairo
-#import pycha.bar
-#import pycha.pie
-#import matplotlib.pyplot as plt
+import cairo
+import pycha.bar
+import pycha.pie
+import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
-#import pycha.line
-
-
+import pycha.line
 
 # ********************************* Estadisticas *********************************
 def line(request):
@@ -159,7 +157,7 @@ def estadisticasRepresentantes(request):
 
 def estadisticasMaquinarias(request, FI, FF):
     listaHs = []
-    lista= []
+    nMaq= []
     listaProd = []
     totalHs = 0
     
@@ -167,9 +165,14 @@ def estadisticasMaquinarias(request, FI, FF):
     FF = FF + " 00:00:00 GMT"
     FIs = datetime.strptime(FI, '%d %m %Y %H:%M:%S %Z')
     FFs = datetime.strptime(FF, '%d %m %Y %H:%M:%S %Z')
-    for m in Maquinaria.objects.all():
-        listaProd.append(m.produccion_set.all())
     
+    for m in Maquinaria.objects.all():
+        nMaq.append(m)
+        listaProd.append(Produccion.objects.all().filter(Maquinaria = m))
+        
+    print nMaq
+    print listaProd
+
     for prod in listaProd:
         if prod is None:
             listaHs.append(0)
@@ -187,8 +190,9 @@ def estadisticasMaquinarias(request, FI, FF):
             if pFI >= FIs:
                 if pFF >= FFs:
                     lista.append(p)   
-                    print lista
+    
                     print pFF-pFI
+    print listaHs
 
 
 # ********************************* Excel *********************************
