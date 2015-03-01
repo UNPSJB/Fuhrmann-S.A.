@@ -159,7 +159,7 @@ def estadisticasRepresentantes(request):
 
 def estadisticasMaquinarias(request, FI, FF):
     listaHs = []
-    lista= []
+    nMaq= []
     listaProd = []
     totalHs = 0
     
@@ -168,8 +168,12 @@ def estadisticasMaquinarias(request, FI, FF):
     FIs = datetime.strptime(FI, '%d %m %Y %H:%M:%S %Z')
     FFs = datetime.strptime(FF, '%d %m %Y %H:%M:%S %Z')
     for m in Maquinaria.objects.all():
+        nMaq.append(m)
         listaProd.append(m.produccion_set.all())
     
+    print nMaq
+    print listaProd
+
     for prod in listaProd:
         if prod is None:
             listaHs.append(0)
