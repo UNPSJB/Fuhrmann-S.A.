@@ -1,10 +1,8 @@
 import urlparse
-
 import xlwt
 import datetime
 import xhtml2pdf.pisa as pisa
 import string
-
 import json
 import reportlab
 import StringIO
@@ -44,35 +42,41 @@ import cairo
 import pycha.bar
 import matplotlib.pyplot as plt
 import numpy as np
+from PIL import Image
+
     
 def estadisticasRepresentantes(request):
-    cantC = []
-    
+    cantC = [] #obtengo las commpras de cada representante
+    rNro = [] #obtengo los id de representantes
+    compras = [] #obtengo cantidad de compras
     for r in Representante.objects.all():
+        rNro.append([r.NroLegajo])
         cantC.append(CompraLote.objects.all().filter(Representante = r))
-
-    for a in cantC:
-        print a.count()
-        print a
-    
+       
+    for c in cantC:
+        compras.append([c.count()]) 
 
     
-    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32,550, 310)
-    data = [('golas',1),('golas',15),('golas',0.1)]    
+    print compras
+    print rNro
+
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32,650, 650)
     dataSet = (
-        ('Puntos', [(i, l[1]) for i, l in enumerate(data)]),
+        
+        ('C', [(j, m[0]) for j, m in enumerate(compras)]),
         )
     options = {
         'legend': {'hide': True},
         'axis': {
             'x': {
-                'ticks': [dict(v=i, label=l[0]) for i, l in enumerate(data)],
-    
-            },
-            'y': {
-                'tickCount': 5,
-    
-            }
+                # en label tengo los nros de representantes sobre x
+                # en val tengo la cantidad de compras de cada represebtabte
+                'ticks': [dict(v=j, label=rNro[0+j]) for j, m in enumerate(compras)],
+            },  
+            'y': {                
+                
+                'ticksCount': [dict(v=j, label=m[0]) for j, m in enumerate(compras)],
+            },    
         },
         'background': {
             'chartColor': '#f3f9fb',
@@ -86,9 +90,12 @@ def estadisticasRepresentantes(request):
         },
     }
     chart = pycha.bar.VerticalBarChart(surface, options)
-    chart.addDataset(dataSet)
+    chart.addDataset(dataSet)   
     chart.render()
-    surface.write_to_png('chart.png')
+    surface.write_to_png('estadisticasRe.png')
+    
+    
+    return render_to_response('Estadisticas/estadisticasRepresentantes.html', context_instance=RequestContext(request))
 
 def estadisticasMaquinarias(request, FI, FF):
     listaHs = []
