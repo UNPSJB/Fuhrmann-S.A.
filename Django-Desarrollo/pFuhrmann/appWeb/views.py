@@ -38,12 +38,12 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404 
 from django.core.mail import EmailMessage
 import cairo
-#import pycha.bar
-#import pycha.pie
+import pycha.bar
+import pycha.pie
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
-#import pycha.line
+import pycha.line
 
 # ********************************* Estadisticas *********************************
 def line(request):
@@ -96,7 +96,7 @@ def line(request):
     chart = pycha.line.LineChart(surface, options)
     chart.addDataset(dataSet)
     chart.render()
-    surface.write_to_png("line.png")
+    surface.write_to_png('static/img/line.png')
     return render_to_response('Estadisticas/estadisticasRepresentantes2.html', context_instance=RequestContext(request))
 
 def estadisticasRepresentantes(request):
@@ -151,7 +151,7 @@ def estadisticasRepresentantes(request):
     chart = pycha.bar.VerticalBarChart(surface, options)
     chart.addDataset(dataSet)   
     chart.render()
-    surface.write_to_png('estadisticasRe.png')
+    surface.write_to_png('static/img/estadisticasRe.png')
     return render_to_response('Estadisticas/estadisticasRepresentantes.html', context_instance=RequestContext(request))
 
 def estadisticasMaquinarias(request, FI, FF):
