@@ -162,34 +162,45 @@ def estadisticasMaquinarias(request, FI, FF):
 
     FI = FI + " 00:00:00 GMT"
     FF = FF + " 00:00:00 GMT"
-    FIs = datetime.strptime(FI, '%d %m %Y %H:%M:%S %Z') # Fecha Desde
-    FFs = datetime.strptime(FF, '%d %m %Y %H:%M:%S %Z') # Fecha hasta
+    FIs = datetime.strptime(FI, '%d %m %Y %H:%M:%S %Z') # Fecha Desde lo convierto en datetime
+    FFs = datetime.strptime(FF, '%d %m %Y %H:%M:%S %Z') # Fecha hasta lo convierto en datetime
     
     for m in Maquinaria.objects.all():
         nMaq.append(m)
         listaProd.append(Produccion.objects.all().filter(Maquinaria = m)) # Todas las Maquinas
 
     print listaProd
-
-    for prod in listaProd:
-        if prod is None:
-            listaHs.append(0)
-        for p in prod:
-            pFI=datetime.combine(p.FechaInicio, datetime.min.time())            
-            if p.FechaFin != None:   
-                pFF=datetime.combine(p.FechaFin, datetime.min.time())
-            else:
-                pFF= datetime.now()
-            print pFI
-            print FIs
-            print pFF
-            print FFs  
-
-            if pFI >= FIs:
-                if pFF >= FFs:
-                    listaHs.append(p)   
     
-                    print pFF-pFI
+    for prod in listaProd:
+        if not prod:  # Si la maquina nunca fue usada tiene 0 horas
+            listaHs.append('0')
+        else: # Si no recorro las producciones
+            horas = 0
+            for p in prod:
+                if p.FechaInicio != None: # Me fijo que la produccion haya iniciado
+                    #Debo ver cuales producciones deben registrarse
+                    pFI = datetime.combine(p.FechaInicio, datetime.min.time())  # datetime
+                    
+                    if not p.FechaFin:
+                        pFF = datetime.now()
+                    else:
+                        pFF = datetime.combine(p.FechaFin, datetime.min.time()) # datetime
+
+                    # Controlo que las producciones tengan dias dentro de las fechas ingresadas
+                    if FFs < pFI: # 0 horas
+                        listaHs.append(horas)
+                        break
+                    else FIs > pFF: # 0 horas
+                        listaHs.append(horas)
+                        break
+                    else:
+
+
+
+            listaHs.append(horas)
+
+                        
+    print nMaq
     print listaHs
 
 
