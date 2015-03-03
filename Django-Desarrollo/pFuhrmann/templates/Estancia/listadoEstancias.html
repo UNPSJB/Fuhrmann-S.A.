@@ -11,7 +11,7 @@
                         <div class="btn-group pull-right">
                             <div class="input-group">
                                 <div class="btn-group pull-right">
-                                    <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('<strong>Ayuda listado estancias</strong>', 'El <strong>listado de estancias</strong> muestra el CUIT, nombre, provincia, zona, representante y productor asociados a la estancia.</br><br>Ingrese en<strong> buscar </strong>el campo (CUIT o nombre de estancia) por el cual desea filtrar las estancias.</br><br>Presione el botón <strong>agregar</strong> para registrar una nueva estancia.</br><br>Presione el botón <strong>modificar</strong> para cambiar datos de una estancia.</br><br>Presione el botón <strong>eliminar</strong> para eliminar una estancia.</br><br>Presione el botón <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
+                                    <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('<strong>Ayuda listado estancias</strong>', 'El <strong>listado de estancias</strong> muestra el CUIT, nombre, provincia, zona, representante y productor asociados a la estancia.</br><br>Ingrese en<strong> buscar </strong>el campo (CUIT o nombre de estancia) por el cual desea filtrar las estancias.</br><br>Presione el botón <strong>agregar</strong> para registrar una nueva estancia.</br><br>Presione el botón <strong>modificar</strong> para cambiar datos de una estancia.</br><br>Presione el botón <strong>eliminar</strong> para eliminar una estancia.</br><br>Presione el botón <strong>salir</strong> para volver al menú principal.</br><br>Presione el botón <strong>exportar pdf </strong>para descargar el listado de estancias.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
                                 </div>
                                 <span class="input-group-btn">
                                     <a class="btn btn-default" type="button" title="Buscar: CUIT, Nombre" onClick="javascript: errorBuscar('/buscarEstancia/', $('#buscar').val());"><span class="glyphicon glyphicon-search"></span></a>
@@ -60,7 +60,8 @@
                         </table>
                         <script type ="text/javascript"> </script>
                         <div class="pull-right">
-                            <a class="btn btn-default btn-gr" type= "button" href="/pdfEstancias" title = "Pdf" >Exportar PDF</a>
+                            <a class="btn btn-default btn-gr" type= "button" onClick="ayuda('Descarga Completa','El listado se encuentra en Descargas')"href="/pdfEstancias" title = "Pdf">Exportar PDF</a>
+
                             {% if perms.appWeb.add_estancia %}
                                 <a class="btn btn-default btn-gr" type= "button" href="/registrarEstancia" title = "Agregar Estancia" >Agregar</a>
                             {% endif %}

@@ -9,7 +9,7 @@
                 <div class="btn-group pull-right">
                     <div class="input-group">
                         <div class="btn-group pull-right">
-                            <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('<strong>Ayuda listado representante</strong>', 'El <strong>listado de representantes</strong> muestra el Nro.de legajo, nombre, apellido, DNI, teléfono, e-mail y zona del productor.</br><br>Ingrese en<strong> buscar </strong>el campo (nombre, apellido o  DNI) por el cual desea filtrar los representantes.</br><br>Presione el botón <strong>agregar</strong> para agregar un nuevo representante.</br><br>Presione el botón <strong>modificar</strong> para cambiar datos de un representante.</br><br>Presione el botón <strong>eliminar</strong> para eliminar un representante.</br><br>Presione el botón <strong>salir</strong> para volver al menú principal.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <a class="btn btn-default" type="button"  title = "Ayuda" onClick="ayuda('<strong>Ayuda listado representante</strong>', 'El <strong>listado de representantes</strong> muestra el Nro.de legajo, nombre, apellido, DNI, teléfono, e-mail y zona del productor.</br><br>Ingrese en<strong> buscar </strong>el campo (nombre, apellido o  DNI) por el cual desea filtrar los representantes.</br><br>Presione el botón <strong>agregar</strong> para agregar un nuevo representante.</br><br>Presione el botón <strong>modificar</strong> para cambiar datos de un representante.</br><br>Presione el botón <strong>eliminar</strong> para eliminar un representante.</br><br>Presione el botón <strong>salir</strong> para volver al menú principal.</br><br>Presione el botón <strong>exportar pdf </strong>para descargar el listado de representantes.</br><br>Presione el botón <strong>excel </strong>para descargar el listado de representantes.</br>')" ><span class="glyphicon glyphicon-question-sign"></span></a>
                         </div>
                         <span class="input-group-btn">
                             <a class="btn btn-default" type="button" title="Buscar: Nombre, Apellido, DNI" onClick="javascript: errorBuscar('/buscarRepresentante/', $('#buscar').val());"><span class="glyphicon glyphicon-search"></span></a>
@@ -59,8 +59,9 @@
                 </table>
                 <script type ="text/javascript"> </script>
                 <div class="pull-right">
-                    <a class="btn btn-default btn-gr" type= "button" href="/pdfRepresentantes" title = "Pdf" >Exportar PDF</a>
-                    <a class="btn btn-default btn-gr" type= "button" href="/excelRepresentantes" title = "Excel" >Excel</a>
+                    <a class="btn btn-default btn-gr" type= "button" onClick="ayuda('Descarga Completa','El listado se encuentra en Descargas')"href="/pdfRepresentantes" title = "Pdf">Exportar PDF</a>
+
+                    <a class="btn btn-default btn-gr" type= "button" onClick="ayuda('Descarga Completa','El listado se encuentra en Descargas')" href="/excelRepresentantes" title = "Excel" >Excel</a>
                     {% if perms.appWeb.add_representante %}
                         <a class="btn btn-default btn-gr" type= "button" href="/registrarRepresentante" title = "Agregar Representante" >Agregar</a>
                     {% endif %}

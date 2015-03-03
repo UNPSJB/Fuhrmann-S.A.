@@ -59,6 +59,11 @@ class Representante(Persona):
             return True
         return False
 
+    def tieneCompra(self):
+        if self.compra_set.all():
+            return True
+        return False
+
 class Estancia(models.Model):
     class Meta:
         ordering = ['Nombre']
@@ -173,16 +178,16 @@ class OrdenProduccion(models.Model):
         if p.FechaFin != None:
             return p.FechaFin
         
-        return 'No Fecha'
+        return 'Sin fecha'
 
     def fechaInicio(self):
         for p in self.produccion_set.all():
             if p.FechaInicio != None:
                 return p.FechaInicio
-        return 'No Fecha'
+        return 'Sin fecha'
 
     def maquinaActual(self):
-        maquinaActual = 'No Maquina'  
+        maquinaActual = 'Sin maquina'  
         for p in self.produccion_set.all():
             if p.FechaInicio != None  and  p.FechaFin == None:
                 maquinaActual = p.Maquinaria.NroSerie
@@ -226,7 +231,7 @@ class OrdenProduccion(models.Model):
         if p.FechaInicio != None and p.FechaFin != None:
             return 'Ok'
         if p.FechaInicio != None and p.FechaFin == None:
-            return 'In Process'
+            return 'En proceso'
     def isPeinado(self):
         p = self.produccion_set.get(Servicio = 'Peinado')
         if p.FechaInicio == None:
@@ -234,7 +239,7 @@ class OrdenProduccion(models.Model):
         if p.FechaInicio != None and p.FechaFin != None:
             return 'Ok'
         if p.FechaInicio != None and p.FechaFin == None:
-            return 'In Process'
+            return 'En proceso'
     def isCardado(self):
         p = self.produccion_set.get(Servicio = 'Cardado')
         if p.FechaInicio == None:
@@ -242,7 +247,7 @@ class OrdenProduccion(models.Model):
         if p.FechaInicio != None and p.FechaFin != None:
             return 'Ok'
         if p.FechaInicio != None and p.FechaFin == None:
-            return 'In Process'
+            return 'En proceso'
     def isLoteVenta(self):
         if self.loteventa == '':
             return True
