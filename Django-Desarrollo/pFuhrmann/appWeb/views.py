@@ -31,7 +31,6 @@ from django.core.context_processors import csrf
 from random import choice
 from wkhtmltopdf import *
 from django.template.response import TemplateResponse
-#users
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
@@ -39,12 +38,12 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404 
 from django.core.mail import EmailMessage
 import cairo
-import pycha.bar
-import pycha.pie
+#import pycha.bar
+#import pycha.pie
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
-import pycha.line
+#import pycha.line
 
 # ********************************* Estadisticas *********************************
 def line(request):
@@ -160,17 +159,16 @@ def estadisticasMaquinarias(request, FI, FF):
     nMaq= []
     listaProd = []
     totalHs = 0
-    
+
     FI = FI + " 00:00:00 GMT"
     FF = FF + " 00:00:00 GMT"
-    FIs = datetime.strptime(FI, '%d %m %Y %H:%M:%S %Z')
-    FFs = datetime.strptime(FF, '%d %m %Y %H:%M:%S %Z')
+    FIs = datetime.strptime(FI, '%d %m %Y %H:%M:%S %Z') # Fecha Desde
+    FFs = datetime.strptime(FF, '%d %m %Y %H:%M:%S %Z') # Fecha hasta
     
     for m in Maquinaria.objects.all():
         nMaq.append(m)
-        listaProd.append(Produccion.objects.all().filter(Maquinaria = m))
-        
-    print nMaq
+        listaProd.append(Produccion.objects.all().filter(Maquinaria = m)) # Todas las Maquinas
+
     print listaProd
 
     for prod in listaProd:
@@ -189,7 +187,7 @@ def estadisticasMaquinarias(request, FI, FF):
 
             if pFI >= FIs:
                 if pFF >= FFs:
-                    lista.append(p)   
+                    listaHs.append(p)   
     
                     print pFF-pFI
     print listaHs
@@ -885,7 +883,12 @@ def mostrarLotes (request, estancia, orden):
     lotes = [] # Lotes que tienen fardos con especificaciones requeridas
     fardos = [] # datos de fardo
     for lote in estancia.lote_set.all():
-        if lote.fardo_set.filter(CV__range = (orden.CV -4, orden.CV +4), AlturaMedia__range = (orden.AlturaMedia -4, orden.AlturaMedia +4), Finura__range = (orden.Finura -4, orden.Finura +4), Romana__range = (orden.Romana -4, orden.Romana +4), Rinde__range = (orden.Rinde -4, orden.Rinde +4), DetalleOrden = None):
+        if lote.fardo_set.filter(CV__range = (orden.CV - ((orden.CV * Config.objects.get_int('CV_%_OK')) / 100), orden.CV + ((orden.CV * Config.objects.get_int('CV_%_OK')) / 100)), 
+                                        AlturaMedia__range = (orden.AlturaMedia - ((orden.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100), orden.AlturaMedia + ((orden.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100)), 
+                                        Finura__range = (orden.Finura - ((orden.Finura * Config.objects.get_int('FINURA_%_OK')) / 100), orden.Finura + ((orden.Finura * Config.objects.get_int('FINURA_%_OK')) / 100)), 
+                                        Romana__range = (orden.Romana - ((orden.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100), orden.Romana + ((orden.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100)), 
+                                        Rinde__range = (orden.Rinde - ((orden.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100), orden.Rinde + ((orden.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100)), 
+                                        DetalleOrden = None):
             lotes.append(lote)
             fardos.append(lote.fardo_set.first())
             continue
@@ -993,7 +996,6 @@ def finalizarFaseProduccion(request, pk):
     for p in orden.produccion_set.all():
         if p.FechaInicio != None and p.FechaFin == None:
             p.FechaFin = datetime.now()
-            p.Maquinaria = None
             p.save()
             break
 

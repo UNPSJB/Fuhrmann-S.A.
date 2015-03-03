@@ -9,8 +9,8 @@ urlpatterns = patterns('',
     # ------ Estadisticas  
     url(r'^eRh/$', 'appWeb.views.estadisticasRepresentantes'),
     url(r'^eRl/$', 'appWeb.views.line'),
-
     url(r'^esta/(?P<FI>.*)/(?P<FF>.*)/$', 'appWeb.views.estadisticasMaquinarias'),
+
     # ------ Adm. Login  
     url(r'^login/$', 'appWeb.views.login_user'),
     url(r'^logout/$', 'appWeb.views.logout'),

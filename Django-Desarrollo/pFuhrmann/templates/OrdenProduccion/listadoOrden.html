@@ -255,7 +255,7 @@
             }
         }
 
-        function showModal(id, hayFardos, prod, cancel, finali, isLoteVentas, needFardos) {
+        function showModal(id, hayFardos, prod, cancel, finali, isLoteVentas, needFardos){
 
             if (prod == 'False' & cancel == 'False' & finali == 'False' & needFardos == 'True'){
                 window.dialog1 = new BootstrapDialog.show({
@@ -323,7 +323,7 @@
                     {
                         label: 'Salir',
                         action: function(dialogRef){
-                            window.location = "/listadoOrden"
+                             window.location = "/listadoOrden"
                             dialogRef.close();
                         }
                     }]

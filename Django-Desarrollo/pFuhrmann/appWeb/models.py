@@ -170,13 +170,13 @@ class OrdenProduccion(models.Model):
         return u"%s " % self.NroOrden
 
     def isFinalizada(self):
+        print self.produccion_set.all()
         return all(map(lambda p: p.FechaFin != None, self.produccion_set.all()))
    
     def fechaFin(self):
-        p = self.produccion_set.last()
-        print p
-        if p.FechaFin != None:
-            return p.FechaFin
+        if self.produccion_set.last() != None:
+            if self.produccion_set.last().FechaFin != None:
+                return self.produccion_set.last().FechaFin
         
         return 'Sin fecha'
 
@@ -197,7 +197,22 @@ class OrdenProduccion(models.Model):
         return any(map(lambda p: p.FechaInicio != None, self.produccion_set.all())) and any(map(lambda p: p.FechaFin == None, self.produccion_set.all())) 
 
     def hayFardos(self):
-        fardos = Fardo.objects.filter(CV__range = (self.CV -4, self.CV +4), AlturaMedia__range =(self.AlturaMedia -4, self.AlturaMedia +4), Finura__range = (self.Finura -4, self.Finura +4), Romana__range = (self.Romana -4, self.Romana +4), Rinde__range = (self.Rinde -4, self.Rinde +4), DetalleOrden = None)
+        print self.CV - ((self.CV * Config.objects.get_int('CV_%_OK')) / 100) 
+        print self.CV + ((self.CV * Config.objects.get_int('CV_%_OK')) / 100)
+        print self.AlturaMedia - ((self.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100), self.AlturaMedia + ((self.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100)
+        print self.Finura - ((self.Finura * Config.objects.get_int('FINURA_%_OK')) / 100), self.Finura + ((self.Finura * Config.objects.get_int('FINURA_%_OK')) / 100)
+        print self.Romana - ((self.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100), self.Romana + ((self.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100) 
+        print self.Rinde - ((self.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100), self.Rinde + ((self.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100)
+        
+
+        fardos = Fardo.objects.filter(CV__range = (self.CV - ((self.CV * Config.objects.get_int('CV_%_OK')) / 100), self.CV + ((self.CV * Config.objects.get_int('CV_%_OK')) / 100)), 
+                                        AlturaMedia__range = (self.AlturaMedia - ((self.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100), self.AlturaMedia + ((self.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100)), 
+                                        Finura__range = (self.Finura - ((self.Finura * Config.objects.get_int('FINURA_%_OK')) / 100), self.Finura + ((self.Finura * Config.objects.get_int('FINURA_%_OK')) / 100)), 
+                                        Romana__range = (self.Romana - ((self.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100), self.Romana + ((self.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100)), 
+                                        Rinde__range = (self.Rinde - ((self.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100), self.Rinde + ((self.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100)), 
+                                        DetalleOrden = None)
+        print fardos
+
         kg = 0
         kgInOrden = 0
 
@@ -321,10 +336,11 @@ class Maquinaria(models.Model):
 
     def isLibre(self):
         prod = []
-        for p in self.produccion_set.all():
-            if p.FechaInicio != None:
+        for p in self.produccion_set.all(): # Obtengo todas las producciones de maquinaria.
+            if p.FechaInicio != None: # Guardo las producciones que hayan iniciado.
                 prod.append(p)
-        return  all(map(lambda p: p.FechaFin != None, prod)) and all(map(lambda p: p.FechaFin <= datetime.today(), self.produccion_set.all()))
+        
+        return  all(map(lambda p: p.FechaFin != None, prod)) # Si todas las producciones tiene fecha de fin la maquina ya no se usa
 
 
 
@@ -353,19 +369,19 @@ class LoteVenta(models.Model):
 DEFAULT_CONFIGS = {
     'RINDE_MIN': 40,
     'RINDE_MAX': 60,
-    'RINDE_%_OK': 10,
+    'RINDE_%_OK': 15,
     'FINURA_MIN': 16,
     'FINURA_MAX': 25,
-    'FINURA_%_OK': 10, 
+    'FINURA_%_OK': 15, 
     'CV_MIN': 40, 
     'CV_MAX': 50, 
-    'CV_%_OK': 10,
+    'CV_%_OK': 15,
     'ALTURAMEDIA_MIN': 60,
     'ALTURAMEDIA_MAX': 80,
-    'ALTURAMEDIA_%_OK': 10, 
+    'ALTURAMEDIA_%_OK': 15, 
     'ROMANA_MIN': 10,
     'ROMANA_MAX': 30,
-    'ROMANA_%_OK': 10,
+    'ROMANA_%_OK': 15,
     # ---------- Algunos ejemplos del potencial ;)
     'EMPRESA': "Fuhrmann",
     'DIRECCION': "Avenida Siempre Viva 742",
