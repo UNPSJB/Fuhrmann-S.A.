@@ -175,7 +175,6 @@ def estadisticasMaquinarias(request, FI, FF):
         if not prod:  # Si la maquina nunca fue usada tiene 0 horas
             listaHs.append('0')
         else: # Si no recorro las producciones
-            horas = 0
             for p in prod:
                 if p.FechaInicio != None: # Me fijo que la produccion haya iniciado
                     #Debo ver cuales producciones deben registrarse
@@ -188,18 +187,16 @@ def estadisticasMaquinarias(request, FI, FF):
 
                     # Controlo que las producciones tengan dias dentro de las fechas ingresadas
                     if FFs < pFI: # 0 horas
-                        listaHs.append(horas)
+                        listaHs.append('0')
                         break
-                    else FIs > pFF: # 0 horas
-                        listaHs.append(horas)
+                    elif FIs > pFF: # 0 horas
+                        listaHs.append('0')
                         break
                     else:
+                        horas = (pFI - pFF)
 
 
 
-            listaHs.append(horas)
-
-                        
     print nMaq
     print listaHs
 
