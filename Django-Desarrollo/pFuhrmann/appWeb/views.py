@@ -37,13 +37,13 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404 
 from django.core.mail import EmailMessage
-#import cairo
-#import pycha.bar
-#import pycha.pie
-#import matplotlib.pyplot as plt
+import cairo
+import pycha.bar
+import pycha.pie
+import matplotlib.pyplot as plt
 import numpy as np
-#from PIL import Image
-#import pycha.line
+from PIL import Image
+import pycha.line
 
 # ********************************* Estadisticas *********************************
 def line(request):
@@ -180,7 +180,7 @@ def estadisticasMaquinarias(request, FI, FF):
             for p in prod:
                 if p.FechaInicio != None: # Me fijo que la produccion haya iniciado
                     print "aaa"
-                    print p.FechaInicio
+                    print p.FechaInicio #aca te muestra solo la fecha!!!
                     print "aaa"
                     #Debo ver cuales producciones deben registrarse
                     pFI = datetime.combine(p.FechaInicio, datetime.min.time())  # datetime
@@ -625,30 +625,8 @@ def registrarLote(request, pk=None):
     else:
         formulario = LoteFormFactory(lote is not None)(instance = lote)
 
-    formulario.setup(pk is None and 'Registrar', css_class="btn btn-success")
+    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('registrarLoteForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
-
-
-@login_required(login_url="/login")
-@permission_required('appWeb.change_lote', login_url='/error_message')
-def modificarLote(request, pk=None):
-    lote = None
-    if pk is not None:
-        lote = get_object_or_404(Lote, pk=pk)
-
-    if request.method == 'POST':
-
-        formulario = LoteFormFactory(lote is not None)(request.POST, instance = lote)
-        if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect('/listadoLotes')
-    else:
-        formulario = LoteFormFactory(lote is not None)(instance = lote)
-
-    formulario.setup('Modificar', css_class="btn btn-success")
-    return render_to_response('modificarLote.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
 
 @login_required(login_url="/login")
 @permission_required('appWeb.delete_lote', login_url='/error_message')
@@ -691,37 +669,8 @@ def registrarFardo(request, pk=None):
     else:
         formulario = FardoFormFactory(fardo is not None)(instance = fardo)
 
-    formulario.setup(pk is None and 'Registrar', css_class="btn btn-success")
+    formulario.setup(pk is None and 'Registrar' or 'Modificar', css_class="btn btn-success")
     return render_to_response('registrarFardoForm.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
-
-@login_required(login_url="/login")
-@permission_required('appWeb.change_fardo', login_url='/error_message')
-def modificarFardo(request, pk=None):
-    fardo = None
-    if pk is not None:
-        fardo = get_object_or_404(Fardo, pk=pk)
-
-    if request.method == 'POST':
-        formulario = FardoFormFactory(fardo is not None)(request.POST, instance = fardo) 
-        if formulario.is_valid():
-            if pk is None:
-                for x in xrange(formulario.cleaned_data['Lote'].CantFardos): # Segun la cantidad de fardos en lote, son las instancia que creo
-                    Fardo.objects.create(Lote = formulario.cleaned_data['Lote'], Peso = (formulario.cleaned_data['Lote'].Peso / formulario.cleaned_data['Lote'].CantFardos),
-                                        Rinde = formulario.cleaned_data['Rinde'], Finura = formulario.cleaned_data['Finura'],
-                                        CV = formulario.cleaned_data['CV'], AlturaMedia = formulario.cleaned_data['AlturaMedia'],
-                                        Romana = formulario.cleaned_data['Romana'])
-            else:
-                formulario = FardoFormFactory(fardo is not None)(request.POST, instance = fardo)  # Modifico todos los fardos del mismo lote al modificar uno
-                formulario.save()
-
-            return HttpResponseRedirect('/listadoFardos')
-    else:
-        formulario = FardoFormFactory(fardo is not None)(instance = fardo)
-
-    formulario.setup('Modificar', css_class="btn btn-success")
-    return render_to_response('modificarFardo.html', {'formulario':formulario}, context_instance=RequestContext(request))
-
 
 # ********************************* Administracion de Productor *********************************
     
