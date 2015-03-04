@@ -5,7 +5,7 @@
     <div class="container">
         <div class="panel panel-primary " id="panel-interno">
             <div class="panel-heading">
-                <h6 class="titulo panel-title"><strong> Estadistica compras de representantes Lineal</strong></h6>
+                <h6 class="titulo panel-title"><strong> Estadistica tiempo uso de maquinarias</strong></h6>
             </div>
         
             <div class="panel-body">
@@ -14,10 +14,11 @@
                     <input id="datepicker">Desde
 
                     <input id="datepicker1">Hasta
-                    <a class="btn btn-default btn-gr" type= "button" onClick = 'javascript:commit()'  title = "Salir" >Enviar Consulta</a>
+                    <a class="btn btn-default btn-gr" type= "button" onClick = 'javascript:commit()'  title = "consulta" >Consultar</a>
+
                 </form>
             	<div class="pull-right">
-                    <a class="btn btn-default btn-gr" type= "button" href="/index"  title = "Commit" >Salir</a>
+                    <a class="btn btn-default btn-gr" type= "button" href="/index"  title = "Salir" >Salir</a>
                 </div>    
             </div>
         </div>
@@ -31,7 +32,7 @@
         var desde = $(datepicker1).val();
 
         window.dialog = new BootstrapDialog.show({
-                    title: ('Estadistica uso de Maquinaria'),
+                    title: ('Estadistica tiempo uso de maquinaria'),
                     cssClass: 'show-dialog',
                     closable: true,
                     message: $('<div></div>').load('/esta/'+hasta+'/'+desde+'/'),
@@ -41,6 +42,7 @@
                             .css("z-index", 1030 + tier * 30);
                         dialog.$modal
                             .css("z-index", 1040 + tier * 30);
+                        
                     },
                 });  
     };
