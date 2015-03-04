@@ -1397,6 +1397,12 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
+.estadisticas{
+  padding-right: 340px;
+  padding-left: 340px;
+  margin-right: auto;
+  margin-left: auto;
+}
 .container {
   padding-right: 15px;
   padding-left: 15px;

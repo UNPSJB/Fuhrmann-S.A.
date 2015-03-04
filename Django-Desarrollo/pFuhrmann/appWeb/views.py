@@ -103,6 +103,7 @@ def estadisticasRepresentantes(request):
     cantC = [] #obtengo las commpras de cada representante
     rNro = [] #obtengo los id de representantes
     compras = [] #obtengo cantidad de compras
+
     for r in Representante.objects.all():
         rNro.append([r.NroLegajo])
         cantC.append(CompraLote.objects.all().filter(Representante = r))
@@ -158,7 +159,7 @@ def estadisticasMaquinarias(request, FI, FF):
     listaHs = []
     nMaq= []
     listaProd = []
-    totalHs = 0
+    horas2 = 0
 
     FI = FI + " 00:00:00 GMT"
     FF = FF + " 00:00:00 GMT"
@@ -169,37 +170,42 @@ def estadisticasMaquinarias(request, FI, FF):
         nMaq.append(m)
         listaProd.append(Produccion.objects.all().filter(Maquinaria = m)) # Todas las Maquinas
 
-    print listaProd
     
     for prod in listaProd:
+        horas = 0
+        print prod
         if not prod:  # Si la maquina nunca fue usada tiene 0 horas
             listaHs.append('0')
         else: # Si no recorro las producciones
             for p in prod:
                 if p.FechaInicio != None: # Me fijo que la produccion haya iniciado
+                    print "aaa"
+                    print p.FechaInicio
+                    print "aaa"
                     #Debo ver cuales producciones deben registrarse
                     pFI = datetime.combine(p.FechaInicio, datetime.min.time())  # datetime
-                    
                     if not p.FechaFin:
                         pFF = datetime.now()
                     else:
                         pFF = datetime.combine(p.FechaFin, datetime.min.time()) # datetime
-
                     # Controlo que las producciones tengan dias dentro de las fechas ingresadas
-                    if FFs < pFI: # 0 horas
-                        listaHs.append('0')
+                    print FFs
+                    print pFI
+                    if FFs < pFI: # 0 horas 1 a 3 
+                        
                         break
                     elif FIs > pFF: # 0 horas
-                        listaHs.append('0')
                         break
-                    else:
-                        horas = (pFI - pFF)
+                    else: #calcular hs 
+                        print pFF
+                        print pFI
+                        
+                        horas = pFF - pFI
+                        
+                        print horas
 
-
-
-    print nMaq
     print listaHs
-
+    print horas2
 
 # ********************************* Excel *********************************
 def excelRepresentantes(request):
@@ -990,6 +996,7 @@ def commitIniciarFase(request, orden, nroSerie):
     for p in o.produccion_set.all():
         if p.FechaInicio == None:
             p.FechaInicio = datetime.now()
+
             print p.FechaInicio
             p.Maquinaria = m
             p.save()
