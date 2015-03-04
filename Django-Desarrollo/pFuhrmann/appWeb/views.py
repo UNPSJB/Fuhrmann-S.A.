@@ -209,8 +209,8 @@ def estadisticasMaquinarias(request, FI, FF):
 
             listaHs.append(segundos)
     
-    print nMaq
-    print listaHs
+    # print nMaq
+    # print listaHs
 
     return render_to_response('estadisticasMaq.html', context_instance=RequestContext(request))
 
@@ -1083,6 +1083,14 @@ def buscarCompra(request, pkb):
     total = 0
     results = []
     
+    if not pkb:
+        return render_to_response("listadoCompra.html", { "lista": Compra.objects.all() }, context_instance=RequestContext(request))
+    
+    if pkb.isdigit():
+        results4 = CompraLote.objects.all().filter(NroCompra = pkb)
+        for obj in results4:
+            results.append(obj)
+
     representante = Representante.objects.all().filter(Nombre = pkb)
     representante2 = Representante.objects.all().filter(Apellido = pkb)
     results1 = CompraLote.objects.all().filter(Representante = representante)
@@ -1097,6 +1105,8 @@ def buscarCompra(request, pkb):
     for obj in results3:
         results.append(obj)
 
+
+
  
     return render_to_response("listadoCompra.html", { "lista": results }, context_instance=RequestContext(request))
 
@@ -1104,12 +1114,12 @@ def buscarCompra(request, pkb):
 @permission_required('appWeb.listado_venta', login_url='/error_message')
 def buscarVenta(request, pkb):
     results = []
+    if pkb.isdigit():
+        results1 = Venta.objects.all().filter(NroVenta = pkb)
 
-    results1 = Venta.objects.all().filter(NroVenta = pkb)
-
-    for obj in results1:
-        results.append(obj)
- 
+        for obj in results1:
+            results.append(obj)
+     
     return render_to_response("listadoVenta.html", { "lista": results }, context_instance=RequestContext(request))
 
 
@@ -1132,10 +1142,10 @@ def buscarEstancia(request, pkb):
 @permission_required('appWeb.listado_lote', login_url='/error_message')
 def buscarLote(request, pkb):
     results = []
-
-    results2 = Lote.objects.all().filter(NroLote = pkb)
-    for obj in results2:
-        results.append(obj)
+    if pkb.isdigit():
+        results2 = Lote.objects.all().filter(NroLote = pkb)
+        for obj in results2:
+            results.append(obj)
 
     return render_to_response("listadoLotes.html", { "lista": results }, context_instance=RequestContext(request))
 
@@ -1143,11 +1153,11 @@ def buscarLote(request, pkb):
 @permission_required('appWeb.listado_fardo', login_url='/error_message')
 def buscarFardo(request, pkb):
     results = []
+    if pkb.isdigit():
+        results1 = Fardo.objects.all().filter(NroFardo = pkb)
 
-    results1 = Fardo.objects.all().filter(NroFardo = pkb)
-
-    for obj in results1:
-        results.append(obj)
+        for obj in results1:
+            results.append(obj)
  
     return render_to_response("listadoFardos.html", { "lista": results }, context_instance=RequestContext(request))
 
@@ -1204,9 +1214,9 @@ def buscarOrden(request, pkb):
 @permission_required('appWeb.listado_maquinaria', login_url='/error_message')
 def buscarMaquinaria(request, pkb):
     results = []
-    results1 = Maquinaria.objects.all().filter(TipoMaquinaria = pkb)
-    
+    results1 = Maquinaria.objects.all().filter(Servicio = pkb)
+        
     for obj in results1:
         results.append(obj)
-    
+
     return render_to_response("listadoMaquinaria.html", { "lista": results }, context_instance=RequestContext(request))

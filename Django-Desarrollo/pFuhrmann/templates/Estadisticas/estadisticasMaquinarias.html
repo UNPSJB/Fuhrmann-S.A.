@@ -21,7 +21,6 @@
                 </div>    
             </div>
         </div>
-
     </div>
 {% endblock %}
 {% block scripts %}
@@ -30,33 +29,55 @@
         var hasta = $(datepicker).val();
         var desde = $(datepicker1).val();
 
+        var hastaN = ''; // Cadena nueva
+        var desdeN = ''; // Cadena nueva
+
+        for (var i=0; i<hasta.length; i++){
+            var c = hasta.charAt(i);
+            if (c == " "){
+                hastaN = hastaN + "%20";
+            }
+            else{
+                hastaN = hastaN + c;
+            }
+        }
+
+        for (var i=0; i<desde.length; i++){
+            var c1 = desde.charAt(i);
+            if (c1 == " "){
+                desdeN = desdeN + "%20";
+            }
+            else{
+                desdeN = desdeN + c1;
+            }
+        }
+        alert(hastaN + desdeN);
+
         window.dialog = new BootstrapDialog.show({
                     title: ('Estadistica uso de Maquinaria'),
                     cssClass: 'show-dialog',
                     closable: true,
-                    message: $('<div></div>').load('/esta/'+hasta+'/'+desde+'/'),
+                    message: $('<div></div>').load('/esta/'+hastaN+'/'+desdeN),
                     onshown: function(dialog) {
                         var tier = $('.bootstrap-dialog').length - 1;
                         dialog.$modal.prev(".modal-backdrop")
                             .css("z-index", 1030 + tier * 30);
                         dialog.$modal
                             .css("z-index", 1040 + tier * 30);
-                    },
+                    }
                 });  
-    };
+    }
 
     $(function() {
-        $( "#datepicker" ).datepicker({ dateFormat: 'dd%20mm%20yy', 
+        $( "#datepicker" ).datepicker({ dateFormat: 'dd mm yy', 
                                         inline: true
         });
     });
     $(function() {
-        $( "#datepicker1" ).datepicker({ dateFormat: 'dd%20mm%20yy', 
+        $( "#datepicker1" ).datepicker({ dateFormat: 'dd mm yy', 
                                         inline: true
         });
     });
-    
-
 
 </script>
 {% endblock %}

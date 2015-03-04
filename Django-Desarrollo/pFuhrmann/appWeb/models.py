@@ -170,7 +170,6 @@ class OrdenProduccion(models.Model):
         return u"%s " % self.NroOrden
 
     def isFinalizada(self):
-        print self.produccion_set.all()
         return all(map(lambda p: p.FechaFin != None, self.produccion_set.all()))
    
     def fechaFin(self):
@@ -203,8 +202,6 @@ class OrdenProduccion(models.Model):
                                         Romana__range = (self.Romana - ((self.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100), self.Romana + ((self.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100)), 
                                         Rinde__range = (self.Rinde - ((self.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100), self.Rinde + ((self.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100)), 
                                         DetalleOrden = None)
-        print fardos
-
         kg = 0
         kgInOrden = 0
 
