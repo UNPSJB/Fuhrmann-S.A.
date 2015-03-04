@@ -8,10 +8,55 @@
                 <h6 class="titulo panel-title"><strong> Estadistica compras de representantes Lineal</strong></h6>
             </div>
         
-        <div class="panel-body">
-        	<div class="pull-right">
-                <a class="btn btn-default btn-gr" type= "button" href="/index"  title = "Salir" >Salir</a>
-            </div>    
+            <div class="panel-body">
+                <form>
+                    <text>Seleccione Fecha: </text>
+                    <input id="datepicker">Desde
+
+                    <input id="datepicker1">Hasta
+                    <a class="btn btn-default btn-gr" type= "button" onClick = 'javascript:commit()'  title = "Salir" >Enviar Consulta</a>
+                </form>
+            	<div class="pull-right">
+                    <a class="btn btn-default btn-gr" type= "button" href="/index"  title = "Commit" >Salir</a>
+                </div>    
+            </div>
         </div>
+
     </div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    function commit() {
+        var hasta = $(datepicker).val();
+        var desde = $(datepicker1).val();
+
+        window.dialog = new BootstrapDialog.show({
+                    title: ('Estadistica uso de Maquinaria'),
+                    cssClass: 'show-dialog',
+                    closable: true,
+                    message: $('<div></div>').load('/esta/'+hasta+'/'+desde+'/'),
+                    onshown: function(dialog) {
+                        var tier = $('.bootstrap-dialog').length - 1;
+                        dialog.$modal.prev(".modal-backdrop")
+                            .css("z-index", 1030 + tier * 30);
+                        dialog.$modal
+                            .css("z-index", 1040 + tier * 30);
+                    },
+                });  
+    };
+
+    $(function() {
+        $( "#datepicker" ).datepicker({ dateFormat: 'dd%20mm%20yy', 
+                                        inline: true
+        });
+    });
+    $(function() {
+        $( "#datepicker1" ).datepicker({ dateFormat: 'dd%20mm%20yy', 
+                                        inline: true
+        });
+    });
+    
+
+
+</script>
 {% endblock %}

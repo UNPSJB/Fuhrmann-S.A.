@@ -155,11 +155,13 @@ def estadisticasRepresentantes(request):
     surface.write_to_png('static/img/estadisticasRe.png')
     return render_to_response('Estadisticas/estadisticasRepresentantes.html', context_instance=RequestContext(request))
 
+def estadisticasMaq(request):
+    return render_to_response('Estadisticas/estadisticasMaquinarias.html', context_instance=RequestContext(request))
+
 def estadisticasMaquinarias(request, FI, FF):
     listaHs = []
     nMaq= []
     listaProd = []
-    horas2 = 0
 
     FI = FI + " 00:00:00 GMT"
     FF = FF + " 00:00:00 GMT"
@@ -172,40 +174,45 @@ def estadisticasMaquinarias(request, FI, FF):
 
     
     for prod in listaProd:
-        horas = 0
-        print prod
+        segundos = 0
         if not prod:  # Si la maquina nunca fue usada tiene 0 horas
             listaHs.append('0')
         else: # Si no recorro las producciones
             for p in prod:
                 if p.FechaInicio != None: # Me fijo que la produccion haya iniciado
-                    print "aaa"
-                    print p.FechaInicio #aca te muestra solo la fecha!!!
-                    print "aaa"
                     #Debo ver cuales producciones deben registrarse
-                    pFI = datetime.combine(p.FechaInicio, datetime.min.time())  # datetime
-                    if not p.FechaFin:
+                    pFI = p.FechaInicio  # datetime
+                    if p.FechaFin == None:
                         pFF = datetime.now()
                     else:
-                        pFF = datetime.combine(p.FechaFin, datetime.min.time()) # datetime
+                        pFF = p.FechaFin # datetime
+                    
                     # Controlo que las producciones tengan dias dentro de las fechas ingresadas
-                    print FFs
-                    print pFI
-                    if FFs < pFI: # 0 horas 1 a 3 
-                        
+                    if FFs < pFI:   # 0 horas 1 a 3 
                         break
                     elif FIs > pFF: # 0 horas
                         break
-                    else: #calcular hs 
-                        print pFF
-                        print pFI
+                    # Calculo tiempo
+                    elif FIs > pFI and FFs > pFF:  # Si la fecha desde ingresada es mayor y fecha fin es mayor             
+                        time = (pFF - FIs)
+                        segundos = segundos + time.total_seconds() 
+                    elif FIs > pFI and FFs < pFF:  # Si la fecha desde ingresada es mayor y fecha fin es menor               
+                        time = (FFs - FIs)
+                        segundos = segundos + time.total_seconds() 
+                    elif FIs < pFI and FFs > pFF:  # Si la fecha desde ingresada es menor y fecha fin es mayor           
+                        time = (pFF - pFI)
+                        segundos = segundos + time.total_seconds() 
+                    elif FIs < pFI and FFs < pFF:  # Si la fecha desde ingresada es menor y fecha fin es menor              
+                        time = (FFs - pFI)
+                        segundos = segundos + time.total_seconds() 
                         
-                        horas = pFF - pFI
-                        
-                        print horas
 
+            listaHs.append(segundos)
+    
+    print nMaq
     print listaHs
-    print horas2
+
+    return render_to_response('estadisticasMaq.html', context_instance=RequestContext(request))
 
 # ********************************* Excel *********************************
 def excelRepresentantes(request):
@@ -221,11 +228,8 @@ def excelRepresentantes(request):
     lista =[]
     for representante in Representante.objects.all():
         lista.append( [representante.NroLegajo,representante.Nombre, representante.Apellido,representante.DNI, representante.Telefono, representante.Email, representante.Zona] )
-    print(len(lista))
     for i in range(0,len(lista)):
         for j in range(0,len(lista[i])):
-            print 'i %s, j %s' %(i,j)
-            print lista[i][j]
             sheet.write(i+1,j,lista[i][j],style=xlwt.Style.default_style)
     response = HttpResponse(content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename=Representantes.xls'
@@ -244,11 +248,8 @@ def excelProductores(request):
     lista =[]
     for p in Productor.objects.all():
         lista.append( [p.CUIL,p.Nombre, p.Apellido,p.DNI, p.Telefono, p.Email] )
-    print(len(lista))
     for i in range(0,len(lista)):
         for j in range(0,len(lista[i])):
-            print 'i %s, j %s' %(i,j)
-            print lista[i][j]
             sheet.write(i+1,j,lista[i][j],style=xlwt.Style.default_style)
     response = HttpResponse(content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename=Productores.xls'
@@ -267,11 +268,8 @@ def excelLotes(request):
     lista =[]
     for p in Lote.objects.all():
         lista.append( [p.NroLote,p.TipoFardo.Nombre, p.CantFardos,p.Peso, p.Estancia.Nombre, p.Cuadricula] )
-    print(len(lista))
     for i in range(0,len(lista)):
         for j in range(0,len(lista[i])):
-            print 'i %s, j %s' %(i,j)
-            print lista[i][j]
             sheet.write(i+1,j,lista[i][j],style=xlwt.Style.default_style)
     response = HttpResponse(content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename=Lotes.xls'
@@ -290,11 +288,8 @@ def excelFardos(request):
     lista =[]
     for p in Fardo.objects.all():
         lista.append( [p.NroFardo,p.Lote.NroLote, p.Peso, p.Rinde, p.Finura, p.CV,p.AlturaMedia, p.Romana] )
-    print(len(lista))
     for i in range(0,len(lista)):
         for j in range(0,len(lista[i])):
-            print 'i %s, j %s' %(i,j)
-            print lista[i][j]
             sheet.write(i+1,j,lista[i][j],style=xlwt.Style.default_style)
     response = HttpResponse(content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename=Fardos.xls'
@@ -305,7 +300,6 @@ def excelFardos(request):
 def login_user(request):
     logout(request) # Por si un usuario se encontraba logueado
     form = LoginForm(request.POST)  
-    print Config.objects.get_int('FINURA_MIN')
     try:
         meta = request.META['QUERY_STRING'].split('=')[1][:-1]
     except IndexError:
@@ -699,7 +693,6 @@ def modificarProductor(request, pk=None):
     productor = None
     if pk is not None:
         productor = get_object_or_404(Productor, pk=pk)
-        print productor
     if request.method == 'POST':
         formulario = ProductorFormFactory(True)(request.POST, instance = productor)
         if formulario.is_valid():
@@ -995,9 +988,7 @@ def commitIniciarFase(request, orden, nroSerie):
 
     for p in o.produccion_set.all():
         if p.FechaInicio == None:
-            p.FechaInicio = datetime.now()
-
-            print p.FechaInicio
+            p.FechaInicio = datetime.today()
             p.Maquinaria = m
             p.save()
             break
@@ -1010,7 +1001,7 @@ def finalizarFaseProduccion(request, pk):
     orden = OrdenProduccion.objects.get(NroOrden = pk)
     for p in orden.produccion_set.all():
         if p.FechaInicio != None and p.FechaFin == None:
-            p.FechaFin = datetime.now()
+            p.FechaFin = datetime.today()
             p.save()
             break
 
@@ -1103,7 +1094,6 @@ def buscarCompra(request, pkb):
     for obj in results1:
         results.append(obj)
         total = total + 1
-    print total    
     for obj in results3:
         results.append(obj)
 

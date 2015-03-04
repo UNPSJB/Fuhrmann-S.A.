@@ -197,14 +197,6 @@ class OrdenProduccion(models.Model):
         return any(map(lambda p: p.FechaInicio != None, self.produccion_set.all())) and any(map(lambda p: p.FechaFin == None, self.produccion_set.all())) 
 
     def hayFardos(self):
-        print self.CV - ((self.CV * Config.objects.get_int('CV_%_OK')) / 100) 
-        print self.CV + ((self.CV * Config.objects.get_int('CV_%_OK')) / 100)
-        print self.AlturaMedia - ((self.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100), self.AlturaMedia + ((self.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100)
-        print self.Finura - ((self.Finura * Config.objects.get_int('FINURA_%_OK')) / 100), self.Finura + ((self.Finura * Config.objects.get_int('FINURA_%_OK')) / 100)
-        print self.Romana - ((self.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100), self.Romana + ((self.Romana * Config.objects.get_int('ROMANA_%_OK')) / 100) 
-        print self.Rinde - ((self.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100), self.Rinde + ((self.Rinde * Config.objects.get_int('RINDE_%_OK')) / 100)
-        
-
         fardos = Fardo.objects.filter(CV__range = (self.CV - ((self.CV * Config.objects.get_int('CV_%_OK')) / 100), self.CV + ((self.CV * Config.objects.get_int('CV_%_OK')) / 100)), 
                                         AlturaMedia__range = (self.AlturaMedia - ((self.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100), self.AlturaMedia + ((self.AlturaMedia * Config.objects.get_int('ALTURAMEDIA_%_OK')) / 100)), 
                                         Finura__range = (self.Finura - ((self.Finura * Config.objects.get_int('FINURA_%_OK')) / 100), self.Finura + ((self.Finura * Config.objects.get_int('FINURA_%_OK')) / 100)), 
