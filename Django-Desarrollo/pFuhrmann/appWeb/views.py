@@ -158,6 +158,7 @@ def estadisticasRepresentantes(request):
 def estadisticasMaq(request):
     return render_to_response('Estadisticas/estadisticasMaquinarias.html', context_instance=RequestContext(request))
 
+
 def estadisticasMaquinarias(request, FI, FF):
     listaHs = []
     nMaq= []
@@ -169,14 +170,13 @@ def estadisticasMaquinarias(request, FI, FF):
     FFs = datetime.strptime(FF, '%d %m %Y %H:%M:%S %Z') # Fecha hasta lo convierto en datetime
     
     for m in Maquinaria.objects.all():
-        nMaq.append(m)
+        nMaq.append([m.NroSerie])
         listaProd.append(Produccion.objects.all().filter(Maquinaria = m)) # Todas las Maquinas
 
-    
     for prod in listaProd:
         segundos = 0
         if not prod:  # Si la maquina nunca fue usada tiene 0 horas
-            listaHs.append('0')
+            listaHs.append([0])
         else: # Si no recorro las producciones
             for p in prod:
                 if p.FechaInicio != None: # Me fijo que la produccion haya iniciado
@@ -205,13 +205,59 @@ def estadisticasMaquinarias(request, FI, FF):
                     elif FIs < pFI and FFs < pFF:  # Si la fecha desde ingresada es menor y fecha fin es menor              
                         time = (FFs - pFI)
                         segundos = segundos + time.total_seconds() 
-                        
-
-            listaHs.append(segundos)
+            listaHs.append([segundos])
     
     # print nMaq
     # print listaHs
 
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32,650, 650)
+
+    dataSet = (
+        
+        ('C', [(j, m[0]) for j, m in enumerate(listaHs)]),
+        )
+
+    options = {
+        'legend': {'hide': True},
+        'axis': {
+            'x': {
+                # en label tengo los nros de representantes sobre x
+                # en val tengo la cantidad de compras de cada represebtabte
+                'ticks': [dict(v=j, label=nMaq[0+j]) for j, m in enumerate(listaHs)],
+                'label': 'Nro Serie Maquinaria',
+                'rotate': 25
+            },  
+            'y': {                
+                'ticksCount': [dict(v=j, label=m[0]) for j, m in enumerate(listaHs)],
+                'label': 'Tiempo',
+                'rotate': 25
+            },    
+        },
+        'background': {
+            'color': '#eeeeff',
+            'lineColor': '#444444'
+ 
+            
+        },
+        'colorScheme': {
+            'name': 'gradient',
+            'args': {
+                'initialColor': 'blue',
+            },
+        },
+        'padding': {
+            'left': 1,
+            'bottom': 1,
+            'top': 2,
+            'right': 1,
+        },
+        'title': 'Tiempo en produccion'
+    }
+    chart = pycha.bar.VerticalBarChart(surface, options)
+    chart.addDataset(dataSet)   
+    chart.render()
+    surface.write_to_png('static/img/estadisticasM.png')
+    
     return render_to_response('estadisticasMaq.html', context_instance=RequestContext(request))
 
 # ********************************* Excel *********************************
